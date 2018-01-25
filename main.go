@@ -4,8 +4,15 @@ import (
     "fmt"
     "github.com/gin-gonic/gin"
     "net/http"
-    //configapi "github.com/openshift/origin/pkg/cmd/server/api"
+    "github.com/pivotal-golang/lager"
+    "os"
+    ocapi "github.com/asiainfoLDP/datafoundry-gw/handler"
 )
+
+//定义日志以及其他变量
+var logger lager.Logger
+var ocAPIName string = "ocapi"
+
 
 func main() {
     //设置全局环境：1.开发环境（gin.DebugMode） 2.线上环境（gin.ReleaseMode）
@@ -17,30 +24,40 @@ func main() {
     //添加中间件
     //router.Use(Middleware)
 
-    //注册接口
+    //初始化日志对象，日志输出到stdout
+    logger = lager.NewLogger(ocAPIName)
+    logger.RegisterSink(lager.NewWriterSink(os.Stdout, lager.INFO)) //默认日志级别
+
+    //注册接口实例
     //router.GET("/simple/server/get", GetHandler)
     //router.POST("/simple/server/post", PostHandler)
     //router.PUT("/simple/server/put", PutHandler)
     //router.DELETE("/simple/server/delete", DeleteHandler)
 
-    router.GET("/oapi/v1/users",GetUsers)
-    //router.GET("/oapi/v1/projects",GetProjects)
-    router.GET("/oapi/v1/users/:name", GetaUser)
-
+    //测试接口
+    router.GET("/projects",ocapi.GetProjects)
+    router.GET("/projects/:project", GetaProject)
+    //接口列表及注册接口
 
 
     //监听端口
     http.ListenAndServe(":10000", router)
 }
 
-func GetUsers(c *gin.Context){
-
-    c.Data(http.StatusOK, "json", []byte(fmt.Sprintf("get success!")))
-    //c.JSON(http.StatusOK, gin.H{"message":"wch" , "status": http.StatusOK})
-    return
+//获取环境变量
+func getenv(env string) string {
+    env_value := os.Getenv(env)
+    if env_value == "" {
+        fmt.Println("FATAL: NEED ENV", env)
+        fmt.Println("Exit...........")
+        os.Exit(2)
+    }
+    fmt.Println("ENV:", env, env_value)
+    return env_value
 }
 
-func GetaUser(c *gin.Context){
+
+func GetaProject(c *gin.Context){
     name := c.Param("name")
     if "" == name{
         c.JSON(http.StatusExpectationFailed, gin.H{"message": "param is nil", "status": http.StatusExpectationFailed})

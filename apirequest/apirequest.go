@@ -69,7 +69,6 @@ func Request(timeout time.Duration, method, url, token string, body []byte) (*ht
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", token)
 
-
 	switch timeout {
 	case MaxRequestTimeout:
 		return httpClientC.Do(req)

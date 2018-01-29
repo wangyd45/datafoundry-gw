@@ -18,7 +18,6 @@ func CreateUser(c *gin.Context){
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	fmt.Println("----- result is ",result)
 	c.JSON(http.StatusOK, gin.H{"result": result})
 }
 
@@ -26,27 +25,23 @@ func GetUser(c *gin.Context){
 	str := "sb-instanceid-anaconda3-nt9z3"
 	req,err := oapi.Request(10,"GET","/oapi/v1/users","JlzsISKq7ZGY4W51KfL3o1GbqHBgoQ4D6dgsV3DkRho",[]byte(str))
 	if err != nil{
-		fmt.Println("----- req is ",req)
 		fmt.Println("----- CetUser error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	fmt.Println("----- result is ",result)
-
 	c.JSON(http.StatusOK, gin.H{"status": string(result)})
 }
 
 func GetAllUser(c *gin.Context){
 	token := pkg.GetToken(c)
-	fmt.Println("------ token is ",token)
 	req,err := oapi.Request(10,"GET","/oapi/v1/users",token,[]byte{})
 	if err != nil{
 		fmt.Println("------  CetAllUser error ",err)
 	}
-
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.JSON(http.StatusOK, string(result))
+	//c.JSON(http.StatusOK,req.Body)
+	c.Data(http.StatusOK,"ok",result)
 }
 
 func WatchUser(c *gin.Context){

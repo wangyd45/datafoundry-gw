@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	USER  = "/oapi/v1/users"
+	USER  = "/oapi/v1/users/"
 	WATCH = "/oapi/v1/watch/users/"
 )
 
@@ -25,13 +25,13 @@ var log lager.Logger
 
 func CreateUser(c *gin.Context){
 	token := pkg.GetToken(c)
-	rBody, _:= ioutil.ReadAll(c.Request.Body)
+	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"POST",USER,token, rBody)
 	if err != nil{
 		fmt.Println("CreateUser error ",err)
 		//log.Error("CreateUser error ",err)
-		c.JSON(http.StatusRequestEntityTooLarge,err)
+		c.JSON(http.StatusInternalServerError,gin.H{"status":req.Status,"errorcode":req.StatusCode})
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -41,13 +41,13 @@ func CreateUser(c *gin.Context){
 func GetUser(c *gin.Context){
 	token := pkg.GetToken(c)
 	name := c.Param("name")
-	req,err := oapi.Request(10,"GET",USER+name,token,[]byte{})
+	req,err := oapi.Request(10,"GET",USER + name,token,[]byte{})
 	if err != nil{
-		fmt.Println("------- GetUser error ",err)
 		//log.Error("GetUser error ",err)
+		c.JSON(http.StatusInternalServerError,gin.H{"status":req.Status,"errorcode":req.StatusCode})
+
 	}
 	result, _:= ioutil.ReadAll(req.Body)
-	fmt.Println("------ result is ",string(result))
 	defer req.Body.Close()
 	c.Data(http.StatusOK, "status", result)
 }
@@ -57,10 +57,10 @@ func GetAllUser(c *gin.Context){
 	req,err := oapi.Request(10,"GET",USER,token,[]byte{})
 	if err != nil{
 		//log.Error("CetAllUser error ",err)
+		c.JSON(http.StatusInternalServerError,gin.H{"status":req.Status,"errorcode":req.StatusCode})
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	//c.JSON(http.StatusOK,req.Body)
 	c.Data(http.StatusOK, "status", result)
 }
 
@@ -69,11 +69,11 @@ func WatchUser(c *gin.Context){
 	name := c.Param("name")
 	req,err := oapi.Request(10,"GET",WATCH + name,token,[]byte{})
 	if err != nil{
-		//log.Error("WatchUser error ",err)
+		//log.Error("WatchAllUser error ",err)
+		c.JSON(http.StatusInternalServerError,gin.H{"status":req.Status,"errorcode":req.StatusCode})
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	//c.JSON(http.StatusOK,req.Body)
 	c.Data(http.StatusOK, "status", result)
 }
 
@@ -82,10 +82,10 @@ func WatchAllUser(c *gin.Context){
 	req,err := oapi.Request(10,"GET",WATCH,token,[]byte{})
 	if err != nil{
 		//log.Error("WatchAllUser error ",err)
+		c.JSON(http.StatusInternalServerError,gin.H{"status":req.Status,"errorcode":req.StatusCode})
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	//c.JSON(http.StatusOK,req.Body)
 	c.Data(http.StatusOK, "status", result)
 }
 
@@ -96,11 +96,11 @@ func UpdataUser(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"PUT",USER + name,token,rBody)
 	if err != nil{
-		//log.Error("UpdataUser error ",err)
+		//log.Error("DeleteAllUser error ",err)
+		c.JSON(http.StatusInternalServerError,gin.H{"status":req.Status,"errorcode":req.StatusCode})
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	//c.JSON(http.StatusOK,req.Body)
 	c.Data(http.StatusOK, "status", result)
 }
 
@@ -110,10 +110,10 @@ func PatchUser(c *gin.Context){
 	req,err := oapi.Request(10,"PATCH",USER + name,token,[]byte{})
 	if err != nil{
 		//log.Error("PatchUser error ",err)
+		c.JSON(http.StatusInternalServerError,gin.H{"status":req.Status,"errorcode":req.StatusCode})
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	//c.JSON(http.StatusOK,req.Body)
 	c.Data(http.StatusOK, "status", result)
 }
 
@@ -123,10 +123,10 @@ func DeleteUser(c *gin.Context){
 	req,err := oapi.Request(10,"DELETE",USER + name,token,[]byte{})
 	if err != nil{
 		//log.Error("DeleteUser error ",err)
+		c.JSON(http.StatusInternalServerError,gin.H{"status":req.Status,"errorcode":req.StatusCode})
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	//c.JSON(http.StatusOK,req.Body)
 	c.Data(http.StatusOK, "status", result)
 }
 
@@ -135,6 +135,7 @@ func DeleteAllUser(c *gin.Context){
 	req,err := oapi.Request(10,"DELETE",USER,token,[]byte{})
 	if err != nil{
 		//log.Error("DeleteAllUser error ",err)
+		c.JSON(http.StatusInternalServerError,gin.H{"status":req.Status,"errorcode":req.StatusCode})
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()

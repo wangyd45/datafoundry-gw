@@ -51,15 +51,14 @@ func handle()(router *gin.Engine){
 
     //v1.user
     router.POST("/users",user.CreateUser)
-    router.GET("/users",user.GetUser)
-    router.GET("/users/getAllUser",user.GetAllUser)
-    router.GET("/users/watchUser",user.WatchUser)
-    router.GET("/users/watchAllUser",user.WatchAllUser)
-    router.PUT("/users/updataUser",user.UpdataUser)
-    router.PATCH("/users/patchUser",user.PatchUser)
-    router.DELETE("/users/deleteUser",user.DeleteUser)
-    router.DELETE("/users/deleteAllUser",user.DeleteAllUser)
-    //router.GET("/api/v1/namespace/:name/users/:user")
+    router.GET("/users/:name",user.GetUser)
+    router.GET("/users",user.GetAllUser)
+    router.GET("/watch/users/:name",user.WatchUser)
+    router.GET("watch/users",user.WatchAllUser)
+    router.PUT("/users/:name",user.UpdataUser)
+    router.PATCH("/users/:name",user.PatchUser)
+    router.DELETE("/users/:name",user.DeleteUser)
+    router.DELETE("/users/",user.DeleteAllUser)
 
     //v1.project
     router.POST("/projects",project.CreateAProject)

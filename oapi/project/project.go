@@ -100,8 +100,7 @@ func PatchAProject(c *gin.Context){
 func DeleteAProject(c *gin.Context){
 	token := pkg.GetToken(c)
 	name := c.Param("name")
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.Request(10,"DELETE","/oapi/v1/projects"+name,token,rBody)
+	req,err := oapi.Request(10,"DELETE","/oapi/v1/projects"+name,token,nil)
 	if err != nil{
 		fmt.Println("Delete A Project :%s Fail",name,err)
 	}

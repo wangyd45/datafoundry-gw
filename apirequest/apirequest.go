@@ -66,7 +66,11 @@ func Request(timeout time.Duration, method, url, token string, body []byte) (*ht
 		return nil, err
 	}
 
-	req.Header.Set("Content-Type", "application/json")
+	if method == "PATCH"{
+		req.Header.Set("Content-Type", "application/json-patch+json")
+	}else{
+		req.Header.Set("Content-Type", "application/json")
+	}
 	req.Header.Set("Authorization", token)
 
 	switch timeout {

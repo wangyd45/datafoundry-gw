@@ -8,6 +8,7 @@ import (
     "github.com/gin-gonic/gin"
     "github.com/pivotal-golang/lager"
     "github.com/asiainfoLDP/datafoundry-gw/oapi/user"
+    "github.com/asiainfoLDP/datafoundry-gw/oapi/project"
 )
 
 //定义日志以及其他变量
@@ -48,7 +49,7 @@ func handle()(router *gin.Engine){
     //获取路由实例
     router = gin.Default()
 
-    //user
+    //v1.user
     router.POST("/users",user.CreateUser)
     router.GET("/users",user.GetUser)
     router.GET("/users/getAllUser",user.GetAllUser)
@@ -60,7 +61,16 @@ func handle()(router *gin.Engine){
     router.DELETE("/users/deleteAllUser",user.DeleteAllUser)
     //router.GET("/api/v1/namespace/:name/users/:user")
 
-    //projects
+    //v1.project
+    router.POST("/projects",project.CreateAProject)
+    router.GET("/projects/:name",project.GetAProject)
+    router.GET("/projects",project.GetAllProjects)
+    router.GET("/watch/projects/:name",project.WatchAProject)
+    router.GET("/watch/projects",project.WatchAllProjects)
+    router.PUT("/projects/:name",project.UpdateAProject)
+    router.PATCH("/projects/:name",project.PatchAProject)
+    router.DELETE("/projects/:name",project.DeleteAProject)
+
     return
 }
 

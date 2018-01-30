@@ -61,14 +61,14 @@ func handle()(router *gin.Engine){
     //router.DELETE("/users/",user.DeleteAllUser)
 
     //v1.project
-    router.POST("/projects",project.CreateAProject)
-    router.GET("/projects/:name",project.GetAProject)
+    router.POST("/projects",project.CreateProject)
+    router.GET("/projects/:name",project.GetProject)
     router.GET("/projects",project.GetAllProjects)
-    router.GET("/watch/projects/:name",project.WatchAProject)
-    router.GET("/watch/projects",project.WatchAllProjects)
-    router.PUT("/projects/:name",project.UpdateAProject)
-    router.PATCH("/projects/:name",project.PatchAProject)
-    router.DELETE("/projects/:name",project.DeleteAProject)
+    //router.GET("/watch/projects/:name",project.WatchAProject)
+    //router.GET("/watch/projects",project.WatchAllProjects)
+    router.PUT("/projects/:name",project.UpdateProject)
+    //router.PATCH("/projects/:name",project.PatchAProject)
+    router.DELETE("/projects/:name",project.DeleteProject)
 
     return
 }

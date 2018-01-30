@@ -10,7 +10,7 @@ import (
 
 )
 
-func CreateAProject(c *gin.Context){
+func CreateProject(c *gin.Context){
 
 	token := pkg.GetToken(c)
 	rBody,_ := ioutil.ReadAll(c.Request.Body)
@@ -25,7 +25,7 @@ func CreateAProject(c *gin.Context){
 
 }
 
-func GetAProject(c *gin.Context){
+func GetProject(c *gin.Context){
 	token := pkg.GetToken(c)
 	name := c.Param("name")
 	req,err := oapi.Request(10,"GET","/oapi/v1/projects/"+name,token,nil)
@@ -47,7 +47,7 @@ func GetAllProjects(c *gin.Context){
 	defer req.Body.Close()
 	c.JSON(http.StatusOK, gin.H{"result": result})
 }
-
+/*
 func WatchAProject(c *gin.Context){
 	token := pkg.GetToken(c)
 	name := c.Param("name")
@@ -70,8 +70,8 @@ func WatchAllProjects(c *gin.Context){
 	defer req.Body.Close()
 	c.JSON(http.StatusOK, gin.H{"result": result})
 }
-
-func UpdateAProject(c *gin.Context){
+*/
+func UpdateProject(c *gin.Context){
 	token := pkg.GetToken(c)
 	name := c.Param("name")
 	rBody,_ := ioutil.ReadAll(c.Request.Body)
@@ -83,7 +83,7 @@ func UpdateAProject(c *gin.Context){
 	defer req.Body.Close()
 	c.JSON(http.StatusOK, gin.H{"result": result})
 }
-
+/*
 func PatchAProject(c *gin.Context){
 	token := pkg.GetToken(c)
 	name := c.Param("name")
@@ -96,8 +96,8 @@ func PatchAProject(c *gin.Context){
 	defer req.Body.Close()
 	c.JSON(http.StatusOK, gin.H{"result": result})
 }
-
-func DeleteAProject(c *gin.Context){
+*/
+func DeleteProject(c *gin.Context){
 	token := pkg.GetToken(c)
 	name := c.Param("name")
 	req,err := oapi.Request(10,"DELETE","/oapi/v1/projects"+name,token,nil)

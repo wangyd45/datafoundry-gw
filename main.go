@@ -8,6 +8,7 @@ import (
     "github.com/gin-gonic/gin"
     "github.com/pivotal-golang/lager"
     "github.com/asiainfoLDP/datafoundry-gw/oapi/user"
+    "github.com/asiainfoLDP/datafoundry-gw/oapi/build"
     "github.com/asiainfoLDP/datafoundry-gw/oapi/project"
 )
 
@@ -69,6 +70,23 @@ func handle()(router *gin.Engine){
     router.PUT("/projects/:name",project.UpdateProject)
     //router.PATCH("/projects/:name",project.PatchAProject)
     router.DELETE("/projects/:name",project.DeleteProject)
+
+    //v1.Build
+    router.POST("/build",build.CreateBuild)
+    router.POST("/build/:namespace",build.CreateBuildInNameSpace)
+    router.POST("/clone/build/:namespace/:name",build.CreateCloneInNameSpace)
+    router.GET("/build/:namespace/:namespace",build.GetBuildFromNameSpace)
+    router.GET("/build",build.GetAllBuilds)
+    router.GET("/build/:namespace",build.GetAllBuildFromNameSpace)
+    router.GET("/log/build/:namespace/:name",build.GetLogBuildFromNameSpace)
+    router.GET("/watch/build/:namespace/:name",build.WatchBuildFromNameSpace)
+    router.GET("/watch/build",build.WatchAllBuilds)
+    router.GET("/watch/build/:namespace",build.WatchAllBuildFromNameSpace)
+    router.PUT("/build/:namespace/:name",build.UpdataBuildFromNameSpace)
+    router.PUT("/detail/build/:namespace/:name",build.UpdataDetailsInNameSpace)
+    router.PATCH("/build/:namespace/:name",build.PatchBuildFromNameSpace)
+    router.DELETE("/build/:namespace/:name",build.DeleteBuildFromNameSpace)
+    router.DELETE("/build/:namespace",build.DeleteAllBuildFromNameSpace)
 
     return
 }

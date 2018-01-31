@@ -11,6 +11,7 @@ import (
     "github.com/asiainfoLDP/datafoundry-gw/oapi/build"
     "github.com/asiainfoLDP/datafoundry-gw/oapi/project"
     "github.com/asiainfoLDP/datafoundry-gw/oapi/buildconfig"
+    dep "github.com/asiainfoLDP/datafoundry-gw/oapi/deploymentconfig"
 )
 
 //定义日志以及其他变量
@@ -107,7 +108,30 @@ func handle()(router *gin.Engine){
     router.DELETE("/buildconfig/:namesapce/:name",buildconfig.DeleteBuildConfigFromNameSpace)
     router.DELETE("/buildconfig/:namesapce",buildconfig.DeleteAllBuildFromNameSpace)
 
-
+    //v1.DeploymentConfig
+    router.POST("/deploymentconfig",dep.CreateDeploymentConfig)
+    router.POST("/deploymentconfig/:namespace",dep.CreateDeploymentConfigInNameSpace)
+    router.POST("/ins/deploymentconfig/:namespace/:name",dep.CreateInsInNameSpace)
+    router.POST("/roolback/deploymentconfig/:namespace/:name",dep.CreateRollBackInNameSpace)
+    router.POST("/web/deploymentconfig/:namespace/:name",buildconfig.CreateWebInNameSpace)
+    router.POST("/web/deploymentconfig/:namespace/:name/:path",buildconfig.CreateWebInNameSpacePath)
+    router.GET("/deploymentconfig/:namespace/:name",dep.GetDeploymentConfigFromNameSpace)
+    router.GET("/deploymentconfig",dep.GetAllDeploymentConfig)
+    router.GET("/deploymentconfig/:namespace",dep.GetAllDeploymentConfigFromNameSpace)
+    router.GET("/watch/deploymentconfig/:namespace/:name",dep.WatchDeploymentConfigFromNameSpace)
+    router.GET("/watch/deploymentconfig",dep.WatchAllDeploymentConfig)
+    router.GET("/watch/deploymentconfig/:namespace",dep.WatchAllDeploymentConfigFromNameSpace)
+    router.GET("/log/deploymentconfig/:namespace/:name",dep.GetLogDeploymentFromNameSpace)
+    router.GET("/scale/deploymentconfig/:namespace/:name",dep.GetScaleDeploymentFromNameSpace)
+    router.GET("/status/deploymentconfig/:namespace/:name",dep.GetStatusDeploymentFromNameSpace)
+    router.PUT("/deploymentconfig/:namesapce/:name",dep.UpdataDeploymentConfigFromNameSpace)
+    router.PUT("/scale/deploymentconfig/:namesapce/:name",dep.UpdataScaleDeploymentConfigFromNameSpace)
+    router.PUT("/status/deploymentconfig/:namesapce/:name",dep.UpdataStatusDeploymentConfigFromNameSpace)
+    router.PATCH("/deploymentconfig/:namesapce/:name",dep.PatchDeploymentConfigFromNameSpace)
+    router.PATCH("/scale/deploymentconfig/:namesapce/:name",dep.PatchScaleDeploymentConfigFromNameSpace)
+    router.PATCH("/status/deploymentconfig/:namesapce/:name",dep.PatchStatusDeploymentConfigFromNameSpace)
+    router.DELETE("/deploymentconfig/:namesapce/:name",dep.DeleteDeploymentConfigFromNameSpace)
+    router.DELETE("/deploymentconfig/:namesapce",dep.DeleteAllDeploymentFromNameSpace)
 
 
 

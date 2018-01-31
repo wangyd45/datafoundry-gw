@@ -11,6 +11,11 @@ import (
     "github.com/asiainfoLDP/datafoundry-gw/oapi/build"
     "github.com/asiainfoLDP/datafoundry-gw/oapi/project"
     "github.com/asiainfoLDP/datafoundry-gw/oapi/buildconfig"
+    "github.com/asiainfoLDP/datafoundry-gw/oapi/netnamespace"
+    "github.com/asiainfoLDP/datafoundry-gw/oapi/role"
+    "github.com/asiainfoLDP/datafoundry-gw/oapi/rolebinding"
+    "github.com/asiainfoLDP/datafoundry-gw/oapi/route"
+    "github.com/asiainfoLDP/datafoundry-gw/oapi/template"
 )
 
 //定义日志以及其他变量
@@ -107,8 +112,67 @@ func handle()(router *gin.Engine){
     router.DELETE("/buildconfig/:namesapce/:name",buildconfig.DeleteBuildConfigFromNameSpace)
     router.DELETE("/buildconfig/:namesapce",buildconfig.DeleteAllBuildFromNameSpace)
 
+    //v1.NetNamespace
+    router.POST("/netnamespaces",netnamespace.CreateNetNamespace)
+    router.GET("/netnamespaces/:name",netnamespace.GetNetNamespace)
+    router.GET("/netnamespaces",netnamespace.GetAllNetNamespaces)
+    router.GET("/watch/netnamespaces/:name",netnamespace.WatchNetNamespace)
+    router.GET("/watch/netnamespaces",netnamespace.WatchAllNetNamespaces)
+    router.PUT("/netnamespaces/:name",netnamespace.UpdateNetNamespace)
+    router.PATCH("/netnamespaces/:name",netnamespace.PatchNetNamespace)
+    router.DELETE("/netnamespaces/:name",netnamespace.DeleteNetNamespace)
+    router.DELETE("/netnamespaces",netnamespace.DeleteAllNetNamespaces)
 
+    //v1.Role
+    router.POST("/roles",role.CreateRole)
+    router.POST("/namespaces/:namespace/roles",role.CreateRoleInNS)
+    router.GET("/namespaces/:namespace/roles/:name",role.GetRoleInNS)
+    router.GET("/roles",role.GetAllRoles)
+    router.GET("/namespaces/:namespace/roles",role.GetRolesInNS)
+    router.PUT("/namespaces/:namespace/roles/:name",role.UpdateRoleInNS)
+    router.PATCH("/namespaces/:namespace/roles/:name",role.PatchRoleInNS)
+    router.DELETE("/namespaces/:namespace/roles/:name",role.DeleteRoleInNS)
 
+    //v1.RoleBinding
+    router.POST("/rolebindings",rolebinding.CreateRoleBinding)
+    router.POST("/namespaces/:namespace/rolebindings",rolebinding.CreateRoleBindingInNS)
+    router.GET("/namespaces/:namespace/rolebindings/:name",rolebinding.GetRoleBindingInNS)
+    router.GET("/rolebindings",rolebinding.GetAllRoleBindings)
+    router.GET("/namespaces/:namespace/rolebindings",rolebinding.GetRoleBindingInNS)
+    router.PUT("/namespaces/:namespace/rolebindings/:name",rolebinding.UpdateRoleBindingInNS)
+    router.PATCH("/namespaces/:namespace/rolebindings/:name",rolebinding.PatchRoleBindingInNS)
+    router.DELETE("/namespaces/:namespace/rolebindings/:name",rolebinding.DeleteRoleBindingInNS)
+
+    //v1.Route
+    router.POST("/routes",route.CreateRoute)
+    router.POST("/namespaces/:namespace/routes",route.CreateRouteInNS)
+    router.GET("/namespaces/:namespace/routes/:name",route.GetRouteInNS)
+    router.GET("/routes",route.GetAllRoutes)
+    router.GET("/namespaces/:namespace/routes",route.GetAllRoutesInNS)
+    router.GET("/watch/namespaces/:namespace/routes/:name",route.WatchRouteInNS)
+    router.GET("/watch/routes",route.WatchAllRoutes)
+    router.GET("/watch/namespaces/:namespace/routes",route.WatchAllRoutesInNS)
+    router.PUT("/namespaces/:namespace/routes/:name",route.UpdateRouteInNS)
+    router.PATCH("/namespaces/:namespace/routes/:name",route.PatchRouteInNS)
+    router.DELETE("/namespaces/:namespace/routes/:name",route.DeleteRouteInNS)
+    router.DELETE("/namespaces/:namespace/routes",route.DeleteAllRoutesInNS)
+    router.GET("namespaces/:namespace/routes/:name/status",route.GetRouteStatusInNS)
+    router.PUT("/namespaces/:namespace/routes/:name/status",route.UpdateRouteStatusInNS)
+    router.PATCH("/namespaces/:namespace/routes/:name/status",route.PatchRouteStatusInNS)
+
+    //v1.Template
+    router.POST("/templates",template.CreateTemplate)
+    router.POST("/namespaces/:namespace/templates",template.CreateTemplatenNS)
+    router.GET("/namespaces/:namespace/templates/:name",template.GetTemplateInNS)
+    router.GET("/templates",template.GetAllTemplates)
+    router.GET("/namespaces/:namespace/templates",template.GetAllTemplatesInNS)
+    router.GET("/watch/namespaces/:namespace/templates/:name",template.WatchTemplateInNS)
+    router.GET("/watch/templates",template.WatchAllTemplates)
+    router.GET("/watch/namespaces/:namespace/templates",template.WatchAllTemplatesInNS)
+    router.PUT("/namespaces/:namespace/templates/:name",template.UpdateTemplateInNS)
+    router.PATCH("/namespaces/:namespace/templates/:name",template.PatchTemplateInNS)
+    router.DELETE("/namespaces/:namespace/templates/:name",template.DeleteTemplateInNS)
+    router.DELETE("/namespaces/:namespace/templates",template.DeleteAllTemplatesInNS)
 
 
     return

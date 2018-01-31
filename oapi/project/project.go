@@ -25,7 +25,7 @@ func CreateProject(c *gin.Context){
 	//调用原生接口
 	req,err := oapi.Request(10,"POST","/oapi/v1/projectrequests",token,rBody)
 	if err != nil{
-		logger.Error("Create Project Fail",err)
+		logger.Error("Create A Project Fail",err)
 	}
 	//返回结果JSON格式
 	result, _:= ioutil.ReadAll(req.Body)

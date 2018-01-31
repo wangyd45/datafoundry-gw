@@ -1,8 +1,8 @@
 package build
 
 import (
-	//"os"
-	"fmt"
+	"os"
+	//"fmt"
 	"io/ioutil"
 	"github.com/gin-gonic/gin"
 	"github.com/pivotal-golang/lager"
@@ -20,10 +20,10 @@ const (
 
 var log lager.Logger
 
-//func init(){
-//	log = lager.NewLogger("V1_Build.log")
-//	log.RegisterSink(lager.NewWriterSink(os.Stdout, lager.DEBUG)) //默认日志级别
-//}
+func init(){
+	log = lager.NewLogger("oapi_v1_Build.log")
+	log.RegisterSink(lager.NewWriterSink(os.Stdout, lager.DEBUG)) //默认日志级别
+}
 
 func CreateBuild(c *gin.Context){
 	token := pkg.GetToken(c)
@@ -31,8 +31,7 @@ func CreateBuild(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"POST",BUILD,token, rBody)
 	if err != nil{
-		fmt.Println("CreateUser error ",err)
-		//log.Error("CreateUser error ",err)
+		log.Error("CreateBuild error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -46,8 +45,7 @@ func CreateBuildInNameSpace(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"POST",BUILDNAME +namespace+ "/builds",token, rBody)
 	if err != nil{
-		fmt.Println("CreateUser error ",err)
-		//log.Error("CreateUser error ",err)
+		log.Error("CreateBuildInNameSpace error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -62,8 +60,7 @@ func CreateCloneInNameSpace(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"POST",BUILDNAME +namespace+ "/builds/" + name + "/clone",token, rBody)
 	if err != nil{
-		fmt.Println("CreateUser error ",err)
-		//log.Error("CreateUser error ",err)
+		log.Error("CreateCloneInNameSpace error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -76,8 +73,7 @@ func GetBuildFromNameSpace(c *gin.Context){
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET",BUILDNAME + namespace + "/builds/" + name,token, []byte{})
 	if err != nil{
-		fmt.Println("CreateUser error ",err)
-		//log.Error("CreateUser error ",err)
+		log.Error("GetBuildFromNameSpace error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -88,8 +84,7 @@ func GetAllBuilds(c *gin.Context){
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET",BUILD,token, []byte{})
 	if err != nil{
-		fmt.Println("CreateUser error ",err)
-		//log.Error("CreateUser error ",err)
+		log.Error("GetAllBuilds error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -101,8 +96,7 @@ func GetAllBuildFromNameSpace(c *gin.Context){
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET",BUILDNAME + namespace + "/builds",token, []byte{})
 	if err != nil{
-		fmt.Println("CreateUser error ",err)
-		//log.Error("CreateUser error ",err)
+		log.Error("GetAllBuildFromNameSpace error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -115,8 +109,7 @@ func GetLogBuildFromNameSpace(c *gin.Context){
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET",BUILDNAME + namespace + "/builds/" + name +"/log",token, []byte{})
 	if err != nil{
-		fmt.Println("CreateUser error ",err)
-		//log.Error("CreateUser error ",err)
+		log.Error("GetLogBuildFromNameSpace error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -129,8 +122,7 @@ func WatchBuildFromNameSpace(c *gin.Context){
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET",WATCH + namespace + "/builds" + name,token, []byte{})
 	if err != nil{
-		fmt.Println("CreateUser error ",err)
-		//log.Error("CreateUser error ",err)
+		log.Error("WatchBuildFromNameSpace error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -141,8 +133,7 @@ func WatchAllBuilds(c *gin.Context){
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET",WATCHALL,token, []byte{})
 	if err != nil{
-		fmt.Println("CreateUser error ",err)
-		//log.Error("CreateUser error ",err)
+		log.Error("WatchAllBuilds error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -154,8 +145,7 @@ func WatchAllBuildFromNameSpace(c *gin.Context){
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET",WATCH + namespace + "/builds" ,token, []byte{})
 	if err != nil{
-		fmt.Println("CreateUser error ",err)
-		//log.Error("CreateUser error ",err)
+		log.Error("WatchAllBuildFromNameSpace error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -170,8 +160,7 @@ func UpdataBuildFromNameSpace(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"PUT",BUILDNAME + namespace + "/builds" + name,token, rBody)
 	if err != nil{
-		fmt.Println("CreateUser error ",err)
-		//log.Error("CreateUser error ",err)
+		log.Error("UpdataBuildFromNameSpace error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -186,8 +175,7 @@ func UpdataDetailsInNameSpace(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"PUT",BUILDNAME + namespace + "/builds/" + name + "/details",token, rBody)
 	if err != nil{
-		fmt.Println("CreateUser error ",err)
-		//log.Error("CreateUser error ",err)
+		log.Error("UpdataDetailsInNameSpace error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -202,8 +190,7 @@ func PatchBuildFromNameSpace(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"PATCH",BUILDNAME + namespace + "/builds" + name,token, rBody)
 	if err != nil{
-		fmt.Println("CreateUser error ",err)
-		//log.Error("CreateUser error ",err)
+		log.Error("PatchBuildFromNameSpace error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -218,8 +205,7 @@ func DeleteBuildFromNameSpace(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"DELETE",BUILDNAME + namespace + "/builds" + name,token, rBody)
 	if err != nil{
-		fmt.Println("CreateUser error ",err)
-		//log.Error("CreateUser error ",err)
+		log.Error("DeleteBuildFromNameSpace error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -233,8 +219,7 @@ func DeleteAllBuildFromNameSpace(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"DELETE",BUILDNAME + namespace + "/builds",token, rBody)
 	if err != nil{
-		fmt.Println("CreateUser error ",err)
-		//log.Error("CreateUser error ",err)
+		log.Error("DeleteAllBuildFromNameSpace error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()

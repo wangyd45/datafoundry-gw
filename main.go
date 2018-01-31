@@ -172,7 +172,6 @@ func handle()(router *gin.Engine){
     router.PUT("/imagestreamtag/:namespace/:name",tag.UpdataImageTagFromNameSpace)
     router.PATCH("/imagestreamtag/:namespace/:name",tag.PatchImageTagFromNameSpace)
     router.DELETE("/imagestreamtag/:namespace/:name",tag.DeleteImageTagFromNameSpace)
-    router.DELETE("/imagestreamtag/:namespace",tag.DeleteAllImageTagFromNameSpace)
 
     //v1.NetNamespace
     router.POST("/netnamespaces",netnamespace.CreateNetNamespace)

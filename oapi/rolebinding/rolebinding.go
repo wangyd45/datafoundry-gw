@@ -78,13 +78,43 @@ func GetRoleBindingsInNS(c *gin.Context)  {
 }
 
 func UpdateRoleBindingInNS(c *gin.Context){
-
+	token := pkg.GetToken(c)
+	namespace := c.Param("namespace")
+	name := c.Param("name")
+	rBody,_ := ioutil.ReadAll(c.Request.Body)
+	req,err := oapi.Request(10,"PUT","/oapi/v1/namespaces/"+namespace+"/rolebindings/"+name,token,rBody)
+	if err != nil{
+		logger.Error("Update A RoleBinding In A Namespace Fail",err)
+	}
+	result, _:= ioutil.ReadAll(req.Body)
+	defer req.Body.Close()
+	c.Data(req.StatusCode, "application/json",result)
 }
 
 func PatchRoleBindingInNS(c *gin.Context){
-
+	token := pkg.GetToken(c)
+	namespace := c.Param("namespace")
+	name := c.Param("name")
+	rBody,_ := ioutil.ReadAll(c.Request.Body)
+	req,err := oapi.Request(10,"PATCH","/oapi/v1/namespaces/"+namespace+"/rolebindings/"+name,token,rBody)
+	if err != nil{
+		logger.Error("Patch A RoleBinding In A Namespace Fail",err)
+	}
+	result, _:= ioutil.ReadAll(req.Body)
+	defer req.Body.Close()
+	c.Data(req.StatusCode, "application/json",result)
 }
 
 func DeleteRoleBindingInNS(c *gin.Context){
-
+	token := pkg.GetToken(c)
+	namespace := c.Param("namespace")
+	name := c.Param("name")
+	rBody,_ := ioutil.ReadAll(c.Request.Body)
+	req,err := oapi.Request(10,"DELETE","/oapi/v1/namespaces/"+namespace+"/rolebindings/"+name,token,rBody)
+	if err != nil{
+		logger.Error("Delete A RoleBinding In A Namespace Fail",err)
+	}
+	result, _:= ioutil.ReadAll(req.Body)
+	defer req.Body.Close()
+	c.Data(req.StatusCode, "application/json",result)
 }

@@ -213,13 +213,13 @@ func handle()(router *gin.Engine){
     router.GET("/watch/routes/:namespace/:name",route.WatchRouteInNS)
     router.GET("/watch/routes",route.WatchAllRoutes)
     router.GET("/watch/routes/:namespace",route.WatchAllRoutesInNS)
+    router.GET("/status/routes/:namespace/:name",route.GetRouteStatusInNS)
     router.PUT("/routes/:namespace/:name",route.UpdateRouteInNS)
+    router.PUT("/status/routes/:namespace/:name",route.UpdateRouteStatusInNS)
     router.PATCH("/routes/:namespace/:name",route.PatchRouteInNS)
+    router.PATCH("/status/routes/:namespace/:name",route.PatchRouteStatusInNS)
     router.DELETE("/routes/:namespace/:name",route.DeleteRouteInNS)
     router.DELETE("/routes/:namespace",route.DeleteAllRoutesInNS)
-    router.GET("/routes/status/:namespace/:name",route.GetRouteStatusInNS)
-    router.PUT("/routes/status/:namespace/:name",route.UpdateRouteStatusInNS)
-    router.PATCH("/routes/status/:namespace/:name",route.PatchRouteStatusInNS)
 
     //v1.Template
     router.POST("/templates",template.CreateTemplate)
@@ -233,7 +233,7 @@ func handle()(router *gin.Engine){
     router.PUT("/templates/:namespace/:name",template.UpdateTemplateInNS)
     router.PATCH("/templates/:namespace/:name",template.PatchTemplateInNS)
     router.DELETE("/templates/:namespace/:name",template.DeleteTemplateInNS)
-    router.DELETE("/templates/:namespace/:name",template.DeleteAllTemplatesInNS)
+    router.DELETE("/templates/:namespace",template.DeleteAllTemplatesInNS)
 
     return
 }

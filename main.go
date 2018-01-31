@@ -11,12 +11,15 @@ import (
     "github.com/asiainfoLDP/datafoundry-gw/oapi/build"
     "github.com/asiainfoLDP/datafoundry-gw/oapi/project"
     "github.com/asiainfoLDP/datafoundry-gw/oapi/buildconfig"
-    dep "github.com/asiainfoLDP/datafoundry-gw/oapi/deploymentconfig"
-    "github.com/asiainfoLDP/datafoundry-gw/oapi/netnamespace"
     "github.com/asiainfoLDP/datafoundry-gw/oapi/role"
     "github.com/asiainfoLDP/datafoundry-gw/oapi/rolebinding"
     "github.com/asiainfoLDP/datafoundry-gw/oapi/route"
+    "github.com/asiainfoLDP/datafoundry-gw/oapi/netnamespace"
     "github.com/asiainfoLDP/datafoundry-gw/oapi/template"
+    "github.com/asiainfoLDP/datafoundry-gw/oapi/imagestreamimport"
+    image "github.com/asiainfoLDP/datafoundry-gw/oapi/imagestream"
+    dep "github.com/asiainfoLDP/datafoundry-gw/oapi/deploymentconfig"
+    tag "github.com/asiainfoLDP/datafoundry-gw/oapi/imagestreamtag"
 )
 
 //定义日志以及其他变量
@@ -137,6 +140,39 @@ func handle()(router *gin.Engine){
     router.PATCH("/status/deploymentconfig/:namesapce/:name",dep.PatchStatusDeploymentConfigFromNameSpace)
     router.DELETE("/deploymentconfig/:namesapce/:name",dep.DeleteDeploymentConfigFromNameSpace)
     router.DELETE("/deploymentconfig/:namesapce",dep.DeleteAllDeploymentFromNameSpace)
+
+    //v1.ImageStream
+    router.POST("/imagestream",image.CreateImageStream)
+    router.POST("/imagestream/:namespace",image.CreateImageInNameSpace)
+    router.GET("/imagestream/:namespace/:name",image.GetImageFromNameSpace)
+    router.GET("/imagestream",image.GetAllImage)
+    router.GET("/imagestream/:namespace",image.GetAllImageFromNameSpace)
+    router.GET("/secrets/imagestream/:namespace/:name",image.GetSecretsImageFromNameSpace)
+    router.GET("/status/imagestream/:namespace/:name",image.GetStatusImageFromNameSpace)
+    router.GET("/watch/imagestream/:namespace/:name",image.WatchImageFromNameSpace)
+    router.GET("/watch/imagestream",image.WatchAllImage)
+    router.GET("/watch/imagestream/:namespace",image.WatchAllImageFromNameSpace)
+    router.PUT("/imagestream/:namespace/:name",image.UpdataImageFromNameSpace)
+    router.PUT("/status/imagestream/:namespace/:name",image.UpdataStatusImageFromNameSpace)
+    router.PATCH("/imagestream/:namespace/:name",image.PatchImageFromNameSpace)
+    router.PATCH("/status/imagestream/:namespace/:name",image.PatchStatusImageFromNameSpace)
+    router.DELETE("/imagestream/:namespace/:name",image.DeleteImageFromNameSpace)
+    router.DELETE("/imagestream/:namespace",image.DeleteAllImageFromNameSpace)
+
+    //v1.ImageStreamImport
+    router.POST("/imagestreamimport",imagestreamimport.CreateImageStreamImport)
+    router.POST("/imagestreamimprot/:namespace",imagestreamimport.CreateImageStreamImportInNameSpace)
+
+    //v1.ImageStreamTag
+    router.POST("/imagestreamtag",tag.CreateImageStreamTag)
+    router.POST("/imagestreamtag/:namespace",tag.CreateImageTagInNameSpace)
+    router.GET("/imagestreamtag/:namespace/:name",tag.GetImageTagFromNameSpace)
+    router.GET("/imagestreamtag",tag.GetAllImageTag)
+    router.GET("/imagestreamtag/:namespace",tag.GetAllImageTagFromNameSpace)
+    router.PUT("/imagestreamtag/:namespace/:name",tag.UpdataImageTagFromNameSpace)
+    router.PATCH("/imagestreamtag/:namespace/:name",tag.PatchImageTagFromNameSpace)
+    router.DELETE("/imagestreamtag/:namespace/:name",tag.DeleteImageTagFromNameSpace)
+    router.DELETE("/imagestreamtag/:namespace",tag.DeleteAllImageTagFromNameSpace)
 
     //v1.NetNamespace
     router.POST("/netnamespaces",netnamespace.CreateNetNamespace)

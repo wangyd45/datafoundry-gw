@@ -20,7 +20,7 @@ const (
 var log lager.Logger
 
 //func init(){
-//	log = lager.NewLogger("user.log")
+//	log = lager.NewLogger("V1_User.log")
 //	log.RegisterSink(lager.NewWriterSink(os.Stdout, lager.DEBUG)) //默认日志级别
 //}
 

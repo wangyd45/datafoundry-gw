@@ -24,7 +24,7 @@ func init(){
 	log.RegisterSink(lager.NewWriterSink(os.Stdout, lager.DEBUG)) //默认日志级别
 }
 
-func CreateImageStreamImport(c *gin.Context){
+func CreateISImport(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
@@ -37,7 +37,7 @@ func CreateImageStreamImport(c *gin.Context){
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func CreateImageStreamImportInNameSpace(c *gin.Context){
+func CreateISImportInNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)

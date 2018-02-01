@@ -26,20 +26,20 @@ func init(){
 	log.RegisterSink(lager.NewWriterSink(os.Stdout, lager.DEBUG)) //默认日志级别
 }
 
-func CreateImageStream(c *gin.Context){
+func CreateIS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"POST", IMAGE,token, rBody)
 	if err != nil{
-		log.Error("CreateImageStream error ",err)
+		log.Error("CreateIS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func CreateImageInNameSpace(c *gin.Context){
+func CreateImageInNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
@@ -53,7 +53,7 @@ func CreateImageInNameSpace(c *gin.Context){
 	c.Data(req.StatusCode, JSON , result)
 }
 
-func GetImageFromNameSpace(c *gin.Context){
+func GetImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
@@ -77,51 +77,51 @@ func GetAllImage(c *gin.Context){
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func GetAllImageFromNameSpace(c *gin.Context){
+func GetAllImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET", IMAGENAME+ namespace +IMAGECONFIG,token, []byte{})
 	if err != nil{
-		log.Error("GetAllImageFromNameSpace error ",err)
+		log.Error("GetAllImageFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func GetSecretsImageFromNameSpace(c *gin.Context){
+func GetSecImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET", IMAGENAME+ namespace +IMAGECONFIG+ name + "/secrets",token, []byte{})
 	if err != nil{
-		log.Error("GetSecretsImageFromNameSpace error ",err)
+		log.Error("GetSecImageFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func GetStatusImageFromNameSpace(c *gin.Context){
+func GetStaImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET", IMAGENAME+ namespace +IMAGECONFIG+ name + "/status",token, []byte{})
 	if err != nil{
-		log.Error("GetSecretsImageFromNameSpace error ",err)
+		log.Error("GetSecImageFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func WatchImageFromNameSpace(c *gin.Context){
+func WatchImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET",WATCH + namespace +IMAGECONFIG+ name,token, []byte{})
 	if err != nil{
-		log.Error("WatchImageFromNameSpace error ",err)
+		log.Error("WatchImageFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -139,19 +139,19 @@ func WatchAllImage(c *gin.Context){
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func WatchAllImageFromNameSpace(c *gin.Context){
+func WatchAllImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET",WATCH + namespace +IMAGECONFIG,token, []byte{})
 	if err != nil{
-		log.Error("WatchAllImageFromNameSpace error ",err)
+		log.Error("WatchAllImageFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func UpdataImageFromNameSpace(c *gin.Context){
+func UpdataImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
@@ -159,14 +159,14 @@ func UpdataImageFromNameSpace(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"PUT", IMAGENAME+ namespace +IMAGECONFIG+ name,token, rBody)
 	if err != nil{
-		log.Error("UpdataImageFromNameSpace error ",err)
+		log.Error("UpdataImageFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func UpdataStatusImageFromNameSpace(c *gin.Context){
+func UpdataStaImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
@@ -174,14 +174,14 @@ func UpdataStatusImageFromNameSpace(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"PUT", IMAGENAME+ namespace +IMAGECONFIG+ name + "/status",token, rBody)
 	if err != nil{
-		log.Error("UpdataImageFromNameSpace error ",err)
+		log.Error("UpdataImageFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func PatchImageFromNameSpace(c *gin.Context){
+func PatchImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
@@ -189,14 +189,14 @@ func PatchImageFromNameSpace(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"PATCH", IMAGENAME+ namespace +IMAGECONFIG+ name,token, rBody)
 	if err != nil{
-		log.Error("PatchImageFromNameSpace error ",err)
+		log.Error("PatchImageFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func PatchStatusImageFromNameSpace(c *gin.Context){
+func PatchStaImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
@@ -204,14 +204,14 @@ func PatchStatusImageFromNameSpace(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"PATCH", IMAGENAME+ namespace +IMAGECONFIG+ name + "/status",token, rBody)
 	if err != nil{
-		log.Error("PatchStatusImageFromNameSpace error ",err)
+		log.Error("PatchStaImageFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func DeleteImageFromNameSpace(c *gin.Context){
+func DeleteImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
@@ -226,7 +226,7 @@ func DeleteImageFromNameSpace(c *gin.Context){
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func DeleteAllImageFromNameSpace(c *gin.Context){
+func DeleteAllImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)

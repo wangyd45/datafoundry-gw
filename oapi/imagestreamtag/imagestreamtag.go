@@ -24,34 +24,34 @@ func init(){
 	log.RegisterSink(lager.NewWriterSink(os.Stdout, lager.DEBUG)) //默认日志级别
 }
 
-func CreateImageStreamTag(c *gin.Context){
+func CreateIST(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"POST", IMAGE,token, rBody)
 	if err != nil{
-		log.Error("CreateImageStreamTag error ",err)
+		log.Error("CreateIST error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func CreateImageTagInNameSpace(c *gin.Context){
+func CreateImageTagInNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"POST", IMAGENAME+namespace +IMAGECONFIG,token, rBody)
 	if err != nil{
-		log.Error("CreateImageTagInNameSpace error ",err)
+		log.Error("CreateImageTagInNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON , result)
 }
 
-func GetImageTagFromNameSpace(c *gin.Context){
+func GetImageTagFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
@@ -75,19 +75,19 @@ func GetAllImageTag(c *gin.Context){
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func GetAllImageTagFromNameSpace(c *gin.Context){
+func GetAllImageTagFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET", IMAGENAME+ namespace +IMAGECONFIG,token, []byte{})
 	if err != nil{
-		log.Error("GetAllImageTagFromNameSpace error ",err)
+		log.Error("GetAllImageTagFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func UpdataImageTagFromNameSpace(c *gin.Context){
+func UpdataImageTagFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
@@ -95,14 +95,14 @@ func UpdataImageTagFromNameSpace(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"PUT", IMAGENAME+ namespace +IMAGECONFIG+ name,token, rBody)
 	if err != nil{
-		log.Error("UpdataImageTagFromNameSpace error ",err)
+		log.Error("UpdataImageTagFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func PatchImageTagFromNameSpace(c *gin.Context){
+func PatchImageTagFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
@@ -117,7 +117,7 @@ func PatchImageTagFromNameSpace(c *gin.Context){
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func DeleteImageTagFromNameSpace(c *gin.Context){
+func DeleteImageTagFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)

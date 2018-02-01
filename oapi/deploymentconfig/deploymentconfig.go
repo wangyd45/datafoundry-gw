@@ -26,34 +26,34 @@ func init(){
 	log.RegisterSink(lager.NewWriterSink(os.Stdout, lager.DEBUG)) //默认日志级别
 }
 
-func CreateDeploymentConfig(c *gin.Context){
+func CreateDC(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"POST", DEP,token, rBody)
 	if err != nil{
-		log.Error("CreateDeploymentConfig error ",err)
+		log.Error("CreateDC error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func CreateDeploymentConfigInNameSpace(c *gin.Context){
+func CreateDCInNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"POST", DEPNAME+namespace +DEPCONFIG,token, rBody)
 	if err != nil{
-		log.Error("CreateDeploymentConfigInNameSpace error ",err)
+		log.Error("CreateDCInNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON , result)
 }
 
-func CreateInsInNameSpace(c *gin.Context){
+func CreateInsInNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
@@ -61,14 +61,14 @@ func CreateInsInNameSpace(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"POST", DEPNAME+namespace+DEPCONFIG+ name + INS,token, rBody)
 	if err != nil{
-		log.Error("CreateInsInNameSpace error ",err)
+		log.Error("CreateInsInNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON , result)
 }
 
-func CreateRollBackInNameSpace(c *gin.Context){
+func CreateRollBackInNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
@@ -83,43 +83,43 @@ func CreateRollBackInNameSpace(c *gin.Context){
 	c.Data(req.StatusCode, JSON , result)
 }
 
-func GetDeploymentConfigFromNameSpace(c *gin.Context){
+func GetDCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET", DEPNAME+ namespace +DEPCONFIG+ name,token, []byte{})
 	if err != nil{
-		log.Error("GetDeploymentConfigFromNameSpace error ",err)
+		log.Error("GetDCFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func GetAllDeploymentConfig(c *gin.Context){
+func GetAllDC(c *gin.Context){
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET", DEP,token, []byte{})
 	if err != nil{
-		log.Error("GetAllDeploymentConfig error ",err)
+		log.Error("GetAllDC error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func GetAllDeploymentConfigFromNameSpace(c *gin.Context){
+func GetAllDCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET", DEPNAME+ namespace +DEPCONFIG,token, []byte{})
 	if err != nil{
-		log.Error("GetAllDeploymentConfigFromNameSpace error ",err)
+		log.Error("GetAllDCFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func GetLogDeploymentFromNameSpace(c *gin.Context){
+func GetLogDepFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
@@ -132,69 +132,69 @@ func GetLogDeploymentFromNameSpace(c *gin.Context){
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func GetScaleDeploymentFromNameSpace(c *gin.Context){
+func GetScaleDepFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET",DEPNAME + namespace + DEPCONFIG + name +"/scale",token, []byte{})
 	if err != nil{
-		log.Error("GetScaleDeploymentFromNameSpace error ",err)
+		log.Error("GetScaleDepFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func GetStatusDeploymentFromNameSpace(c *gin.Context){
+func GetStatusDepFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET",DEPNAME + namespace + DEPCONFIG + name +"/status",token, []byte{})
 	if err != nil{
-		log.Error("GetStatusDeploymentFromNameSpace error ",err)
+		log.Error("GetStatusDepFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func WatchDeploymentConfigFromNameSpace(c *gin.Context){
+func WatchDCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET",WATCH + namespace +DEPCONFIG+ name,token, []byte{})
 	if err != nil{
-		log.Error("WatchDeploymentConfigFromNameSpace error ",err)
+		log.Error("WatchDCFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func WatchAllDeploymentConfig(c *gin.Context){
+func WatchAllDC(c *gin.Context){
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET",WATCHALL,token, []byte{})
 	if err != nil{
-		log.Error("WatchAllDeploymentConfig error ",err)
+		log.Error("WatchAllDC error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func WatchAllDeploymentConfigFromNameSpace(c *gin.Context){
+func WatchAllDCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET",WATCH + namespace + DEPCONFIG,token, []byte{})
 	if err != nil{
-		log.Error("WatchAllDeploymentConfigFromNameSpace error ",err)
+		log.Error("WatchAllDCFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func UpdataDeploymentConfigFromNameSpace(c *gin.Context){
+func UpdataDCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
@@ -202,14 +202,14 @@ func UpdataDeploymentConfigFromNameSpace(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"PUT", DEPNAME+ namespace +DEPCONFIG+ name,token, rBody)
 	if err != nil{
-		log.Error("UpdataDeploymentConfigFromNameSpace error ",err)
+		log.Error("UpdataDCFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func UpdataScaleDeploymentConfigFromNameSpace(c *gin.Context){
+func UpdataScaleDCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
@@ -217,14 +217,14 @@ func UpdataScaleDeploymentConfigFromNameSpace(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"PUT", DEPNAME+ namespace +DEPCONFIG+ name + "/scale",token, rBody)
 	if err != nil{
-		log.Error("UpdataDeploymentConfigFromNameSpace error ",err)
+		log.Error("UpdataDCFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func UpdataStatusDeploymentConfigFromNameSpace(c *gin.Context){
+func UpdataStatusDCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
@@ -232,14 +232,14 @@ func UpdataStatusDeploymentConfigFromNameSpace(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"PUT", DEPNAME+ namespace +DEPCONFIG+ name + "/status",token, rBody)
 	if err != nil{
-		log.Error("UpdataDeploymentConfigFromNameSpace error ",err)
+		log.Error("UpdataDCFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func PatchDeploymentConfigFromNameSpace(c *gin.Context){
+func PatchDCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
@@ -254,7 +254,7 @@ func PatchDeploymentConfigFromNameSpace(c *gin.Context){
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func PatchScaleDeploymentConfigFromNameSpace(c *gin.Context){
+func PatchScaleDCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
@@ -262,14 +262,14 @@ func PatchScaleDeploymentConfigFromNameSpace(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"PATCH", DEPNAME+ namespace +DEPCONFIG+ name + "/scale",token, rBody)
 	if err != nil{
-		log.Error("PatchScaleDeploymentConfigFromNameSpace error ",err)
+		log.Error("PatchScaleDCFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func PatchStatusDeploymentConfigFromNameSpace(c *gin.Context){
+func PatchStatusDCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
@@ -277,14 +277,14 @@ func PatchStatusDeploymentConfigFromNameSpace(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"PATCH", DEPNAME+ namespace +DEPCONFIG+ name + "/status",token, rBody)
 	if err != nil{
-		log.Error("PatchScaleDeploymentConfigFromNameSpace error ",err)
+		log.Error("PatchScaleDCFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func DeleteDeploymentConfigFromNameSpace(c *gin.Context){
+func DeleteDCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
@@ -292,21 +292,21 @@ func DeleteDeploymentConfigFromNameSpace(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"DELETE", DEPNAME+ namespace +DEPCONFIG+ name,token, rBody)
 	if err != nil{
-		log.Error("DeleteDeploymentConfigFromNameSpace error ",err)
+		log.Error("DeleteDCFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func DeleteAllDeploymentFromNameSpace(c *gin.Context){
+func DeleteAllDepFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"DELETE", DEPNAME+ namespace +DEPCONFIG,token, rBody)
 	if err != nil{
-		log.Error("DeleteAllDeploymentFromNameSpace error ",err)
+		log.Error("DeleteAllDepFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()

@@ -26,34 +26,34 @@ func init(){
 	log.RegisterSink(lager.NewWriterSink(os.Stdout, lager.DEBUG)) //默认日志级别
 }
 
-func CreateBuildConfig(c *gin.Context){
+func CreateBC(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"POST",BUILD,token, rBody)
 	if err != nil{
-		log.Error("CreateBuildConfig error ",err)
+		log.Error("CreateBC error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func CreateBuildConfigInNameSpace(c *gin.Context){
+func CreateBCInNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"POST",BUILDNAME +namespace + BUILDCONFIG,token, rBody)
 	if err != nil{
-		log.Error("CreateBuildConfigInNameSpace error ",err)
+		log.Error("CreateBCInNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON , result)
 }
 
-func CreateInsInNameSpace(c *gin.Context){
+func CreateInsInNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
@@ -61,14 +61,14 @@ func CreateInsInNameSpace(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"POST",BUILDNAME +namespace+ BUILDCONFIG + name + "/instantiate",token, rBody)
 	if err != nil{
-		log.Error("CreateInsInNameSpace error ",err)
+		log.Error("CreateInsInNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON , result)
 }
 
-func CreateInstInNameSpace(c *gin.Context){
+func CreateInstInNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
@@ -76,14 +76,14 @@ func CreateInstInNameSpace(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"POST",BUILDNAME +namespace+ BUILDCONFIG + name + "/instantiatebinary",token, rBody)
 	if err != nil{
-		log.Error("CreateInstInNameSpace error ",err)
+		log.Error("CreateInstInNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON , result)
 }
 
-func CreateWebInNameSpace(c *gin.Context){
+func CreateWebInNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
@@ -91,14 +91,14 @@ func CreateWebInNameSpace(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"POST",BUILDNAME +namespace+ BUILDCONFIG + name + "/webhooks",token, rBody)
 	if err != nil{
-		log.Error("CreateWebInNameSpace error ",err)
+		log.Error("CreateWebInNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON , result)
 }
 
-func CreateWebInNameSpacePath(c *gin.Context){
+func CreateWebInNSP(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	path := c.Param("path")
@@ -107,86 +107,86 @@ func CreateWebInNameSpacePath(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"POST",BUILDNAME +namespace+ BUILDCONFIG + name + "/webhooks/" + path,token, rBody)
 	if err != nil{
-		log.Error("CreateWebInNameSpacePath error ",err)
+		log.Error("CreateWebInNSP error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON , result)
 }
 
-func GetBuildConfigFromNameSpace(c *gin.Context){
+func GetBCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET",BUILDNAME + namespace + BUILDCONFIG + name,token, []byte{})
 	if err != nil{
-		log.Error("GetBuildConfigFromNameSpace error ",err)
+		log.Error("GetBCFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func GetAllBuildConfig(c *gin.Context){
+func GetAllBC(c *gin.Context){
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET",BUILD,token, []byte{})
 	if err != nil{
-		log.Error("GetAllBuildConfig error ",err)
+		log.Error("GetAllBC error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func GetAllBuildConfigFromNameSpace(c *gin.Context){
+func GetAllBCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET",BUILDNAME + namespace + BUILDCONFIG,token, []byte{})
 	if err != nil{
-		log.Error("GetAllBuildConfigFromNameSpace error ",err)
+		log.Error("GetAllBCFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func WatchBuildConfigFromNameSpace(c *gin.Context){
+func WatchBCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET",WATCH + namespace + BUILDCONFIG + name,token, []byte{})
 	if err != nil{
-		log.Error("WatchBuildConfigFromNameSpace error ",err)
+		log.Error("WatchBCFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func WatchAllBuildConfig(c *gin.Context){
+func WatchAllBC(c *gin.Context){
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET",WATCHALL,token, []byte{})
 	if err != nil{
-		log.Error("WatchAllBuildConfig error ",err)
+		log.Error("WatchAllBC error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func WatchAllBuildConfigFromNameSpace(c *gin.Context){
+func WatchAllBCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
 	req,err := oapi.Request(10,"GET",WATCH + namespace + BUILDCONFIG ,token, []byte{})
 	if err != nil{
-		log.Error("WatchAllBuildConfigFromNameSpace error ",err)
+		log.Error("WatchAllBCFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func UpdataBuildConfigFromNameSpace(c *gin.Context){
+func UpdataBCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
@@ -194,14 +194,14 @@ func UpdataBuildConfigFromNameSpace(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"PUT",BUILDNAME + namespace + BUILDCONFIG + name,token, rBody)
 	if err != nil{
-		log.Error("UpdataBuildConfigFromNameSpace error ",err)
+		log.Error("UpdataBCFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func PatchBuildConfigFromNameSpace(c *gin.Context){
+func PatchBCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
@@ -209,14 +209,14 @@ func PatchBuildConfigFromNameSpace(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"PATCH",BUILDNAME + namespace + BUILDCONFIG + name,token, rBody)
 	if err != nil{
-		log.Error("PatchBuildConfigFromNameSpace error ",err)
+		log.Error("PatchBCFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func DeleteBuildConfigFromNameSpace(c *gin.Context){
+func DeleteBCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
@@ -224,21 +224,21 @@ func DeleteBuildConfigFromNameSpace(c *gin.Context){
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"DELETE",BUILDNAME + namespace + BUILDCONFIG + name,token, rBody)
 	if err != nil{
-		log.Error("DeleteBuildConfigFromNameSpace error ",err)
+		log.Error("DeleteBCFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func DeleteAllBuildFromNameSpace(c *gin.Context){
+func DeleteAllBuildFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
 	req,err := oapi.Request(10,"DELETE",BUILDNAME + namespace + BUILDCONFIG,token, rBody)
 	if err != nil{
-		log.Error("DeleteAllBuildFromNameSpace error ",err)
+		log.Error("DeleteAllBuildFromNS error ",err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()

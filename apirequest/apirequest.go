@@ -7,6 +7,7 @@ import (
 	"bytes"
 	"crypto/tls"
 	"fmt"
+	"net"
 )
 
 
@@ -32,6 +33,29 @@ var httpClientC = &http.Client{
 	Transport: httpClientA.Transport,
 	Timeout:   MaxRequestTimeout,
 }
+
+var httpClientD = &http.Client{
+	Transport: &http.Transport{
+		Proxy: http.ProxyFromEnvironment,
+		DialContext: (&net.Dialer{
+			Timeout:   30 * time.Second,
+			KeepAlive: 30 * time.Second,
+		}).DialContext,
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+		MaxIdleConns:        MaxIdleConns,
+		MaxIdleConnsPerHost: MaxIdleConnsPerHost,
+		IdleConnTimeout:	 time.Duration(IdleConnTimeout)* time.Second,
+	},
+	Timeout: 20 * time.Second,
+}
+
+const (
+	MaxIdleConns int = 100
+	MaxIdleConnsPerHost int = 100
+	IdleConnTimeout int = 90
+)
+
+
 
 func init() {
 	//apiHost = getenv("APIHOST")
@@ -73,14 +97,17 @@ func Request(timeout time.Duration, method, url, token string, body []byte) (*ht
 	}
 	req.Header.Set("Authorization", token)
 
+	//return httpClientD.Do(req)
+
 	switch timeout {
-	case MaxRequestTimeout:
-		return httpClientC.Do(req)
+	case 300:
+		return httpClientD.Do(req)
 	case MinRequestTimeout:
 		return httpClientB.Do(req)
 	default:
 		return httpClientA.Do(req)
 	}
+
 }
 
 

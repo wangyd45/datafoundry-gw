@@ -161,7 +161,7 @@ func handle() (router *gin.Engine) {
 
 	//v1.ImageStreamImport IS -> ImageStream NS -> NameSpace
 	router.POST("/imagestreamimport", imagestreamimport.CreateISImport)
-	router.POST("/imagestreamimprot/:namespace", imagestreamimport.CreateISImportInNS)
+	router.POST("/imagestreamimport/:namespace", imagestreamimport.CreateISImportInNS)
 
 	//v1.ImageStreamTag IST -> ImageStreamTag NS -> NameSpace
 	router.POST("/imagestreamtag", tag.CreateIST)

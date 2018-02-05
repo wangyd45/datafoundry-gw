@@ -143,7 +143,7 @@ func WatchAllBuilds(c *gin.Context) {
 func WatchAllBuildFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
-	req, err := oapi.Request(10, "GET", WATCH+namespace+"/builds", token, []byte{})
+	req, err := oapi.Request(0, "GET", WATCH+namespace+"/builds", token, []byte{})
 	if err != nil {
 		log.Error("WatchAllBuildFromNS error ", err)
 	}

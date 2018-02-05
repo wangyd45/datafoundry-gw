@@ -38,15 +38,15 @@ var httpClientD = &http.Client{
 	Transport: &http.Transport{
 		Proxy: http.ProxyFromEnvironment,
 		DialContext: (&net.Dialer{
-			Timeout:   30 * time.Second,
-			KeepAlive: 30 * time.Second,
+			Timeout:   0 * time.Second,
+			KeepAlive: 300 * time.Second,
 		}).DialContext,
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 		MaxIdleConns:        MaxIdleConns,
 		MaxIdleConnsPerHost: MaxIdleConnsPerHost,
 		IdleConnTimeout:	 time.Duration(IdleConnTimeout)* time.Second,
 	},
-	Timeout: 20 * time.Second,
+	Timeout: 300 * time.Second,
 }
 
 const (

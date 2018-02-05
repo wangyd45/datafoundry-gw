@@ -154,7 +154,7 @@ func WatchBCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET",WATCH + namespace + BUILDCONFIG + name,token, []byte{})
+	req,err := oapi.Request(300,"GET",WATCH + namespace + BUILDCONFIG + name,token, []byte{})
 	if err != nil{
 		log.Error("WatchBCFromNS error ",err)
 	}
@@ -165,7 +165,7 @@ func WatchBCFromNS(c *gin.Context){
 
 func WatchAllBC(c *gin.Context){
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET",WATCHALL,token, []byte{})
+	req,err := oapi.Request(300,"GET",WATCHALL,token, []byte{})
 	if err != nil{
 		log.Error("WatchAllBC error ",err)
 	}
@@ -177,7 +177,7 @@ func WatchAllBC(c *gin.Context){
 func WatchAllBCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET",WATCH + namespace + BUILDCONFIG ,token, []byte{})
+	req,err := oapi.Request(300,"GET",WATCH + namespace + BUILDCONFIG ,token, []byte{})
 	if err != nil{
 		log.Error("WatchAllBCFromNS error ",err)
 	}

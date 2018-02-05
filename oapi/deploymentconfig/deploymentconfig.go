@@ -162,7 +162,7 @@ func WatchDCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET",WATCH + namespace +DEPCONFIG+ name,token, []byte{})
+	req,err := oapi.Request(300,"GET",WATCH + namespace +DEPCONFIG+ name,token, []byte{})
 	if err != nil{
 		log.Error("WatchDCFromNS error ",err)
 	}
@@ -173,7 +173,7 @@ func WatchDCFromNS(c *gin.Context){
 
 func WatchAllDC(c *gin.Context){
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET",WATCHALL,token, []byte{})
+	req,err := oapi.Request(300,"GET",WATCHALL,token, []byte{})
 	if err != nil{
 		log.Error("WatchAllDC error ",err)
 	}
@@ -185,7 +185,7 @@ func WatchAllDC(c *gin.Context){
 func WatchAllDCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET",WATCH + namespace + DEPCONFIG,token, []byte{})
+	req,err := oapi.Request(300,"GET",WATCH + namespace + DEPCONFIG,token, []byte{})
 	if err != nil{
 		log.Error("WatchAllDCFromNS error ",err)
 	}

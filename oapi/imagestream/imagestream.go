@@ -119,7 +119,7 @@ func WatchImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET",WATCH + namespace +IMAGECONFIG+ name,token, []byte{})
+	req,err := oapi.Request(300,"GET",WATCH + namespace +IMAGECONFIG+ name,token, []byte{})
 	if err != nil{
 		log.Error("WatchImageFromNS error ",err)
 	}
@@ -130,7 +130,7 @@ func WatchImageFromNS(c *gin.Context){
 
 func WatchAllImage(c *gin.Context){
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET",WATCHALL,token, []byte{})
+	req,err := oapi.Request(300,"GET",WATCHALL,token, []byte{})
 	if err != nil{
 		log.Error("WatchAllImage error ",err)
 	}
@@ -142,7 +142,7 @@ func WatchAllImage(c *gin.Context){
 func WatchAllImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET",WATCH + namespace +IMAGECONFIG,token, []byte{})
+	req,err := oapi.Request(300,"GET",WATCH + namespace +IMAGECONFIG,token, []byte{})
 	if err != nil{
 		log.Error("WatchAllImageFromNS error ",err)
 	}

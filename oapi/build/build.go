@@ -120,7 +120,7 @@ func WatchBuildFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	req, err := oapi.Request(10, "GET", WATCH+namespace+"/builds"+name, token, []byte{})
+	req, err := oapi.Request(300, "GET", WATCH+namespace+"/builds"+name, token, []byte{})
 	if err != nil {
 		log.Error("WatchBuildFromNS error ", err)
 	}
@@ -131,7 +131,7 @@ func WatchBuildFromNS(c *gin.Context) {
 
 func WatchAllBuilds(c *gin.Context) {
 	token := pkg.GetToken(c)
-	req, err := oapi.Request(10, "GET", WATCHALL, token, []byte{})
+	req, err := oapi.Request(300, "GET", WATCHALL, token, []byte{})
 	if err != nil {
 		log.Error("WatchAllBuilds error ", err)
 	}
@@ -143,7 +143,7 @@ func WatchAllBuilds(c *gin.Context) {
 func WatchAllBuildFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
-	req, err := oapi.Request(0, "GET", WATCH+namespace+"/builds", token, []byte{})
+	req, err := oapi.Request(300, "GET", WATCH+namespace+"/builds", token, []byte{})
 	if err != nil {
 		log.Error("WatchAllBuildFromNS error ", err)
 	}

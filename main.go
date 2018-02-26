@@ -83,9 +83,9 @@ func handle() (router *gin.Engine) {
 	router.GET("/projects/:name", project.GetProject)
 	router.GET("/projects", project.GetAllProjects)
 	router.GET("/watch/projects/:name",project.WatchAProject)
-	//router.GET("/watch/projects",project.WatchAllProjects)
+	router.GET("/watch/projects",project.WatchAllProjects)
 	router.PUT("/projects/:name", project.UpdateProject)
-	//router.PATCH("/projects/:name",project.PatchAProject)
+	router.PATCH("/projects/:name",project.PatchAProject)
 	router.DELETE("/projects/:name", project.DeleteProject)
 
 	//v1.Build NS -> NameSpace

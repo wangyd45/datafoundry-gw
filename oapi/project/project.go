@@ -9,6 +9,7 @@ import (
 	oapi "github.com/asiainfoLDP/datafoundry-gw/apirequest"
 
 	"fmt"
+	"net/http"
 )
 
 var logger lager.Logger
@@ -25,7 +26,7 @@ func CreateProject(c *gin.Context){
 	//获取前端参数
 	rBody,_ := ioutil.ReadAll(c.Request.Body)
 	//调用原生接口
-	req,err := oapi.Request(10,"POST","/oapi/v1/projectrequests",token,rBody)
+	req,err := oapi.GenRequest("POST","/oapi/v1/projectrequests",token,rBody)
 	if err != nil{
 		logger.Error("Create A Project Fail",err)
 	}
@@ -39,7 +40,7 @@ func CreateProject(c *gin.Context){
 func GetProject(c *gin.Context){
 	token := pkg.GetToken(c)
 	name := c.Param("name")
-	req,err := oapi.Request(10,"GET","/oapi/v1/projects/"+name,token,nil)
+	req,err := oapi.GenRequest("GET","/oapi/v1/projects/"+name,token,nil)
 	if err != nil{
 		logger.Error("Get A Project Fail",err)
 	}
@@ -51,7 +52,7 @@ func GetProject(c *gin.Context){
 //获取project列表-OK
 func GetAllProjects(c *gin.Context){
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET","/oapi/v1/projects",token,nil)
+	req,err := oapi.GenRequest("GET","/oapi/v1/projects",token,nil)
 	if err != nil{
 		logger.Error("Get All Projects Fail",err)
 	}
@@ -62,44 +63,24 @@ func GetAllProjects(c *gin.Context){
 
 func WatchAProject(c *gin.Context) {
 
-
 	token := pkg.GetToken(c)
 	name := c.Param("name")
-	req,err := oapi.Request(10,"GET","/oapi/v1/watch/projects/"+name,token,nil)
-	if err != nil{
-		logger.Error("Watch A Project Fail",err)
-	}
-	result, _:= ioutil.ReadAll(req.Body)
-	fmt.Println("----------",string(result))
-	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
-
-
+	oapi.WSRequest("/oapi/v1/watch/projects/"+name,token,c.Writer,c.Request)
 }
 
 
-//func sendResult(status int,c *gin.Context,result []byte){
-//	c.Data(status, "application/json",result)
-//}
-/*
 func WatchAllProjects(c *gin.Context){
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET","/oapi/v1/watch/projects",token,nil)
-	if err != nil{
-		fmt.Println("Watch All Project Fail",err)
-	}
-	result, _:= ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.JSON(http.StatusOK, gin.H{"result": result})
+	oapi.WSRequest("/oapi/v1/watch/projects",token,c.Writer,c.Request)
 }
-*/
+
 
 //更新project
 func UpdateProject(c *gin.Context){
 	token := pkg.GetToken(c)
 	name := c.Param("name")
 	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.Request(10,"PUT","/oapi/v1/projects/"+name,token,rBody)
+	req,err := oapi.GenRequest("PUT","/oapi/v1/projects/"+name,token,rBody)
 	if err != nil{
 		logger.Error("Update A Project Fail",err)
 	}
@@ -107,12 +88,12 @@ func UpdateProject(c *gin.Context){
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
 }
-/*
+
 func PatchAProject(c *gin.Context){
 	token := pkg.GetToken(c)
 	name := c.Param("name")
 	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.Request(10,"PATCH","/oapi/v1/projects"+name,token,rBody)
+	req,err := oapi.GenRequest("PATCH","/oapi/v1/projects"+name,token,rBody)
 	if err != nil{
 		fmt.Println("Patch A Project :%s Fail",name,err)
 	}
@@ -120,13 +101,12 @@ func PatchAProject(c *gin.Context){
 	defer req.Body.Close()
 	c.JSON(http.StatusOK, gin.H{"result": result})
 }
-*/
 
 //删除project-OK
 func DeleteProject(c *gin.Context){
 	token := pkg.GetToken(c)
 	name := c.Param("name")
-	req,err := oapi.Request(10,"DELETE","/oapi/v1/projects/"+name,token,nil)
+	req,err := oapi.GenRequest("DELETE","/oapi/v1/projects/"+name,token,nil)
 	if err != nil{
 		logger.Error("Delete A Project Fail",err)
 	}

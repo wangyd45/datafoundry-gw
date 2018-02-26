@@ -30,7 +30,7 @@ func CreateDC(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"POST", DEP,token, rBody)
+	req,err := oapi.GenRequest("POST", DEP,token, rBody)
 	if err != nil{
 		log.Error("CreateDC error ",err)
 	}
@@ -44,7 +44,7 @@ func CreateDCInNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"POST", DEPNAME+namespace +DEPCONFIG,token, rBody)
+	req,err := oapi.GenRequest("POST", DEPNAME+namespace +DEPCONFIG,token, rBody)
 	if err != nil{
 		log.Error("CreateDCInNS error ",err)
 	}
@@ -59,7 +59,7 @@ func CreateInsInNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"POST", DEPNAME+namespace+DEPCONFIG+ name + INS,token, rBody)
+	req,err := oapi.GenRequest("POST", DEPNAME+namespace+DEPCONFIG+ name + INS,token, rBody)
 	if err != nil{
 		log.Error("CreateInsInNS error ",err)
 	}
@@ -74,7 +74,7 @@ func CreateRollBackInNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"POST", DEPNAME+namespace+DEPCONFIG+ name + "/rollback",token, rBody)
+	req,err := oapi.GenRequest("POST", DEPNAME+namespace+DEPCONFIG+ name + "/rollback",token, rBody)
 	if err != nil{
 		log.Error("CreateInstInNameSpace error ",err)
 	}
@@ -87,7 +87,7 @@ func GetDCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET", DEPNAME+ namespace +DEPCONFIG+ name,token, []byte{})
+	req,err := oapi.GenRequest("GET", DEPNAME+ namespace +DEPCONFIG+ name,token, []byte{})
 	if err != nil{
 		log.Error("GetDCFromNS error ",err)
 	}
@@ -98,7 +98,7 @@ func GetDCFromNS(c *gin.Context){
 
 func GetAllDC(c *gin.Context){
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET", DEP,token, []byte{})
+	req,err := oapi.GenRequest("GET", DEP,token, []byte{})
 	if err != nil{
 		log.Error("GetAllDC error ",err)
 	}
@@ -110,7 +110,7 @@ func GetAllDC(c *gin.Context){
 func GetAllDCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET", DEPNAME+ namespace +DEPCONFIG,token, []byte{})
+	req,err := oapi.GenRequest("GET", DEPNAME+ namespace +DEPCONFIG,token, []byte{})
 	if err != nil{
 		log.Error("GetAllDCFromNS error ",err)
 	}
@@ -123,7 +123,7 @@ func GetLogDepFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET",DEPNAME + namespace + DEPCONFIG + name +"/log",token, []byte{})
+	req,err := oapi.GenRequest("GET",DEPNAME + namespace + DEPCONFIG + name +"/log",token, []byte{})
 	if err != nil{
 		log.Error("GetLogBuildFromNameSpace error ",err)
 	}
@@ -136,7 +136,7 @@ func GetScaleDepFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET",DEPNAME + namespace + DEPCONFIG + name +"/scale",token, []byte{})
+	req,err := oapi.GenRequest("GET",DEPNAME + namespace + DEPCONFIG + name +"/scale",token, []byte{})
 	if err != nil{
 		log.Error("GetScaleDepFromNS error ",err)
 	}
@@ -149,7 +149,7 @@ func GetStatusDepFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET",DEPNAME + namespace + DEPCONFIG + name +"/status",token, []byte{})
+	req,err := oapi.GenRequest("GET",DEPNAME + namespace + DEPCONFIG + name +"/status",token, []byte{})
 	if err != nil{
 		log.Error("GetStatusDepFromNS error ",err)
 	}
@@ -162,36 +162,18 @@ func WatchDCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(300,"GET",WATCH + namespace +DEPCONFIG+ name,token, []byte{})
-	if err != nil{
-		log.Error("WatchDCFromNS error ",err)
-	}
-	result, _:= ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, JSON, result)
+	oapi.WSRequest(WATCH + namespace +DEPCONFIG+ name, token, c.Writer,c.Request)
 }
 
 func WatchAllDC(c *gin.Context){
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(300,"GET",WATCHALL,token, []byte{})
-	if err != nil{
-		log.Error("WatchAllDC error ",err)
-	}
-	result, _:= ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, JSON, result)
+	oapi.WSRequest(WATCHALL, token, c.Writer,c.Request)
 }
 
 func WatchAllDCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(300,"GET",WATCH + namespace + DEPCONFIG,token, []byte{})
-	if err != nil{
-		log.Error("WatchAllDCFromNS error ",err)
-	}
-	result, _:= ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, JSON, result)
+	oapi.WSRequest(WATCH + namespace + DEPCONFIG, token, c.Writer,c.Request)
 }
 
 func UpdataDCFromNS(c *gin.Context){
@@ -200,7 +182,7 @@ func UpdataDCFromNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"PUT", DEPNAME+ namespace +DEPCONFIG+ name,token, rBody)
+	req,err := oapi.GenRequest("PUT", DEPNAME+ namespace +DEPCONFIG+ name,token, rBody)
 	if err != nil{
 		log.Error("UpdataDCFromNS error ",err)
 	}
@@ -215,7 +197,7 @@ func UpdataScaleDCFromNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"PUT", DEPNAME+ namespace +DEPCONFIG+ name + "/scale",token, rBody)
+	req,err := oapi.GenRequest("PUT", DEPNAME+ namespace +DEPCONFIG+ name + "/scale",token, rBody)
 	if err != nil{
 		log.Error("UpdataDCFromNS error ",err)
 	}
@@ -230,7 +212,7 @@ func UpdataStatusDCFromNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"PUT", DEPNAME+ namespace +DEPCONFIG+ name + "/status",token, rBody)
+	req,err := oapi.GenRequest("PUT", DEPNAME+ namespace +DEPCONFIG+ name + "/status",token, rBody)
 	if err != nil{
 		log.Error("UpdataDCFromNS error ",err)
 	}
@@ -245,7 +227,7 @@ func PatchDCFromNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"PATCH", DEPNAME+ namespace +DEPCONFIG+ name,token, rBody)
+	req,err := oapi.GenRequest("PATCH", DEPNAME+ namespace +DEPCONFIG+ name,token, rBody)
 	if err != nil{
 		log.Error("PatchDeploymentdConfigFromNameSpace error ",err)
 	}
@@ -260,7 +242,7 @@ func PatchScaleDCFromNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"PATCH", DEPNAME+ namespace +DEPCONFIG+ name + "/scale",token, rBody)
+	req,err := oapi.GenRequest("PATCH", DEPNAME+ namespace +DEPCONFIG+ name + "/scale",token, rBody)
 	if err != nil{
 		log.Error("PatchScaleDCFromNS error ",err)
 	}
@@ -275,7 +257,7 @@ func PatchStatusDCFromNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"PATCH", DEPNAME+ namespace +DEPCONFIG+ name + "/status",token, rBody)
+	req,err := oapi.GenRequest("PATCH", DEPNAME+ namespace +DEPCONFIG+ name + "/status",token, rBody)
 	if err != nil{
 		log.Error("PatchScaleDCFromNS error ",err)
 	}
@@ -290,7 +272,7 @@ func DeleteDCFromNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"DELETE", DEPNAME+ namespace +DEPCONFIG+ name,token, rBody)
+	req,err := oapi.GenRequest("DELETE", DEPNAME+ namespace +DEPCONFIG+ name,token, rBody)
 	if err != nil{
 		log.Error("DeleteDCFromNS error ",err)
 	}
@@ -304,7 +286,7 @@ func DeleteAllDepFromNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"DELETE", DEPNAME+ namespace +DEPCONFIG,token, rBody)
+	req,err := oapi.GenRequest("DELETE", DEPNAME+ namespace +DEPCONFIG,token, rBody)
 	if err != nil{
 		log.Error("DeleteAllDepFromNS error ",err)
 	}

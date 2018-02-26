@@ -28,7 +28,7 @@ func CreateIST(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"POST", IMAGE,token, rBody)
+	req,err := oapi.GenRequest("POST", IMAGE,token, rBody)
 	if err != nil{
 		log.Error("CreateIST error ",err)
 	}
@@ -42,7 +42,7 @@ func CreateImageTagInNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"POST", IMAGENAME+namespace +IMAGECONFIG,token, rBody)
+	req,err := oapi.GenRequest("POST", IMAGENAME+namespace +IMAGECONFIG,token, rBody)
 	if err != nil{
 		log.Error("CreateImageTagInNS error ",err)
 	}
@@ -55,7 +55,7 @@ func GetImageTagFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET", IMAGENAME+ namespace +IMAGECONFIG+ name,token, []byte{})
+	req,err := oapi.GenRequest("GET", IMAGENAME+ namespace +IMAGECONFIG+ name,token, []byte{})
 	if err != nil{
 		log.Error("GetBuildConfigFromNameSpace error ",err)
 	}
@@ -66,7 +66,7 @@ func GetImageTagFromNS(c *gin.Context){
 
 func GetAllImageTag(c *gin.Context){
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET", IMAGE,token, []byte{})
+	req,err := oapi.GenRequest("GET", IMAGE,token, []byte{})
 	if err != nil{
 		log.Error("GetAllImageTag error ",err)
 	}
@@ -78,7 +78,7 @@ func GetAllImageTag(c *gin.Context){
 func GetAllImageTagFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET", IMAGENAME+ namespace +IMAGECONFIG,token, []byte{})
+	req,err := oapi.GenRequest("GET", IMAGENAME+ namespace +IMAGECONFIG,token, []byte{})
 	if err != nil{
 		log.Error("GetAllImageTagFromNS error ",err)
 	}
@@ -93,7 +93,7 @@ func UpdataImageTagFromNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"PUT", IMAGENAME+ namespace +IMAGECONFIG+ name,token, rBody)
+	req,err := oapi.GenRequest("PUT", IMAGENAME+ namespace +IMAGECONFIG+ name,token, rBody)
 	if err != nil{
 		log.Error("UpdataImageTagFromNS error ",err)
 	}
@@ -108,7 +108,7 @@ func PatchImageTagFromNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"PATCH", IMAGENAME+ namespace +IMAGECONFIG+ name,token, rBody)
+	req,err := oapi.GenRequest("PATCH", IMAGENAME+ namespace +IMAGECONFIG+ name,token, rBody)
 	if err != nil{
 		log.Error("PatchImageFromNameSpace error ",err)
 	}
@@ -123,7 +123,7 @@ func DeleteImageTagFromNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"DELETE", IMAGENAME+ namespace +IMAGECONFIG+ name,token, rBody)
+	req,err := oapi.GenRequest("DELETE", IMAGENAME+ namespace +IMAGECONFIG+ name,token, rBody)
 	if err != nil{
 		log.Error("DeleteImagegFromNameSpace error ",err)
 	}

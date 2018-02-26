@@ -29,7 +29,7 @@ func CreateBuild(c *gin.Context) {
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req, err := oapi.Request(10, "POST", BUILD, token, rBody)
+	req, err := oapi.GenRequest("POST", BUILD, token, rBody)
 	if err != nil {
 		log.Error("CreateBuild error ", err)
 	}
@@ -43,7 +43,7 @@ func CreateBuildInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req, err := oapi.Request(10, "POST", BUILDNAME+namespace+"/builds", token, rBody)
+	req, err := oapi.GenRequest("POST", BUILDNAME+namespace+"/builds", token, rBody)
 	if err != nil {
 		log.Error("CreateBuildInNS error ", err)
 	}
@@ -58,7 +58,7 @@ func CreateCloneInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req, err := oapi.Request(10, "POST", BUILDNAME+namespace+"/builds/"+name+"/clone", token, rBody)
+	req, err := oapi.GenRequest("POST", BUILDNAME+namespace+"/builds/"+name+"/clone", token, rBody)
 	if err != nil {
 		log.Error("CreateCloneInNS error ", err)
 	}
@@ -71,7 +71,7 @@ func GetBuildFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	req, err := oapi.Request(10, "GET", BUILDNAME+namespace+"/builds/"+name, token, []byte{})
+	req, err := oapi.GenRequest("GET", BUILDNAME+namespace+"/builds/"+name, token, []byte{})
 	if err != nil {
 		log.Error("GetBuildFromNS error ", err)
 	}
@@ -82,7 +82,7 @@ func GetBuildFromNS(c *gin.Context) {
 
 func GetAllBuilds(c *gin.Context) {
 	token := pkg.GetToken(c)
-	req, err := oapi.Request(10, "GET", BUILD, token, []byte{})
+	req, err := oapi.GenRequest("GET", BUILD, token, []byte{})
 	if err != nil {
 		log.Error("GetAllBuilds error ", err)
 	}
@@ -94,7 +94,7 @@ func GetAllBuilds(c *gin.Context) {
 func GetAllBuildFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
-	req, err := oapi.Request(10, "GET", BUILDNAME+namespace+"/builds", token, []byte{})
+	req, err := oapi.GenRequest("GET", BUILDNAME+namespace+"/builds", token, []byte{})
 	if err != nil {
 		log.Error("GetAllBuildFromNS error ", err)
 	}
@@ -107,7 +107,7 @@ func GetLogBuildFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	req, err := oapi.Request(10, "GET", BUILDNAME+namespace+"/builds/"+name+"/log", token, []byte{})
+	req, err := oapi.GenRequest( "GET", BUILDNAME+namespace+"/builds/"+name+"/log", token, []byte{})
 	if err != nil {
 		log.Error("GetLogBuildFromNS error ", err)
 	}
@@ -120,36 +120,18 @@ func WatchBuildFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	req, err := oapi.Request(300, "GET", WATCH+namespace+"/builds"+name, token, []byte{})
-	if err != nil {
-		log.Error("WatchBuildFromNS error ", err)
-	}
-	result, _ := ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, JSON, result)
+	oapi.WSRequest(WATCH+namespace+"/builds"+name,token,c.Writer,c.Request)
 }
 
 func WatchAllBuilds(c *gin.Context) {
 	token := pkg.GetToken(c)
-	req, err := oapi.Request(300, "GET", WATCHALL, token, []byte{})
-	if err != nil {
-		log.Error("WatchAllBuilds error ", err)
-	}
-	result, _ := ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, JSON, result)
+	oapi.WSRequest(WATCHALL,token,c.Writer,c.Request)
 }
 
 func WatchAllBuildFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
-	req, err := oapi.Request(300, "GET", WATCH+namespace+"/builds", token, []byte{})
-	if err != nil {
-		log.Error("WatchAllBuildFromNS error ", err)
-	}
-	result, _ := ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, JSON, result)
+	oapi.WSRequest(WATCH+namespace+"/builds", token, c.Writer,c.Request)
 }
 
 func UpdataBuildFromNS(c *gin.Context) {
@@ -158,7 +140,7 @@ func UpdataBuildFromNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req, err := oapi.Request(10, "PUT", BUILDNAME+namespace+"/builds"+name, token, rBody)
+	req, err := oapi.GenRequest("PUT", BUILDNAME+namespace+"/builds"+name, token, rBody)
 	if err != nil {
 		log.Error("UpdataBuildFromNS error ", err)
 	}
@@ -173,7 +155,7 @@ func UpdataDetailsInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req, err := oapi.Request(10, "PUT", BUILDNAME+namespace+"/builds/"+name+"/details", token, rBody)
+	req, err := oapi.GenRequest("PUT", BUILDNAME+namespace+"/builds/"+name+"/details", token, rBody)
 	if err != nil {
 		log.Error("UpdataDetailsInNS error ", err)
 	}
@@ -188,7 +170,7 @@ func PatchBuildFromNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req, err := oapi.Request(10, "PATCH", BUILDNAME+namespace+"/builds"+name, token, rBody)
+	req, err := oapi.GenRequest("PATCH", BUILDNAME+namespace+"/builds"+name, token, rBody)
 	if err != nil {
 		log.Error("PatchBuildFromNS error ", err)
 	}
@@ -203,7 +185,7 @@ func DeleteBuildFromNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req, err := oapi.Request(10, "DELETE", BUILDNAME+namespace+"/builds"+name, token, rBody)
+	req, err := oapi.GenRequest( "DELETE", BUILDNAME+namespace+"/builds"+name, token, rBody)
 	if err != nil {
 		log.Error("DeleteBuildFromNS error ", err)
 	}
@@ -217,7 +199,7 @@ func DeleteAllBuildFromNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req, err := oapi.Request(10, "DELETE", BUILDNAME+namespace+"/builds", token, rBody)
+	req, err := oapi.GenRequest("DELETE", BUILDNAME+namespace+"/builds", token, rBody)
 	if err != nil {
 		log.Error("DeleteAllBuildFromNS error ", err)
 	}

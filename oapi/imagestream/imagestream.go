@@ -30,7 +30,7 @@ func CreateIS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"POST", IMAGE,token, rBody)
+	req,err := oapi.GenRequest("POST", IMAGE,token, rBody)
 	if err != nil{
 		log.Error("CreateIS error ",err)
 	}
@@ -44,7 +44,7 @@ func CreateImageInNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"POST", IMAGENAME+namespace +IMAGECONFIG,token, rBody)
+	req,err := oapi.GenRequest("POST", IMAGENAME+namespace +IMAGECONFIG,token, rBody)
 	if err != nil{
 		log.Error("CreateBuildConfigInNameSpace error ",err)
 	}
@@ -57,7 +57,7 @@ func GetImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET", IMAGENAME+ namespace +IMAGECONFIG+ name,token, []byte{})
+	req,err := oapi.GenRequest("GET", IMAGENAME+ namespace +IMAGECONFIG+ name,token, []byte{})
 	if err != nil{
 		log.Error("GetBuildConfigFromNameSpace error ",err)
 	}
@@ -68,7 +68,7 @@ func GetImageFromNS(c *gin.Context){
 
 func GetAllImage(c *gin.Context){
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET", IMAGE,token, []byte{})
+	req,err := oapi.GenRequest("GET", IMAGE,token, []byte{})
 	if err != nil{
 		log.Error("GetAllBuildConfig error ",err)
 	}
@@ -80,7 +80,7 @@ func GetAllImage(c *gin.Context){
 func GetAllImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET", IMAGENAME+ namespace +IMAGECONFIG,token, []byte{})
+	req,err := oapi.GenRequest("GET", IMAGENAME+ namespace +IMAGECONFIG,token, []byte{})
 	if err != nil{
 		log.Error("GetAllImageFromNS error ",err)
 	}
@@ -93,7 +93,7 @@ func GetSecImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET", IMAGENAME+ namespace +IMAGECONFIG+ name + "/secrets",token, []byte{})
+	req,err := oapi.GenRequest("GET", IMAGENAME+ namespace +IMAGECONFIG+ name + "/secrets",token, []byte{})
 	if err != nil{
 		log.Error("GetSecImageFromNS error ",err)
 	}
@@ -106,7 +106,7 @@ func GetStaImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET", IMAGENAME+ namespace +IMAGECONFIG+ name + "/status",token, []byte{})
+	req,err := oapi.GenRequest("GET", IMAGENAME+ namespace +IMAGECONFIG+ name + "/status",token, []byte{})
 	if err != nil{
 		log.Error("GetSecImageFromNS error ",err)
 	}
@@ -119,36 +119,18 @@ func WatchImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(300,"GET",WATCH + namespace +IMAGECONFIG+ name,token, []byte{})
-	if err != nil{
-		log.Error("WatchImageFromNS error ",err)
-	}
-	result, _:= ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, JSON, result)
+	oapi.WSRequest(WATCH + namespace +IMAGECONFIG+ name, token, c.Writer,c.Request)
 }
 
 func WatchAllImage(c *gin.Context){
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(300,"GET",WATCHALL,token, []byte{})
-	if err != nil{
-		log.Error("WatchAllImage error ",err)
-	}
-	result, _:= ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, JSON, result)
+	oapi.WSRequest(WATCHALL, token, c.Writer,c.Request)
 }
 
 func WatchAllImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(300,"GET",WATCH + namespace +IMAGECONFIG,token, []byte{})
-	if err != nil{
-		log.Error("WatchAllImageFromNS error ",err)
-	}
-	result, _:= ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, JSON, result)
+	oapi.WSRequest(WATCH + namespace +IMAGECONFIG, token, c.Writer,c.Request)
 }
 
 func UpdataImageFromNS(c *gin.Context){
@@ -157,7 +139,7 @@ func UpdataImageFromNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"PUT", IMAGENAME+ namespace +IMAGECONFIG+ name,token, rBody)
+	req,err := oapi.GenRequest("PUT", IMAGENAME+ namespace +IMAGECONFIG+ name,token, rBody)
 	if err != nil{
 		log.Error("UpdataImageFromNS error ",err)
 	}
@@ -172,7 +154,7 @@ func UpdataStaImageFromNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"PUT", IMAGENAME+ namespace +IMAGECONFIG+ name + "/status",token, rBody)
+	req,err := oapi.GenRequest("PUT", IMAGENAME+ namespace +IMAGECONFIG+ name + "/status",token, rBody)
 	if err != nil{
 		log.Error("UpdataImageFromNS error ",err)
 	}
@@ -187,7 +169,7 @@ func PatchImageFromNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"PATCH", IMAGENAME+ namespace +IMAGECONFIG+ name,token, rBody)
+	req,err := oapi.GenRequest("PATCH", IMAGENAME+ namespace +IMAGECONFIG+ name,token, rBody)
 	if err != nil{
 		log.Error("PatchImageFromNS error ",err)
 	}
@@ -202,7 +184,7 @@ func PatchStaImageFromNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"PATCH", IMAGENAME+ namespace +IMAGECONFIG+ name + "/status",token, rBody)
+	req,err := oapi.GenRequest("PATCH", IMAGENAME+ namespace +IMAGECONFIG+ name + "/status",token, rBody)
 	if err != nil{
 		log.Error("PatchStaImageFromNS error ",err)
 	}
@@ -217,7 +199,7 @@ func DeleteImageFromNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"DELETE", IMAGENAME+ namespace +IMAGECONFIG+ name,token, rBody)
+	req,err := oapi.GenRequest("DELETE", IMAGENAME+ namespace +IMAGECONFIG+ name,token, rBody)
 	if err != nil{
 		log.Error("DeleteImagegFromNameSpace error ",err)
 	}
@@ -231,7 +213,7 @@ func DeleteAllImageFromNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"DELETE", IMAGENAME+ namespace +IMAGECONFIG,token, rBody)
+	req,err := oapi.GenRequest("DELETE", IMAGENAME+ namespace +IMAGECONFIG,token, rBody)
 	if err != nil{
 		log.Error("DeleteAllBuildFromNameSpace error ",err)
 	}

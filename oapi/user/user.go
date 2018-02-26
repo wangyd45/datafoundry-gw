@@ -69,6 +69,52 @@ func WatchUser(c *gin.Context){
 	oapi.WSRequest(WATCH + name, token, c.Writer,c.Request)
 }
 
+func WatchAllUser(c *gin.Context){
+	token := pkg.GetToken(c)
+	oapi.WSRequest(WATCH , token, c.Writer,c.Request)
+}
+
+//更新用户
+func UpdataUser(c *gin.Context){
+	name := c.Param("name")
+	token := pkg.GetToken(c)
+	rBody, _:= ioutil.ReadAll(c.Request.Body)
+	defer c.Request.Body.Close()
+	req,err := oapi.GenRequest("PUT",USER + name,token,rBody)
+	if err != nil{
+		log.Error("DeleteAllUser error ",err)
+	}
+	result, _:= ioutil.ReadAll(req.Body)
+	defer req.Body.Close()
+	c.Data(http.StatusOK, JSON, result)
+}
+
+func PatchUser(c *gin.Context){
+	token := pkg.GetToken(c)
+	name := c.Param("name")
+	req,err := oapi.GenRequest("PATCH",USER + name,token,[]byte{})
+	if err != nil{
+		log.Error("PatchUser error ",err)
+	}
+	result, _:= ioutil.ReadAll(req.Body)
+	defer req.Body.Close()
+	c.Data(http.StatusOK, JSON, result)
+}
+
+//删除单个用户
+func DeleteUser(c *gin.Context){
+	token := pkg.GetToken(c)
+	name := c.Param("name")
+	req,err := oapi.GenRequest("DELETE",USER + name,token,[]byte{})
+	if err != nil{
+		log.Error("DeleteUser error ",err)
+	}
+	result, _:= ioutil.ReadAll(req.Body)
+	defer req.Body.Close()
+	c.Data(http.StatusOK, JSON, result)
+}
+
+
 //删除所有用户
 func DeleteAllUser(c *gin.Context){
 	token := pkg.GetToken(c)

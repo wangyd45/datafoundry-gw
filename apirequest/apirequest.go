@@ -4,58 +4,26 @@ import (
 	"os"
 	"time"
 	"net/http"
+	"github.com/gorilla/websocket"
 	"bytes"
 	"crypto/tls"
 	"fmt"
-	"net"
 )
 
-
-const (
-	MaxRequestTimeout = time.Duration(30) * time.Second
-	MinRequestTimeout = time.Duration(10) * time.Second
-
-)
 
 var apiHost string
 
-var httpClientA = &http.Client{
+var httpClientB = &http.Client{
 	Transport: &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	},
 	Timeout:   0,
 }
-var httpClientB = &http.Client{
-	Transport: httpClientA.Transport,
-	Timeout:   MinRequestTimeout,
+
+var httpClientG = &http.Client{
+	Transport: httpClientB.Transport,
+	Timeout:   time.Duration(8) * time.Second,
 }
-var httpClientC = &http.Client{
-	Transport: httpClientA.Transport,
-	Timeout:   MaxRequestTimeout,
-}
-
-var httpClientD = &http.Client{
-	Transport: &http.Transport{
-		Proxy: http.ProxyFromEnvironment,
-		DialContext: (&net.Dialer{
-			Timeout:   0 * time.Second,
-			KeepAlive: 300 * time.Second,
-		}).DialContext,
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-		MaxIdleConns:        MaxIdleConns,
-		MaxIdleConnsPerHost: MaxIdleConnsPerHost,
-		IdleConnTimeout:	 time.Duration(IdleConnTimeout)* time.Second,
-	},
-	Timeout: 300 * time.Second,
-}
-
-const (
-	MaxIdleConns int = 100
-	MaxIdleConnsPerHost int = 100
-	IdleConnTimeout int = 90
-)
-
-
 
 func init() {
 	//apiHost = getenv("APIHOST")
@@ -90,22 +58,55 @@ func Request(timeout time.Duration, method, url, token string, body []byte) (*ht
 		return nil, err
 	}
 
-	if method == "PATCH"{
+	if method == "PATCH" {
 		req.Header.Set("Content-Type", "application/json-patch+json")
-	}else{
+	} else {
 		req.Header.Set("Content-Type", "application/json")
 	}
 	req.Header.Set("Authorization", token)
+	//req.Header.Set("Connection", "upgrade")
+	//req.Header.Set("Upgrade", "websocket")
+	//req.Header.Set("Sec-WebSocket-Version","13")
+	//req.Header.Set("Sec-WebSocket-Key", "")
 
-	//return httpClientD.Do(req)
 
-	switch timeout {
-	case 300:
-		return httpClientD.Do(req)
-	case MinRequestTimeout:
-		return httpClientB.Do(req)
-	default:
-		return httpClientA.Do(req)
+	return httpClientG.Do(req)
+
+}
+
+var wsupgraderT = websocket.Upgrader{
+	ReadBufferSize:  2048,
+	WriteBufferSize: 2048,
+}
+
+func wshandlerT(w http.ResponseWriter, r *http.Request) {
+
+	conn, err := wsupgraderT.Upgrade(w, r, nil)
+	if err != nil {
+		fmt.Println("Failed to set websocket upgrade: %+v", err)
+		return
+	}
+
+	url := "https://new.dataos.io:8443/oapi/v1/watch/projects/wutest001"
+	request,err1 := http.NewRequest("GET", url, nil)
+	if err1 !=nil{
+		fmt.Println("request err:",err1)
+	}
+
+	request.Header.Set("Content-Type", "application/json")
+	request.Header.Set("Authorization", "Bearer p0AdoasmlrVlrFSkAk9ywjns_YQvcig5dTr1GTVzdXU")
+	//request.Header.Set("Connection", "close")
+
+	response,_:=httpClientB.Do(request)
+
+	//我也不知道有多大
+	var data = make([]byte,1024)
+	defer response.Body.Close()
+	defer conn.Close()
+	for{
+
+		response.Body.Read(data)
+		conn.WriteMessage(1,data)
 	}
 
 }

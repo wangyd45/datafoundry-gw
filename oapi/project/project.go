@@ -7,6 +7,7 @@ import (
 	"github.com/pivotal-golang/lager"
 	"github.com/asiainfoLDP/datafoundry-gw/pkg"
 	oapi "github.com/asiainfoLDP/datafoundry-gw/apirequest"
+
 	"fmt"
 )
 
@@ -61,33 +62,25 @@ func GetAllProjects(c *gin.Context){
 
 func WatchAProject(c *gin.Context) {
 
-	//go func(){
+
 	token := pkg.GetToken(c)
 	name := c.Param("name")
-	//for i := 0; i < 16; i++ {
-	//	time.Sleep(2 * time.Second)
-		req, err := oapi.Request(0, "GET", "/oapi/v1/watch/projects/"+name, token, nil)
-		if err != nil {
-			logger.Error("Get All Projects Fail", err)
-		}
+	req,err := oapi.Request(10,"GET","/oapi/v1/watch/projects/"+name,token,nil)
+	if err != nil{
+		logger.Error("Watch A Project Fail",err)
+	}
+	result, _:= ioutil.ReadAll(req.Body)
+	fmt.Println("----------",string(result))
+	defer req.Body.Close()
+	c.Data(req.StatusCode, "application/json",result)
 
 
-		fmt.Println("----- code ", req.StatusCode)
-		fmt.Println("***** status ", req.Status)
-		fmt.Println("---**** ", req.Body)
-
-		//aa:
-		result,err := ioutil.ReadAll(req.Body)
-
-
-		//			goto aa
-		fmt.Println("------ length body ", len(result))
-		defer req.Body.Close()
-		c.Data(req.StatusCode, "application/json", result)
-	//}
-
-	//}()
 }
+
+
+//func sendResult(status int,c *gin.Context,result []byte){
+//	c.Data(status, "application/json",result)
+//}
 /*
 func WatchAllProjects(c *gin.Context){
 	token := pkg.GetToken(c)

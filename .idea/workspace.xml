@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5d1d8f17-e7fb-4da5-9d92-e7182c519935" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="5d1d8f17-e7fb-4da5-9d92-e7182c519935" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -177,6 +175,14 @@
               <item name="vendor" type="462c0819:PsiDirectoryNode" />
               <item name="github.com" type="462c0819:PsiDirectoryNode" />
               <item name="gin-contrib" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
+              <item name="vendor" type="462c0819:PsiDirectoryNode" />
+              <item name="github.com" type="462c0819:PsiDirectoryNode" />
+              <item name="gin-contrib" type="462c0819:PsiDirectoryNode" />
+              <item name="sse" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />

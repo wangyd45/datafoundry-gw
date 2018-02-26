@@ -7,9 +7,7 @@ import (
 	"github.com/pivotal-golang/lager"
 	"github.com/asiainfoLDP/datafoundry-gw/pkg"
 	oapi "github.com/asiainfoLDP/datafoundry-gw/apirequest"
-
 	"fmt"
-	"net/http"
 )
 
 var logger lager.Logger
@@ -93,13 +91,13 @@ func PatchAProject(c *gin.Context){
 	token := pkg.GetToken(c)
 	name := c.Param("name")
 	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.GenRequest("PATCH","/oapi/v1/projects"+name,token,rBody)
+	req,err := oapi.GenRequest("PATCH","/oapi/v1/projects/"+name,token,rBody)
 	if err != nil{
 		fmt.Println("Patch A Project :%s Fail",name,err)
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.JSON(http.StatusOK, gin.H{"result": result})
+	c.JSON(req.StatusCode, gin.H{"application/json": result})
 }
 
 //删除project-OK

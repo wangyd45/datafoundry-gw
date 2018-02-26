@@ -1,3 +1,0 @@
-[submodule "vendor/github.com/gin-contrib/sse"]
-	path = vendor/github.com/gin-contrib/sse
-	url = https://github.com/asiainfoLDP/datafoundry-gw

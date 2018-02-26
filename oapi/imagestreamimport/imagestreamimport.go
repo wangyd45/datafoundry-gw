@@ -28,7 +28,7 @@ func CreateISImport(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"POST", IMAGE,token, rBody)
+	req,err := oapi.GenRequest("POST", IMAGE,token, rBody)
 	if err != nil{
 		log.Error("CreateImageStream error ",err)
 	}
@@ -42,7 +42,7 @@ func CreateISImportInNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.Request(10,"POST", IMAGENAME+namespace +IMAGECONFIG,token, rBody)
+	req,err := oapi.GenRequest("POST", IMAGENAME+namespace +IMAGECONFIG,token, rBody)
 	if err != nil{
 		log.Error("CreateBuildConfigInNameSpace error ",err)
 	}

@@ -19,7 +19,7 @@ func init() {
 func CreateRoute(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.Request(10,"POST","/oapi/v1/routes",token,rBody)
+	req,err := oapi.GenRequest("POST","/oapi/v1/routes",token,rBody)
 	if err != nil{
 		logger.Error("Create A Route Fail",err)
 	}
@@ -32,7 +32,7 @@ func CreateRouteInNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.Request(10,"POST","/oapi/v1/namespaces/"+namespace+"/routes",token,rBody)
+	req,err := oapi.GenRequest("POST","/oapi/v1/namespaces/"+namespace+"/routes",token,rBody)
 	if err != nil{
 		logger.Error("Create A Route In A Namespace Fail",err)
 	}
@@ -45,7 +45,7 @@ func GetRouteInNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	req,err := oapi.Request(10,"GET","/oapi/v1/namespaces/"+namespace+"/routes/"+name,token,nil)
+	req,err := oapi.GenRequest("GET","/oapi/v1/namespaces/"+namespace+"/routes/"+name,token,nil)
 	if err != nil{
 		logger.Error("Get A Route In A Namespace Fail",err)
 	}
@@ -56,7 +56,7 @@ func GetRouteInNS(c *gin.Context){
 
 func GetAllRoutes(c *gin.Context){
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET","/oapi/v1/routes",token,nil)
+	req,err := oapi.GenRequest("GET","/oapi/v1/routes",token,nil)
 	if err != nil{
 		logger.Error("Get All Routes Fail",err)
 	}
@@ -68,7 +68,7 @@ func GetAllRoutes(c *gin.Context){
 func GetAllRoutesInNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
-	req,err := oapi.Request(10,"GET","/oapi/v1/namespaces/"+namespace+"/routes",token,nil)
+	req,err := oapi.GenRequest("GET","/oapi/v1/namespaces/"+namespace+"/routes",token,nil)
 	if err != nil{
 		logger.Error("Get All Routes In A Namespace Fail",err)
 	}
@@ -78,39 +78,27 @@ func GetAllRoutesInNS(c *gin.Context){
 }
 
 func WatchRouteInNS(c *gin.Context){
+
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	req,err := oapi.Request(10,"GET","/oapi/v1/watch/namespaces/"+namespace+"/routes/"+name,token,nil)
-	if err != nil{
-		logger.Error("Watch A Route In A Namespace Fail",err)
-	}
-	result, _:= ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	oapi.WSRequest("/oapi/v1/watch/namespaces/"+namespace+"/routes/"+name,token,c.Writer,c.Request)
+
 }
 
 func WatchAllRoutes(c *gin.Context){
+
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET","/oapi/v1/watch/routes",token,nil)
-	if err != nil{
-		logger.Error("Watch All Routes Fail",err)
-	}
-	result, _:= ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	oapi.WSRequest("/oapi/v1/watch/routes",token,c.Writer,c.Request)
+
 }
 
 func WatchAllRoutesInNS(c *gin.Context){
+
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
-	req,err := oapi.Request(10,"GET","/oapi/v1/watch/namespaces/"+namespace+"/routes",token,nil)
-	if err != nil{
-		logger.Error("Watch All Routes In A Namespace Fail",err)
-	}
-	result, _:= ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	oapi.WSRequest("/oapi/v1/watch/namespaces/"+namespace+"/routes",token,c.Writer,c.Request)
+
 }
 
 func UpdateRouteInNS(c *gin.Context){
@@ -118,7 +106,7 @@ func UpdateRouteInNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.Request(10,"PUT","/oapi/v1/namespaces/"+namespace+"/routes/"+name,token,rBody)
+	req,err := oapi.GenRequest("PUT","/oapi/v1/namespaces/"+namespace+"/routes/"+name,token,rBody)
 	if err != nil{
 		logger.Error("Update A Route In A Namespace Fail",err)
 	}
@@ -132,7 +120,7 @@ func PatchRouteInNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.Request(10,"PATCH","/oapi/v1/namespaces/"+namespace+"/routes/"+name,token,rBody)
+	req,err := oapi.GenRequest("PATCH","/oapi/v1/namespaces/"+namespace+"/routes/"+name,token,rBody)
 	if err != nil{
 		logger.Error("Patch A Route In A Namespace Fail",err)
 	}
@@ -146,7 +134,7 @@ func DeleteRouteInNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.Request(10,"DELETE","/oapi/v1/namespaces/"+namespace+"/routes/"+name,token,rBody)
+	req,err := oapi.GenRequest("DELETE","/oapi/v1/namespaces/"+namespace+"/routes/"+name,token,rBody)
 	if err != nil{
 		logger.Error("Delete A Route In A Namespace Fail",err)
 	}
@@ -158,7 +146,7 @@ func DeleteRouteInNS(c *gin.Context){
 func DeleteAllRoutesInNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
-	req,err := oapi.Request(10,"DELETE","/oapi/v1/namespaces/"+namespace+"/routes",token,nil)
+	req,err := oapi.GenRequest("DELETE","/oapi/v1/namespaces/"+namespace+"/routes",token,nil)
 	if err != nil{
 		logger.Error("Delete All Routes In A Namespace Fail",err)
 	}
@@ -171,7 +159,7 @@ func GetRouteStatusInNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	req,err := oapi.Request(10,"GET","/oapi/v1/namespaces/"+namespace+"/routes/"+name+"/status",token,nil)
+	req,err := oapi.GenRequest("GET","/oapi/v1/namespaces/"+namespace+"/routes/"+name+"/status",token,nil)
 	if err != nil{
 		logger.Error("Get Status Of A Route In A Namespace Fail",err)
 	}
@@ -185,7 +173,7 @@ func UpdateRouteStatusInNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.Request(10,"PUT","/oapi/v1/namespaces/"+namespace+"/routes/"+name+"/status",token,rBody)
+	req,err := oapi.GenRequest("PUT","/oapi/v1/namespaces/"+namespace+"/routes/"+name+"/status",token,rBody)
 	if err != nil{
 		logger.Error("Update Status Of A Route In A Namespace Fail",err)
 	}
@@ -199,7 +187,7 @@ func PatchRouteStatusInNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.Request(10,"PATCH","/oapi/v1/namespaces/"+namespace+"/routes/"+name+"/status",token,rBody)
+	req,err := oapi.GenRequest("PATCH","/oapi/v1/namespaces/"+namespace+"/routes/"+name+"/status",token,rBody)
 	if err != nil{
 		logger.Error("Patch Status Of A Route In A Namespace Fail",err)
 	}

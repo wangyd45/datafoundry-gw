@@ -19,7 +19,7 @@ func init() {
 func CreateNetNamespace(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.Request(10,"POST","/oapi/v1/netnamespaces",token,rBody)
+	req,err := oapi.GenRequest("POST","/oapi/v1/netnamespaces",token,rBody)
 	if err != nil{
 		logger.Error("Create A NetNamespaces Fail",err)
 	}
@@ -31,7 +31,7 @@ func CreateNetNamespace(c *gin.Context){
 func GetNetNamespace(c *gin.Context){
 	token := pkg.GetToken(c)
 	name := c.Param("name")
-	req,err := oapi.Request(10,"GET","/oapi/v1/netnamespaces/"+name,token,nil)
+	req,err := oapi.GenRequest("GET","/oapi/v1/netnamespaces/"+name,token,nil)
 	if err != nil{
 		logger.Error("Get A NetNamespaces Fail",err)
 	}
@@ -42,7 +42,7 @@ func GetNetNamespace(c *gin.Context){
 
 func GetAllNetNamespaces(c *gin.Context){
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET","/oapi/v1/netnamespaces",token,nil)
+	req,err := oapi.GenRequest("GET","/oapi/v1/netnamespaces",token,nil)
 	if err != nil{
 		logger.Error("Get All NetNamespaces Fail",err)
 	}
@@ -52,26 +52,17 @@ func GetAllNetNamespaces(c *gin.Context){
 }
 
 func WatchNetNamespace(c *gin.Context){
+
 	token := pkg.GetToken(c)
 	name := c.Param("name")
-	req,err := oapi.Request(10,"GET","/oapi/v1/watch/netnamespaces/"+name,token,nil)
-	if err != nil{
-		logger.Error("Watch A NetNamespaces Fail",err)
-	}
-	result, _:= ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	oapi.WSRequest("/oapi/v1/watch/netnamespaces/"+name,token,c.Writer,c.Request)
+
 }
 
 func WatchAllNetNamespaces(c *gin.Context){
+
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET","/oapi/v1/watch/netnamespaces",token,nil)
-	if err != nil{
-		logger.Error("Watch All NetNamespaces Fail",err)
-	}
-	result, _:= ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	oapi.WSRequest("/oapi/v1/watch/netnamespaces",token,c.Writer,c.Request)
 
 }
 
@@ -79,7 +70,7 @@ func UpdateNetNamespace(c *gin.Context){
 	token := pkg.GetToken(c)
 	name := c.Param("name")
 	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.Request(10,"PUT","/oapi/v1/netnamespaces/"+name,token,rBody)
+	req,err := oapi.GenRequest("PUT","/oapi/v1/netnamespaces/"+name,token,rBody)
 	if err != nil{
 		logger.Error("Update A NetNamespaces Fail",err)
 	}
@@ -93,7 +84,7 @@ func PatchNetNamespace(c *gin.Context){
 	token := pkg.GetToken(c)
 	name := c.Param("name")
 	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.Request(10,"PATCH","/oapi/v1/netnamespaces/"+name,token,rBody)
+	req,err := oapi.GenRequest("PATCH","/oapi/v1/netnamespaces/"+name,token,rBody)
 	if err != nil{
 		logger.Error("Patch A NetNamespaces Fail",err)
 	}
@@ -106,7 +97,7 @@ func DeleteNetNamespace(c *gin.Context){
 	token := pkg.GetToken(c)
 	name := c.Param("name")
 	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.Request(10,"DELETE","/oapi/v1/netnamespaces/"+name,token,rBody)
+	req,err := oapi.GenRequest("DELETE","/oapi/v1/netnamespaces/"+name,token,rBody)
 	if err != nil{
 		logger.Error("Delete A NetNamespaces Fail",err)
 	}
@@ -117,7 +108,7 @@ func DeleteNetNamespace(c *gin.Context){
 
 func DeleteAllNetNamespaces(c *gin.Context){
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"DELETE","/oapi/v1/netnamespaces",token,nil)
+	req,err := oapi.GenRequest("DELETE","/oapi/v1/netnamespaces",token,nil)
 	if err != nil{
 		logger.Error("Delete All NetNamespaces Fail",err)
 	}

@@ -19,7 +19,7 @@ func init() {
 func CreateTemplate(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.Request(10,"POST","/oapi/v1/templates",token,rBody)
+	req,err := oapi.GenRequest("POST","/oapi/v1/templates",token,rBody)
 	if err != nil{
 		logger.Error("Create A Template Fail",err)
 	}
@@ -32,7 +32,7 @@ func CreateTemplatenNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.Request(10,"POST","/oapi/v1/namespaces/"+namespace+"/templates",token,rBody)
+	req,err := oapi.GenRequest("POST","/oapi/v1/namespaces/"+namespace+"/templates",token,rBody)
 	if err != nil{
 		logger.Error("Create A Template In A Namespace Fail",err)
 	}
@@ -45,7 +45,7 @@ func GetTemplateInNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	req,err := oapi.Request(10,"GET","/oapi/v1/namespaces/"+namespace+"/templates/"+name,token,nil)
+	req,err := oapi.GenRequest("GET","/oapi/v1/namespaces/"+namespace+"/templates/"+name,token,nil)
 	if err != nil{
 		logger.Error("Get A Template In A Namespace Fail",err)
 	}
@@ -56,7 +56,7 @@ func GetTemplateInNS(c *gin.Context){
 
 func GetAllTemplates(c *gin.Context){
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET","/oapi/v1/templates",token,nil)
+	req,err := oapi.GenRequest("GET","/oapi/v1/templates",token,nil)
 	if err != nil{
 		logger.Error("Get All Templates Fail",err)
 	}
@@ -68,7 +68,7 @@ func GetAllTemplates(c *gin.Context){
 func GetAllTemplatesInNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
-	req,err := oapi.Request(10,"GET","/oapi/v1/namespaces/"+namespace+"/templates",token,nil)
+	req,err := oapi.GenRequest("GET","/oapi/v1/namespaces/"+namespace+"/templates",token,nil)
 	if err != nil{
 		logger.Error("Get All Templates In A Namespace Fail",err)
 	}
@@ -78,39 +78,27 @@ func GetAllTemplatesInNS(c *gin.Context){
 }
 
 func WatchTemplateInNS(c *gin.Context){
+
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	req,err := oapi.Request(10,"GET","/oapi/v1/watch/namespaces/"+namespace+"/templates/"+name,token,nil)
-	if err != nil{
-		logger.Error("Watch A Template In A Namespace Fail",err)
-	}
-	result, _:= ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	oapi.WSRequest("/oapi/v1/watch/namespaces/"+namespace+"/templates/"+name,token,c.Writer,c.Request)
+
 }
 
 func WatchAllTemplates(c *gin.Context){
+
 	token := pkg.GetToken(c)
-	req,err := oapi.Request(10,"GET","/oapi/v1/watch/templates",token,nil)
-	if err != nil{
-		logger.Error("Watch All Templates Fail",err)
-	}
-	result, _:= ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	oapi.WSRequest("/oapi/v1/watch/templates",token,c.Writer,c.Request)
+
 }
 
 func WatchAllTemplatesInNS(c *gin.Context){
+
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
-	req,err := oapi.Request(10,"GET","/oapi/v1/watch/namespaces/"+namespace+"/templates",token,nil)
-	if err != nil{
-		logger.Error("Watch All Templates In A Namespace Fail",err)
-	}
-	result, _:= ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	oapi.WSRequest("/oapi/v1/watch/namespaces/"+namespace+"/templates",token,c.Writer,c.Request)
+
 }
 
 func UpdateTemplateInNS(c *gin.Context){
@@ -118,7 +106,7 @@ func UpdateTemplateInNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.Request(10,"PUT","/oapi/v1/namespaces/"+namespace+"/templates/"+name,token,rBody)
+	req,err := oapi.GenRequest("PUT","/oapi/v1/namespaces/"+namespace+"/templates/"+name,token,rBody)
 	if err != nil{
 		logger.Error("Update A Template In A Namespace Fail",err)
 	}
@@ -132,7 +120,7 @@ func PatchTemplateInNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.Request(10,"PATCH","/oapi/v1/namespaces/"+namespace+"/templates/"+name,token,rBody)
+	req,err := oapi.GenRequest("PATCH","/oapi/v1/namespaces/"+namespace+"/templates/"+name,token,rBody)
 	if err != nil{
 		logger.Error("Patch A Template In A Namespace Fail",err)
 	}
@@ -146,7 +134,7 @@ func DeleteTemplateInNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.Request(10,"DELETE","/oapi/v1/namespaces/"+namespace+"/templates/"+name,token,rBody)
+	req,err := oapi.GenRequest("DELETE","/oapi/v1/namespaces/"+namespace+"/templates/"+name,token,rBody)
 	if err != nil{
 		logger.Error("Delete A Template In A Namespace Fail",err)
 	}
@@ -158,7 +146,7 @@ func DeleteTemplateInNS(c *gin.Context){
 func DeleteAllTemplatesInNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
-	req,err := oapi.Request(10,"DELETE","/oapi/v1/namespaces/"+namespace+"/templates",token,nil)
+	req,err := oapi.GenRequest("DELETE","/oapi/v1/namespaces/"+namespace+"/templates",token,nil)
 	if err != nil{
 		logger.Error("Delete All Templates In A Namespace Fail",err)
 	}

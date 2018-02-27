@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5d1d8f17-e7fb-4da5-9d92-e7182c519935" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/k8sapi/configmap/configmap.go" afterPath="$PROJECT_DIR$/k8sapi/configmap/configmap.go" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -36,14 +35,53 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="configmap.go" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/k8sapi/configmap/configmap.go">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="156" column="32" lean-forward="false" selection-start-line="156" selection-start-column="32" selection-end-line="156" selection-end-column="32" />
+            <state relative-caret-position="151">
+              <caret line="16" column="12" lean-forward="false" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="12" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="endpoints.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/k8sapi/endpoints/endpoints.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="157" column="40" lean-forward="true" selection-start-line="157" selection-start-column="40" selection-end-line="157" selection-end-column="40" />
               <folding>
-                <element signature="e#19#220#0" expanded="true" />
+                <element signature="e#19#213#0" expanded="true" />
+                <element signature="n#!!block;n#CreateEndpoints#0" expanded="false" />
+                <element signature="n#!!block;n#CreateEndpointsNS#0" expanded="false" />
+                <element signature="n#!!block;n#GetEndpointsNS#0" expanded="false" />
+                <element signature="n#!!block;n#GetAllEndpoints#0" expanded="false" />
+                <element signature="n#!!block;n#WatchEndpointsNS#0" expanded="false" />
+                <element signature="n#!!block;n#WatchAllEndpoints#0" expanded="false" />
+                <element signature="n#!!block;n#WatchAllEndpointsNS#0" expanded="false" />
+                <element signature="n#!!block;n#UpdateEndpointsNS#0" expanded="false" />
+                <element signature="n#!!block;n#PatchEndpointsNS#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="279">
+              <caret line="84" column="57" lean-forward="true" selection-start-line="84" selection-start-column="57" selection-end-line="84" selection-end-column="57" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="project.go" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/oapi/project/project.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="140">
+              <caret line="61" column="5" lean-forward="false" selection-start-line="61" selection-start-column="5" selection-end-line="61" selection-end-column="5" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -67,6 +105,7 @@
       <find>Request</find>
       <find>Conn</find>
       <find>GenRequest</find>
+      <find>oapi</find>
     </findStrings>
   </component>
   <component name="GOROOT" path="/usr/local/go" />
@@ -93,6 +132,7 @@
         <option value="$PROJECT_DIR$/oapi/netnamespace/netnamespace.go" />
         <option value="$PROJECT_DIR$/main.go" />
         <option value="$PROJECT_DIR$/k8sapi/configmap/configmap.go" />
+        <option value="$PROJECT_DIR$/k8sapi/endpoints/endpoints.go" />
       </list>
     </option>
   </component>
@@ -145,30 +185,8 @@
             <path>
               <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
               <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="oapi" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="oapi" type="462c0819:PsiDirectoryNode" />
-              <item name="project" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="oapi" type="462c0819:PsiDirectoryNode" />
-              <item name="role" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="oapi" type="462c0819:PsiDirectoryNode" />
-              <item name="route" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
+              <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
+              <item name="endpoints" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
@@ -289,13 +307,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file:///usr/local/go/src/sync/atomic/value.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="526">
-          <caret line="46" column="16" lean-forward="false" selection-start-line="46" selection-start-column="16" selection-end-line="46" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/handler/openshift.go" />
     <entry file="file://$PROJECT_DIR$/../datafoundry_servicebroker_openshift/handler/handler.go">
       <provider selected="true" editor-type-id="text-editor">
@@ -432,9 +443,7 @@
     <entry file="file://$PROJECT_DIR$/oapi/template/template.go" />
     <entry file="file://$PROJECT_DIR$/vendor/github.com/gin-gonic/gin/binding/msgpack.go" />
     <entry file="file://$PROJECT_DIR$/oapi/netnamespace/netnamespace.go" />
-    <entry file="file://$PROJECT_DIR$/README.md" />
     <entry file="file://$PROJECT_DIR$/oapi/user/user.go" />
-    <entry file="file://$PROJECT_DIR$/main.go" />
     <entry file="file://$PROJECT_DIR$/oapi/build/build.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
@@ -459,14 +468,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/oapi/project/project.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="34" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apirequest/apirequest.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19">
@@ -485,13 +486,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="16" column="12" lean-forward="false" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/k8sapi/configmap/configmap.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="156" column="32" lean-forward="false" selection-start-line="156" selection-start-column="32" selection-end-line="156" selection-end-column="32" />
+        <state relative-caret-position="308">
+          <caret line="160" column="1" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="160" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/k8sapi/endpoints/endpoints.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="157" column="40" lean-forward="true" selection-start-line="157" selection-start-column="40" selection-end-line="157" selection-end-column="40" />
           <folding>
-            <element signature="e#19#220#0" expanded="true" />
+            <element signature="e#19#213#0" expanded="true" />
+            <element signature="n#!!block;n#CreateEndpoints#0" expanded="false" />
+            <element signature="n#!!block;n#CreateEndpointsNS#0" expanded="false" />
+            <element signature="n#!!block;n#GetEndpointsNS#0" expanded="false" />
+            <element signature="n#!!block;n#GetAllEndpoints#0" expanded="false" />
+            <element signature="n#!!block;n#WatchEndpointsNS#0" expanded="false" />
+            <element signature="n#!!block;n#WatchAllEndpoints#0" expanded="false" />
+            <element signature="n#!!block;n#WatchAllEndpointsNS#0" expanded="false" />
+            <element signature="n#!!block;n#UpdateEndpointsNS#0" expanded="false" />
+            <element signature="n#!!block;n#PatchEndpointsNS#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="279">
+          <caret line="84" column="57" lean-forward="true" selection-start-line="84" selection-start-column="57" selection-end-line="84" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oapi/project/project.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="61" column="5" lean-forward="false" selection-start-line="61" selection-start-column="5" selection-end-line="61" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>

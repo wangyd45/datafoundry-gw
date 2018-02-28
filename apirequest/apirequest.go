@@ -101,8 +101,8 @@ func WSRequest(url, token string,w http.ResponseWriter, r *http.Request) {
 	defer conn.Close()
 	for{
 
-		response.Body.Read(data)
-		conn.WriteMessage(1,data)
+		n,_:=response.Body.Read(data)
+		conn.WriteMessage(1,data[:n])
 	}
 
 }

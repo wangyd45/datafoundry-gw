@@ -141,12 +141,12 @@ func handle() (router *gin.Engine) {
 	router.GET("/oapi/v1/namespaces/:namespace/deploymentconfigs/:name/status", dep.GetStatusDepFromNS)
 	router.PUT("/oapi/v1/namespaces/:namespace/deploymentconfigs/:name", dep.UpdataDCFromNS)
 	router.PUT("/oapi/v1/namespaces/:namespace/deploymentconfigs/:name/scale", dep.UpdataScaleDCFromNS)
-	router.PUT("/oapi/v1/namespaces/namespace/deploymentconfigs/:name/status", dep.UpdataStatusDCFromNS)
-	router.PATCH("/oapi/v1/namespaces/:namesapce/deploymentconfigs/:name", dep.PatchDCFromNS)
-	router.PATCH("/oapi/v1/namespaces/:namesapce/deploymentconfigs/:name/scale", dep.PatchScaleDCFromNS)
-	router.PATCH("/oapi/v1/namespaces/:namesapce/deploymentconfigs/:name/status", dep.PatchStatusDCFromNS)
-	router.DELETE("/oapi/v1/namespaces/:namesapce/deploymentconfigs/:name", dep.DeleteDCFromNS)
-	router.DELETE("/oapi/v1/namespaces/:namesapce/deploymentconfigs", dep.DeleteAllDepFromNS)
+	router.PUT("/oapi/v1/namespaces/:namespace/deploymentconfigs/:name/status", dep.UpdataStatusDCFromNS)
+	router.PATCH("/oapi/v1/namespaces/:namespace/deploymentconfigs/:name", dep.PatchDCFromNS)
+	router.PATCH("/oapi/v1/namespaces/:namespace/deploymentconfigs/:name/scale", dep.PatchScaleDCFromNS)
+	router.PATCH("/oapi/v1/namespaces/:namespace/deploymentconfigs/:name/status", dep.PatchStatusDCFromNS)
+	router.DELETE("/oapi/v1/namespaces/:namespace/deploymentconfigs/:name", dep.DeleteDCFromNS)
+	router.DELETE("/oapi/v1/namespaces/:namespace/deploymentconfigs", dep.DeleteAllDepFromNS)
 
 	//v1.ImageStream IS -> ImageStream NS -> NameSpace SecImage ->SecretsImage
 	router.POST("/oapi/v1/imagestreams", image.CreateIS)

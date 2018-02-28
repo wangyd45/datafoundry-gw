@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5d1d8f17-e7fb-4da5-9d92-e7182c519935" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/main.go" afterPath="$PROJECT_DIR$/main.go" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,7 +17,7 @@
       <file leaf-file-name="apirequest.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apirequest/apirequest.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-66">
+            <state relative-caret-position="475">
               <caret line="33" column="33" lean-forward="false" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
               <folding>
                 <element signature="e#20#118#0" expanded="true" />
@@ -25,57 +26,34 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
+      <file leaf-file-name="main.go" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="17" column="8" lean-forward="false" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="8" />
+            <state relative-caret-position="194">
+              <caret line="97" column="59" lean-forward="false" selection-start-line="97" selection-start-column="59" selection-end-line="97" selection-end-column="59" />
+              <folding>
+                <element signature="e#14#940#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wsclient.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/wsclient.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="38">
+              <caret line="2" column="7" lean-forward="false" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="endpoints.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/k8sapi/endpoints/endpoints.go">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="161" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
-              <folding>
-                <element signature="e#19#213#0" expanded="true" />
-                <element signature="n#!!block;n#CreateEndpoints#0" expanded="false" />
-                <element signature="n#!!block;n#CreateEndpointsNS#0" expanded="false" />
-                <element signature="n#!!block;n#GetEndpointsNS#0" expanded="false" />
-                <element signature="n#!!block;n#GetAllEndpoints#0" expanded="false" />
-                <element signature="n#!!block;n#WatchEndpointsNS#0" expanded="false" />
-                <element signature="n#!!block;n#WatchAllEndpoints#0" expanded="false" />
-                <element signature="n#!!block;n#WatchAllEndpointsNS#0" expanded="false" />
-                <element signature="n#!!block;n#UpdateEndpointsNS#0" expanded="false" />
-                <element signature="n#!!block;n#PatchEndpointsNS#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="event.go" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/k8sapi/event/event.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="259">
-              <caret line="161" column="0" lean-forward="true" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
-              <folding>
-                <element signature="e#15#209#0" expanded="true" />
-                <element signature="n#!!block;n#CreateEvent#0" expanded="false" />
-                <element signature="n#!!block;n#CreateEventNS#0" expanded="false" />
-                <element signature="n#!!block;n#GetEventNS#0" expanded="false" />
-                <element signature="n#!!block;n#GetAllEvents#0" expanded="false" />
-                <element signature="n#!!block;n#GetAllEventsNS#0" expanded="false" />
-                <element signature="n#!!block;n#WatchEventNS#0" expanded="false" />
-                <element signature="n#!!block;n#WatchAllEvents#0" expanded="false" />
-                <element signature="n#!!block;n#WatchAllEventsNS#0" expanded="false" />
-                <element signature="n#!!block;n#UpdateEventNS#0" expanded="false" />
-                <element signature="n#!!block;n#PatchEventNS#0" expanded="false" />
-                <element signature="n#!!block;n#DeleteEventNS#0" expanded="false" />
-                <element signature="n#!!block;n#DeleteAllEventNS#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="418">
+              <caret line="22" column="24" lean-forward="false" selection-start-line="22" selection-start-column="24" selection-end-line="22" selection-end-column="24" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -124,11 +102,12 @@
         <option value="$PROJECT_DIR$/oapi/route/route.go" />
         <option value="$PROJECT_DIR$/oapi/template/template.go" />
         <option value="$PROJECT_DIR$/oapi/netnamespace/netnamespace.go" />
-        <option value="$PROJECT_DIR$/main.go" />
         <option value="$PROJECT_DIR$/k8sapi/configmap/configmap.go" />
         <option value="$PROJECT_DIR$/k8sapi/endpoints/endpoints.go" />
         <option value="$PROJECT_DIR$/client/wsclient.go" />
         <option value="$PROJECT_DIR$/k8sapi/event/event.go" />
+        <option value="$PROJECT_DIR$/server/server.go" />
+        <option value="$PROJECT_DIR$/main.go" />
       </list>
     </option>
   </component>
@@ -158,6 +137,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -165,23 +145,6 @@
             <path>
               <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
               <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
-              <item name="endpoints" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
-              <item name="event" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
@@ -248,7 +211,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -288,16 +250,16 @@
     <frame x="0" y="23" width="1440" height="797" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18526466" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20314735" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905984" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36324787" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -320,14 +282,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../datafoundry_servicebroker_openshift/handler/openshift.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5">
-          <caret line="76" column="0" lean-forward="true" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/handler/ocapi.go" />
     <entry file="file:///usr/local/go/src/fmt/print.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="134">
@@ -477,24 +431,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/wsclient.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-766">
-          <caret line="2" column="7" lean-forward="false" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/oapi/project/project.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
           <caret line="61" column="5" lean-forward="false" selection-start-line="61" selection-start-column="5" selection-end-line="61" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="84" column="57" lean-forward="false" selection-start-line="84" selection-start-column="57" selection-end-line="84" selection-end-column="57" />
         </state>
       </provider>
     </entry>
@@ -505,21 +445,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apirequest/apirequest.go">
+    <entry file="file://$PROJECT_DIR$/k8sapi/event/event.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-66">
-          <caret line="33" column="33" lean-forward="false" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
-          <folding>
-            <element signature="e#20#118#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="17" column="8" lean-forward="false" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="8" />
-          <folding />
+        <state relative-caret-position="259">
+          <caret line="161" column="0" lean-forward="true" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -527,39 +456,50 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
           <caret line="161" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apirequest/apirequest.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="33" column="33" lean-forward="false" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
           <folding>
-            <element signature="e#19#213#0" expanded="true" />
-            <element signature="n#!!block;n#CreateEndpoints#0" expanded="false" />
-            <element signature="n#!!block;n#CreateEndpointsNS#0" expanded="false" />
-            <element signature="n#!!block;n#GetEndpointsNS#0" expanded="false" />
-            <element signature="n#!!block;n#GetAllEndpoints#0" expanded="false" />
-            <element signature="n#!!block;n#WatchEndpointsNS#0" expanded="false" />
-            <element signature="n#!!block;n#WatchAllEndpoints#0" expanded="false" />
-            <element signature="n#!!block;n#WatchAllEndpointsNS#0" expanded="false" />
-            <element signature="n#!!block;n#UpdateEndpointsNS#0" expanded="false" />
-            <element signature="n#!!block;n#PatchEndpointsNS#0" expanded="false" />
+            <element signature="e#20#118#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/k8sapi/event/event.go">
+    <entry file="file://$PROJECT_DIR$/server.go" />
+    <entry file="file://$PROJECT_DIR$/server/server.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="161" column="0" lean-forward="true" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
+        <state relative-caret-position="4503">
+          <caret line="264" column="33" lean-forward="false" selection-start-line="264" selection-start-column="33" selection-end-line="264" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/wsclient.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="7" lean-forward="false" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="22" column="24" lean-forward="false" selection-start-line="22" selection-start-column="24" selection-end-line="22" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="97" column="59" lean-forward="false" selection-start-line="97" selection-start-column="59" selection-end-line="97" selection-end-column="59" />
           <folding>
-            <element signature="e#15#209#0" expanded="true" />
-            <element signature="n#!!block;n#CreateEvent#0" expanded="false" />
-            <element signature="n#!!block;n#CreateEventNS#0" expanded="false" />
-            <element signature="n#!!block;n#GetEventNS#0" expanded="false" />
-            <element signature="n#!!block;n#GetAllEvents#0" expanded="false" />
-            <element signature="n#!!block;n#GetAllEventsNS#0" expanded="false" />
-            <element signature="n#!!block;n#WatchEventNS#0" expanded="false" />
-            <element signature="n#!!block;n#WatchAllEvents#0" expanded="false" />
-            <element signature="n#!!block;n#WatchAllEventsNS#0" expanded="false" />
-            <element signature="n#!!block;n#UpdateEventNS#0" expanded="false" />
-            <element signature="n#!!block;n#PatchEventNS#0" expanded="false" />
-            <element signature="n#!!block;n#DeleteEventNS#0" expanded="false" />
-            <element signature="n#!!block;n#DeleteAllEventNS#0" expanded="false" />
+            <element signature="e#14#940#0" expanded="true" />
           </folding>
         </state>
       </provider>

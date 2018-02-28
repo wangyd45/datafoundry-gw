@@ -100,9 +100,9 @@ func handle() (router *gin.Engine) {
 	router.GET("/oapi/v1/watch/builds", build.WatchAllBuilds)
 	router.GET("/oapi/v1/watch/namespaces/:namespace/builds", build.WatchAllBuildFromNS)
 	router.PUT("/oapi/v1/namespaces/:namespace/builds/:name", build.UpdataBuildFromNS)
-	router.PUT("//oapi/v1/namespaces/:namespace/builds/:name/details", build.UpdataDetailsInNS)
+	router.PUT("/oapi/v1/namespaces/:namespace/builds/:name/details", build.UpdataDetailsInNS)
 	router.PATCH("/oapi/v1/namespaces/:namespace/builds/:name", build.PatchBuildFromNS)
-	router.DELETE("/oapi/v1/namespaces/:namespace/builds/name", build.DeleteBuildFromNS)
+	router.DELETE("/oapi/v1/namespaces/:namespace/builds/:name", build.DeleteBuildFromNS)
 	router.DELETE("/oapi/v1/namespaces/:namespace/builds", build.DeleteAllBuildFromNS)
 
 	//v1.BuildConfig BC -> BuildConfig NS -> NameSpace NSP -> NameSpacePath

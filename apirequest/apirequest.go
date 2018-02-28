@@ -22,7 +22,7 @@ var httpClientB = &http.Client{
 
 var httpClientG = &http.Client{
 	Transport: httpClientB.Transport,
-	Timeout:   time.Duration(8) * time.Second,
+	Timeout:   time.Duration(10) * time.Second,
 }
 
 var wsupgrader = websocket.Upgrader{

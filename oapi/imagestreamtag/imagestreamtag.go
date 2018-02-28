@@ -42,7 +42,7 @@ func CreateImageTagInNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.GenRequest("POST", IMAGENAME+namespace +IMAGECONFIG,token, rBody)
+	req,err := oapi.GenRequest("POST", IMAGENAME+namespace +"/imagestreamtags",token, rBody)
 	if err != nil{
 		log.Error("CreateImageTagInNS error ",err)
 	}
@@ -78,7 +78,7 @@ func GetAllImageTag(c *gin.Context){
 func GetAllImageTagFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
-	req,err := oapi.GenRequest("GET", IMAGENAME+ namespace +IMAGECONFIG,token, []byte{})
+	req,err := oapi.GenRequest("GET", IMAGENAME+ namespace +"/imagestreamtags",token, []byte{})
 	if err != nil{
 		log.Error("GetAllImageTagFromNS error ",err)
 	}

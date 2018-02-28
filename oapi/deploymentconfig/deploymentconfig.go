@@ -44,7 +44,7 @@ func CreateDCInNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.GenRequest("POST", DEPNAME+namespace +DEPCONFIG,token, rBody)
+	req,err := oapi.GenRequest("POST", DEPNAME+namespace +"/deploymentconfigs",token, rBody)
 	if err != nil{
 		log.Error("CreateDCInNS error ",err)
 	}
@@ -110,7 +110,7 @@ func GetAllDC(c *gin.Context){
 func GetAllDCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
-	req,err := oapi.GenRequest("GET", DEPNAME+ namespace +DEPCONFIG,token, []byte{})
+	req,err := oapi.GenRequest("GET", DEPNAME+ namespace +"/deploymentconfigs",token, []byte{})
 	if err != nil{
 		log.Error("GetAllDCFromNS error ",err)
 	}
@@ -173,7 +173,7 @@ func WatchAllDC(c *gin.Context){
 func WatchAllDCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
-	oapi.WSRequest(WATCH + namespace + DEPCONFIG, token, c.Writer,c.Request)
+	oapi.WSRequest(WATCH + namespace + "/deploymentconfigs", token, c.Writer,c.Request)
 }
 
 func UpdataDCFromNS(c *gin.Context){
@@ -286,7 +286,7 @@ func DeleteAllDepFromNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.GenRequest("DELETE", DEPNAME+ namespace +DEPCONFIG,token, rBody)
+	req,err := oapi.GenRequest("DELETE", DEPNAME+ namespace +"/deploymentconfigs",token, rBody)
 	if err != nil{
 		log.Error("DeleteAllDepFromNS error ",err)
 	}

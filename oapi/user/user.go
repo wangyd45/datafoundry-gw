@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	USER  = "/oapi/v1/users/"
+	USER  = "/oapi/v1/users"
 	WATCH = "/oapi/v1/watch/users/"
 	JSON = "application/json"
 )
@@ -42,7 +42,7 @@ func CreateUser(c *gin.Context){
 func GetUser(c *gin.Context){
 	token := pkg.GetToken(c)
 	name := c.Param("name")
-	req,err := oapi.GenRequest("GET",USER + name,token,[]byte{})
+	req,err := oapi.GenRequest("GET",USER + "/" + name,token,[]byte{})
 	if err != nil{
 		log.Error("GetUser error ",err)
 	}
@@ -80,7 +80,7 @@ func UpdataUser(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _:= ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.GenRequest("PUT",USER + name,token,rBody)
+	req,err := oapi.GenRequest("PUT",USER + "/" + name,token,rBody)
 	if err != nil{
 		log.Error("DeleteAllUser error ",err)
 	}
@@ -92,7 +92,7 @@ func UpdataUser(c *gin.Context){
 func PatchUser(c *gin.Context){
 	token := pkg.GetToken(c)
 	name := c.Param("name")
-	req,err := oapi.GenRequest("PATCH",USER + name,token,[]byte{})
+	req,err := oapi.GenRequest("PATCH",USER + "/" + name,token,[]byte{})
 	if err != nil{
 		log.Error("PatchUser error ",err)
 	}
@@ -105,7 +105,7 @@ func PatchUser(c *gin.Context){
 func DeleteUser(c *gin.Context){
 	token := pkg.GetToken(c)
 	name := c.Param("name")
-	req,err := oapi.GenRequest("DELETE",USER + name,token,[]byte{})
+	req,err := oapi.GenRequest("DELETE",USER + "/" + name,token,[]byte{})
 	if err != nil{
 		log.Error("DeleteUser error ",err)
 	}

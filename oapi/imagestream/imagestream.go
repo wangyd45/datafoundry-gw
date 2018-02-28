@@ -44,7 +44,7 @@ func CreateImageInNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.GenRequest("POST", IMAGENAME+namespace +IMAGECONFIG,token, rBody)
+	req,err := oapi.GenRequest("POST", IMAGENAME+namespace +"/imagestreams",token, rBody)
 	if err != nil{
 		log.Error("CreateBuildConfigInNameSpace error ",err)
 	}
@@ -80,7 +80,7 @@ func GetAllImage(c *gin.Context){
 func GetAllImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
-	req,err := oapi.GenRequest("GET", IMAGENAME+ namespace +IMAGECONFIG,token, []byte{})
+	req,err := oapi.GenRequest("GET", IMAGENAME+ namespace +"/imagestreams",token, []byte{})
 	if err != nil{
 		log.Error("GetAllImageFromNS error ",err)
 	}
@@ -130,7 +130,7 @@ func WatchAllImage(c *gin.Context){
 func WatchAllImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
-	oapi.WSRequest(WATCH + namespace +IMAGECONFIG, token, c.Writer,c.Request)
+	oapi.WSRequest(WATCH + namespace +"/imagestreams", token, c.Writer,c.Request)
 }
 
 func UpdataImageFromNS(c *gin.Context){
@@ -213,7 +213,7 @@ func DeleteAllImageFromNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.GenRequest("DELETE", IMAGENAME+ namespace +IMAGECONFIG,token, rBody)
+	req,err := oapi.GenRequest("DELETE", IMAGENAME+ namespace +"/imagestreams",token, rBody)
 	if err != nil{
 		log.Error("DeleteAllBuildFromNameSpace error ",err)
 	}

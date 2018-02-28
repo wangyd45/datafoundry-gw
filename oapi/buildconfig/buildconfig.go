@@ -44,7 +44,7 @@ func CreateBCInNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req,err := oapi.GenRequest("POST",BUILDNAME +namespace + BUILDCONFIG,token, rBody)
+	req,err := oapi.GenRequest("POST",BUILDNAME +namespace + "/buildconfigs",token, rBody)
 	if err != nil{
 		log.Error("CreateBCInNS error ",err)
 	}
@@ -141,7 +141,7 @@ func GetAllBC(c *gin.Context){
 func GetAllBCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
-	req,err := oapi.GenRequest("GET",BUILDNAME + namespace + BUILDCONFIG,token, []byte{})
+	req,err := oapi.GenRequest("GET",BUILDNAME + namespace + "/buildconfigs",token, []byte{})
 	if err != nil{
 		log.Error("GetAllBCFromNS error ",err)
 	}
@@ -165,7 +165,7 @@ func WatchAllBC(c *gin.Context){
 func WatchAllBCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
-	oapi.WSRequest(WATCH + namespace + BUILDCONFIG, token, c.Writer,c.Request)
+	oapi.WSRequest(WATCH + namespace + "/buildconfigs", token, c.Writer,c.Request)
 }
 
 func UpdataBCFromNS(c *gin.Context){

@@ -53,7 +53,7 @@ func GetAllNetNamespaces(c *gin.Context){
 
 func WatchNetNamespace(c *gin.Context){
 
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	name := c.Param("name")
 	oapi.WSRequest("/oapi/v1/watch/netnamespaces/"+name,token,c.Writer,c.Request)
 
@@ -61,7 +61,7 @@ func WatchNetNamespace(c *gin.Context){
 
 func WatchAllNetNamespaces(c *gin.Context){
 
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	oapi.WSRequest("/oapi/v1/watch/netnamespaces",token,c.Writer,c.Request)
 
 }

@@ -79,7 +79,7 @@ func GetAllRoutesInNS(c *gin.Context){
 
 func WatchRouteInNS(c *gin.Context){
 
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	oapi.WSRequest("/oapi/v1/watch/namespaces/"+namespace+"/routes/"+name,token,c.Writer,c.Request)
@@ -88,14 +88,14 @@ func WatchRouteInNS(c *gin.Context){
 
 func WatchAllRoutes(c *gin.Context){
 
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	oapi.WSRequest("/oapi/v1/watch/routes",token,c.Writer,c.Request)
 
 }
 
 func WatchAllRoutesInNS(c *gin.Context){
 
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
 	oapi.WSRequest("/oapi/v1/watch/namespaces/"+namespace+"/routes",token,c.Writer,c.Request)
 

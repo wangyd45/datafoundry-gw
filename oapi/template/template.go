@@ -79,7 +79,7 @@ func GetAllTemplatesInNS(c *gin.Context){
 
 func WatchTemplateInNS(c *gin.Context){
 
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	oapi.WSRequest("/oapi/v1/watch/namespaces/"+namespace+"/templates/"+name,token,c.Writer,c.Request)
@@ -88,14 +88,14 @@ func WatchTemplateInNS(c *gin.Context){
 
 func WatchAllTemplates(c *gin.Context){
 
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	oapi.WSRequest("/oapi/v1/watch/templates",token,c.Writer,c.Request)
 
 }
 
 func WatchAllTemplatesInNS(c *gin.Context){
 
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
 	oapi.WSRequest("/oapi/v1/watch/namespaces/"+namespace+"/templates",token,c.Writer,c.Request)
 

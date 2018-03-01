@@ -61,14 +61,14 @@ func GetAllProjects(c *gin.Context){
 
 func WatchAProject(c *gin.Context) {
 
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	name := c.Param("name")
 	oapi.WSRequest("/oapi/v1/watch/projects/"+name,token,c.Writer,c.Request)
 }
 
 
 func WatchAllProjects(c *gin.Context){
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	oapi.WSRequest("/oapi/v1/watch/projects",token,c.Writer,c.Request)
 }
 

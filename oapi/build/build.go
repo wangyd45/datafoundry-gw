@@ -131,7 +131,7 @@ func WatchAllBuilds(c *gin.Context) {
 func WatchAllBuildFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
-	oapi.WSRequest(WATCH+ "/" +namespace+"/builds", token, c.Writer,c.Request)
+	oapi.WSRequest(WATCH+ "/" +namespace + "/builds", token, c.Writer,c.Request)
 }
 
 func UpdataBuildFromNS(c *gin.Context) {

@@ -8,7 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/pivotal-golang/lager"
 	"io/ioutil"
-	"fmt"
 )
 
 const (

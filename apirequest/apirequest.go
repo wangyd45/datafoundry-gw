@@ -97,13 +97,21 @@ func WSRequest(url, token string,w http.ResponseWriter, r *http.Request) {
 	response,_:=httpClientB.Do(request)
 
 	//我也不知道有多大
-	var data = make([]byte,1024)
+	var data = make([]byte,0)
+	var datatemp = make([]byte,1024)
 	defer response.Body.Close()
 	defer conn.Close()
 	for{
 
-		n,_:=response.Body.Read(data)
-		conn.WriteMessage(1,data[:n])
+		n,_:=response.Body.Read(datatemp)
+
+		if n ==1024{
+			data = append(data,datatemp...)
+			continue
+		}else{
+			data = append(data,datatemp[:n]...)
+		}
+		conn.WriteMessage(1,data)
 	}
 
 }

@@ -153,18 +153,18 @@ func GetAllBCFromNS(c *gin.Context){
 func WatchBCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	oapi.WSRequest(WATCH + namespace + BUILDCONFIG + name, token, c.Writer,c.Request)
 }
 
 func WatchAllBC(c *gin.Context){
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	oapi.WSRequest(WATCHALL, token, c.Writer,c.Request)
 }
 
 func WatchAllBCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	oapi.WSRequest(WATCH + namespace + "/buildconfigs", token, c.Writer,c.Request)
 }
 

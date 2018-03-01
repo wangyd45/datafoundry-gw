@@ -161,18 +161,18 @@ func GetStatusDepFromNS(c *gin.Context){
 func WatchDCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	oapi.WSRequest(WATCH + namespace +DEPCONFIG+ name, token, c.Writer,c.Request)
 }
 
 func WatchAllDC(c *gin.Context){
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	oapi.WSRequest(WATCHALL, token, c.Writer,c.Request)
 }
 
 func WatchAllDCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	oapi.WSRequest(WATCH + namespace + "/deploymentconfigs", token, c.Writer,c.Request)
 }
 

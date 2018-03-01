@@ -119,12 +119,12 @@ func GetLogBuildFromNS(c *gin.Context) {
 func WatchBuildFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	oapi.WSRequest(WATCH+ "/" +namespace+"/builds/" + name,token,c.Writer,c.Request)
 }
 
 func WatchAllBuilds(c *gin.Context) {
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	oapi.WSRequest(WATCHALL,token,c.Writer,c.Request)
 }
 

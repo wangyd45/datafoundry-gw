@@ -64,13 +64,13 @@ func GetAllUser(c *gin.Context){
 }
 
 func WatchUser(c *gin.Context){
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	name := c.Param("name")
 	oapi.WSRequest(WATCH + name, token, c.Writer,c.Request)
 }
 
 func WatchAllUser(c *gin.Context){
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	oapi.WSRequest(WATCH , token, c.Writer,c.Request)
 }
 

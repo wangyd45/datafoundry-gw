@@ -118,18 +118,18 @@ func GetStaImageFromNS(c *gin.Context){
 func WatchImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	oapi.WSRequest(WATCH + namespace +IMAGECONFIG+ name, token, c.Writer,c.Request)
 }
 
 func WatchAllImage(c *gin.Context){
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	oapi.WSRequest(WATCHALL, token, c.Writer,c.Request)
 }
 
 func WatchAllImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	oapi.WSRequest(WATCH + namespace +"/imagestreams", token, c.Writer,c.Request)
 }
 

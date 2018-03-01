@@ -28,6 +28,7 @@ var httpClientG = &http.Client{
 var wsupgrader = websocket.Upgrader{
 	ReadBufferSize:  2048,
 	WriteBufferSize: 2048,
+	CheckOrigin:func(r *http.Request)bool{return true},
 }
 
 func init() {

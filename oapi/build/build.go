@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/pivotal-golang/lager"
 	"io/ioutil"
+	"fmt"
 )
 
 const (
@@ -130,7 +131,7 @@ func WatchAllBuilds(c *gin.Context) {
 
 func WatchAllBuildFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	oapi.WSRequest(WATCH+ "/" +namespace+"/builds", token, c.Writer,c.Request)
 }
 

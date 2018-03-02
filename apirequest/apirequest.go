@@ -90,7 +90,6 @@ func WSRequest(url, token string,w http.ResponseWriter, r *http.Request) {
 	if err !=nil{
 		fmt.Println("request err:",err)
 	}
-
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Authorization", token)
 

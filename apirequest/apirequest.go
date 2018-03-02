@@ -8,6 +8,7 @@ import (
 	"bytes"
 	"crypto/tls"
 	"fmt"
+	"encoding/json"
 )
 
 
@@ -96,25 +97,46 @@ func WSRequest(url, token string,w http.ResponseWriter, r *http.Request) {
 
 	response,_:=httpClientB.Do(request)
 
-	//我也不知道有多大
-	var data = make([]byte,0)
-	var datatemp = make([]byte,1024)
+
+	//var data = make([]byte,10240)
 	defer response.Body.Close()
 	defer conn.Close()
+	var data = make([]byte,0)
+	var datatemp = make([]byte,512)
 	for{
-
-		n,_:=response.Body.Read(datatemp)
-
-		if n ==1024{
-			data = append(data,datatemp...)
-			continue
-		}else{
-			data = append(data,datatemp[:n]...)
+		response.Body.Read(datatemp)
+		data = append(data,datatemp...)
+		len :=len(data)
+		index :=0
+		//println("len ===%d",len)
+		for i:=0;i<len;i++{
+			if json.Valid(data[:i-index]){
+				//println("-------------")
+				//println(string(data[:i-index]))
+				conn.WriteMessage(1,data[:i-index])
+				data = data[i-index:]
+				index = i
+			}
 		}
-		conn.WriteMessage(1,data)
+
+		/*
+		n,_:=response.Body.Read(data)
+		index :=0
+		for i:=0;i<n;i++{
+			if json.Valid(data[index:i]){
+				println("index=%d",index)
+				println(string(data[index:i]))
+				conn.WriteMessage(1,data[index:i])
+				index = i
+			}
+
+		}
+		*/
+
 	}
 
 }
+
 
 func Request(timeout time.Duration, method, url, token string, body []byte) (*http.Response, error) {
 	var req *http.Request

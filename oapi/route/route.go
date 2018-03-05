@@ -41,7 +41,31 @@ func CreateRouteInNS(c *gin.Context){
 	c.Data(req.StatusCode, "application/json",result)
 }
 
-func GetRouteInNS(c *gin.Context){
+func GorWRouteInNS(c *gin.Context){
+	if pkg.IsWebsocket(c){
+		watchRouteInNS(c)
+	}else {
+		getRouteInNS(c)
+	}
+}
+
+func GorWAllRoutes(c *gin.Context){
+	if pkg.IsWebsocket(c){
+		watchAllRoutes(c)
+	}else {
+		getAllRoutes(c)
+	}
+}
+
+func GorWAllRoutesInNS(c *gin.Context){
+	if pkg.IsWebsocket(c){
+		watchAllRoutesInNS(c)
+	}else {
+		getAllRoutesInNS(c)
+	}
+}
+
+func getRouteInNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
@@ -54,7 +78,7 @@ func GetRouteInNS(c *gin.Context){
 	c.Data(req.StatusCode, "application/json",result)
 }
 
-func GetAllRoutes(c *gin.Context){
+func getAllRoutes(c *gin.Context){
 	token := pkg.GetToken(c)
 	req,err := oapi.GenRequest("GET","/oapi/v1/routes",token,nil)
 	if err != nil{
@@ -65,7 +89,7 @@ func GetAllRoutes(c *gin.Context){
 	c.Data(req.StatusCode, "application/json",result)
 }
 
-func GetAllRoutesInNS(c *gin.Context){
+func getAllRoutesInNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	req,err := oapi.GenRequest("GET","/oapi/v1/namespaces/"+namespace+"/routes",token,nil)
@@ -77,7 +101,7 @@ func GetAllRoutesInNS(c *gin.Context){
 	c.Data(req.StatusCode, "application/json",result)
 }
 
-func WatchRouteInNS(c *gin.Context){
+func watchRouteInNS(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
@@ -86,14 +110,14 @@ func WatchRouteInNS(c *gin.Context){
 
 }
 
-func WatchAllRoutes(c *gin.Context){
+func watchAllRoutes(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
 	oapi.WSRequest("/oapi/v1/watch/routes",token,c.Writer,c.Request)
 
 }
 
-func WatchAllRoutesInNS(c *gin.Context){
+func watchAllRoutesInNS(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")

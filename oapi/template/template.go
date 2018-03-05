@@ -41,7 +41,34 @@ func CreateTemplatenNS(c *gin.Context){
 	c.Data(req.StatusCode, "application/json",result)
 }
 
-func GetTemplateInNS(c *gin.Context){
+func GorWTemplateInNS(c *gin.Context) {
+
+	if pkg.IsWebsocket(c){
+		watchTemplateInNS(c)
+	}else{
+		getTemplateInNS(c)
+	}
+}
+
+func GorWAllTemplates(c *gin.Context) {
+
+	if pkg.IsWebsocket(c){
+		watchAllTemplates(c)
+	}else{
+		getAllTemplates(c)
+	}
+}
+
+func GorWAllTemplatesInNS(c *gin.Context) {
+
+	if pkg.IsWebsocket(c){
+		watchAllTemplatesInNS(c)
+	}else{
+		getAllTemplatesInNS(c)
+	}
+}
+
+func getTemplateInNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
@@ -54,7 +81,7 @@ func GetTemplateInNS(c *gin.Context){
 	c.Data(req.StatusCode, "application/json",result)
 }
 
-func GetAllTemplates(c *gin.Context){
+func getAllTemplates(c *gin.Context){
 	token := pkg.GetToken(c)
 	req,err := oapi.GenRequest("GET","/oapi/v1/templates",token,nil)
 	if err != nil{
@@ -65,7 +92,7 @@ func GetAllTemplates(c *gin.Context){
 	c.Data(req.StatusCode, "application/json",result)
 }
 
-func GetAllTemplatesInNS(c *gin.Context){
+func getAllTemplatesInNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	req,err := oapi.GenRequest("GET","/oapi/v1/namespaces/"+namespace+"/templates",token,nil)
@@ -77,7 +104,7 @@ func GetAllTemplatesInNS(c *gin.Context){
 	c.Data(req.StatusCode, "application/json",result)
 }
 
-func WatchTemplateInNS(c *gin.Context){
+func watchTemplateInNS(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
@@ -86,14 +113,14 @@ func WatchTemplateInNS(c *gin.Context){
 
 }
 
-func WatchAllTemplates(c *gin.Context){
+func watchAllTemplates(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
 	oapi.WSRequest("/oapi/v1/watch/templates",token,c.Writer,c.Request)
 
 }
 
-func WatchAllTemplatesInNS(c *gin.Context){
+func watchAllTemplatesInNS(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")

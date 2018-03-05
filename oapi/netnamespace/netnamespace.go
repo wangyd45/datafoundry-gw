@@ -28,7 +28,23 @@ func CreateNetNamespace(c *gin.Context){
 	c.Data(req.StatusCode, "application/json",result)
 }
 
-func GetNetNamespace(c *gin.Context){
+func GorWNetNamespace(c *gin.Context){
+	if pkg.IsWebsocket(c){
+		watchNetNamespace(c)
+	}else{
+		getNetNamespace(c)
+	}
+}
+
+func GorWAllNetNamespaces(c *gin.Context){
+	if pkg.IsWebsocket(c){
+		watchAllNetNamespaces(c)
+	}else{
+		getAllNetNamespaces(c)
+	}
+}
+
+func getNetNamespace(c *gin.Context){
 	token := pkg.GetToken(c)
 	name := c.Param("name")
 	req,err := oapi.GenRequest("GET","/oapi/v1/netnamespaces/"+name,token,nil)
@@ -40,7 +56,7 @@ func GetNetNamespace(c *gin.Context){
 	c.Data(req.StatusCode, "application/json",result)
 }
 
-func GetAllNetNamespaces(c *gin.Context){
+func getAllNetNamespaces(c *gin.Context){
 	token := pkg.GetToken(c)
 	req,err := oapi.GenRequest("GET","/oapi/v1/netnamespaces",token,nil)
 	if err != nil{
@@ -51,7 +67,7 @@ func GetAllNetNamespaces(c *gin.Context){
 	c.Data(req.StatusCode, "application/json",result)
 }
 
-func WatchNetNamespace(c *gin.Context){
+func watchNetNamespace(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
 	name := c.Param("name")
@@ -59,7 +75,7 @@ func WatchNetNamespace(c *gin.Context){
 
 }
 
-func WatchAllNetNamespaces(c *gin.Context){
+func watchAllNetNamespaces(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
 	oapi.WSRequest("/oapi/v1/watch/netnamespaces",token,c.Writer,c.Request)

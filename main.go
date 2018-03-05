@@ -184,10 +184,13 @@ func handle() (router *gin.Engine) {
 
 	//v1.NetNamespace
 	router.POST("/oapi/v1/netnamespaces", netnamespace.CreateNetNamespace)
-	router.GET("/oapi/v1/netnamespaces/:name", netnamespace.GetNetNamespace)
-	router.GET("/oapi/v1/netnamespaces", netnamespace.GetAllNetNamespaces)
-	router.GET("/oapi/v1/watch/netnamespaces/:name", netnamespace.WatchNetNamespace)
-	router.GET("/oapi/v1/watch/netnamespaces", netnamespace.WatchAllNetNamespaces)
+	router.GET("/oapi/v1/netnamespaces/:name", netnamespace.GorWNetNamespace)
+	router.GET("/oapi/v1/netnamespaces", netnamespace.GorWAllNetNamespaces)
+	//router.GET("/oapi/v1/netnamespaces/:name", netnamespace.GetNetNamespace)
+	//router.GET("/oapi/v1/netnamespaces", netnamespace.GetAllNetNamespaces)
+	//router.GET("/oapi/v1/watch/netnamespaces/:name", netnamespace.WatchNetNamespace)
+	//router.GET("/oapi/v1/watch/netnamespaces", netnamespace.WatchAllNetNamespaces)
+
 	router.PUT("/oapi/v1/netnamespaces/:name", netnamespace.UpdateNetNamespace)
 	router.PATCH("/oapi/v1/netnamespaces/:name", netnamespace.PatchNetNamespace)
 	router.DELETE("/oapi/v1/netnamespaces/:name", netnamespace.DeleteNetNamespace)
@@ -216,12 +219,15 @@ func handle() (router *gin.Engine) {
 	//v1.Route
 	router.POST("/oapi/v1/routes", route.CreateRoute)
 	router.POST("/oapi/v1/namespaces/:namespace/routes", route.CreateRouteInNS)
-	router.GET("/oapi/v1/namespaces/:namespace/routes/:name", route.GetRouteInNS)
-	router.GET("/oapi/v1/routes", route.GetAllRoutes)
-	router.GET("/oapi/v1/namespaces/:namespace/routes", route.GetAllRoutesInNS)
-	router.GET("/oapi/v1/watch/namespaces/:namespace/routes/:name", route.WatchRouteInNS)
-	router.GET("/oapi/v1/watch/routes", route.WatchAllRoutes)
-	router.GET("/oapi/v1/watch/namespaces/:namespace/routes", route.WatchAllRoutesInNS)
+	router.GET("/oapi/v1/namespaces/:namespace/routes/:name", route.GorWRouteInNS)
+	router.GET("/oapi/v1/routes", route.GorWAllRoutes)
+	router.GET("/oapi/v1/namespaces/:namespace/routes", route.GorWAllRoutesInNS)
+	//router.GET("/oapi/v1/namespaces/:namespace/routes/:name", route.GetRouteInNS)
+	//router.GET("/oapi/v1/routes", route.GetAllRoutes)
+	//router.GET("/oapi/v1/namespaces/:namespace/routes", route.GetAllRoutesInNS)
+	//router.GET("/oapi/v1/watch/namespaces/:namespace/routes/:name", route.WatchRouteInNS)
+	//router.GET("/oapi/v1/watch/routes", route.WatchAllRoutes)
+	//router.GET("/oapi/v1/watch/namespaces/:namespace/routes", route.WatchAllRoutesInNS)
 	router.GET("/oapi/v1/namespaces/:namespace/routes/:name/status", route.GetRouteStatusInNS)
 	router.PUT("/oapi/v1/namespaces/:namespace/routes/:name", route.UpdateRouteInNS)
 	router.PUT("/oapi/v1/namespaces/:namespace/routes/:name/status", route.UpdateRouteStatusInNS)
@@ -233,12 +239,15 @@ func handle() (router *gin.Engine) {
 	//v1.Template
 	router.POST("/oapi/v1/templates", template.CreateTemplate)
 	router.POST("/oapi/v1/namespaces/:namespace/templates", template.CreateTemplatenNS)
-	router.GET("/oapi/v1/namespaces/:namespace/templates/:name", template.GetTemplateInNS)
-	router.GET("/oapi/v1/templates", template.GetAllTemplates)
-	router.GET("/oapi/v1/namespaces/:namespace/templates", template.GetAllTemplatesInNS)
-	router.GET("/oapi/v1/watch/namespaces/:namespace/templates/:name", template.WatchTemplateInNS)
-	router.GET("/oapi/v1/watch/templates", template.WatchAllTemplates)
-	router.GET("/oapi/v1/watch/namespaces/:namespace/templates", template.WatchAllTemplatesInNS)
+	router.GET("/oapi/v1/namespaces/:namespace/templates/:name", template.GorWTemplateInNS)
+	router.GET("/oapi/v1/templates", template.GorWAllTemplates)
+	router.GET("/oapi/v1/namespaces/:namespace/templates", template.GorWAllTemplatesInNS)
+	//router.GET("/oapi/v1/namespaces/:namespace/templates/:name", template.GetTemplateInNS)
+	//router.GET("/oapi/v1/templates", template.GetAllTemplates)
+	//router.GET("/oapi/v1/namespaces/:namespace/templates", template.GetAllTemplatesInNS)
+	//router.GET("/oapi/v1/watch/namespaces/:namespace/templates/:name", template.WatchTemplateInNS)
+	//router.GET("/oapi/v1/watch/templates", template.WatchAllTemplates)
+	//router.GET("/oapi/v1/watch/namespaces/:namespace/templates", template.WatchAllTemplatesInNS)
 	router.PUT("/oapi/v1/namespaces/:namespace/templates/:name", template.UpdateTemplateInNS)
 	router.PATCH("/oapi/v1/namespaces/:namespace/templates/:name", template.PatchTemplateInNS)
 	router.DELETE("/oapi/v1/namespaces/:namespace/templates/:name", template.DeleteTemplateInNS)
@@ -246,26 +255,3 @@ func handle() (router *gin.Engine) {
 
 	return
 }
-
-/*
-var origin = "http://new.dataos.io:8443/"
-var url = "ws://new.dataos.io:8443?token=zTUpzpPPTaKtY0ZCTB80FP0djjwQ1e36TGT17a3OR1M/oapi/v1/watch/projects/wutest001"
-
-func main() {
-
-	ws, err := websocket.Dial(url, "", origin)
-	if err != nil {
-		fmt.Println("-----------------------")
-		log.Fatal(err)
-	}
-
-	var msg = make([]byte, 512)
-	m, err := ws.Read(msg)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Printf("Receive: %s\n", msg[:m])
-
-	ws.Close()//关闭连接
-}
-*/

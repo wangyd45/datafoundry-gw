@@ -102,19 +102,22 @@ func WSRequest(url, token string,w http.ResponseWriter, r *http.Request) {
 	defer conn.Close()
 	var data = make([]byte,0)
 	var datatemp = make([]byte,512)
+	lenindex := 0
 	for{
 		response.Body.Read(datatemp)
 		data = append(data,datatemp...)
 		len :=len(data)
 		index :=0
+		lenindex++
 		//println("len ===%d",len)
-		for i:=0;i<len;i++{
+		for i:=512*(lenindex-1);i<len;i++{
 			if json.Valid(data[:i-index]){
 				//println("-------------")
 				//println(string(data[:i-index]))
 				conn.WriteMessage(1,data[:i-index])
 				data = data[i-index:]
 				index = i
+				lenindex = 0
 			}
 		}
 

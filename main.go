@@ -80,10 +80,12 @@ func handle() (router *gin.Engine) {
 
 	//v1.project
 	router.POST("/oapi/v1/projectrequests", project.CreateProject)
-	router.GET("/oapi/v1/projects/:name", project.GetProject)
-	router.GET("/oapi/v1/projects", project.GetAllProjects)
-	router.GET("/oapi/v1/watch/projects/:name",project.WatchAProject)
-	router.GET("/oapi/v1/watch/projects",project.WatchAllProjects)
+	//router.GET("/oapi/v1/projects/:name", project.GetProject)
+	router.GET("/oapi/v1/projects/:name", project.GorWProject)
+	router.GET("/oapi/v1/projects", project.GorWAllProjects)
+	//router.GET("/oapi/v1/projects", project.GetAllProjects)
+	//router.GET("/oapi/v1/watch/projects/:name",project.WatchAProject)
+	//router.GET("/oapi/v1/watch/projects",project.WatchAllProjects)
 	router.PUT("/oapi/v1/projects/:name", project.UpdateProject)
 	router.PATCH("/oapi/v1/projects/:name",project.PatchAProject)
 	router.DELETE("/oapi/v1/projects/:name", project.DeleteProject)

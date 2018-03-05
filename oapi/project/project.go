@@ -33,7 +33,7 @@ func CreateProject(c *gin.Context){
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
 }
-
+/*
 //获取project-OK
 func GetProject(c *gin.Context){
 	token := pkg.GetToken(c)
@@ -46,7 +46,41 @@ func GetProject(c *gin.Context){
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
 }
+*/
 
+func GorWProject(c *gin.Context) {
+	token := pkg.GetToken(c)
+	name := c.Param("name")
+
+	if true{
+		req,err := oapi.GenRequest("GET","/oapi/v1/projects/"+name,token,nil)
+		if err != nil{
+			logger.Error("Get A Project Fail",err)
+		}
+		result, _:= ioutil.ReadAll(req.Body)
+		defer req.Body.Close()
+		c.Data(req.StatusCode, "application/json",result)
+	}else{
+		oapi.WSRequest("/oapi/v1/watch/projects/"+name,token,c.Writer,c.Request)
+	}
+}
+
+func GorWAllProjects(c *gin.Context) {
+	token := pkg.GetToken(c)
+
+	if true{
+		req,err := oapi.GenRequest("GET","/oapi/v1/projects",token,nil)
+		if err != nil{
+			logger.Error("Get ALL Projects Fail",err)
+		}
+		result, _:= ioutil.ReadAll(req.Body)
+		defer req.Body.Close()
+		c.Data(req.StatusCode, "application/json",result)
+	}else{
+		oapi.WSRequest("/oapi/v1/watch/projects",token,c.Writer,c.Request)
+	}
+}
+/*
 //获取project列表-OK
 func GetAllProjects(c *gin.Context){
 	token := pkg.GetToken(c)
@@ -66,12 +100,11 @@ func WatchAProject(c *gin.Context) {
 	oapi.WSRequest("/oapi/v1/watch/projects/"+name,token,c.Writer,c.Request)
 }
 
-
 func WatchAllProjects(c *gin.Context){
 	token := pkg.GetWSToken(c)
 	oapi.WSRequest("/oapi/v1/watch/projects",token,c.Writer,c.Request)
 }
-
+*/
 
 //更新project
 func UpdateProject(c *gin.Context){

@@ -255,26 +255,3 @@ func handle() (router *gin.Engine) {
 
 	return
 }
-
-/*
-var origin = "http://new.dataos.io:8443/"
-var url = "ws://new.dataos.io:8443?token=zTUpzpPPTaKtY0ZCTB80FP0djjwQ1e36TGT17a3OR1M/oapi/v1/watch/projects/wutest001"
-
-func main() {
-
-	ws, err := websocket.Dial(url, "", origin)
-	if err != nil {
-		fmt.Println("-----------------------")
-		log.Fatal(err)
-	}
-
-	var msg = make([]byte, 512)
-	m, err := ws.Read(msg)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Printf("Receive: %s\n", msg[:m])
-
-	ws.Close()//关闭连接
-}
-*/

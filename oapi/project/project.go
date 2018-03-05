@@ -49,10 +49,13 @@ func GetProject(c *gin.Context){
 */
 
 func GorWProject(c *gin.Context) {
-	token := pkg.GetToken(c)
 	name := c.Param("name")
 
-	if true{
+	if pkg.IsWebsocket(c){
+		token := pkg.GetWSToken(c)
+		oapi.WSRequest("/oapi/v1/watch/projects/"+name,token,c.Writer,c.Request)
+	}else{
+		token := pkg.GetToken(c)
 		req,err := oapi.GenRequest("GET","/oapi/v1/projects/"+name,token,nil)
 		if err != nil{
 			logger.Error("Get A Project Fail",err)
@@ -60,15 +63,16 @@ func GorWProject(c *gin.Context) {
 		result, _:= ioutil.ReadAll(req.Body)
 		defer req.Body.Close()
 		c.Data(req.StatusCode, "application/json",result)
-	}else{
-		oapi.WSRequest("/oapi/v1/watch/projects/"+name,token,c.Writer,c.Request)
 	}
 }
 
 func GorWAllProjects(c *gin.Context) {
-	token := pkg.GetToken(c)
 
-	if true{
+	if pkg.IsWebsocket(c){
+		token := pkg.GetWSToken(c)
+		oapi.WSRequest("/oapi/v1/watch/projects",token,c.Writer,c.Request)
+	}else{
+		token := pkg.GetToken(c)
 		req,err := oapi.GenRequest("GET","/oapi/v1/projects",token,nil)
 		if err != nil{
 			logger.Error("Get ALL Projects Fail",err)
@@ -76,8 +80,6 @@ func GorWAllProjects(c *gin.Context) {
 		result, _:= ioutil.ReadAll(req.Body)
 		defer req.Body.Close()
 		c.Data(req.StatusCode, "application/json",result)
-	}else{
-		oapi.WSRequest("/oapi/v1/watch/projects",token,c.Writer,c.Request)
 	}
 }
 /*

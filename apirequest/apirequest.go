@@ -82,14 +82,14 @@ func WSRequest(url, token string,w http.ResponseWriter, r *http.Request) {
 
 	conn, err = wsupgrader.Upgrade(w, r, nil)
 	if err != nil {
-		fmt.Println("Failed to set websocket upgrade: %+v", err)
+		fmt.Errorf("Failed to set websocket upgrade: %+v", err)
 		return
 	}
 
 	url = "https://"+apiHost+url
 	request,err = http.NewRequest("GET", url, nil)
 	if err !=nil{
-		fmt.Println("request err:",err)
+		fmt.Errorf("request err:",err)
 	}
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Authorization", token)

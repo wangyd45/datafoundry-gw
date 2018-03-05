@@ -17,6 +17,18 @@ func GetWSToken(c *gin.Context) (ret string){
 	return ret
 }
 
+func IsWebsocket(c *gin.Context) (bret bool){
+	bret = false
+	value :=c.Request.Header.Get("Upgrade")
+	if value == "websocket"{
+		bret = true
+	}else {
+		bret = false
+	}
+	return bret
+}
+
+
 func GetRealToken(c *gin.Context) (ret string){
 	ret = c.Request.Header.Get("Authorization")
 	if len(ret) > 7{

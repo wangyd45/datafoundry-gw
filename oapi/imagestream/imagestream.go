@@ -54,39 +54,51 @@ func CreateImageInNS(c *gin.Context){
 }
 
 func GetImageFromNS(c *gin.Context){
-	namespace := c.Param("namespace")
-	name := c.Param("name")
-	token := pkg.GetToken(c)
-	req,err := oapi.GenRequest("GET", IMAGENAME+ namespace +IMAGECONFIG+ name,token, []byte{})
-	if err != nil{
-		log.Error("GetBuildConfigFromNameSpace error ",err)
+	if pkg.IsWebsocket(c){
+		watchImageFromNS(c)
+	}else {
+		namespace := c.Param("namespace")
+		name := c.Param("name")
+		token := pkg.GetToken(c)
+		req, err := oapi.GenRequest("GET", IMAGENAME+namespace+IMAGECONFIG+name, token, []byte{})
+		if err != nil {
+			log.Error("GetBuildConfigFromNameSpace error ", err)
+		}
+		result, _ := ioutil.ReadAll(req.Body)
+		defer req.Body.Close()
+		c.Data(req.StatusCode, JSON, result)
 	}
-	result, _:= ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, JSON, result)
 }
 
 func GetAllImage(c *gin.Context){
-	token := pkg.GetToken(c)
-	req,err := oapi.GenRequest("GET", IMAGE,token, []byte{})
-	if err != nil{
-		log.Error("GetAllBuildConfig error ",err)
+	if pkg.IsWebsocket(c){
+		watchAllImage(c)
+	}else {
+		token := pkg.GetToken(c)
+		req, err := oapi.GenRequest("GET", IMAGE, token, []byte{})
+		if err != nil {
+			log.Error("GetAllBuildConfig error ", err)
+		}
+		result, _ := ioutil.ReadAll(req.Body)
+		defer req.Body.Close()
+		c.Data(req.StatusCode, JSON, result)
 	}
-	result, _:= ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, JSON, result)
 }
 
 func GetAllImageFromNS(c *gin.Context){
-	namespace := c.Param("namespace")
-	token := pkg.GetToken(c)
-	req,err := oapi.GenRequest("GET", IMAGENAME+ namespace +"/imagestreams",token, []byte{})
-	if err != nil{
-		log.Error("GetAllImageFromNS error ",err)
+	if pkg.IsWebsocket(c){
+		watchAllImageFromNS(c)
+	}else {
+		namespace := c.Param("namespace")
+		token := pkg.GetToken(c)
+		req, err := oapi.GenRequest("GET", IMAGENAME+namespace+"/imagestreams", token, []byte{})
+		if err != nil {
+			log.Error("GetAllImageFromNS error ", err)
+		}
+		result, _ := ioutil.ReadAll(req.Body)
+		defer req.Body.Close()
+		c.Data(req.StatusCode, JSON, result)
 	}
-	result, _:= ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, JSON, result)
 }
 
 func GetSecImageFromNS(c *gin.Context){
@@ -115,19 +127,19 @@ func GetStaImageFromNS(c *gin.Context){
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func WatchImageFromNS(c *gin.Context){
+func watchImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetWSToken(c)
 	oapi.WSRequest(WATCH + namespace +IMAGECONFIG+ name, token, c.Writer,c.Request)
 }
 
-func WatchAllImage(c *gin.Context){
+func watchAllImage(c *gin.Context){
 	token := pkg.GetWSToken(c)
 	oapi.WSRequest(WATCHALL, token, c.Writer,c.Request)
 }
 
-func WatchAllImageFromNS(c *gin.Context){
+func watchAllImageFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetWSToken(c)
 	oapi.WSRequest(WATCH + namespace +"/imagestreams", token, c.Writer,c.Request)

@@ -68,39 +68,51 @@ func CreateCloneInNS(c *gin.Context) {
 }
 
 func GetBuildFromNS(c *gin.Context) {
-	namespace := c.Param("namespace")
-	name := c.Param("name")
-	token := pkg.GetToken(c)
-	req, err := oapi.GenRequest("GET", BUILDNAME + "/" +namespace+"/builds/"+name, token, []byte{})
-	if err != nil {
-		log.Error("GetBuildFromNS error ", err)
+	if pkg.IsWebsocket(c){
+		watchBuildFromNS(c)
+	}else {
+		namespace := c.Param("namespace")
+		name := c.Param("name")
+		token := pkg.GetToken(c)
+		req, err := oapi.GenRequest("GET", BUILDNAME + "/" +namespace+"/builds/"+name, token, []byte{})
+		if err != nil {
+			log.Error("GetBuildFromNS error ", err)
+		}
+		result, _ := ioutil.ReadAll(req.Body)
+		defer req.Body.Close()
+		c.Data(req.StatusCode, JSON, result)
 	}
-	result, _ := ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, JSON, result)
 }
 
 func GetAllBuilds(c *gin.Context) {
-	token := pkg.GetToken(c)
-	req, err := oapi.GenRequest("GET", BUILD, token, []byte{})
-	if err != nil {
-		log.Error("GetAllBuilds error ", err)
+	if pkg.IsWebsocket(c){
+		watchAllBuilds(c)
+	}else {
+		token := pkg.GetToken(c)
+		req, err := oapi.GenRequest("GET", BUILD, token, []byte{})
+		if err != nil {
+			log.Error("GetAllBuilds error ", err)
+		}
+		result, _ := ioutil.ReadAll(req.Body)
+		defer req.Body.Close()
+		c.Data(req.StatusCode, JSON, result)
 	}
-	result, _ := ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, JSON, result)
 }
 
 func GetAllBuildFromNS(c *gin.Context) {
-	namespace := c.Param("namespace")
-	token := pkg.GetToken(c)
-	req, err := oapi.GenRequest("GET", BUILDNAME + "/" +namespace+"/builds", token, []byte{})
-	if err != nil {
-		log.Error("GetAllBuildFromNS error ", err)
+	if pkg.IsWebsocket(c){
+		watchAllBuildFromNS(c)
+	}else {
+		namespace := c.Param("namespace")
+		token := pkg.GetToken(c)
+		req, err := oapi.GenRequest("GET", BUILDNAME+"/"+namespace+"/builds", token, []byte{})
+		if err != nil {
+			log.Error("GetAllBuildFromNS error ", err)
+		}
+		result, _ := ioutil.ReadAll(req.Body)
+		defer req.Body.Close()
+		c.Data(req.StatusCode, JSON, result)
 	}
-	result, _ := ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, JSON, result)
 }
 
 func GetLogBuildFromNS(c *gin.Context) {
@@ -116,19 +128,19 @@ func GetLogBuildFromNS(c *gin.Context) {
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func WatchBuildFromNS(c *gin.Context) {
+func watchBuildFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetWSToken(c)
 	oapi.WSRequest(WATCH+ "/" +namespace+"/builds/" + name,token,c.Writer,c.Request)
 }
 
-func WatchAllBuilds(c *gin.Context) {
+func watchAllBuilds(c *gin.Context) {
 	token := pkg.GetWSToken(c)
 	oapi.WSRequest(WATCHALL,token,c.Writer,c.Request)
 }
 
-func WatchAllBuildFromNS(c *gin.Context) {
+func watchAllBuildFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetWSToken(c)
 	oapi.WSRequest(WATCH+ "/" +namespace+"/builds", token, c.Writer,c.Request)

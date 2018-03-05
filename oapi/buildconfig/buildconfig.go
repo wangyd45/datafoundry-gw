@@ -115,54 +115,66 @@ func CreateWebInNSP(c *gin.Context){
 }
 
 func GetBCFromNS(c *gin.Context){
-	namespace := c.Param("namespace")
-	name := c.Param("name")
-	token := pkg.GetToken(c)
-	req,err := oapi.GenRequest("GET",BUILDNAME + namespace + BUILDCONFIG + name,token, []byte{})
-	if err != nil{
-		log.Error("GetBCFromNS error ",err)
+	if pkg.IsWebsocket(c){
+		watchBCFromNS(c)
+	}else {
+		namespace := c.Param("namespace")
+		name := c.Param("name")
+		token := pkg.GetToken(c)
+		req, err := oapi.GenRequest("GET", BUILDNAME+namespace+BUILDCONFIG+name, token, []byte{})
+		if err != nil {
+			log.Error("GetBCFromNS error ", err)
+		}
+		result, _ := ioutil.ReadAll(req.Body)
+		defer req.Body.Close()
+		c.Data(req.StatusCode, JSON, result)
 	}
-	result, _:= ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, JSON, result)
 }
 
 func GetAllBC(c *gin.Context){
-	token := pkg.GetToken(c)
-	req,err := oapi.GenRequest("GET",BUILD,token, []byte{})
-	if err != nil{
-		log.Error("GetAllBC error ",err)
+	if pkg.IsWebsocket(c){
+		watchAllBC(c)
+	}else {
+		token := pkg.GetToken(c)
+		req, err := oapi.GenRequest("GET", BUILD, token, []byte{})
+		if err != nil {
+			log.Error("GetAllBC error ", err)
+		}
+		result, _ := ioutil.ReadAll(req.Body)
+		defer req.Body.Close()
+		c.Data(req.StatusCode, JSON, result)
 	}
-	result, _:= ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, JSON, result)
 }
 
 func GetAllBCFromNS(c *gin.Context){
-	namespace := c.Param("namespace")
-	token := pkg.GetToken(c)
-	req,err := oapi.GenRequest("GET",BUILDNAME + namespace + "/buildconfigs",token, []byte{})
-	if err != nil{
-		log.Error("GetAllBCFromNS error ",err)
+	if pkg.IsWebsocket(c){
+		watchAllBCFromNS(c)
+	}else {
+		namespace := c.Param("namespace")
+		token := pkg.GetToken(c)
+		req, err := oapi.GenRequest("GET", BUILDNAME+namespace+"/buildconfigs", token, []byte{})
+		if err != nil {
+			log.Error("GetAllBCFromNS error ", err)
+		}
+		result, _ := ioutil.ReadAll(req.Body)
+		defer req.Body.Close()
+		c.Data(req.StatusCode, JSON, result)
 	}
-	result, _:= ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, JSON, result)
 }
 
-func WatchBCFromNS(c *gin.Context){
+func watchBCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetWSToken(c)
 	oapi.WSRequest(WATCH + namespace + BUILDCONFIG + name, token, c.Writer,c.Request)
 }
 
-func WatchAllBC(c *gin.Context){
+func watchAllBC(c *gin.Context){
 	token := pkg.GetWSToken(c)
 	oapi.WSRequest(WATCHALL, token, c.Writer,c.Request)
 }
 
-func WatchAllBCFromNS(c *gin.Context){
+func watchAllBCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetWSToken(c)
 	oapi.WSRequest(WATCH + namespace + "/buildconfigs", token, c.Writer,c.Request)

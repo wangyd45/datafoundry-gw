@@ -84,39 +84,51 @@ func CreateRollBackInNS(c *gin.Context){
 }
 
 func GetDCFromNS(c *gin.Context){
-	namespace := c.Param("namespace")
-	name := c.Param("name")
-	token := pkg.GetToken(c)
-	req,err := oapi.GenRequest("GET", DEPNAME+ namespace +DEPCONFIG+ name,token, []byte{})
-	if err != nil{
-		log.Error("GetDCFromNS error ",err)
+	if pkg.IsWebsocket(c){
+		watchDCFromNS(c)
+	}else {
+		namespace := c.Param("namespace")
+		name := c.Param("name")
+		token := pkg.GetToken(c)
+		req, err := oapi.GenRequest("GET", DEPNAME+namespace+DEPCONFIG+name, token, []byte{})
+		if err != nil {
+			log.Error("GetDCFromNS error ", err)
+		}
+		result, _ := ioutil.ReadAll(req.Body)
+		defer req.Body.Close()
+		c.Data(req.StatusCode, JSON, result)
 	}
-	result, _:= ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, JSON, result)
 }
 
 func GetAllDC(c *gin.Context){
-	token := pkg.GetToken(c)
-	req,err := oapi.GenRequest("GET", DEP,token, []byte{})
-	if err != nil{
-		log.Error("GetAllDC error ",err)
+	if pkg.IsWebsocket(c){
+		watchAllDC(c)
+	}else {
+		token := pkg.GetToken(c)
+		req, err := oapi.GenRequest("GET", DEP, token, []byte{})
+		if err != nil {
+			log.Error("GetAllDC error ", err)
+		}
+		result, _ := ioutil.ReadAll(req.Body)
+		defer req.Body.Close()
+		c.Data(req.StatusCode, JSON, result)
 	}
-	result, _:= ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, JSON, result)
 }
 
 func GetAllDCFromNS(c *gin.Context){
-	namespace := c.Param("namespace")
-	token := pkg.GetToken(c)
-	req,err := oapi.GenRequest("GET", DEPNAME+ namespace +"/deploymentconfigs",token, []byte{})
-	if err != nil{
-		log.Error("GetAllDCFromNS error ",err)
+	if pkg.IsWebsocket(c){
+		watchAllDCFromNS(c)
+	}else {
+		namespace := c.Param("namespace")
+		token := pkg.GetToken(c)
+		req, err := oapi.GenRequest("GET", DEPNAME+namespace+"/deploymentconfigs", token, []byte{})
+		if err != nil {
+			log.Error("GetAllDCFromNS error ", err)
+		}
+		result, _ := ioutil.ReadAll(req.Body)
+		defer req.Body.Close()
+		c.Data(req.StatusCode, JSON, result)
 	}
-	result, _:= ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, JSON, result)
 }
 
 func GetLogDepFromNS(c *gin.Context){
@@ -158,19 +170,19 @@ func GetStatusDepFromNS(c *gin.Context){
 	c.Data(req.StatusCode, JSON, result)
 }
 
-func WatchDCFromNS(c *gin.Context){
+func watchDCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetWSToken(c)
 	oapi.WSRequest(WATCH + namespace +DEPCONFIG+ name, token, c.Writer,c.Request)
 }
 
-func WatchAllDC(c *gin.Context){
+func watchAllDC(c *gin.Context){
 	token := pkg.GetWSToken(c)
 	oapi.WSRequest(WATCHALL, token, c.Writer,c.Request)
 }
 
-func WatchAllDCFromNS(c *gin.Context){
+func watchAllDCFromNS(c *gin.Context){
 	namespace := c.Param("namespace")
 	token := pkg.GetWSToken(c)
 	oapi.WSRequest(WATCH + namespace + "/deploymentconfigs", token, c.Writer,c.Request)

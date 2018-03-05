@@ -2,6 +2,7 @@ package pkg
 
 import (
 	"github.com/gin-gonic/gin"
+	"fmt"
 )
 
 func Parm(c *gin.Context,key string)string{
@@ -20,6 +21,7 @@ func GetWSToken(c *gin.Context) (ret string){
 func IsWebsocket(c *gin.Context) (bret bool){
 	bret = false
 	value :=c.Request.Header.Get("Upgrade")
+	fmt.Println("----------",value)
 	if value == "websocket"{
 		bret = true
 	}else {

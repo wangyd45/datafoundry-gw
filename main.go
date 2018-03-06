@@ -26,6 +26,14 @@ import (
 	rq "github.com/asiainfoLDP/datafoundry-gw/k8sapi/resourcequota"
 	rc "github.com/asiainfoLDP/datafoundry-gw/k8sapi/replicationcontroller"
 	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/pod"
+	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/configmap"
+	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/endpoints"
+	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/event"
+	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/limitrange"
+	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/namespace"
+	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/node"
+	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/persistentvolume"
+	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/persistentvolumeclaim"
 /*
 
 	"log"
@@ -367,6 +375,116 @@ func handle() (router *gin.Engine) {
 	router.DELETE("/api/v1/namespaces/:namespace/services/:name/proxy", service.DeleteProServicesFromNS)
 	router.DELETE("/api/v1/namespaces/:namespace/services/:name/proxy/:path", service.DeleteProPathServicesFromNS)
 
+	//v1.ConfigMap
+	router.POST("/api/v1/configmaps", configmap.CreateConfigMap)
+	router.POST("/api/v1/namespaces/:namespace/configmaps", configmap.CreateConfigMapNS)
+	router.GET("/api/v1/namespaces/:namespace/configmaps/:name", configmap.GorWConfigMapNS)
+	router.GET("/api/v1/configmaps", configmap.GorWAllConfigMap)
+	router.GET("/api/v1/namespaces/:namespace/configmaps", configmap.GorWAllConfigMapNS)
+	router.PUT("/api/v1/namespaces/:namespace/configmaps/:name", configmap.UpdateConfigMapNS)
+	router.PATCH("/api/v1/namespaces/:namespace/configmaps/:name", configmap.PatchConfigMapNS)
+	router.DELETE("/api/v1/namespaces/:namespace/configmaps/:name", configmap.DeleteConfigMapNS)
+	router.DELETE("/api/v1/namespaces/:namespace/configmaps", configmap.DeleteAllConfigMapNS)
+
+
+	//v1.Endpoints
+	router.POST("/api/v1/endpoints", endpoints.CreateEndpoints)
+	router.POST("/api/v1/namespaces/:namespace/endpoints", endpoints.CreateEndpointsNS)
+	router.GET("/api/v1/namespaces/:namespace/endpoints/:name", endpoints.GorWEndpointsNS)
+	router.GET("/api/v1/endpoints", endpoints.GorWAllEndpoints)
+	router.GET("/api/v1/namespaces/:namespace/endpoints", endpoints.GorWAllEndpointsNS)
+	router.PUT("/api/v1/namespaces/:namespace/endpoints/:name", endpoints.UpdateEndpointsNS)
+	router.PATCH("/api/v1/namespaces/:namespace/endpoints/:name", endpoints.PatchEndpointsNS)
+	router.DELETE("/api/v1/namespaces/:namespace/endpoints/:name", endpoints.DeleteEndpointsNS)
+	router.DELETE("/api/v1/namespaces/:namespace/endpoints", endpoints.DeleteAllEndpointsNS)
+
+	//v1.Event
+	router.POST("/api/v1/events", event.CreateEvent)
+	router.POST("/api/v1/namespaces/:namespace/events", event.CreateEventNS)
+	router.GET("/api/v1/namespaces/:namespace/events/:name", event.GorWEventNS)
+	router.GET("/api/v1/events", event.GorWAllEvents)
+	router.GET("/api/v1/namespaces/:namespace/events", event.GorWAllEventsNS)
+	router.PUT("/api/v1/namespaces/:namespace/events/:name", event.UpdateEventNS)
+	router.PATCH("/api/v1/namespaces/:namespace/events/:name", event.PatchEventNS)
+	router.DELETE("/api/v1/namespaces/:namespace/events/:name", event.DeleteEventNS)
+	router.DELETE("/api/v1/namespaces/:namespace/events", event.DeleteAllEventNS)
+
+
+	//v1.LimitRange
+	router.POST("/api/v1/limitranges", limitrange.CreateLimitRange)
+	router.POST("/api/v1/namespaces/:namespace/limitranges", limitrange.CreateLimitRangeNS)
+	router.GET("/api/v1/namespaces/:namespace/limitranges/:name", limitrange.GorWLimitRangeNS)
+	router.GET("/api/v1/limitranges", limitrange.GorWAllLimitRanges)
+	router.GET("/api/v1/namespaces/:namespace/limitranges", limitrange.GorWAllLimitRangesNS)
+	router.PUT("/api/v1/namespaces/:namespace/limitranges/:name", limitrange.UpdateLimitRangeNS)
+	router.PATCH("/api/v1/namespaces/:namespace/limitranges/:name", limitrange.PatchLimitRangeNS)
+	router.DELETE("/api/v1/namespaces/:namespace/limitranges/:name", limitrange.DeleteLimitRangeNS)
+	router.DELETE("/api/v1/namespaces/:namespace/limitranges", limitrange.DeleteAllLimitRangeNS)
+
+	//v1.Namespace
+	router.POST("/api/v1/namespaces", namespace.CreateNamespace)
+	router.GET("/api/v1/namespaces/:name", namespace.GorWNamespace)
+	router.GET("/api/v1/namespaces", namespace.GorWAllNamespaces)
+	router.PUT("/api/v1/namespaces/:name", namespace.UpdateNamespace)
+	router.PATCH("/api/v1/namespaces/:name", namespace.PatchNamespace)
+	router.DELETE("/api/v1/namespaces/:name", namespace.DeleteNamespace)
+	router.PUT("/api/v1/namespaces/:name/finalize", namespace.UpdatefinalizeofNS)
+	router.GET("/api/v1/namespaces/:name/status", namespace.GetstatusofNS)
+	router.PUT("/api/v1/namespaces/:name/status", namespace.UpdatestatusofNS)
+	router.PATCH("/api/v1/namespaces/:name/status", namespace.PatchstatusofNS)
+
+	//v1.Node
+	router.POST("/api/v1/nodes", node.CreateNode)
+	router.GET("/api/v1/nodes/:name", node.GorWNode)
+	router.GET("/api/v1/nodes", node.GorWAllNodes)
+	router.PUT("/api/v1/nodes/:name", node.UpdateNode)
+	router.PATCH("/api/v1/nodes/:name", node.PatchNode)
+	router.DELETE("/api/v1/nodes/:name", node.DeleteNode)
+	router.DELETE("/api/v1/nodes", node.DeleteAllNodes)
+	router.GET("/api/v1/nodes/:name/status", node.GetStatusOfNode)
+	router.PUT("/api/v1/nodes/:name/status", node.UpdateStatusOfNode)
+	router.PATCH("/api/v1/nodes/:name/status", node.PatchStatusOfNode)
+	router.OPTIONS("/api/v1/nodes/:name/proxy",node.ProxyOpnReqToNode)
+	router.POST("/api/v1/nodes/:name/proxy",node.ProxyPostReqToNode)
+	router.HEAD("/api/v1/nodes/:name/proxy",node.ProxyHeadReqToNode)
+	router.GET("/api/v1/nodes/:name/proxy",node.ProxyGetReqToNode)
+	router.PUT("/api/v1/nodes/:name/proxy",node.ProxyPutReqToNode)
+	router.PATCH("/api/v1/nodes/:name/proxy",node.ProxyPatchReqToNode)
+	router.DELETE("/api/v1/nodes/:name/proxy",node.ProxyDelReqToNode)
+	router.OPTIONS("/api/v1/nodes/:name/proxy/:path",node.ProxyOpnReqToNodeP)
+	router.POST("/api/v1/nodes/:name/proxy/:path",node.ProxyPostReqToNodeP)
+	router.HEAD("/api/v1/nodes/:name/proxy/:path",node.ProxyHeadReqToNodeP)
+	router.GET("/api/v1/nodes/:name/proxy/:path",node.ProxyGetReqToNodeP)
+	router.PUT("/api/v1/nodes/:name/proxy/:path",node.ProxyPutReqToNodeP)
+	router.PATCH("/api/v1/nodes/:name/proxy/:path",node.ProxyPatchReqToNodeP)
+	router.DELETE("/api/v1/nodes/:name/proxy/:path",node.ProxyDelReqToNodeP)
+
+	//v1.PersistentVolume
+	router.POST("/api/v1/persistentvolumes", persistentvolume.CreatePV)
+	router.GET("/api/v1/persistentvolumes/:name", persistentvolume.GorWPV)
+	router.GET("/api/v1/persistentvolumes", persistentvolume.GorWAllPVs)
+	router.PUT("/api/v1/persistentvolumes/:name", persistentvolume.UpdatePV)
+	router.PATCH("/api/v1/persistentvolumes/:name", persistentvolume.PatchPV)
+	router.DELETE("/api/v1/persistentvolumes/:name", persistentvolume.DeletePV)
+	router.DELETE("/api/v1/persistentvolumes", persistentvolume.DeleteAllPVs)
+	router.GET("/api/v1/persistentvolumes/:name/status", persistentvolume.GetstatusofPV)
+	router.PUT("/api/v1/persistentvolumes/:name/status", persistentvolume.UpdatestatusofPV)
+	router.PATCH("/api/v1/persistentvolumes/:name/status", persistentvolume.PatchstatusofPV)
+
+	//v1.PersistentVolumeClaim
+	router.POST("/api/v1/persistentvolumeclaims", persistentvolumeclaim.CreatePVC)
+	router.POST("/api/v1/namespaces/:namespace/persistentvolumeclaims", persistentvolumeclaim.CreatePVCns)
+	router.GET("/api/v1/namespaces/:namespace/persistentvolumeclaims/:name", persistentvolumeclaim.GorWPVCns)
+	router.GET("/api/v1/persistentvolumeclaims", persistentvolumeclaim.GorWAllPVC)
+	router.GET("/api/v1/namespaces/:namespace/persistentvolumeclaims", persistentvolumeclaim.GorWAllPVCns)
+	router.PUT("/api/v1/namespaces/:namespace/persistentvolumeclaims/:name", persistentvolumeclaim.UpdatePVCns)
+	router.PATCH("/api/v1/namespaces/:namespace/persistentvolumeclaims/:name", persistentvolumeclaim.PatchPVCns)
+	router.DELETE("/api/v1/namespaces/:namespace/persistentvolumeclaims/:name", persistentvolumeclaim.DeletePVCns)
+	router.DELETE("/api/v1/namespaces/:namespace/persistentvolumeclaims", persistentvolumeclaim.DeleteAllPVCns)
+	router.GET("/api/v1/namespaces/:namespace/persistentvolumeclaims/:name/status", persistentvolumeclaim.GetstatusofPVCns)
+	router.PUT("/api/v1/namespaces/:namespace/persistentvolumeclaims/:name/status", persistentvolumeclaim.UpdatestatusofPVCns)
+	router.PATCH("/api/v1/namespaces/:namespace/persistentvolumeclaims/:name/status", persistentvolumeclaim.PatchstatusofPVCns)
 
 	return
 }
+

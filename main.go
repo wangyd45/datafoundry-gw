@@ -21,6 +21,11 @@ import (
 	"github.com/asiainfoLDP/datafoundry-gw/oapi/route"
 	"github.com/asiainfoLDP/datafoundry-gw/oapi/template"
 	"github.com/asiainfoLDP/datafoundry-gw/oapi/user"
+	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/service"
+	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/secret"
+	rq "github.com/asiainfoLDP/datafoundry-gw/k8sapi/resourcequota"
+	rc "github.com/asiainfoLDP/datafoundry-gw/k8sapi/replicationcontroller"
+	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/pod"
 /*
 
 	"log"
@@ -252,6 +257,116 @@ func handle() (router *gin.Engine) {
 	router.PATCH("/oapi/v1/namespaces/:namespace/templates/:name", template.PatchTemplateInNS)
 	router.DELETE("/oapi/v1/namespaces/:namespace/templates/:name", template.DeleteTemplateInNS)
 	router.DELETE("/oapi/v1/namespaces/:namespace/templates", template.DeleteAllTemplatesInNS)
+
+	//k8s api
+	//v1.Pod
+	router.POST("/api/v1/pods",pod.CreatePod)
+	router.POST("/api/v1/namespaces/:namespace/pods", pod.CreatePodInNS)
+	router.POST("/api/v1/namespaces/:namespace/pods/:name/attach", pod.AttachPodInNS)
+	router.POST("/api/v1/namespaces/:namespace/pods/:name/binding", pod.CreateBindPodInNS)
+	router.POST("/api/v1/namespaces/:namespace/pods/:name/eviction", pod.CreateEvtPodInNS)
+	router.POST("/api/v1/namespaces/:namespace/pods/:name/exec", pod.CreateExecPodInNS)
+	router.POST("/api/v1/namespaces/:namespace/pods/:name/portforward", pod.PortPodInNS)
+	router.POST("/api/v1/namespaces/:namespace/pods/:name/proxy", pod.ProxyPodInNS)
+	router.POST("/api/v1/namespaces/:namespace/pods/:name/proxy/:path", pod.ProxysPathInNS)
+	router.HEAD("/api/v1/namespaces/:namespace/pods/:name/proxy", pod.HeadPodInNS)
+	router.HEAD("/api/v1/namespaces/:namespace/pods/:name/proxy/:path", pod.HeadProxysPathInNS)
+	router.GET("/api/v1/namespaces/:namespace/pods/:name",pod.GetPodFromNS)
+	router.GET("/api/v1/services", pod.GetAllPod)
+	router.GET("/api/v1/namespaces/:namespace/pods", pod.GetAllPodFromNS)
+	router.GET("/api/v1/namespaces/:namespace/pods/:name/attach",pod.GetAtaPodFromNS)
+	router.GET("/api/v1/namespaces/:namespace/pods/:name/exec",pod.GetExecPodFromNS)
+	router.GET("/api/v1/namespaces/:namespace/pods/:name/log",pod.GetLogPodFromNS)
+	router.GET("/api/v1/namespaces/:namespace/pods/:name/portforward",pod.GetPortPodFromNS)
+	router.GET("/api/v1/namespaces/:namespace/pods/:name/status",pod.GetStatusPodFromNS)
+	router.GET("/api/v1/namespaces/:namespace/pods/:name/proxy",pod.GetProxyPodFromNS)
+	router.GET("/api/v1/namespaces/:namespace/pods/:name/proxy/:path",pod.GetProxyPathPodFromNS)
+	router.PUT("/api/v1/namespaces/:namespace/pods/:name", pod.UpdataPodFromNS)
+	router.PUT("/api/v1/namespaces/:namespace/pods/:name/status", pod.UpdataStuPodFromNS)
+	router.PUT("/api/v1/namespaces/:namespace/pods/:name/proxy", pod.UpdataProxyPodFromNS)
+	router.PUT("/api/v1/namespaces/:namespace/pods/:name/proxy/:path", pod.UpdataProPathPodFromNS)
+	router.PATCH("/api/v1/namespaces/:namespace/pods/:name", pod.PatchPodFromNS)
+	router.PATCH("/api/v1/namespaces/:namespace/pods/:name/status", pod.PatchStuPodFromNS)
+	router.PATCH("/api/v1/namespaces/:namespace/pods/:name/proxy", pod.PatchProxyPodFromNS)
+	router.PATCH("/api/v1/namespaces/:namespace/pods/:name/proxy/:path", pod.PatchProPathPodFromNS)
+	router.OPTIONS("/api/v1/namespaces/:namespace/pods/:name/proxy", pod.OptionsPodFromNS)
+	router.OPTIONS("/api/v1/namespaces/:namespace/pods/:name/proxy/:path", pod.OptionsPathPodFromNS)
+	router.DELETE("/api/v1/namespaces/:namespace/pods/:name", pod.DeletePodFromNS)
+	router.DELETE("/api/v1/namespaces/:namespace/pods/:name/proxy", pod.DeleteProxyPodFromNS)
+	router.DELETE("/api/v1/namespaces/:namespace/pods/:name/proxy/:path", pod.DeleteProxyPathPodFromNS)
+	router.DELETE("/api/v1/namespaces/:namespace/pods", pod.DeleteAllPodFromNS)
+
+	//v1.ReplicationController
+	router.POST("/api/v1/replicationcontrollers",rc.CreateRc)
+	router.POST("/api/v1/namespaces/:namespace/replicationcontrollers", rc.CreateRcInNS)
+	router.GET("/api/v1/namespaces/:namespace/replicationcontrollers/:name",rc.GetRcFromNS)
+	router.GET("/api/v1/replicationcontrollers", rc.GetAllRc)
+	router.GET("/api/v1/namespaces/:namespace/replicationcontrollers", rc.GetAllRcFromNS)
+	router.GET("/api/v1/namespaces/:namespace/replicationcontrollers/:name/scale",rc.GetScaleRcFromNS)
+	router.GET("/apis/extensions/v1beta1/namespaces/:namespace/replicationcontrollers/:name/scale",rc.GetExScaleRcFromNS)
+	router.GET("/api/v1/namespaces/:namespace/replicationcontrollers/:name/status",rc.GetStatusRcFromNS)
+	router.PUT("/api/v1/namespaces/:namespace/replicationcontrollers/:name", rc.UpdataRcFromNS)
+	router.PUT("/api/v1/namespaces/:namespace/replicationcontrollers/:name/scale", rc.UpdataScaleRcFromNS)
+	router.PUT("/apis/extensions/v1beta1/namespaces/:namespace/replicationcontrollers/:name/scale", rc.UpdataExScaleRcFromNS)
+	router.PUT("/api/v1/namespaces/:namespace/replicationcontrollers/:name/proxy/:path", rc.UpdataStatusRcFromNS)
+	router.PATCH("/api/v1/namespaces/:namespace/replicationcontrollers/:name", rc.PatchRcFromNS)
+	router.PATCH("/api/v1/namespaces/:namespace/replicationcontrollers/:name/sacle", rc.PatchScaleRcFromNS)
+	router.PATCH("/apis/extensions/v1beta1/namespaces/:namespace/replicationcontrollers/:name/scale", rc.PatchExScaleFromNS)
+	router.PATCH("/api/v1/namespaces/:namespace/replicationcontrollers/:name/proxy/:path", rc.PatchStatusRcFromNS)
+	router.DELETE("/api/v1/namespaces/:namespace/replicationcontrollers/:name", rc.DeleteRcFromNS)
+	router.DELETE("/api/v1/namespaces/:namespace/replicationcontrollers", rc.DeleteAllRcFromNS)
+
+	//v1.ResourceQuota
+	router.POST("/api/v1/resourcequotas",rq.CreateRq)
+	router.POST("/api/v1/namespaces/:namespace/resourcequotas", rq.CreateRqInNS)
+	router.GET("/api/v1/namespaces/:namespace/resourcequotas/:name",rq.GetRqFromNS)
+	router.GET("/api/v1/resourcequotas", rq.GetAllRq)
+	router.GET("/api/v1/namespaces/:namespace/resourcequotas", rq.GetAllRqFromNS)
+	router.GET("/api/v1/namespaces/:namespace/resourcequotas/:name/status",rq.GetStuRqFromNS)
+	router.PUT("/api/v1/namespaces/:namespace/resourcequotas/:name", rq.UpdataRqFromNS)
+	router.PUT("/api/v1/namespaces/:namespace/resourcequotas/:name/status",rq.UpdataStuRqFromNS)
+	router.PATCH("/api/v1/namespaces/:namespace/resourcequotas/:name", rq.PatchRqFromNS)
+	router.PATCH("/api/v1/namespaces/:namespace/resourcequotas/:name/status",rq.PatchStuRqFromNS)
+	router.DELETE("/api/v1/namespaces/:namespace/resourcequotas/:name", rq.DeleteRqFromNS)
+	router.DELETE("/api/v1/namespaces/:namespace/resourcequotas", rq.DeleteAllRqFromNS)
+
+	//v1.Secret
+	router.POST("/api/v1/secrets",secret.CreateSecret)
+	router.POST("/api/v1/namespaces/:namespace/secrets", secret.CreateSecretInNS)
+	router.GET("/api/v1/namespaces/:namespace/secrets/:name",secret.GetSecretFromNS)
+	router.GET("/api/v1/secrets", secret.GetAllSecret)
+	router.GET("/api/v1/namespaces/:namespace/secrets", secret.GetAllSecretFromNS)
+	router.PUT("/api/v1/namespaces/:namespace/secrets/:name", secret.UpdataSecretFromNS)
+	router.PATCH("/api/v1/namespaces/:namespace/secrets/:name", secret.PatchSecretFromNS)
+	router.DELETE("/api/v1/namespaces/:namespace/secrets/:name", secret.DeleteSecretFromNS)
+	router.DELETE("/api/v1/namespaces/:namespace/secrets", secret.DeleteAllSecretFromNS)
+
+	//v1.Service
+	router.POST("/api/v1/services",service.CreateService)
+	router.POST("/api/v1/namespaces/:namespace/services", service.CreateServiceInNS)
+	router.POST("/api/v1/namespaces/:namespace/services/:name/proxy", service.CreateProxysInNS)
+	router.POST("/api/v1/namespaces/:namespace/services/:name/proxy/:path", service.CreateProxysPathInNS)
+	router.HEAD("/api/v1/namespaces/:namespace/services/:name/proxy", service.HeadProxysInNS)
+	router.HEAD("/api/v1/namespaces/:namespace/services/:name/proxy/:path", service.HeadProxysPathInNS)
+	router.GET("/api/v1/namespaces/:namespace/services/:name",service.GetServiceFromNS)
+	//router.GET("/api/v1/services", service.GetAllServices)
+	router.GET("/api/v1/namespaces/:namespace/services", service.GetAllServicesFromNS)
+	router.GET("/api/v1/namespaces/:namespace/services/:name/status",service.GetStuServiceFromNS)
+	router.GET("/api/v1/namespaces/:namespace/services/:name/proxy",service.GetProServiceFromNS)
+	router.GET("/api/v1/namespaces/:namespace/services/:name/proxy/:path",service.GetProPathServiceFromNS)
+	router.PUT("/api/v1/namespaces/:namespace/services/:name", service.UpdataServicesFromNS)
+	router.PUT("/api/v1/namespaces/:namespace/services/:name/status", service.UpdataStuServicesFromNS)
+	router.PUT("/api/v1/namespaces/:namespace/services/:name/proxy", service.UpdataProServicesFromNS)
+	router.PUT("/api/v1/namespaces/:namespace/services/:name/proxy/:path", service.UpdataProPathServicesFromNS)
+	router.PATCH("/api/v1/namespaces/:namespace/services/:name", service.PatchServicesFromNS)
+	router.PATCH("/api/v1/namespaces/:namespace/services/:name/status", service.PatchStuServicesFromNS)
+	router.PATCH("/api/v1/namespaces/:namespace/services/:name/proxy", service.PatchProServicesFromNS)
+	router.PATCH("/api/v1/namespaces/:namespace/services/:name/proxy/:path", service.PatchProPathServicesFromNS)
+	router.OPTIONS("/api/v1/namespaces/:namespace/services/:name/proxy", service.OptionsServicesFromNS)
+	router.OPTIONS("/api/v1/namespaces/:namespace/services/:name/proxy/:path", service.OptionsPathServicesFromNS)
+	router.DELETE("/api/v1/namespaces/:namespace/services/:name/proxy", service.DeleteProServicesFromNS)
+	router.DELETE("/api/v1/namespaces/:namespace/services/:name/proxy/:path", service.DeleteProPathServicesFromNS)
+
 
 	return
 }

@@ -45,7 +45,31 @@ func CreateConfigMapNS(c *gin.Context){
 	c.Data(req.StatusCode, "application/json",result)
 }
 
-func GetConfigMapNS(c *gin.Context){
+func GorWConfigMapNS(c *gin.Context){
+	if pkg.IsWebsocket(c){
+		watchConfigMapNS(c)
+	}else{
+		getConfigMapNS(c)
+	}
+}
+
+func GorWAllConfigMap(c *gin.Context){
+	if pkg.IsWebsocket(c){
+		watchAllConfigMap(c)
+	}else{
+		getAllConfigMap(c)
+	}
+}
+
+func GorWAllConfigMapNS(c *gin.Context){
+	if pkg.IsWebsocket(c){
+		watchAllConfigMapNS(c)
+	}else{
+		getAllConfigMapNS(c)
+	}
+}
+
+func getConfigMapNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
@@ -58,7 +82,7 @@ func GetConfigMapNS(c *gin.Context){
 	c.Data(req.StatusCode, "application/json",result)
 }
 
-func GetAllConfigMap(c *gin.Context){
+func getAllConfigMap(c *gin.Context){
 	token := pkg.GetToken(c)
 	req,err := oapi.GenRequest("GET","/api/v1/configmaps",token,nil)
 	if err != nil{
@@ -69,7 +93,7 @@ func GetAllConfigMap(c *gin.Context){
 	c.Data(req.StatusCode, "application/json",result)
 }
 
-func GetAllConfigMapNS(c *gin.Context){
+func getAllConfigMapNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	req,err := oapi.GenRequest("GET","/api/v1/namespaces/"+namespace+"/configmaps",token,nil)
@@ -81,25 +105,25 @@ func GetAllConfigMapNS(c *gin.Context){
 	c.Data(req.StatusCode, "application/json",result)
 }
 
-func WatchConfigMapNS(c *gin.Context){
+func watchConfigMapNS(c *gin.Context){
 
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/configmaps/"+name,token,c.Writer,c.Request)
 
 }
 
-func WatchAllConfigMap(c *gin.Context){
+func watchAllConfigMap(c *gin.Context){
 
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	oapi.WSRequest("/api/v1/watch/configmaps",token,c.Writer,c.Request)
 
 }
 
-func WatchAllConfigMapNS(c *gin.Context){
+func watchAllConfigMapNS(c *gin.Context){
 
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
 	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/configmaps",token,c.Writer,c.Request)
 
@@ -150,8 +174,7 @@ func DeleteConfigMapNS(c *gin.Context){
 func DeleteAllConfigMapNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.GenRequest("DELETE","/api/v1/namespaces/"+namespace+"/configmaps",token,rBody)
+	req,err := oapi.GenRequest("DELETE","/api/v1/namespaces/"+namespace+"/configmaps",token,nil)
 	if err != nil{
 		logger.Error("Delete All ConfigMap In A Namespace Fail",err)
 	}
@@ -159,3 +182,14 @@ func DeleteAllConfigMapNS(c *gin.Context){
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
 }
+
+//v1.ConfigMap
+//router.POST("/api/v1/configmaps", route.CreateConfigMap)
+//router.POST("/api/v1/namespaces/:namespace/configmaps", route.CreateConfigMapNS)
+//router.GET("/api/v1/namespaces/:namespace/configmaps/:name", route.GorWConfigMapNS)
+//router.GET("/api/v1/configmaps", route.GorWAllConfigMap)
+//router.GET("/api/v1/namespaces/:namespace/configmaps", route.GorWAllConfigMapNS)
+//router.PUT("/api/v1/namespaces/:namespace/configmaps/:name", route.UpdateConfigMapNS)
+//router.PATCH("/api/v1/namespaces/:namespace/configmaps/:name", route.PatchConfigMapNS)
+//router.DELETE("/api/v1/namespaces/:namespace/configmaps/:name", route.DeleteConfigMapNS)
+//router.DELETE("/api/v1/namespaces/:namespace/configmaps", route.DeleteAllConfigMapNS)

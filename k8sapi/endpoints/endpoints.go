@@ -45,7 +45,31 @@ func CreateEndpointsNS(c *gin.Context){
 	c.Data(req.StatusCode, "application/json",result)
 }
 
-func GetEndpointsNS(c *gin.Context){
+func GorWEndpointsNS(c *gin.Context){
+	if pkg.IsWebsocket(c){
+		watchEndpointsNS(c)
+	}else{
+		getEndpointsNS(c)
+	}
+}
+
+func GorWAllEndpoints(c *gin.Context){
+	if pkg.IsWebsocket(c){
+		watchAllEndpoints(c)
+	}else{
+		getAllEndpoints(c)
+	}
+}
+
+func GorWAllEndpointsNS(c *gin.Context){
+	if pkg.IsWebsocket(c){
+		watchAllEndpointsNS(c)
+	}else{
+		getAllEndpointsNS(c)
+	}
+}
+
+func getEndpointsNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
@@ -58,7 +82,7 @@ func GetEndpointsNS(c *gin.Context){
 	c.Data(req.StatusCode, "application/json",result)
 }
 
-func GetAllEndpoints(c *gin.Context){
+func getAllEndpoints(c *gin.Context){
 	token := pkg.GetToken(c)
 	req,err := oapi.GenRequest("GET","/api/v1/endpoints",token,nil)
 	if err != nil{
@@ -69,7 +93,7 @@ func GetAllEndpoints(c *gin.Context){
 	c.Data(req.StatusCode, "application/json",result)
 }
 
-func GetAllEndpointsNS(c *gin.Context){
+func getAllEndpointsNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	req,err := oapi.GenRequest("GET","/api/v1/namespaces/"+namespace+"/endpoints",token,nil)
@@ -81,25 +105,25 @@ func GetAllEndpointsNS(c *gin.Context){
 	c.Data(req.StatusCode, "application/json",result)
 }
 
-func WatchEndpointsNS(c *gin.Context){
+func watchEndpointsNS(c *gin.Context){
 
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/endpoints/"+name,token,c.Writer,c.Request)
 
 }
 
-func WatchAllEndpoints(c *gin.Context){
+func watchAllEndpoints(c *gin.Context){
 
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	oapi.WSRequest("/api/v1/watch/endpoints",token,c.Writer,c.Request)
 
 }
 
-func WatchAllEndpointsNS(c *gin.Context){
+func watchAllEndpointsNS(c *gin.Context){
 
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
 	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/endpoints",token,c.Writer,c.Request)
 
@@ -150,8 +174,7 @@ func DeleteEndpointsNS(c *gin.Context){
 func DeleteAllEndpointsNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.GenRequest("DELETE","/api/v1/namespaces/"+namespace+"/endpoints",token,rBody)
+	req,err := oapi.GenRequest("DELETE","/api/v1/namespaces/"+namespace+"/endpoints",token,nil)
 	if err != nil{
 		logger.Error("Delete All Endpoints In A Namespace Fail",err)
 	}
@@ -159,3 +182,14 @@ func DeleteAllEndpointsNS(c *gin.Context){
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
 }
+
+//v1.Endpoints
+//router.POST("/api/v1/endpoints", route.CreateEndpoints)
+//router.POST("/api/v1/namespaces/:namespace/endpoints", route.CreateEndpointsNS)
+//router.GET("/api/v1/namespaces/:namespace/endpoints/:name", route.GorWEndpointsNS)
+//router.GET("/api/v1/endpoints", route.GorWAllEndpoints)
+//router.GET("/api/v1/namespaces/:namespace/endpoints", route.GorWAllEndpointsNS)
+//router.PUT("/api/v1/namespaces/:namespace/endpoints/:name", route.UpdateEndpointsNS)
+//router.PATCH("/api/v1/namespaces/:namespace/endpoints/:name", route.PatchEndpointsNS)
+//router.DELETE("/api/v1/namespaces/:namespace/endpoints/:name", route.DeleteEndpointsNS)
+//router.DELETE("/api/v1/namespaces/:namespace/endpoints", route.DeleteAllEndpointsNS)

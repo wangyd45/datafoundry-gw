@@ -45,7 +45,31 @@ func CreateEventNS(c *gin.Context){
 	c.Data(req.StatusCode, "application/json",result)
 }
 
-func GetEventNS(c *gin.Context){
+func GorWEventNS(c *gin.Context){
+	if pkg.IsWebsocket(c){
+		watchEventNS(c)
+	}else{
+		getEventNS(c)
+	}
+}
+
+func GorWAllEvents(c *gin.Context){
+	if pkg.IsWebsocket(c){
+		watchAllEvents(c)
+	}else{
+		getAllEvents(c)
+	}
+}
+
+func GorWAllEventsNS(c *gin.Context){
+	if pkg.IsWebsocket(c){
+		watchAllEventsNS(c)
+	}else{
+		getAllEventsNS(c)
+	}
+}
+
+func getEventNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
@@ -58,7 +82,7 @@ func GetEventNS(c *gin.Context){
 	c.Data(req.StatusCode, "application/json",result)
 }
 
-func GetAllEvents(c *gin.Context){
+func getAllEvents(c *gin.Context){
 	token := pkg.GetToken(c)
 	req,err := oapi.GenRequest("GET","/api/v1/events",token,nil)
 	if err != nil{
@@ -69,7 +93,7 @@ func GetAllEvents(c *gin.Context){
 	c.Data(req.StatusCode, "application/json",result)
 }
 
-func GetAllEventsNS(c *gin.Context){
+func getAllEventsNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	req,err := oapi.GenRequest("GET","/api/v1/namespaces/"+namespace+"/events",token,nil)
@@ -81,25 +105,25 @@ func GetAllEventsNS(c *gin.Context){
 	c.Data(req.StatusCode, "application/json",result)
 }
 
-func WatchEventNS(c *gin.Context){
+func watchEventNS(c *gin.Context){
 
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/events/"+name,token,c.Writer,c.Request)
 
 }
 
-func WatchAllEvents(c *gin.Context){
+func watchAllEvents(c *gin.Context){
 
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	oapi.WSRequest("/api/v1/watch/events",token,c.Writer,c.Request)
 
 }
 
-func WatchAllEventsNS(c *gin.Context){
+func watchAllEventsNS(c *gin.Context){
 
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
 	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/events",token,c.Writer,c.Request)
 
@@ -150,8 +174,7 @@ func DeleteEventNS(c *gin.Context){
 func DeleteAllEventNS(c *gin.Context){
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.GenRequest("DELETE","/api/v1/namespaces/"+namespace+"/events",token,rBody)
+	req,err := oapi.GenRequest("DELETE","/api/v1/namespaces/"+namespace+"/events",token,nil)
 	if err != nil{
 		logger.Error("Delete All Event In A Namespace Fail",err)
 	}
@@ -159,3 +182,14 @@ func DeleteAllEventNS(c *gin.Context){
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
 }
+
+//v1.Event
+//router.POST("/api/v1/events", route.CreateEvent)
+//router.POST("/api/v1/namespaces/:namespace/events", route.CreateEventNS)
+//router.GET("/api/v1/namespaces/:namespace/events/:name", route.GorWEventNS)
+//router.GET("/api/v1/events", route.GorWAllEvents)
+//router.GET("/api/v1/namespaces/:namespace/events", route.GorWAllEventsNS)
+//router.PUT("/api/v1/namespaces/:namespace/events/:name", route.UpdateEventNS)
+//router.PATCH("/api/v1/namespaces/:namespace/events/:name", route.PatchEventNS)
+//router.DELETE("/api/v1/namespaces/:namespace/events/:name", route.DeleteEventNS)
+//router.DELETE("/api/v1/namespaces/:namespace/events", route.DeleteAllEventNS)

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5d1d8f17-e7fb-4da5-9d92-e7182c519935" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="5d1d8f17-e7fb-4da5-9d92-e7182c519935" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -40,18 +38,18 @@
       <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="217">
-              <caret line="21" column="19" lean-forward="false" selection-start-line="21" selection-start-column="3" selection-end-line="21" selection-end-column="19" />
+            <state relative-caret-position="236">
+              <caret line="22" column="24" lean-forward="false" selection-start-line="22" selection-start-column="3" selection-end-line="22" selection-end-column="24" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="persistentvolume.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="persistentvolume.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/k8sapi/persistentvolume/persistentvolume.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="337">
-              <caret line="184" column="79" lean-forward="true" selection-start-line="184" selection-start-column="79" selection-end-line="184" selection-end-column="79" />
+            <state relative-caret-position="341">
+              <caret line="183" column="78" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="184" selection-end-column="79" />
               <folding>
                 <element signature="n#!!block;n#GorWPV#0" expanded="false" />
                 <element signature="n#!!block;n#GorWAllPVs#0" expanded="false" />
@@ -63,6 +61,33 @@
                 <element signature="n#!!block;n#DeletePV#0" expanded="false" />
                 <element signature="n#!!block;n#DeleteAllPVs#0" expanded="false" />
                 <element signature="n#!!block;n#GetstatusofPV#0" expanded="false" />
+                <element signature="n#!!block;n#UpdatestatusofPV#0" expanded="false" />
+                <element signature="n#!!block;n#PatchstatusofPV#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="persistentvolumeclaim.go" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/k8sapi/persistentvolumeclaim/persistentvolumeclaim.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="337">
+              <caret line="238" column="13" lean-forward="false" selection-start-line="238" selection-start-column="13" selection-end-line="238" selection-end-column="13" />
+              <folding>
+                <element signature="n#!!block;n#CreatePVC#0" expanded="false" />
+                <element signature="n#!!block;n#GorWPVCns#0" expanded="false" />
+                <element signature="n#!!block;n#GorWAllPVC#0" expanded="false" />
+                <element signature="n#!!block;n#GorWAllPVCns#0" expanded="false" />
+                <element signature="n#!!block;n#getPVCns#0" expanded="false" />
+                <element signature="n#!!block;n#getAllPVC#0" expanded="false" />
+                <element signature="n#!!block;n#getAllPVCns#0" expanded="false" />
+                <element signature="n#!!block;n#watchPVCns#0" expanded="false" />
+                <element signature="n#!!block;n#watchAllPVC#0" expanded="false" />
+                <element signature="n#!!block;n#watchAllPVCns#0" expanded="false" />
+                <element signature="n#!!block;n#UpdatePVCns#0" expanded="false" />
+                <element signature="n#!!block;n#PatchPVCns#0" expanded="false" />
+                <element signature="n#!!block;n#DeletePVCns#0" expanded="false" />
+                <element signature="n#!!block;n#DeleteAllPVCns#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -129,6 +154,7 @@
         <option value="$PROJECT_DIR$/main.go" />
         <option value="$PROJECT_DIR$/k8sapi/node/node.go" />
         <option value="$PROJECT_DIR$/k8sapi/persistentvolume/persistentvolume.go" />
+        <option value="$PROJECT_DIR$/k8sapi/persistentvolumeclaim/persistentvolumeclaim.go" />
       </list>
     </option>
   </component>
@@ -139,8 +165,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-13" />
-    <option name="y" value="90" />
+    <option name="x" value="97" />
+    <option name="y" value="81" />
     <option name="width" value="1440" />
     <option name="height" value="797" />
   </component>
@@ -182,6 +208,12 @@
               <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
               <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
               <item name="persistentvolume" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
+              <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
+              <item name="persistentvolumeclaim" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
@@ -343,7 +375,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-13" y="90" width="1440" height="797" extended-state="0" />
+    <frame x="97" y="81" width="1440" height="797" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25822604" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -385,7 +417,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/clientT.go" />
     <entry file="file://$PROJECT_DIR$/vendor/github.com/gin-gonic/gin/binding/msgpack.go" />
     <entry file="file://$PROJECT_DIR$/oapi/user/user.go" />
     <entry file="file://$PROJECT_DIR$/vendor/vendor.json">
@@ -720,14 +751,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="21" column="19" lean-forward="false" selection-start-line="21" selection-start-column="3" selection-end-line="21" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/k8sapi/limitrange/limitrange.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="188">
@@ -816,10 +839,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="22" column="24" lean-forward="false" selection-start-line="22" selection-start-column="3" selection-end-line="22" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/k8sapi/persistentvolume/persistentvolume.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="184" column="79" lean-forward="true" selection-start-line="184" selection-start-column="79" selection-end-line="184" selection-end-column="79" />
+        <state relative-caret-position="341">
+          <caret line="183" column="78" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="184" selection-end-column="79" />
           <folding>
             <element signature="n#!!block;n#GorWPV#0" expanded="false" />
             <element signature="n#!!block;n#GorWAllPVs#0" expanded="false" />
@@ -831,6 +862,31 @@
             <element signature="n#!!block;n#DeletePV#0" expanded="false" />
             <element signature="n#!!block;n#DeleteAllPVs#0" expanded="false" />
             <element signature="n#!!block;n#GetstatusofPV#0" expanded="false" />
+            <element signature="n#!!block;n#UpdatestatusofPV#0" expanded="false" />
+            <element signature="n#!!block;n#PatchstatusofPV#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/k8sapi/persistentvolumeclaim/persistentvolumeclaim.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="337">
+          <caret line="238" column="13" lean-forward="false" selection-start-line="238" selection-start-column="13" selection-end-line="238" selection-end-column="13" />
+          <folding>
+            <element signature="n#!!block;n#CreatePVC#0" expanded="false" />
+            <element signature="n#!!block;n#GorWPVCns#0" expanded="false" />
+            <element signature="n#!!block;n#GorWAllPVC#0" expanded="false" />
+            <element signature="n#!!block;n#GorWAllPVCns#0" expanded="false" />
+            <element signature="n#!!block;n#getPVCns#0" expanded="false" />
+            <element signature="n#!!block;n#getAllPVC#0" expanded="false" />
+            <element signature="n#!!block;n#getAllPVCns#0" expanded="false" />
+            <element signature="n#!!block;n#watchPVCns#0" expanded="false" />
+            <element signature="n#!!block;n#watchAllPVC#0" expanded="false" />
+            <element signature="n#!!block;n#watchAllPVCns#0" expanded="false" />
+            <element signature="n#!!block;n#UpdatePVCns#0" expanded="false" />
+            <element signature="n#!!block;n#PatchPVCns#0" expanded="false" />
+            <element signature="n#!!block;n#DeletePVCns#0" expanded="false" />
+            <element signature="n#!!block;n#DeleteAllPVCns#0" expanded="false" />
           </folding>
         </state>
       </provider>

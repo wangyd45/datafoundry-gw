@@ -17,7 +17,7 @@
       <file leaf-file-name="apirequest.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apirequest/apirequest.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
+            <state relative-caret-position="1463">
               <caret line="86" column="5" lean-forward="false" selection-start-line="86" selection-start-column="5" selection-end-line="86" selection-end-column="5" />
               <folding>
                 <element signature="e#20#135#0" expanded="true" />
@@ -29,10 +29,47 @@
       <file leaf-file-name="main.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="344">
-              <caret line="457" column="56" lean-forward="false" selection-start-line="457" selection-start-column="56" selection-end-line="457" selection-end-column="56" />
+            <state relative-caret-position="261">
+              <caret line="434" column="0" lean-forward="true" selection-start-line="434" selection-start-column="0" selection-end-line="434" selection-end-column="0" />
               <folding>
-                <element signature="e#14#1581#0" expanded="true" />
+                <element signature="e#14#1716#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="namespace.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/k8sapi/namespace/namespace.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1273">
+              <caret line="86" column="0" lean-forward="false" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
+              <folding>
+                <element signature="n#!!block;n#CreateNamespace#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="persistentvolumeclaim.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/k8sapi/persistentvolumeclaim/persistentvolumeclaim.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1805">
+              <caret line="226" column="0" lean-forward="false" selection-start-line="226" selection-start-column="0" selection-end-line="238" selection-end-column="109" />
+              <folding>
+                <element signature="n#!!block;n#CreatePVC#0" expanded="false" />
+                <element signature="n#!!block;n#GorWPVCns#0" expanded="false" />
+                <element signature="n#!!block;n#GorWAllPVC#0" expanded="false" />
+                <element signature="n#!!block;n#GorWAllPVCns#0" expanded="false" />
+                <element signature="n#!!block;n#getPVCns#0" expanded="false" />
+                <element signature="n#!!block;n#getAllPVC#0" expanded="false" />
+                <element signature="n#!!block;n#getAllPVCns#0" expanded="false" />
+                <element signature="n#!!block;n#watchPVCns#0" expanded="false" />
+                <element signature="n#!!block;n#watchAllPVC#0" expanded="false" />
+                <element signature="n#!!block;n#watchAllPVCns#0" expanded="false" />
+                <element signature="n#!!block;n#UpdatePVCns#0" expanded="false" />
+                <element signature="n#!!block;n#PatchPVCns#0" expanded="false" />
+                <element signature="n#!!block;n#DeletePVCns#0" expanded="false" />
+                <element signature="n#!!block;n#DeleteAllPVCns#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -41,7 +78,7 @@
       <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
+            <state relative-caret-position="437">
               <caret line="23" column="6" lean-forward="false" selection-start-line="23" selection-start-column="3" selection-end-line="23" selection-end-column="6" />
               <folding />
             </state>
@@ -69,6 +106,7 @@
       <find>GenRequest</find>
       <find>oapi</find>
       <find>messageType</find>
+      <find>/api/v1/namespaces/</find>
     </findStrings>
   </component>
   <component name="GOROOT" path="/usr/local/go" />
@@ -119,9 +157,8 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="97" />
-    <option name="y" value="81" />
+  <component name="ProjectFrameBounds">
+    <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="797" />
   </component>
@@ -140,42 +177,14 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
               <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="apirequest" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
-              <item name="limitrange" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
-              <item name="namespace" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
-              <item name="node" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
@@ -220,92 +229,6 @@
               <item name="github.com" type="462c0819:PsiDirectoryNode" />
               <item name="asiainfoLDP" type="462c0819:PsiDirectoryNode" />
               <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="GOPATH &lt;datafoundry-gw&gt;" type="20ee2d1f:SyntheticLibraryElementNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="github.com" type="462c0819:PsiDirectoryNode" />
-              <item name="asiainfoLDP" type="462c0819:PsiDirectoryNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="apirequest" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="GOPATH &lt;datafoundry-gw&gt;" type="20ee2d1f:SyntheticLibraryElementNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="github.com" type="462c0819:PsiDirectoryNode" />
-              <item name="asiainfoLDP" type="462c0819:PsiDirectoryNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="GOPATH &lt;datafoundry-gw&gt;" type="20ee2d1f:SyntheticLibraryElementNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="github.com" type="462c0819:PsiDirectoryNode" />
-              <item name="asiainfoLDP" type="462c0819:PsiDirectoryNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
-              <item name="configmap" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="GOPATH &lt;datafoundry-gw&gt;" type="20ee2d1f:SyntheticLibraryElementNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="github.com" type="462c0819:PsiDirectoryNode" />
-              <item name="asiainfoLDP" type="462c0819:PsiDirectoryNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
-              <item name="endpoints" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="GOPATH &lt;datafoundry-gw&gt;" type="20ee2d1f:SyntheticLibraryElementNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="github.com" type="462c0819:PsiDirectoryNode" />
-              <item name="asiainfoLDP" type="462c0819:PsiDirectoryNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
-              <item name="event" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="GOPATH &lt;datafoundry-gw&gt;" type="20ee2d1f:SyntheticLibraryElementNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="github.com" type="462c0819:PsiDirectoryNode" />
-              <item name="asiainfoLDP" type="462c0819:PsiDirectoryNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
-              <item name="limitrange" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="GOPATH &lt;datafoundry-gw&gt;" type="20ee2d1f:SyntheticLibraryElementNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="github.com" type="462c0819:PsiDirectoryNode" />
-              <item name="asiainfoLDP" type="462c0819:PsiDirectoryNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
-              <item name="namespace" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="GOPATH &lt;datafoundry-gw&gt;" type="20ee2d1f:SyntheticLibraryElementNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="github.com" type="462c0819:PsiDirectoryNode" />
-              <item name="asiainfoLDP" type="462c0819:PsiDirectoryNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
-              <item name="node" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
@@ -427,16 +350,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="797" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26180258" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2653791" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905984" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2905983" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37749287" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -678,7 +600,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apirequest/apirequest.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
+        <state relative-caret-position="1463">
           <caret line="86" column="5" lean-forward="false" selection-start-line="86" selection-start-column="5" selection-end-line="86" selection-end-column="5" />
           <folding>
             <element signature="e#20#135#0" expanded="true" />
@@ -735,23 +657,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/k8sapi/persistentvolumeclaim/persistentvolumeclaim.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="238" column="13" lean-forward="false" selection-start-line="238" selection-start-column="13" selection-end-line="238" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/k8sapi/persistentvolume/persistentvolume.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="183" column="78" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="184" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
+        <state relative-caret-position="437">
           <caret line="23" column="6" lean-forward="false" selection-start-line="23" selection-start-column="3" selection-end-line="23" selection-end-column="6" />
           <folding />
         </state>
@@ -761,22 +669,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="166">
           <caret line="185" column="0" lean-forward="false" selection-start-line="185" selection-start-column="0" selection-end-line="194" selection-end-column="87" />
-          <folding>
-            <element signature="n#!!block;n#CreateConfigMap#0" expanded="false" />
-            <element signature="n#!!block;n#CreateConfigMapNS#0" expanded="false" />
-            <element signature="n#!!block;n#GorWConfigMapNS#0" expanded="false" />
-            <element signature="n#!!block;n#GorWAllConfigMap#0" expanded="false" />
-            <element signature="n#!!block;n#GorWAllConfigMapNS#0" expanded="false" />
-            <element signature="n#!!block;n#getConfigMapNS#0" expanded="false" />
-            <element signature="n#!!block;n#getAllConfigMap#0" expanded="false" />
-            <element signature="n#!!block;n#getAllConfigMapNS#0" expanded="false" />
-            <element signature="n#!!block;n#watchConfigMapNS#0" expanded="false" />
-            <element signature="n#!!block;n#watchAllConfigMap#0" expanded="false" />
-            <element signature="n#!!block;n#watchAllConfigMapNS#0" expanded="false" />
-            <element signature="n#!!block;n#UpdateConfigMapNS#0" expanded="false" />
-            <element signature="n#!!block;n#PatchConfigMapNS#0" expanded="false" />
-            <element signature="n#!!block;n#DeleteConfigMapNS#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -784,21 +676,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="169">
           <caret line="185" column="0" lean-forward="true" selection-start-line="185" selection-start-column="0" selection-end-line="194" selection-end-column="86" />
-          <folding>
-            <element signature="n#!!block;n#CreateEndpoints#0" expanded="false" />
-            <element signature="n#!!block;n#CreateEndpointsNS#0" expanded="false" />
-            <element signature="n#!!block;n#GorWEndpointsNS#0" expanded="false" />
-            <element signature="n#!!block;n#GorWAllEndpoints#0" expanded="false" />
-            <element signature="n#!!block;n#GorWAllEndpointsNS#0" expanded="false" />
-            <element signature="n#!!block;n#getEndpointsNS#0" expanded="false" />
-            <element signature="n#!!block;n#getAllEndpoints#0" expanded="false" />
-            <element signature="n#!!block;n#getAllEndpointsNS#0" expanded="false" />
-            <element signature="n#!!block;n#watchEndpointsNS#0" expanded="false" />
-            <element signature="n#!!block;n#watchAllEndpoints#0" expanded="false" />
-            <element signature="n#!!block;n#watchAllEndpointsNS#0" expanded="false" />
-            <element signature="n#!!block;n#UpdateEndpointsNS#0" expanded="false" />
-            <element signature="n#!!block;n#PatchEndpointsNS#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -806,23 +683,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="188">
           <caret line="185" column="0" lean-forward="true" selection-start-line="185" selection-start-column="0" selection-end-line="194" selection-end-column="79" />
-          <folding>
-            <element signature="n#!!block;n#CreateEvent#0" expanded="false" />
-            <element signature="n#!!block;n#CreateEventNS#0" expanded="false" />
-            <element signature="n#!!block;n#GorWEventNS#0" expanded="false" />
-            <element signature="n#!!block;n#GorWAllEvents#0" expanded="false" />
-            <element signature="n#!!block;n#GorWAllEventsNS#0" expanded="false" />
-            <element signature="n#!!block;n#getEventNS#0" expanded="false" />
-            <element signature="n#!!block;n#getAllEvents#0" expanded="false" />
-            <element signature="n#!!block;n#getAllEventsNS#0" expanded="false" />
-            <element signature="n#!!block;n#watchEventNS#0" expanded="false" />
-            <element signature="n#!!block;n#watchAllEvents#0" expanded="false" />
-            <element signature="n#!!block;n#watchAllEventsNS#0" expanded="false" />
-            <element signature="n#!!block;n#UpdateEventNS#0" expanded="false" />
-            <element signature="n#!!block;n#PatchEventNS#0" expanded="false" />
-            <element signature="n#!!block;n#DeleteEventNS#0" expanded="false" />
-            <element signature="n#!!block;n#DeleteAllEventNS#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -830,42 +690,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="188">
           <caret line="185" column="0" lean-forward="false" selection-start-line="185" selection-start-column="0" selection-end-line="194" selection-end-column="89" />
-          <folding>
-            <element signature="n#!!block;n#init#0" expanded="false" />
-            <element signature="n#!!block;n#CreateLimitRange#0" expanded="false" />
-            <element signature="n#!!block;n#CreateLimitRangeNS#0" expanded="false" />
-            <element signature="n#!!block;n#GorWLimitRangeNS#0" expanded="false" />
-            <element signature="n#!!block;n#GorWAllLimitRanges#0" expanded="false" />
-            <element signature="n#!!block;n#GorWAllLimitRangesNS#0" expanded="false" />
-            <element signature="n#!!block;n#getLimitRangeNS#0" expanded="false" />
-            <element signature="n#!!block;n#getAllLimitRanges#0" expanded="false" />
-            <element signature="n#!!block;n#getAllLimitRangesNS#0" expanded="false" />
-            <element signature="n#!!block;n#watchLimitRangeNS#0" expanded="false" />
-            <element signature="n#!!block;n#watchAllLimitRanges#0" expanded="false" />
-            <element signature="n#!!block;n#watchAllLimitRangesNS#0" expanded="false" />
-            <element signature="n#!!block;n#UpdateLimitRangeNS#0" expanded="false" />
-            <element signature="n#!!block;n#PatchLimitRangeNS#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/k8sapi/namespace/namespace.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="176" column="0" lean-forward="true" selection-start-line="176" selection-start-column="0" selection-end-line="186" selection-end-column="72" />
-          <folding>
-            <element signature="n#!!block;n#CreateNamespace#0" expanded="false" />
-            <element signature="n#!!block;n#getNamespace#0" expanded="false" />
-            <element signature="n#!!block;n#getAllNamespaces#0" expanded="false" />
-            <element signature="n#!!block;n#watchNamespace#0" expanded="false" />
-            <element signature="n#!!block;n#watchAllNamespaces#0" expanded="false" />
-            <element signature="n#!!block;n#UpdateNamespace#0" expanded="false" />
-            <element signature="n#!!block;n#PatchNamespace#0" expanded="false" />
-            <element signature="n#!!block;n#UpdatefinalizeofNS#0" expanded="false" />
-            <element signature="n#!!block;n#GetstatusofNS#0" expanded="false" />
-            <element signature="n#!!block;n#UpdatestatusofNS#0" expanded="false" />
-            <element signature="n#!!block;n#PatchstatusofNS#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -873,29 +697,55 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
           <caret line="349" column="0" lean-forward="false" selection-start-line="349" selection-start-column="0" selection-end-line="373" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/k8sapi/persistentvolume/persistentvolume.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="174" column="0" lean-forward="true" selection-start-line="174" selection-start-column="0" selection-end-line="184" selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/k8sapi/persistentvolumeclaim/persistentvolumeclaim.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1805">
+          <caret line="226" column="0" lean-forward="false" selection-start-line="226" selection-start-column="0" selection-end-line="238" selection-end-column="109" />
           <folding>
-            <element signature="n#!!block;n#CreateNode#0" expanded="false" />
-            <element signature="n#!!block;n#GorWNode#0" expanded="false" />
-            <element signature="n#!!block;n#GorWAllNodes#0" expanded="false" />
-            <element signature="n#!!block;n#getNode#0" expanded="false" />
-            <element signature="n#!!block;n#getAllNodes#0" expanded="false" />
-            <element signature="n#!!block;n#watchNode#0" expanded="false" />
-            <element signature="n#!!block;n#watchAllNodes#0" expanded="false" />
-            <element signature="n#!!block;n#DeleteNode#0" expanded="false" />
-            <element signature="n#!!block;n#DeleteAllNodes#0" expanded="false" />
-            <element signature="n#!!block;n#GetStatusOfNode#0" expanded="false" />
-            <element signature="n#!!block;n#UpdateStatusOfNode#0" expanded="false" />
-            <element signature="n#!!block;n#PatchStatusOfNode#0" expanded="false" />
+            <element signature="n#!!block;n#CreatePVC#0" expanded="false" />
+            <element signature="n#!!block;n#GorWPVCns#0" expanded="false" />
+            <element signature="n#!!block;n#GorWAllPVC#0" expanded="false" />
+            <element signature="n#!!block;n#GorWAllPVCns#0" expanded="false" />
+            <element signature="n#!!block;n#getPVCns#0" expanded="false" />
+            <element signature="n#!!block;n#getAllPVC#0" expanded="false" />
+            <element signature="n#!!block;n#getAllPVCns#0" expanded="false" />
+            <element signature="n#!!block;n#watchPVCns#0" expanded="false" />
+            <element signature="n#!!block;n#watchAllPVC#0" expanded="false" />
+            <element signature="n#!!block;n#watchAllPVCns#0" expanded="false" />
+            <element signature="n#!!block;n#UpdatePVCns#0" expanded="false" />
+            <element signature="n#!!block;n#PatchPVCns#0" expanded="false" />
+            <element signature="n#!!block;n#DeletePVCns#0" expanded="false" />
+            <element signature="n#!!block;n#DeleteAllPVCns#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/k8sapi/namespace/namespace.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1273">
+          <caret line="86" column="0" lean-forward="false" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!block;n#CreateNamespace#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="457" column="56" lean-forward="false" selection-start-line="457" selection-start-column="56" selection-end-line="457" selection-end-column="56" />
+        <state relative-caret-position="261">
+          <caret line="434" column="0" lean-forward="true" selection-start-line="434" selection-start-column="0" selection-end-line="434" selection-end-column="0" />
           <folding>
-            <element signature="e#14#1581#0" expanded="true" />
+            <element signature="e#14#1716#0" expanded="true" />
           </folding>
         </state>
       </provider>

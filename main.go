@@ -423,15 +423,15 @@ func handle() (router *gin.Engine) {
 
 	//v1.Namespace
 	router.POST("/api/v1/namespaces", namespace.CreateNamespace)
-	router.GET("/api/v1/namespaces/:name", namespace.GorWNamespace)
+	router.GET("/api/v1/namespaces/:namespace", namespace.GorWNamespace)
 	router.GET("/api/v1/namespaces", namespace.GorWAllNamespaces)
-	router.PUT("/api/v1/namespaces/:name", namespace.UpdateNamespace)
-	router.PATCH("/api/v1/namespaces/:name", namespace.PatchNamespace)
-	router.DELETE("/api/v1/namespaces/:name", namespace.DeleteNamespace)
-	router.PUT("/api/v1/namespaces/:name/finalize", namespace.UpdatefinalizeofNS)
-	router.GET("/api/v1/namespaces/:name/status", namespace.GetstatusofNS)
-	router.PUT("/api/v1/namespaces/:name/status", namespace.UpdatestatusofNS)
-	router.PATCH("/api/v1/namespaces/:name/status", namespace.PatchstatusofNS)
+	router.PUT("/api/v1/namespaces/:namespace", namespace.UpdateNamespace)
+	router.PATCH("/api/v1/namespaces/:namespace", namespace.PatchNamespace)
+	router.DELETE("/api/v1/namespaces/:namespace", namespace.DeleteNamespace)
+	router.PUT("/api/v1/namespaces/:namespace/finalize", namespace.UpdatefinalizeofNS)
+	router.GET("/api/v1/namespaces/:namespace/status", namespace.GetstatusofNS)
+	router.PUT("/api/v1/namespaces/:namespace/status", namespace.UpdatestatusofNS)
+	router.PATCH("/api/v1/namespaces/:namespace/status", namespace.PatchstatusofNS)
 
 	//v1.Node
 	router.POST("/api/v1/nodes", node.CreateNode)

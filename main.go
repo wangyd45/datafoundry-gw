@@ -349,7 +349,7 @@ func handle() (router *gin.Engine) {
 	router.HEAD("/api/v1/namespaces/:namespace/services/:name/proxy", service.HeadProxysInNS)
 	router.HEAD("/api/v1/namespaces/:namespace/services/:name/proxy/:path", service.HeadProxysPathInNS)
 	router.GET("/api/v1/namespaces/:namespace/services/:name",service.GetServiceFromNS)
-	//router.GET("/api/v1/services", service.GetAllServices)
+	router.GET("/api/v1/service", service.GetAllServices)
 	router.GET("/api/v1/namespaces/:namespace/services", service.GetAllServicesFromNS)
 	router.GET("/api/v1/namespaces/:namespace/services/:name/status",service.GetStuServiceFromNS)
 	router.GET("/api/v1/namespaces/:namespace/services/:name/proxy",service.GetProServiceFromNS)

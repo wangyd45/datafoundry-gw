@@ -171,15 +171,3 @@ func PatchstatusofPV(c *gin.Context){
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
 }
-
-//v1.PersistentVolume
-//router.POST("/api/v1/persistentvolumes", route.CreatePV)
-//router.GET("/api/v1/persistentvolumes/:name", route.GorWPV)
-//router.GET("/api/v1/persistentvolumes", route.GorWAllPVs)
-//router.PUT("/api/v1/persistentvolumes/:name", route.UpdatePV)
-//router.PATCH("/api/v1/persistentvolumes/:name", route.PatchPV)
-//router.DELETE("/api/v1/persistentvolumes/:name", route.DeletePV)
-//router.DELETE("/api/v1/persistentvolumes", route.DeleteAllPVs)
-//router.GET("/api/v1/persistentvolumes/:name/status", route.GetstatusofPV)
-//router.PUT("/api/v1/persistentvolumes/:name/status", route.UpdatestatusofPV)
-//router.PATCH("/api/v1/persistentvolumes/:name/status", route.PatchstatusofPV)

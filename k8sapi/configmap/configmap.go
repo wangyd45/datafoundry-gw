@@ -182,14 +182,3 @@ func DeleteAllConfigMapNS(c *gin.Context){
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
 }
-
-//v1.ConfigMap
-//router.POST("/api/v1/configmaps", route.CreateConfigMap)
-//router.POST("/api/v1/namespaces/:namespace/configmaps", route.CreateConfigMapNS)
-//router.GET("/api/v1/namespaces/:namespace/configmaps/:name", route.GorWConfigMapNS)
-//router.GET("/api/v1/configmaps", route.GorWAllConfigMap)
-//router.GET("/api/v1/namespaces/:namespace/configmaps", route.GorWAllConfigMapNS)
-//router.PUT("/api/v1/namespaces/:namespace/configmaps/:name", route.UpdateConfigMapNS)
-//router.PATCH("/api/v1/namespaces/:namespace/configmaps/:name", route.PatchConfigMapNS)
-//router.DELETE("/api/v1/namespaces/:namespace/configmaps/:name", route.DeleteConfigMapNS)
-//router.DELETE("/api/v1/namespaces/:namespace/configmaps", route.DeleteAllConfigMapNS)

@@ -264,16 +264,20 @@ func GetExecPodFromNS(c *gin.Context) {
 }
 
 func GetLogPodFromNS(c *gin.Context) {
-	namespace := c.Param("namespace")
+	/*namespace := c.Param("namespace")
 	name := c.Param("name")
-	token := pkg.GetToken(c)
+	token := pkg.GetWSToken(c)
 	req, err := api.GenRequest("GET", SERVICENAME + "/" +namespace+"/pods/"+name + "/log", token, []byte{})
 	if err != nil {
 		log.Error("GetLogPodFromNS error ", err)
 	}
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, JSON, result)
+	c.Data(req.StatusCode, JSON, result)*/
+	namespace := c.Param("namespace")
+	name := c.Param("name")
+	token := pkg.GetWSToken(c)
+	api.WSRequest(SERVICENAME+ "/" +namespace+"/pods/" + name + "/log",token,c.Writer,c.Request)
 }
 
 func GetPortPodFromNS(c *gin.Context) {

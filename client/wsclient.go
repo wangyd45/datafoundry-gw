@@ -10,8 +10,9 @@ import (
 
 	"github.com/gorilla/websocket"
 	"time"
-	"net/http"
+	//"net/http"
 	"fmt"
+	"net/http"
 )
 
 var addr = flag.String("addr", "127.0.0.1:10012", "http service address")
@@ -23,12 +24,12 @@ func main() {
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt)
 
-	u := url.URL{Scheme: "ws", Host: *addr, Path: "/oapi/v1/watch/namespaces/jiangtong/builds"}
+	u := url.URL{Scheme: "ws", Host: *addr, Path: "/api/v1/namespaces/jiangtong/pods/test-1-7z03s/log"}
 	log.Printf("connecting to %s", u.String())
 
 	var rh http.Header
 	rh = make(map[string] []string)
-	rh.Set("Authorization","Bearer pYd4CV2uTQ3g9r_Mqf2TwVQQPY-JCi3iBoMuCjUzUj8")
+	rh.Set("Authorization","Bearer X4btAQYN7vbyATuDloIwCa15brfT-iHwMFceQexI_Zo")
 	fmt.Println(u.String())
 	//time.Sleep(20*time.Second)
 	c, _, err := websocket.DefaultDialer.Dial(u.String(), rh)

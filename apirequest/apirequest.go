@@ -9,6 +9,7 @@ import (
 	"crypto/tls"
 	"fmt"
 	"encoding/json"
+	"io/ioutil"
 )
 
 
@@ -139,6 +140,36 @@ func WSRequest(url, token string,w http.ResponseWriter, r *http.Request) {
 
 }
 
+func WSRequestRL(url, token string,w http.ResponseWriter, r *http.Request) {
+	var conn *websocket.Conn
+	var request *http.Request
+	var err error
+
+	conn, err = wsupgrader.Upgrade(w, r, nil)
+	if err != nil {
+		fmt.Errorf("Failed to set websocket upgrade: %+v", err)
+		return
+	}
+
+	url = "https://"+apiHost+url
+	request,err = http.NewRequest("GET", url, nil)
+	if err !=nil{
+		fmt.Errorf("request err:",err)
+	}
+	request.Header.Set("Content-Type", "application/json")
+	request.Header.Set("Authorization", token)
+
+	response,_:=httpClientB.Do(request)
+
+	defer response.Body.Close()
+	defer conn.Close()
+
+	result, _ := ioutil.ReadAll(response.Body)
+	println(string(result))
+	conn.WriteMessage(1, result)
+
+
+}
 
 func Request(timeout time.Duration, method, url, token string, body []byte) (*http.Response, error) {
 	var req *http.Request

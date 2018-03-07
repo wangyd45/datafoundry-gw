@@ -276,8 +276,8 @@ func GetLogPodFromNS(c *gin.Context) {
 	c.Data(req.StatusCode, JSON, result)*/
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	token := pkg.GetWSToken(c)
-	api.WSRequest(SERVICENAME+ "/" +namespace+"/pods/" + name + "/log",token,c.Writer,c.Request)
+	token := pkg.GetToken(c)
+	api.WSRequestRL(SERVICENAME+ "/" +namespace+"/pods/" + name + "/log",token,c.Writer,c.Request)
 }
 
 func GetPortPodFromNS(c *gin.Context) {

@@ -3,14 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="5d1d8f17-e7fb-4da5-9d92-e7182c519935" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/k8sapi/configmap/configmap.go" afterPath="$PROJECT_DIR$/k8sapi/configmap/configmap.go" />
-      <change beforePath="$PROJECT_DIR$/k8sapi/endpoints/endpoints.go" afterPath="$PROJECT_DIR$/k8sapi/endpoints/endpoints.go" />
-      <change beforePath="$PROJECT_DIR$/k8sapi/event/event.go" afterPath="$PROJECT_DIR$/k8sapi/event/event.go" />
-      <change beforePath="$PROJECT_DIR$/k8sapi/limitrange/limitrange.go" afterPath="$PROJECT_DIR$/k8sapi/limitrange/limitrange.go" />
-      <change beforePath="$PROJECT_DIR$/k8sapi/namespace/namespace.go" afterPath="$PROJECT_DIR$/k8sapi/namespace/namespace.go" />
-      <change beforePath="$PROJECT_DIR$/k8sapi/node/node.go" afterPath="$PROJECT_DIR$/k8sapi/node/node.go" />
-      <change beforePath="$PROJECT_DIR$/k8sapi/persistentvolume/persistentvolume.go" afterPath="$PROJECT_DIR$/k8sapi/persistentvolume/persistentvolume.go" />
-      <change beforePath="$PROJECT_DIR$/k8sapi/persistentvolumeclaim/persistentvolumeclaim.go" afterPath="$PROJECT_DIR$/k8sapi/persistentvolumeclaim/persistentvolumeclaim.go" />
+      <change beforePath="$PROJECT_DIR$/apirequest/apirequest.go" afterPath="$PROJECT_DIR$/apirequest/apirequest.go" />
+      <change beforePath="$PROJECT_DIR$/client/wsclient.go" afterPath="$PROJECT_DIR$/client/wsclient.go" />
+      <change beforePath="$PROJECT_DIR$/k8sapi/pod/pod.go" afterPath="$PROJECT_DIR$/k8sapi/pod/pod.go" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,8 +19,8 @@
       <file leaf-file-name="main.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="70">
-              <caret line="424" column="57" lean-forward="false" selection-start-line="424" selection-start-column="57" selection-end-line="424" selection-end-column="57" />
+            <state relative-caret-position="82">
+              <caret line="285" column="72" lean-forward="false" selection-start-line="285" selection-start-column="72" selection-end-line="285" selection-end-column="72" />
               <folding>
                 <element signature="e#14#1716#0" expanded="true" />
               </folding>
@@ -36,18 +31,18 @@
       <file leaf-file-name="namespace.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/k8sapi/namespace/namespace.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="175" column="0" lean-forward="true" selection-start-line="175" selection-start-column="0" selection-end-line="175" selection-end-column="0" />
+            <state relative-caret-position="3192">
+              <caret line="175" column="0" lean-forward="false" selection-start-line="175" selection-start-column="0" selection-end-line="175" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="persistentvolumeclaim.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="persistentvolumeclaim.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/k8sapi/persistentvolumeclaim/persistentvolumeclaim.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="225" column="0" lean-forward="true" selection-start-line="225" selection-start-column="0" selection-end-line="225" selection-end-column="0" />
+            <state relative-caret-position="900">
+              <caret line="225" column="0" lean-forward="false" selection-start-line="225" selection-start-column="0" selection-end-line="225" selection-end-column="0" />
               <folding>
                 <element signature="n#!!block;n#CreatePVC#0" expanded="false" />
                 <element signature="n#!!block;n#GorWPVCns#0" expanded="false" />
@@ -68,158 +63,34 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="node.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/k8sapi/node/node.go">
+      <file leaf-file-name="pod.go" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/k8sapi/pod/pod.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="348" column="0" lean-forward="false" selection-start-line="348" selection-start-column="0" selection-end-line="348" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!block;n#CreateNode#0" expanded="false" />
-                <element signature="n#!!block;n#GorWNode#0" expanded="false" />
-                <element signature="n#!!block;n#GorWAllNodes#0" expanded="false" />
-                <element signature="n#!!block;n#getNode#0" expanded="false" />
-                <element signature="n#!!block;n#getAllNodes#0" expanded="false" />
-                <element signature="n#!!block;n#watchNode#0" expanded="false" />
-                <element signature="n#!!block;n#watchAllNodes#0" expanded="false" />
-                <element signature="n#!!block;n#DeleteNode#0" expanded="false" />
-                <element signature="n#!!block;n#DeleteAllNodes#0" expanded="false" />
-                <element signature="n#!!block;n#GetStatusOfNode#0" expanded="false" />
-                <element signature="n#!!block;n#UpdateStatusOfNode#0" expanded="false" />
-                <element signature="n#!!block;n#PatchStatusOfNode#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="persistentvolume.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/k8sapi/persistentvolume/persistentvolume.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="563">
-              <caret line="173" column="0" lean-forward="false" selection-start-line="173" selection-start-column="0" selection-end-line="173" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!block;n#GorWPV#0" expanded="false" />
-                <element signature="n#!!block;n#GorWAllPVs#0" expanded="false" />
-                <element signature="n#!!block;n#getAllPVs#0" expanded="false" />
-                <element signature="n#!!block;n#watchPV#0" expanded="false" />
-                <element signature="n#!!block;n#watchAllPVs#0" expanded="false" />
-                <element signature="n#!!block;n#UpdatePV#0" expanded="false" />
-                <element signature="n#!!block;n#PatchPV#0" expanded="false" />
-                <element signature="n#!!block;n#DeletePV#0" expanded="false" />
-                <element signature="n#!!block;n#DeleteAllPVs#0" expanded="false" />
-                <element signature="n#!!block;n#GetstatusofPV#0" expanded="false" />
-                <element signature="n#!!block;n#UpdatestatusofPV#0" expanded="false" />
-                <element signature="n#!!block;n#PatchstatusofPV#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="configmap.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/k8sapi/configmap/configmap.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="184" column="0" lean-forward="true" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!block;n#CreateConfigMap#0" expanded="false" />
-                <element signature="n#!!block;n#CreateConfigMapNS#0" expanded="false" />
-                <element signature="n#!!block;n#GorWConfigMapNS#0" expanded="false" />
-                <element signature="n#!!block;n#GorWAllConfigMap#0" expanded="false" />
-                <element signature="n#!!block;n#GorWAllConfigMapNS#0" expanded="false" />
-                <element signature="n#!!block;n#getConfigMapNS#0" expanded="false" />
-                <element signature="n#!!block;n#getAllConfigMap#0" expanded="false" />
-                <element signature="n#!!block;n#getAllConfigMapNS#0" expanded="false" />
-                <element signature="n#!!block;n#watchConfigMapNS#0" expanded="false" />
-                <element signature="n#!!block;n#watchAllConfigMap#0" expanded="false" />
-                <element signature="n#!!block;n#watchAllConfigMapNS#0" expanded="false" />
-                <element signature="n#!!block;n#UpdateConfigMapNS#0" expanded="false" />
-                <element signature="n#!!block;n#PatchConfigMapNS#0" expanded="false" />
-                <element signature="n#!!block;n#DeleteConfigMapNS#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="endpoints.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/k8sapi/endpoints/endpoints.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="257">
-              <caret line="184" column="0" lean-forward="true" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!block;n#CreateEndpoints#0" expanded="false" />
-                <element signature="n#!!block;n#CreateEndpointsNS#0" expanded="false" />
-                <element signature="n#!!block;n#GorWEndpointsNS#0" expanded="false" />
-                <element signature="n#!!block;n#GorWAllEndpoints#0" expanded="false" />
-                <element signature="n#!!block;n#GorWAllEndpointsNS#0" expanded="false" />
-                <element signature="n#!!block;n#getEndpointsNS#0" expanded="false" />
-                <element signature="n#!!block;n#getAllEndpoints#0" expanded="false" />
-                <element signature="n#!!block;n#getAllEndpointsNS#0" expanded="false" />
-                <element signature="n#!!block;n#watchEndpointsNS#0" expanded="false" />
-                <element signature="n#!!block;n#watchAllEndpoints#0" expanded="false" />
-                <element signature="n#!!block;n#watchAllEndpointsNS#0" expanded="false" />
-                <element signature="n#!!block;n#UpdateEndpointsNS#0" expanded="false" />
-                <element signature="n#!!block;n#PatchEndpointsNS#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="event.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/k8sapi/event/event.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="184" column="0" lean-forward="false" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!block;n#CreateEvent#0" expanded="false" />
-                <element signature="n#!!block;n#CreateEventNS#0" expanded="false" />
-                <element signature="n#!!block;n#GorWEventNS#0" expanded="false" />
-                <element signature="n#!!block;n#GorWAllEvents#0" expanded="false" />
-                <element signature="n#!!block;n#GorWAllEventsNS#0" expanded="false" />
-                <element signature="n#!!block;n#getEventNS#0" expanded="false" />
-                <element signature="n#!!block;n#getAllEvents#0" expanded="false" />
-                <element signature="n#!!block;n#getAllEventsNS#0" expanded="false" />
-                <element signature="n#!!block;n#watchEventNS#0" expanded="false" />
-                <element signature="n#!!block;n#watchAllEvents#0" expanded="false" />
-                <element signature="n#!!block;n#watchAllEventsNS#0" expanded="false" />
-                <element signature="n#!!block;n#UpdateEventNS#0" expanded="false" />
-                <element signature="n#!!block;n#PatchEventNS#0" expanded="false" />
-                <element signature="n#!!block;n#DeleteEventNS#0" expanded="false" />
-                <element signature="n#!!block;n#DeleteAllEventNS#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="limitrange.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/k8sapi/limitrange/limitrange.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="184" column="0" lean-forward="true" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!block;n#init#0" expanded="false" />
-                <element signature="n#!!block;n#CreateLimitRange#0" expanded="false" />
-                <element signature="n#!!block;n#CreateLimitRangeNS#0" expanded="false" />
-                <element signature="n#!!block;n#GorWLimitRangeNS#0" expanded="false" />
-                <element signature="n#!!block;n#GorWAllLimitRanges#0" expanded="false" />
-                <element signature="n#!!block;n#GorWAllLimitRangesNS#0" expanded="false" />
-                <element signature="n#!!block;n#getLimitRangeNS#0" expanded="false" />
-                <element signature="n#!!block;n#getAllLimitRanges#0" expanded="false" />
-                <element signature="n#!!block;n#getAllLimitRangesNS#0" expanded="false" />
-                <element signature="n#!!block;n#watchLimitRangeNS#0" expanded="false" />
-                <element signature="n#!!block;n#watchAllLimitRanges#0" expanded="false" />
-                <element signature="n#!!block;n#watchAllLimitRangesNS#0" expanded="false" />
-                <element signature="n#!!block;n#UpdateLimitRangeNS#0" expanded="false" />
-                <element signature="n#!!block;n#PatchLimitRangeNS#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="23" column="6" lean-forward="false" selection-start-line="23" selection-start-column="3" selection-end-line="23" selection-end-column="6" />
+            <state relative-caret-position="156">
+              <caret line="278" column="28" lean-forward="true" selection-start-line="278" selection-start-column="28" selection-end-line="278" selection-end-column="28" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="apirequest.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apirequest/apirequest.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2835">
+              <caret line="10" column="19" lean-forward="false" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wsclient.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/wsclient.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="220">
+              <caret line="34" column="61" lean-forward="true" selection-start-line="34" selection-start-column="61" selection-end-line="34" selection-end-column="61" />
+              <folding>
+                <element signature="e#14#153#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -267,10 +138,8 @@
         <option value="$PROJECT_DIR$/server/server.go" />
         <option value="/usr/local/etc/nginx/nginx.conf" />
         <option value="$PROJECT_DIR$/../datafoundry_web/app/pub/service.js" />
-        <option value="$PROJECT_DIR$/client/wsclient.go" />
         <option value="$PROJECT_DIR$/../datafoundry_web/app/resource.js" />
         <option value="$PROJECT_DIR$/vendor/github.com/gorilla/websocket/server.go" />
-        <option value="$PROJECT_DIR$/apirequest/apirequest.go" />
         <option value="$PROJECT_DIR$/../datafoundry_web/app/app.js" />
         <option value="$PROJECT_DIR$/pkg/parse.go" />
         <option value="$PROJECT_DIR$/oapi/build/build.go" />
@@ -287,6 +156,9 @@
         <option value="$PROJECT_DIR$/k8sapi/node/node.go" />
         <option value="$PROJECT_DIR$/k8sapi/persistentvolume/persistentvolume.go" />
         <option value="$PROJECT_DIR$/k8sapi/persistentvolumeclaim/persistentvolumeclaim.go" />
+        <option value="$PROJECT_DIR$/apirequest/apirequest.go" />
+        <option value="$PROJECT_DIR$/client/wsclient.go" />
+        <option value="$PROJECT_DIR$/k8sapi/pod/pod.go" />
       </list>
     </option>
   </component>
@@ -316,8 +188,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -328,55 +200,24 @@
             <path>
               <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
               <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
               <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
               <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
-              <item name="configmap" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
-              <item name="endpoints" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
-              <item name="event" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
-              <item name="limitrange" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
-              <item name="namespace" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
-              <item name="node" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
-              <item name="persistentvolume" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
               <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
               <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
               <item name="persistentvolumeclaim" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
+              <item name="k8sapi" type="462c0819:PsiDirectoryNode" />
+              <item name="pod" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
@@ -492,15 +333,6 @@
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="pub" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="GOPATH &lt;datafoundry-gw&gt;" type="20ee2d1f:SyntheticLibraryElementNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="github.com" type="462c0819:PsiDirectoryNode" />
-              <item name="asiainfoLDP" type="462c0819:PsiDirectoryNode" />
-              <item name="df-api" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -512,7 +344,7 @@
     <property name="configurable.Global.GOPATH.is.expanded" value="true" />
     <property name="configurable.Project.GOPATH.is.expanded" value="true" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
-    <property name="last_opened_file_path" value="$USER_HOME$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.vendoring.notification.had.been.shown" value="true" />
   </component>
@@ -541,17 +373,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="797" extended-state="6" />
-    <editor active="true" />
+    <frame x="0" y="23" width="1440" height="797" extended-state="0" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2653791" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26895565" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905984" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37749287" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.45726496" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -583,7 +414,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/vendor/github.com/gin-gonic/gin/binding/msgpack.go" />
     <entry file="file://$PROJECT_DIR$/oapi/user/user.go" />
     <entry file="file://$PROJECT_DIR$/vendor/vendor.json">
       <provider selected="true" editor-type-id="text-editor">
@@ -599,13 +429,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../df-api/client.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="83" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../df-api/client.go" />
     <entry file="file://$PROJECT_DIR$/server.go" />
     <entry file="file://$PROJECT_DIR$/server/server.go" />
     <entry file="file://$PROJECT_DIR$/oapi/buildconfig/buildconfig.go">
@@ -626,13 +450,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="6441">
           <caret line="355" column="18" lean-forward="false" selection-start-line="355" selection-start-column="18" selection-end-line="355" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/wsclient.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="33" column="43" lean-forward="false" selection-start-line="33" selection-start-column="43" selection-end-line="33" selection-end-column="43" />
         </state>
       </provider>
     </entry>
@@ -785,23 +602,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/parse.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="21" column="43" lean-forward="true" selection-start-line="21" selection-start-column="43" selection-end-line="21" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apirequest/apirequest.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="86" column="5" lean-forward="false" selection-start-line="86" selection-start-column="5" selection-end-line="86" selection-end-column="5" />
-          <folding>
-            <element signature="e#20#135#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/oapi/build/build.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-328">
@@ -859,20 +659,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="70">
-          <caret line="424" column="57" lean-forward="false" selection-start-line="424" selection-start-column="57" selection-end-line="424" selection-end-column="57" />
-          <folding>
-            <element signature="e#14#1716#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/k8sapi/configmap/configmap.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="184" column="0" lean-forward="true" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
+        <state relative-caret-position="950">
+          <caret line="184" column="0" lean-forward="false" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
           <folding>
             <element signature="n#!!block;n#CreateConfigMap#0" expanded="false" />
             <element signature="n#!!block;n#CreateConfigMapNS#0" expanded="false" />
@@ -894,8 +684,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/k8sapi/endpoints/endpoints.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="184" column="0" lean-forward="true" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
+        <state relative-caret-position="1178">
+          <caret line="184" column="0" lean-forward="false" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
           <folding>
             <element signature="n#!!block;n#CreateEndpoints#0" expanded="false" />
             <element signature="n#!!block;n#CreateEndpointsNS#0" expanded="false" />
@@ -916,7 +706,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/k8sapi/event/event.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
+        <state relative-caret-position="760">
           <caret line="184" column="0" lean-forward="false" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
           <folding>
             <element signature="n#!!block;n#CreateEvent#0" expanded="false" />
@@ -940,8 +730,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/k8sapi/limitrange/limitrange.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="184" column="0" lean-forward="true" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
+        <state relative-caret-position="1121">
+          <caret line="184" column="0" lean-forward="false" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
           <folding>
             <element signature="n#!!block;n#init#0" expanded="false" />
             <element signature="n#!!block;n#CreateLimitRange#0" expanded="false" />
@@ -963,15 +753,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/k8sapi/namespace/namespace.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="175" column="0" lean-forward="true" selection-start-line="175" selection-start-column="0" selection-end-line="175" selection-end-column="0" />
+        <state relative-caret-position="3192">
+          <caret line="175" column="0" lean-forward="false" selection-start-line="175" selection-start-column="0" selection-end-line="175" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/k8sapi/node/node.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
+        <state relative-caret-position="4465">
           <caret line="348" column="0" lean-forward="false" selection-start-line="348" selection-start-column="0" selection-end-line="348" selection-end-column="0" />
           <folding>
             <element signature="n#!!block;n#CreateNode#0" expanded="false" />
@@ -992,7 +782,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/k8sapi/persistentvolume/persistentvolume.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="563">
+        <state relative-caret-position="1140">
           <caret line="173" column="0" lean-forward="false" selection-start-line="173" selection-start-column="0" selection-end-line="173" selection-end-column="0" />
           <folding>
             <element signature="n#!!block;n#GorWPV#0" expanded="false" />
@@ -1011,10 +801,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pkg/parse.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="137">
+          <caret line="14" column="5" lean-forward="false" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="82">
+          <caret line="285" column="72" lean-forward="false" selection-start-line="285" selection-start-column="72" selection-end-line="285" selection-end-column="72" />
+          <folding>
+            <element signature="e#14#1716#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/k8sapi/persistentvolumeclaim/persistentvolumeclaim.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="225" column="0" lean-forward="true" selection-start-line="225" selection-start-column="0" selection-end-line="225" selection-end-column="0" />
+        <state relative-caret-position="900">
+          <caret line="225" column="0" lean-forward="false" selection-start-line="225" selection-start-column="0" selection-end-line="225" selection-end-column="0" />
           <folding>
             <element signature="n#!!block;n#CreatePVC#0" expanded="false" />
             <element signature="n#!!block;n#GorWPVCns#0" expanded="false" />
@@ -1031,6 +839,32 @@
             <element signature="n#!!block;n#DeletePVCns#0" expanded="false" />
             <element signature="n#!!block;n#DeleteAllPVCns#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apirequest/apirequest.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2835">
+          <caret line="10" column="19" lean-forward="false" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/wsclient.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="34" column="61" lean-forward="true" selection-start-line="34" selection-start-column="61" selection-end-line="34" selection-end-column="61" />
+          <folding>
+            <element signature="e#14#153#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/k8sapi/pod/pod.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="278" column="28" lean-forward="true" selection-start-line="278" selection-start-column="28" selection-end-line="278" selection-end-column="28" />
+          <folding />
         </state>
       </provider>
     </entry>

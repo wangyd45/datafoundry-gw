@@ -183,13 +183,3 @@ func DeleteAllEndpointsNS(c *gin.Context){
 	c.Data(req.StatusCode, "application/json",result)
 }
 
-//v1.Endpoints
-//router.POST("/api/v1/endpoints", route.CreateEndpoints)
-//router.POST("/api/v1/namespaces/:namespace/endpoints", route.CreateEndpointsNS)
-//router.GET("/api/v1/namespaces/:namespace/endpoints/:name", route.GorWEndpointsNS)
-//router.GET("/api/v1/endpoints", route.GorWAllEndpoints)
-//router.GET("/api/v1/namespaces/:namespace/endpoints", route.GorWAllEndpointsNS)
-//router.PUT("/api/v1/namespaces/:namespace/endpoints/:name", route.UpdateEndpointsNS)
-//router.PATCH("/api/v1/namespaces/:namespace/endpoints/:name", route.PatchEndpointsNS)
-//router.DELETE("/api/v1/namespaces/:namespace/endpoints/:name", route.DeleteEndpointsNS)
-//router.DELETE("/api/v1/namespaces/:namespace/endpoints", route.DeleteAllEndpointsNS)

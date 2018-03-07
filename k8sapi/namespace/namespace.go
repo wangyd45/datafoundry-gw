@@ -173,15 +173,3 @@ func PatchstatusofNS(c *gin.Context){
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
 }
-
-//v1.Namespace
-//router.POST("/api/v1/namespaces", route.CreateNamespace)
-//router.GET("/api/v1/namespaces/:name", route.GorWNamespace)
-//router.GET("/api/v1/namespaces", route.GorWAllNamespaces)
-//router.PUT("/api/v1/namespaces/:name", route.UpdateNamespace)
-//router.PATCH("/api/v1/namespaces/:name", route.PatchNamespace)
-//router.DELETE("/api/v1/namespaces/:name", route.DeleteNamespace)
-//router.PUT("/api/v1/namespaces/:name/finalize", route.UpdatefinalizeofNS)
-//router.GET("/api/v1/namespaces/:name/status", route.GetstatusofNS)
-//router.PUT("/api/v1/namespaces/:name/status", route.UpdatestatusofNS)
-//router.PATCH("/api/v1/namespaces/:name/status", route.PatchstatusofNS)

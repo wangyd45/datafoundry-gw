@@ -182,14 +182,3 @@ func DeleteAllLimitRangeNS(c *gin.Context){
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
 }
-
-//v1.LimitRange
-//router.POST("/api/v1/limitranges", route.CreateLimitRange)
-//router.POST("/api/v1/namespaces/:namespace/limitranges", route.CreateLimitRangeNS)
-//router.GET("/api/v1/namespaces/:namespace/limitranges/:name", route.GorWLimitRangeNS)
-//router.GET("/api/v1/limitranges", route.GorWAllLimitRanges)
-//router.GET("/api/v1/namespaces/:namespace/limitranges", route.GorWAllLimitRangesNS)
-//router.PUT("/api/v1/namespaces/:namespace/limitranges/:name", route.UpdateLimitRangeNS)
-//router.PATCH("/api/v1/namespaces/:namespace/limitranges/:name", route.PatchLimitRangeNS)
-//router.DELETE("/api/v1/namespaces/:namespace/limitranges/:name", route.DeleteLimitRangeNS)
-//router.DELETE("/api/v1/namespaces/:namespace/limitranges", route.DeleteAllLimitRangeNS)

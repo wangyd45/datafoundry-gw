@@ -182,14 +182,3 @@ func DeleteAllEventNS(c *gin.Context){
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
 }
-
-//v1.Event
-//router.POST("/api/v1/events", route.CreateEvent)
-//router.POST("/api/v1/namespaces/:namespace/events", route.CreateEventNS)
-//router.GET("/api/v1/namespaces/:namespace/events/:name", route.GorWEventNS)
-//router.GET("/api/v1/events", route.GorWAllEvents)
-//router.GET("/api/v1/namespaces/:namespace/events", route.GorWAllEventsNS)
-//router.PUT("/api/v1/namespaces/:namespace/events/:name", route.UpdateEventNS)
-//router.PATCH("/api/v1/namespaces/:namespace/events/:name", route.PatchEventNS)
-//router.DELETE("/api/v1/namespaces/:namespace/events/:name", route.DeleteEventNS)
-//router.DELETE("/api/v1/namespaces/:namespace/events", route.DeleteAllEventNS)

@@ -223,17 +223,3 @@ func PatchstatusofPVCns(c *gin.Context){
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
 }
-
-//v1.PersistentVolumeClaim
-//router.POST("/api/v1/persistentvolumeclaims", route.CreatePVC)
-//router.POST("/api/v1/namespaces/:namespace/persistentvolumeclaims", route.CreatePVCns)
-//router.GET("/api/v1/namespaces/:namespace/persistentvolumeclaims/:name", route.GorWPVCns)
-//router.GET("/api/v1/persistentvolumeclaims", route.GorWAllPVC)
-//router.GET("/api/v1/namespaces/:namespace/persistentvolumeclaims", route.GorWAllPVCns)
-//router.PUT("/api/v1/namespaces/:namespace/persistentvolumeclaims/:name", route.UpdatePVCns)
-//router.PATCH("/api/v1/namespaces/:namespace/persistentvolumeclaims/:name", route.PatchPVCns)
-//router.DELETE("/api/v1/namespaces/:namespace/persistentvolumeclaims/:name", route.DeletePVCns)
-//router.DELETE("/api/v1/namespaces/:namespace/persistentvolumeclaims", route.DeleteAllPVCns)
-//router.GET("/api/v1/namespaces/:namespace/persistentvolumeclaims/:name/status", route.GetstatusofPVCns)
-//router.PUT("/api/v1/namespaces/:namespace/persistentvolumeclaims/:name/status", route.UpdatestatusofPVCns)
-//router.PATCH("/api/v1/namespaces/:namespace/persistentvolumeclaims/:name/status", route.PatchstatusofPVCns)

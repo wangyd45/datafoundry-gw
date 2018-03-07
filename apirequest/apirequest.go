@@ -9,6 +9,7 @@ import (
 	"crypto/tls"
 	"fmt"
 	"encoding/json"
+	"io"
 )
 
 
@@ -138,7 +139,6 @@ func WSRequest(url, token string,w http.ResponseWriter, r *http.Request) {
 	}
 
 }
-
 
 func Request(timeout time.Duration, method, url, token string, body []byte) (*http.Response, error) {
 	var req *http.Request

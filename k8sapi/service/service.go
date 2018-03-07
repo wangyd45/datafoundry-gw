@@ -59,7 +59,7 @@ func CreateProxysInNS(c *gin.Context) {
 	defer c.Request.Body.Close()
 	req, err := api.GenRequest("POST", SERVICENAME + "/" +namespace+"/services/"+name+"/proxy", token, rBody)
 	if err != nil {
-		log.Error("CreateCloneInNS error ", err)
+		log.Error("CreateProxysInNS error ", err)
 	}
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -90,7 +90,7 @@ func HeadProxysInNS(c *gin.Context) {
 	defer c.Request.Body.Close()
 	req, err := api.GenRequest("HEAD", SERVICENAME + "/" +namespace+"/services/"+name+"/proxy", token, rBody)
 	if err != nil {
-		log.Error("CreateCloneInNS error ", err)
+		log.Error("HeadProxysInNS error ", err)
 	}
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -153,7 +153,7 @@ func GetAllServicesFromNS(c *gin.Context) {
 		token := pkg.GetToken(c)
 		req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/services", token, []byte{})
 		if err != nil {
-			log.Error("GetAllBuildFromNS error ", err)
+			log.Error("GetAllServicesFromNS error ", err)
 		}
 		result, _ := ioutil.ReadAll(req.Body)
 		defer req.Body.Close()
@@ -227,7 +227,7 @@ func UpdataServicesFromNS(c *gin.Context) {
 	defer c.Request.Body.Close()
 	req, err := api.GenRequest("PUT", SERVICENAME+ "/" +namespace+"/services/"+name, token, rBody)
 	if err != nil {
-		log.Error("UpdataBuildFromNS error ", err)
+		log.Error("UpdataServicesFromNS error ", err)
 	}
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -242,7 +242,7 @@ func UpdataStuServicesFromNS(c *gin.Context) {
 	defer c.Request.Body.Close()
 	req, err := api.GenRequest("PUT", SERVICENAME+ "/" + namespace + "/services/" + name + "/status", token, rBody)
 	if err != nil {
-		log.Error("UpdataBuildFromNS error ", err)
+		log.Error("UpdataStuServicesFromNS error ", err)
 	}
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -257,7 +257,7 @@ func UpdataProServicesFromNS(c *gin.Context) {
 	defer c.Request.Body.Close()
 	req, err := api.GenRequest("PUT", SERVICENAME+ "/" + namespace + "/services/" + name + "/proxy", token, rBody)
 	if err != nil {
-		log.Error("UpdataBuildFromNS error ", err)
+		log.Error("UpdataProServicesFromNS error ", err)
 	}
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -273,7 +273,7 @@ func UpdataProPathServicesFromNS(c *gin.Context) {
 	defer c.Request.Body.Close()
 	req, err := api.GenRequest("PUT", SERVICENAME+ "/" + namespace + "/services/" + name + "/proxy/" + path, token, rBody)
 	if err != nil {
-		log.Error("UpdataBuildFromNS error ", err)
+		log.Error("UpdataProPathServicesFromNS error ", err)
 	}
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -303,7 +303,7 @@ func PatchStuServicesFromNS(c *gin.Context) {
 	defer c.Request.Body.Close()
 	req, err := api.GenRequest("PATCH", SERVICENAME + "/" + namespace + "/services/" + name + "/status", token, rBody)
 	if err != nil {
-		log.Error("PatchServicesFromNS error ", err)
+		log.Error("PatchStuServicesFromNS error ", err)
 	}
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -349,7 +349,7 @@ func OptionsServicesFromNS(c *gin.Context) {
 	defer c.Request.Body.Close()
 	req, err := api.GenRequest("OPTIONS", SERVICENAME + "/" + namespace + "/services/" + name + "/proxy", token, rBody)
 	if err != nil {
-		log.Error("PatchServicesFromNS error ", err)
+		log.Error("OptionsServicesFromNS error ", err)
 	}
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -365,7 +365,7 @@ func OptionsPathServicesFromNS(c *gin.Context) {
 	defer c.Request.Body.Close()
 	req, err := api.GenRequest("OPTIONS", SERVICENAME + "/" + namespace + "/services/" + name + "/proxy/" + path, token, rBody)
 	if err != nil {
-		log.Error("OptionsPatServicesFromNS error ", err)
+		log.Error("OptionsPathServicesFromNS error ", err)
 	}
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -380,7 +380,7 @@ func DeleteProServicesFromNS(c *gin.Context) {
 	defer c.Request.Body.Close()
 	req, err := api.GenRequest( "DELETE", SERVICENAME+ "/" +namespace+"/services/"+name+ "/proxy", token, rBody)
 	if err != nil {
-		log.Error("DeleteBuildFromNS error ", err)
+		log.Error("DeleteProServicesFromNS error ", err)
 	}
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()

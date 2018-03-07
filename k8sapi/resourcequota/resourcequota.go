@@ -76,7 +76,7 @@ func GetAllRq(c *gin.Context) {
 		token := pkg.GetToken(c)
 		req, err := api.GenRequest("GET", SERVICE, token, []byte{})
 		if err != nil {
-			log.Error("GetAllSecret error ", err)
+			log.Error("GetAllRq error ", err)
 		}
 		result, _ := ioutil.ReadAll(req.Body)
 		defer req.Body.Close()
@@ -92,7 +92,7 @@ func GetAllRqFromNS(c *gin.Context) {
 		token := pkg.GetToken(c)
 		req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/resourcequotas", token, []byte{})
 		if err != nil {
-			log.Error("GetAllSecretFromNS error ", err)
+			log.Error("GetAllRqFromNS error ", err)
 		}
 		result, _ := ioutil.ReadAll(req.Body)
 		defer req.Body.Close()
@@ -190,6 +190,7 @@ func PatchStuRqFromNS(c *gin.Context) {
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
+
 func DeleteRqFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
@@ -212,7 +213,7 @@ func DeleteAllRqFromNS(c *gin.Context) {
 	defer c.Request.Body.Close()
 	req, err := api.GenRequest( "DELETE", SERVICENAME+ "/" +namespace+"/resourcequotas", token, rBody)
 	if err != nil {
-		log.Error("DeleteSecretFromNS error ", err)
+		log.Error("DeleteAllRqFromNS error ", err)
 	}
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()

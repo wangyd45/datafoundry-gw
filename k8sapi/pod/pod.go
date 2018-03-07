@@ -151,7 +151,7 @@ func ProxysPathInNS(c *gin.Context) {
 	defer c.Request.Body.Close()
 	req, err := api.GenRequest("POST", SERVICENAME + "/" +namespace+"/pods/"+name+"/proxy/" + path ,token, rBody)
 	if err != nil {
-		log.Error("HeadProxysPathInNS error ", err)
+		log.Error("ProxysPathInNS error ", err)
 	}
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()

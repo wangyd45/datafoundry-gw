@@ -30,7 +30,7 @@ func CreateSecret(c *gin.Context){
 	defer c.Request.Body.Close()
 	req, err := api.GenRequest("POST", SERVICE, token, rBody)
 	if err != nil {
-		log.Error("CreateService error ", err)
+		log.Error("CreateSecret error ", err)
 	}
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -60,7 +60,7 @@ func GetSecretFromNS(c *gin.Context) {
 		token := pkg.GetToken(c)
 		req, err := api.GenRequest("GET", SERVICENAME + "/" +namespace+"/secrets/"+name, token, []byte{})
 		if err != nil {
-			log.Error("GetServiceFromNS error ", err)
+			log.Error("GetSecretFromNS error ", err)
 		}
 		result, _ := ioutil.ReadAll(req.Body)
 		defer req.Body.Close()
@@ -169,7 +169,7 @@ func DeleteAllSecretFromNS(c *gin.Context) {
 	defer c.Request.Body.Close()
 	req, err := api.GenRequest( "DELETE", SERVICENAME+ "/" +namespace+"/secrets", token, rBody)
 	if err != nil {
-		log.Error("DeleteSecretFromNS error ", err)
+		log.Error("DeleteAllSecretFromNS error ", err)
 	}
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()

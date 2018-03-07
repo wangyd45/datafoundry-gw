@@ -44,7 +44,7 @@ func CreateRcInNS(c *gin.Context) {
 	defer c.Request.Body.Close()
 	req, err := api.GenRequest("POST", SERVICENAME + "/" +namespace+"/replicationcontrollers", token, rBody)
 	if err != nil {
-		log.Error("CreateServiceInNS error ", err)
+		log.Error("CreateRcInNS error ", err)
 	}
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -91,7 +91,7 @@ func GetAllRcFromNS(c *gin.Context) {
 		token := pkg.GetToken(c)
 		req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/replicationcontrollers", token, []byte{})
 		if err != nil {
-			log.Error("GetAllBuildFromNS error ", err)
+			log.Error("GetAllRcFromNS error ", err)
 		}
 		result, _ := ioutil.ReadAll(req.Body)
 		defer req.Body.Close()
@@ -164,7 +164,7 @@ func UpdataRcFromNS(c *gin.Context) {
 	defer c.Request.Body.Close()
 	req, err := api.GenRequest("PUT", SERVICENAME+ "/" +namespace+"/replicationcontrollers/"+name, token, rBody)
 	if err != nil {
-		log.Error("UpdataBuildFromNS error ", err)
+		log.Error("UpdataRcFromNS error ", err)
 	}
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -179,7 +179,7 @@ func UpdataScaleRcFromNS(c *gin.Context) {
 	defer c.Request.Body.Close()
 	req, err := api.GenRequest("PUT", SERVICENAME+ "/" + namespace + "/replicationcontrollers/" + name + "/scale", token, rBody)
 	if err != nil {
-		log.Error("UpdataBuildFromNS error ", err)
+		log.Error("UpdataScaleRcFromNS error ", err)
 	}
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -194,7 +194,7 @@ func UpdataExScaleRcFromNS(c *gin.Context) {
 	defer c.Request.Body.Close()
 	req, err := api.GenRequest("PUT",  "/apis/extensions/v1beta1/namespaces/" + namespace + "/replicationcontrollers/" + name + "/scale", token, rBody)
 	if err != nil {
-		log.Error("UpdataBuildFromNS error ", err)
+		log.Error("UpdataExScaleRcFromNS error ", err)
 	}
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()

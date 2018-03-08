@@ -9,7 +9,6 @@ import (
 	"crypto/tls"
 	"fmt"
 	"encoding/json"
-	"io/ioutil"
 )
 
 
@@ -69,6 +68,27 @@ func GenRequest(method, url, token string, body []byte) (*http.Response, error) 
 	} else {
 		req.Header.Set("Content-Type", "application/json")
 	}
+
+	req.Header.Set("Authorization", token)
+
+	return httpClientG.Do(req)
+
+}
+
+func LogRequest(method, url, token string, body []byte) (*http.Response, error) {
+	var req *http.Request
+	var err error
+	url = "https://"+apiHost+url
+
+	if len(body) == 0 {
+		req, err = http.NewRequest(method, url, nil)
+	} else {
+		req, err = http.NewRequest(method, url, bytes.NewReader(body))
+	}
+	if err != nil {
+		return nil, err
+	}
+
 
 	req.Header.Set("Authorization", token)
 
@@ -144,8 +164,10 @@ func WSRequestRL(url, token string,w http.ResponseWriter, r *http.Request) {
 	var conn *websocket.Conn
 	var request *http.Request
 	var err error
+	var rh http.Header = make(map[string] []string)
+	rh.Set("Sec-Websocket-Protocol",r.Header.Get("Sec-Websocket-Protocol"))
 
-	conn, err = wsupgrader.Upgrade(w, r, nil)
+	conn, err = wsupgrader.Upgrade(w, r, rh)
 	if err != nil {
 		fmt.Errorf("Failed to set websocket upgrade: %+v", err)
 		return
@@ -156,17 +178,22 @@ func WSRequestRL(url, token string,w http.ResponseWriter, r *http.Request) {
 	if err !=nil{
 		fmt.Errorf("request err:",err)
 	}
-	request.Header.Set("Content-Type", "application/json")
+	//request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Authorization", token)
 
 	response,_:=httpClientB.Do(request)
 
 	defer response.Body.Close()
 	defer conn.Close()
+	var data = make([]byte,10485760)
 
-	result, _ := ioutil.ReadAll(response.Body)
-	println(string(result))
-	conn.WriteMessage(1, result)
+	for {
+		n,_:=response.Body.Read(data)
+		println("-----------")
+		println(string(data[:n]))
+		println("-----------")
+		conn.WriteMessage(2,data[:n])
+	}
 
 
 }

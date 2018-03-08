@@ -264,20 +264,26 @@ func GetExecPodFromNS(c *gin.Context) {
 }
 
 func GetLogPodFromNS(c *gin.Context) {
-	/*namespace := c.Param("namespace")
-	name := c.Param("name")
-	token := pkg.GetWSToken(c)
-	req, err := api.GenRequest("GET", SERVICENAME + "/" +namespace+"/pods/"+name + "/log", token, []byte{})
-	if err != nil {
-		log.Error("GetLogPodFromNS error ", err)
-	}
-	result, _ := ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, JSON, result)*/
+	//namespace := c.Param("namespace")
+	//name := c.Param("name")
+	//follow=true&tailLines=1000&limitBytes=10485760
+	tailLines:=c.Query("tailLines")
+	limitBytes:=c.Query("limitBytes")
+	//isfollow :=c.Query("limitBytes")
+	//token := pkg.GetWSToken(c)
+	//req, err := api.LogRequest("GET", SERVICENAME + "/" +namespace+"/pods/"+name + "/log?tailLines="+tailLines+"&limitBytes="+limitBytes, token, nil)
+	//if err != nil {
+	//	log.Error("GetLogPodFromNS error ", err)
+	//}
+	//result, _ := ioutil.ReadAll(req.Body)
+	//defer req.Body.Close()
+	//c.Data(req.StatusCode, "text", result)
+
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	token := pkg.GetToken(c)
-	api.WSRequestRL(SERVICENAME+ "/" +namespace+"/pods/" + name + "/log",token,c.Writer,c.Request)
+	token := pkg.GetWSToken(c)
+	api.WSRequestRL(SERVICENAME+ "/" +namespace+"/pods/" + name + "/log?follow=true&tailLines="+tailLines+"&limitBytes="+limitBytes,token,c.Writer,c.Request)
+
 }
 
 func GetPortPodFromNS(c *gin.Context) {

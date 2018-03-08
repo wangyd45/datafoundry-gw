@@ -8,7 +8,6 @@ import (
 	"github.com/pivotal-golang/lager"
 	"github.com/asiainfoLDP/datafoundry-gw/pkg"
 	api "github.com/asiainfoLDP/datafoundry-gw/apirequest"
-	"fmt"
 )
 
 var log lager.Logger
@@ -279,7 +278,6 @@ func GetLogPodFromNS(c *gin.Context) {
 	//result, _ := ioutil.ReadAll(req.Body)
 	//defer req.Body.Close()
 	//c.Data(req.StatusCode, "text", result)
-
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetWSToken(c)

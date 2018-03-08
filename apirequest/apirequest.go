@@ -189,9 +189,7 @@ func WSRequestRL(url, token string,w http.ResponseWriter, r *http.Request) {
 
 	for {
 		n,_:=response.Body.Read(data)
-		println("-----------")
 		println(string(data[:n]))
-		println("-----------")
 		conn.WriteMessage(2,data[:n])
 	}
 

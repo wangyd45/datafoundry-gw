@@ -8,6 +8,7 @@ import (
 	"github.com/pivotal-golang/lager"
 	"github.com/asiainfoLDP/datafoundry-gw/pkg"
 	api "github.com/asiainfoLDP/datafoundry-gw/apirequest"
+	"fmt"
 )
 
 var log lager.Logger

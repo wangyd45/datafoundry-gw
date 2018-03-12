@@ -34,12 +34,6 @@ import (
 	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/node"
 	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/persistentvolume"
 	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/persistentvolumeclaim"
-/*
-
-	"log"
-	"golang.org/x/net/websocket"
-	"fmt"
-*/
 )
 
 //定义日志以及其他变量

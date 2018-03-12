@@ -2,6 +2,8 @@ package main
 
 import (
 
+	//_ "net/http/pprof"
+	"github.com/DeanThompson/ginpprof"
     "os"
     "fmt"
     "time"
@@ -59,13 +61,15 @@ func main() {
 	logger = lager.NewLogger(ocAPIName)
 	logger.RegisterSink(lager.NewWriterSink(os.Stdout, lager.INFO)) //默认日志级别
 	router := handle()
+	ginpprof.Wrap(router)
 	s := &http.Server{
 		Addr:           ":10012",
 		Handler:        router,
 		ReadTimeout:    30 * time.Second,
-		WriteTimeout:   30 * time.Second,
+		//WriteTimeout:   30 * time.Second,
 		MaxHeaderBytes: 0,
 	}
+
 	//监听端口
 	s.ListenAndServe()
 }

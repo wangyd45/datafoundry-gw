@@ -65,7 +65,7 @@ func main() {
 		Addr:           ":10012",
 		Handler:        router,
 		ReadTimeout:    30 * time.Second,
-		//WriteTimeout:   30 * time.Second,
+		WriteTimeout:   30 * time.Second,
 		MaxHeaderBytes: 0,
 	}
 

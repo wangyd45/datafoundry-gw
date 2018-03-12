@@ -34,12 +34,8 @@ import (
 	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/node"
 	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/persistentvolume"
 	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/persistentvolumeclaim"
-/*
+	"github.com/asiainfoLDP/datafoundry-gw/lapi"
 
-	"log"
-	"golang.org/x/net/websocket"
-	"fmt"
-*/
 )
 
 //定义日志以及其他变量
@@ -484,6 +480,11 @@ func handle() (router *gin.Engine) {
 	router.GET("/api/v1/namespaces/:namespace/persistentvolumeclaims/:name/status", persistentvolumeclaim.GetstatusofPVCns)
 	router.PUT("/api/v1/namespaces/:namespace/persistentvolumeclaims/:name/status", persistentvolumeclaim.UpdatestatusofPVCns)
 	router.PATCH("/api/v1/namespaces/:namespace/persistentvolumeclaims/:name/status", persistentvolumeclaim.PatchstatusofPVCns)
+
+	router.POST("/lapi/v1/orgs", lapi.CreateProject)
+	router.GET("/lapi/v1/orgs/:project/roles", lapi.ListMembers)
+	router.PUT("/lapi/v1/orgs/:project/invite", lapi.InviteMember)
+	router.PUT("/lapi/v1/orgs/:project/remove", lapi.RemoveMember)
 
 	return
 }

@@ -57,6 +57,11 @@
 			"revisionTime": "2017-11-07T05:05:31Z"
 		},
 		{
+			"checksumSHA1": "CB1hZHISNXCqMrKf2A7HCNRjJlc=",
+			"path": "github.com/openshift/rolebinding/api/v1",
+			"revision": ""
+		},
+		{
 			"checksumSHA1": "saRnS0zDW9tDKjxpn6XvUfuz38E=",
 			"path": "github.com/pivotal-golang/lager",
 			"revision": "0bfa98e49e7a976af91e918d47978f07c00b081f",
@@ -79,6 +84,21 @@
 			"path": "gopkg.in/yaml.v2",
 			"revision": "7f97868eec74b32b0982dd158a51a446d1da7eb5",
 			"revisionTime": "2018-02-23T19:12:37Z"
+		},
+		{
+			"checksumSHA1": "KQeZhujZgvcSTB7CoqzmFOa7JS8=",
+			"path": "k8s.io/kubernetes/pkg/api/unversioned",
+			"revision": ""
+		},
+		{
+			"checksumSHA1": "m8Y7GVNrZvJqwJ7t44XwWI9LhHY=",
+			"path": "k8s.io/kubernetes/pkg/api/v1",
+			"revision": ""
+		},
+		{
+			"checksumSHA1": "GNpXRyBnDWPUx11CGIL33pwJ4Ao=",
+			"path": "k8s.io/kubernetes/pkg/types",
+			"revision": ""
 		}
 	],
 	"rootPath": "github.com/asiainfoLDP/datafoundry-gw"

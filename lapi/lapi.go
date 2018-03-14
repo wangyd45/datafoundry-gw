@@ -10,6 +10,7 @@ import (
 	"errors"
 	"time"
 	rolebindingapi "github.com/openshift/rolebinding/api/v1"
+	projectapi "github.com/openshift/origin/pkg/project/api/v1"
 	kapi "k8s.io/kubernetes/pkg/api/v1"
 	oapi "github.com/asiainfoLDP/datafoundry-gw/apirequest"
 	"github.com/asiainfoLDP/datafoundry-gw/pkg"
@@ -30,12 +31,50 @@ type OrgMember struct {
 	Status       MemberStatusPhase `json:"status"`
 }
 
+type Orgnazition struct {
+	ID          string         `json:"id"`
+	Name        string         `json:"name"`
+	CreateBy    string         `json:"create_by"`
+	CreateTime  string         `json:"creation_time"`
+	MemberList  []OrgMember    `json:"members"`
+	Status      string         `json:"status"`
+	RoleBinding bool           `json:"rolebinding"`
+	Reason      string         `json:"reason,omitempty"`
+}
+
 type MemberStatusPhase string
 
 
-
 func CreateProject(c *gin.Context){
-
+	org := new(Orgnazition)
+	if err := parseRequestBody(c.Request, org); err != nil {
+		log.Error("read request body error ",err)
+		return
+	}
+	token := pkg.GetToken(c)
+	if "" == token{
+		log.Error("get token error ",nil)
+	}
+	user := c.Param("name")
+	//region := c.Request.FormValue("region")
+	projRequest := new(projectapi.ProjectRequest)
+	{
+		projRequest.DisplayName = org.Name
+		projRequest.Name = user + "-org-" + genRandomName(8)
+	}
+	rBody,err := json.Marshal(projRequest)
+	if err != nil{
+		log.Error("json Masrshal error ",err)
+		return
+	}
+	req,err := oapi.GenRequest("POST","/oapi/v1/projectrequests",token,rBody)
+	if err != nil{
+		log.Error("Create A Project Fail",err)
+	}
+	//返回结果JSON格式
+	result, _:= ioutil.ReadAll(req.Body)
+	defer req.Body.Close()
+	c.Data(req.StatusCode, "application/json",result)
 }
 
 func ListMembers(c *gin.Context){

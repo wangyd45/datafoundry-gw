@@ -80,6 +80,7 @@ func CreateProject(c *gin.Context){
 	req,err := oapi.GenRequest("POST","/oapi/v1/projectrequests",token,rBody)
 	if err != nil{
 		log.Error("Create A Project Fail",err)
+		return
 	}
 	//返回结果JSON格式
 	result, _:= ioutil.ReadAll(req.Body)
@@ -96,7 +97,35 @@ func ListMembers(c *gin.Context){
 	}
 	result, _ := ioutil.ReadAll(resp.Body)
 	defer resp.Body.Close()
-	c.Data(resp.StatusCode, "application/json", result)
+	roles := new(rolebindingapi.RoleBindingList)
+	rolesResult := new(rolebindingapi.RoleBindingList)
+	err = json.Unmarshal(result,roles)
+	if err != nil{
+		log.Error("json Unmarshal error ",err)
+		return
+	}
+	for _, role := range roles.Items {
+		if role.Name == "view" || role.Name == "admin" || role.Name == "edit" {
+			rolesResult.Items = append(rolesResult.Items, role)
+		} else {
+			for _, subject := range role.Subjects {
+				if subject.Kind == "User" {
+					if role.RoleRef.Name == "view" || role.RoleRef.Name == "admin" ||
+						role.RoleRef.Name == "edit" {
+						//clog.Debugf("%#v", role)
+						rolesResult.Items = append(rolesResult.Items, role)
+						break
+					}
+				}
+			}
+		}
+	}
+	res,err := json.Marshal(rolesResult)
+	if err != nil{
+		log.Error("json Masrshal error ",err)
+		return
+	}
+	c.Data(resp.StatusCode, "application/json", res)
 
 }
 

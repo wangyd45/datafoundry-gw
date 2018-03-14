@@ -11,7 +11,7 @@ import (
 	"errors"
 	"time"
 	rolebindingapi "github.com/openshift/rolebinding/api/v1"
-	projectapi "github.com/openshift/origin/pkg/project/api/v1"
+	projectapi "github.com/openshift/project/api/v1"
 	kapi "k8s.io/kubernetes/pkg/api/v1"
 	oapi "github.com/asiainfoLDP/datafoundry-gw/apirequest"
 	"github.com/asiainfoLDP/datafoundry-gw/pkg"

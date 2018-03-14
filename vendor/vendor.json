@@ -57,6 +57,11 @@
 			"revisionTime": "2017-11-07T05:05:31Z"
 		},
 		{
+			"checksumSHA1": "c2X3TKNTHOps2p2L+Alp8oKhAOk=",
+			"path": "github.com/openshift/project/api/v1",
+			"revision": ""
+		},
+		{
 			"checksumSHA1": "CB1hZHISNXCqMrKf2A7HCNRjJlc=",
 			"path": "github.com/openshift/rolebinding/api/v1",
 			"revision": ""

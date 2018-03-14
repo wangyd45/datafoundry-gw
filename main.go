@@ -484,7 +484,7 @@ func handle() (router *gin.Engine) {
 	router.PUT("/api/v1/namespaces/:namespace/persistentvolumeclaims/:name/status", persistentvolumeclaim.UpdatestatusofPVCns)
 	router.PATCH("/api/v1/namespaces/:namespace/persistentvolumeclaims/:name/status", persistentvolumeclaim.PatchstatusofPVCns)
 
-	router.POST("/lapi/v1/orgs", lapi.CreateProject)
+	router.POST("/lapi/v1/orgs/:name", lapi.CreateProject)
 	router.GET("/lapi/v1/orgs/:project/roles", lapi.ListMembers)
 	router.PUT("/lapi/v1/orgs/:project/invite", lapi.InviteMember)
 	router.PUT("/lapi/v1/orgs/:project/remove", lapi.RemoveMember)

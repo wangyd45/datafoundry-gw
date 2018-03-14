@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"io/ioutil"
 	"encoding/json"
+	"math/rand"
 	"errors"
 	"time"
 	rolebindingapi "github.com/openshift/rolebinding/api/v1"
@@ -44,6 +45,15 @@ type Orgnazition struct {
 
 type MemberStatusPhase string
 
+func genRandomName(strlen int) (name string) {
+	rand.Seed(time.Now().UTC().UnixNano())
+	const chars = "abcdefghijklmnopqrstuvwxyz0123456789"
+	result := make([]byte, strlen)
+	for i := 0; i < strlen; i++ {
+		result[i] = chars[rand.Intn(len(chars))]
+	}
+	return string(result)
+}
 
 func CreateProject(c *gin.Context){
 	org := new(Orgnazition)

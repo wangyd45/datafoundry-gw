@@ -14,6 +14,7 @@ import (
 	projectapi "github.com/openshift/project/api/v1"
 	kapi "k8s.io/kubernetes/pkg/api/v1"
 	oapi "github.com/asiainfoLDP/datafoundry-gw/apirequest"
+	userapi "github.com/openshift/user/api/v1"
 	"github.com/asiainfoLDP/datafoundry-gw/pkg"
 )
 
@@ -43,6 +44,8 @@ type Orgnazition struct {
 	Reason      string         `json:"reason,omitempty"`
 }
 
+
+
 type MemberStatusPhase string
 
 func genRandomName(strlen int) (name string) {
@@ -55,6 +58,23 @@ func genRandomName(strlen int) (name string) {
 	return string(result)
 }
 
+func authDF(token string) ( string, error) {
+	u := &userapi.User{}
+	req,err := oapi.GenRequest("GET","/oapi/v1/users/~",token,[]byte{})
+	if err != nil{
+		log.Error("GetUser error ",err)
+	}
+	result, _:= ioutil.ReadAll(req.Body)
+	defer req.Body.Close()
+	err = json.Unmarshal(result,u)
+	if err != nil{
+		log.Error("json unmarshal error ",err)
+		return "",err
+	}
+	return u.Name, nil
+}
+
+
 func CreateProject(c *gin.Context){
 	org := new(Orgnazition)
 	if err := parseRequestBody(c.Request, org); err != nil {
@@ -65,7 +85,7 @@ func CreateProject(c *gin.Context){
 	if "" == token{
 		log.Error("get token error ",nil)
 	}
-	user := c.Param("name")
+	user,err := authDF(token)
 	//region := c.Request.FormValue("region")
 	projRequest := new(projectapi.ProjectRequest)
 	{

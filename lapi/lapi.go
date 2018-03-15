@@ -86,6 +86,10 @@ func CreateProject(c *gin.Context){
 		log.Error("get token error ",nil)
 	}
 	user,err := authDF(token)
+	if err != nil{
+		log.Error("get user error!",err)
+		return
+	}
 	//region := c.Request.FormValue("region")
 	projRequest := new(projectapi.ProjectRequest)
 	{

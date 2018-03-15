@@ -67,6 +67,11 @@
 			"revision": ""
 		},
 		{
+			"checksumSHA1": "FfwRSpfiptoBO3594HR9awj+ANI=",
+			"path": "github.com/openshift/user/api/v1",
+			"revision": ""
+		},
+		{
 			"checksumSHA1": "saRnS0zDW9tDKjxpn6XvUfuz38E=",
 			"path": "github.com/pivotal-golang/lager",
 			"revision": "0bfa98e49e7a976af91e918d47978f07c00b081f",

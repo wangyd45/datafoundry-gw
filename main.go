@@ -43,18 +43,6 @@ import (
 var logger lager.Logger
 var ocAPIName string = "ocapi"
 
-//获取环境变量
-func getenv(env string) string {
-	env_value := os.Getenv(env)
-	if env_value == "" {
-		fmt.Println("FATAL: NEED ENV", env)
-		fmt.Println("Exit...........")
-		os.Exit(2)
-	}
-	fmt.Println("ENV:", env, env_value)
-	return env_value
-}
-
 func main() {
 	//初始化日志对象，日志输出到stdout
 	logger = lager.NewLogger(ocAPIName)

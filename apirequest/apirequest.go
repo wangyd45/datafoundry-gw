@@ -75,26 +75,6 @@ func GenRequest(method, url, token string, body []byte) (*http.Response, error) 
 
 }
 
-func LogRequest(method, url, token string, body []byte) (*http.Response, error) {
-	var req *http.Request
-	var err error
-	url = "https://"+apiHost+url
-
-	if len(body) == 0 {
-		req, err = http.NewRequest(method, url, nil)
-	} else {
-		req, err = http.NewRequest(method, url, bytes.NewReader(body))
-	}
-	if err != nil {
-		return nil, err
-	}
-
-
-	req.Header.Set("Authorization", token)
-
-	return httpClientG.Do(req)
-
-}
 
 func WSRequest(url, token string,w http.ResponseWriter, r *http.Request) {
 	var conn *websocket.Conn
@@ -117,8 +97,6 @@ func WSRequest(url, token string,w http.ResponseWriter, r *http.Request) {
 
 	response,_:=httpClientB.Do(request)
 
-
-	//var data = make([]byte,10240)
 	defer response.Body.Close()
 	defer conn.Close()
 	var data = make([]byte,0)
@@ -130,31 +108,14 @@ func WSRequest(url, token string,w http.ResponseWriter, r *http.Request) {
 		len :=len(data)
 		index :=0
 		lenindex++
-		//println("len ===%d",len)
 		for i:=512*(lenindex-1);i<len;i++{
 			if json.Valid(data[:i-index]){
-				//println("-------------")
-				//println(string(data[:i-index]))
 				conn.WriteMessage(1,data[:i-index])
 				data = data[i-index:]
 				index = i
 				lenindex = 0
 			}
 		}
-
-		/*
-		n,_:=response.Body.Read(data)
-		index :=0
-		for i:=0;i<n;i++{
-			if json.Valid(data[index:i]){
-				println("index=%d",index)
-				println(string(data[index:i]))
-				conn.WriteMessage(1,data[index:i])
-				index = i
-			}
-
-		}
-		*/
 
 	}
 
@@ -193,32 +154,6 @@ func WSRequestRL(url, token string,w http.ResponseWriter, r *http.Request) {
 		conn.WriteMessage(2,data[:n])
 	}
 
-
-}
-
-func Request(timeout time.Duration, method, url, token string, body []byte) (*http.Response, error) {
-	var req *http.Request
-	var err error
-	//url = apiHost + url
-	url = "https://new.dataos.io:8443" + url
-	if len(body) == 0 {
-		req, err = http.NewRequest(method, url, nil)
-	} else {
-		req, err = http.NewRequest(method, url, bytes.NewReader(body))
-	}
-
-	if err != nil {
-		return nil, err
-	}
-
-	if method == "PATCH" {
-		req.Header.Set("Content-Type", "application/json-patch+json")
-	} else {
-		req.Header.Set("Content-Type", "application/json")
-	}
-	req.Header.Set("Authorization", token)
-
-	return httpClientG.Do(req)
 
 }
 

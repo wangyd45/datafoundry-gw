@@ -5,7 +5,6 @@ import (
 	//_ "net/http/pprof"
 	"github.com/DeanThompson/ginpprof"
     "os"
-    "fmt"
     "time"
     "net/http"
     "github.com/gin-gonic/gin"

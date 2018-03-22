@@ -121,7 +121,7 @@ func WSRequest(url, token string,w http.ResponseWriter, r *http.Request) {
 
 }
 
-func WSRequestRL(url, token string,w http.ResponseWriter, r *http.Request) {
+func WSRequestRL(len int,url, token string,w http.ResponseWriter, r *http.Request) {
 	var conn *websocket.Conn
 	var request *http.Request
 	var err error
@@ -139,18 +139,16 @@ func WSRequestRL(url, token string,w http.ResponseWriter, r *http.Request) {
 	if err !=nil{
 		fmt.Errorf("request err:",err)
 	}
-	//request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Authorization", token)
 
 	response,_:=httpClientB.Do(request)
 
 	defer response.Body.Close()
 	defer conn.Close()
-	var data = make([]byte,10485760)
+	var data = make([]byte,len)
 
 	for {
 		n,_:=response.Body.Read(data)
-		println(string(data[:n]))
 		conn.WriteMessage(2,data[:n])
 	}
 

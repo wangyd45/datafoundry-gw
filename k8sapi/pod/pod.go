@@ -8,6 +8,7 @@ import (
 	"github.com/pivotal-golang/lager"
 	"github.com/asiainfoLDP/datafoundry-gw/pkg"
 	api "github.com/asiainfoLDP/datafoundry-gw/apirequest"
+	"strconv"
 )
 
 var log lager.Logger
@@ -264,24 +265,17 @@ func GetExecPodFromNS(c *gin.Context) {
 }
 
 func GetLogPodFromNS(c *gin.Context) {
-	//namespace := c.Param("namespace")
-	//name := c.Param("name")
-	//follow=true&tailLines=1000&limitBytes=10485760
 	tailLines:=c.Query("tailLines")
 	limitBytes:=c.Query("limitBytes")
-	//isfollow :=c.Query("limitBytes")
-	//token := pkg.GetWSToken(c)
-	//req, err := api.LogRequest("GET", SERVICENAME + "/" +namespace+"/pods/"+name + "/log?tailLines="+tailLines+"&limitBytes="+limitBytes, token, nil)
-	//if err != nil {
-	//	log.Error("GetLogPodFromNS error ", err)
-	//}
-	//result, _ := ioutil.ReadAll(req.Body)
-	//defer req.Body.Close()
-	//c.Data(req.StatusCode, "text", result)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetWSToken(c)
-	api.WSRequestRL(SERVICENAME+ "/" +namespace+"/pods/" + name + "/log?follow=true&tailLines="+tailLines+"&limitBytes="+limitBytes,token,c.Writer,c.Request)
+	lenth,e := stringToInt(limitBytes)
+	if e != nil{
+		lenth = 0
+		log.Error("stringToInt error ",e )
+	}
+	api.WSRequestRL(lenth,SERVICENAME+ "/" +namespace+"/pods/" + name + "/log?follow=true&tailLines="+tailLines+"&limitBytes="+limitBytes,token,c.Writer,c.Request)
 
 }
 
@@ -567,4 +561,12 @@ func DeleteAllPodFromNS(c *gin.Context) {
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
+}
+
+func stringToInt(v string) (d int, err error) {
+	tmp, err := strconv.ParseInt(v, 10, 32)
+	if err != nil {
+		return
+	}
+	return int(tmp), err
 }

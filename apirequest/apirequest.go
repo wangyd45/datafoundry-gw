@@ -146,10 +146,11 @@ func WSRequestRL(len int,url, token string,w http.ResponseWriter, r *http.Reques
 	defer response.Body.Close()
 	defer conn.Close()
 	var data = make([]byte,len)
-
+	var jsting string
 	for {
 		n,_:=response.Body.Read(data)
-		conn.WriteMessage(2,data[:n])
+		jsting = "{ \"message\": \""+string(data[:n])+"\"}"
+		conn.WriteMessage(2,[]byte(jsting))
 	}
 
 

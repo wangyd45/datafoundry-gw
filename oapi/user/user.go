@@ -51,6 +51,19 @@ func GetUser(c *gin.Context){
 	c.Data(http.StatusOK, JSON, result)
 }
 
+//获取用户
+func GetSelf(c *gin.Context){
+	token := pkg.GetToken(c)
+
+	req,err := oapi.GenRequest("GET",USER + "/~" ,token,[]byte{})
+	if err != nil{
+		log.Error("GetSelf error ",err)
+	}
+	result, _:= ioutil.ReadAll(req.Body)
+	defer req.Body.Close()
+	c.Data(http.StatusOK, JSON, result)
+}
+
 //获取所有用户
 func GetAllUser(c *gin.Context){
 	token := pkg.GetToken(c)

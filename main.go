@@ -36,6 +36,7 @@ import (
 	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/persistentvolume"
 	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/persistentvolumeclaim"
 	"github.com/asiainfoLDP/datafoundry-gw/lapi"
+	"github.com/asiainfoLDP/datafoundry-gw/pkg"
 )
 
 //定义日志以及其他变量
@@ -55,7 +56,7 @@ func main() {
 		WriteTimeout:   30 * time.Second,
 		MaxHeaderBytes: 0,
 	}
-
+	logger.Info("Service starting ...",map[string]interface{}{"user": "master", "time": pkg.GetTimeNow()})
 	//监听端口
 	s.ListenAndServe()
 }
@@ -68,6 +69,8 @@ func handle() (router *gin.Engine) {
 
 	//v1.user
 	//router.POST("/users",user.CreateUser)
+	//router.Any()
+	router.Group("/oapi/v1/users/~",user.GetSelf)
 	router.GET("/oapi/v1/users/:name", user.GetUser)
 	router.GET("/oapi/v1/users", user.GetAllUser)
 	//router.GET("/watch/users/:name",user.WatchUser)
@@ -475,6 +478,7 @@ func handle() (router *gin.Engine) {
 	router.GET("/lapi/v1/orgs/:project/roles", lapi.ListMembers)
 	router.PUT("/lapi/v1/orgs/:project/invite", lapi.InviteMember)
 	router.PUT("/lapi/v1/orgs/:project/remove", lapi.RemoveMember)
+
 
 	return
 }

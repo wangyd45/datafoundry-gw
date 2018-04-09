@@ -9,6 +9,12 @@ import (
 	userapi "github.com/openshift/user/api/v1"
 )
 
+var UserMap map[string]string
+
+func init() {
+	UserMap = make(map[string]string)
+}
+
 func GetToken(c *gin.Context)string{
 	return c.Request.Header.Get("Authorization")
 }
@@ -30,6 +36,15 @@ func IsWebsocket(c *gin.Context) (bret bool){
 }
 
 func GetUserFromToken(token string) ( string, error) {
+
+	if len(UserMap) >100 {
+		UserMap = make(map[string]string)
+	}
+
+	value,ok := UserMap[token]
+	if ok {
+		return value,nil
+	}
 	u := &userapi.User{}
 	req,err := oapi.GenRequest("GET","/oapi/v1/users/~",token,[]byte{})
 	if err != nil{
@@ -41,6 +56,7 @@ func GetUserFromToken(token string) ( string, error) {
 	if err != nil{
 		return "",err
 	}
+	UserMap[token] = u.Name
 	return u.Name, nil
 }
 

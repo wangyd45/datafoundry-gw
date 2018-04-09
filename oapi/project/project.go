@@ -28,6 +28,7 @@ func CreateProject(c *gin.Context){
 	if err != nil{
 		logger.Error("Create A Project Fail",err)
 	}
+	logger.Info("Create project",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	//返回结果JSON格式
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()

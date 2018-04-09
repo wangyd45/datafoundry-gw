@@ -35,6 +35,13 @@ func IsWebsocket(c *gin.Context) (bret bool){
 	return bret
 }
 
+func SliceToken(token string) string{
+	if len(token) > 7{
+		return token[7:]
+	}
+	return ""
+}
+
 func GetUserFromToken(token string) ( string, error) {
 
 	if len(UserMap) >100 {

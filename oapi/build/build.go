@@ -125,7 +125,8 @@ func GetLogBuildFromNS(c *gin.Context) {
 	}
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, JSON, result)
+	jstring := "{ \"message\": \""+string(result)+"\"}"
+	c.Data(req.StatusCode, JSON, []byte(jstring))
 }
 
 func watchBuildFromNS(c *gin.Context) {

@@ -36,6 +36,7 @@ import (
 	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/persistentvolume"
 	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/persistentvolumeclaim"
 	"github.com/asiainfoLDP/datafoundry-gw/lapi"
+	"github.com/asiainfoLDP/datafoundry-gw/apis"
 	"github.com/asiainfoLDP/datafoundry-gw/pkg"
 )
 
@@ -498,11 +499,34 @@ func handle() (router *gin.Engine) {
 	router.PUT("/api/v1/namespaces/:namespace/persistentvolumeclaims/:name/status", persistentvolumeclaim.UpdatestatusofPVCns)
 	router.PATCH("/api/v1/namespaces/:namespace/persistentvolumeclaims/:name/status", persistentvolumeclaim.PatchstatusofPVCns)
 
+	//lapi
 	router.POST("/lapi/v1/orgs", lapi.CreateProject)
 	router.GET("/lapi/v1/orgs/:project/roles", lapi.ListMembers)
 	router.PUT("/lapi/v1/orgs/:project/invite", lapi.InviteMember)
 	router.PUT("/lapi/v1/orgs/:project/remove", lapi.RemoveMember)
 
+	//apis
+	router.GET("/apis/autoscaling/v1/namespaces/:namespace/horizontalpodautoscalers/:name", apis.GetHPAns)
+	router.PUT("/apis/autoscaling/v1/namespaces/:namespace/horizontalpodautoscalers/:name", apis.UpdateHPAns)
+	router.PATCH("/apis/autoscaling/v1/namespaces/:namespace/horizontalpodautoscalers/:name", apis.PatchHPAns)
+	router.DELETE("/apis/autoscaling/v1/namespaces/:namespace/horizontalpodautoscalers/:name", apis.DeleteHPAns)
+	router.GET("/apis/apps/v1beta1/namespaces/:namespace/statefulsets/:name", apis.GetSFSns)
+	router.PUT("/apis/apps/v1beta1/namespaces/:namespace/statefulsets/:name", apis.UpdateSFSns)
+	router.PATCH("/apis/apps/v1beta1/namespaces/:namespace/statefulsets/:name", apis.PatchSFSns)
+	router.DELETE("/apis/apps/v1beta1/namespaces/:namespace/statefulsets/:name", apis.DeleteSFSns)
+	router.GET("/apis/extensions/v1beta1/namespaces/:namespace/deployments/:name", apis.GetDeploymentns)
+	router.PUT("/apis/extensions/v1beta1/namespaces/:namespace/deployments/:name", apis.UpdateDeploymentns)
+	router.PATCH("/apis/extensions/v1beta1/namespaces/:namespace/deployments/:name", apis.PatchDeploymentns)
+	router.DELETE("/apis/extensions/v1beta1/namespaces/:namespace/deployments/:name", apis.DeleteDeploymentns)
+	router.GET("/apis/extensions/v1beta1/namespaces/:namespace/deployments/:name/scale", apis.GetDeploymentScalens)
+	router.PUT("/apis/extensions/v1beta1/namespaces/:namespace/deployments/:name/scale", apis.UpdateDeploymentScalens)
+	router.PATCH("/apis/extensions/v1beta1/namespaces/:namespace/deployments/:name/scale", apis.PatchDeploymentScalens)
+	router.GET("/apis/extensions/v1beta1/namespaces/:namespace/replicasets/:name", apis.GetRSns)
+	router.PUT("/apis/extensions/v1beta1/namespaces/:namespace/replicasets/:name", apis.UpdateRSns)
+	router.PATCH("/apis/extensions/v1beta1/namespaces/:namespace/replicasets/:name", apis.PatchRSns)
+	router.DELETE("/apis/extensions/v1beta1/namespaces/:namespace/replicasets/:name", apis.DeleteRSns)
+	router.GET("/apis/extensions/v1beta1/namespaces/:namespace/replicasets", apis.WatchAllRSns)
+	router.GET("/apis/extensions/v1beta1/namespaces/:namespace/deployments", apis.WatchAllDeployns)
 
 	return
 }

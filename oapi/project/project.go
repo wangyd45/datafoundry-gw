@@ -43,6 +43,7 @@ func getProject(c *gin.Context){
 	if err != nil{
 		logger.Error("Get A Project Fail",err)
 	}
+	logger.Info("Get projects/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -74,6 +75,7 @@ func getAllProjects(c *gin.Context){
 	if err != nil{
 		logger.Error("Get All Projects Fail",err)
 	}
+	logger.Info("List projects",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -83,11 +85,13 @@ func watchAProject(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
 	name := c.Param("name")
+	logger.Info("Watch projects/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/oapi/v1/watch/projects/"+name,token,c.Writer,c.Request)
 }
 
 func watchAllProjects(c *gin.Context){
 	token := pkg.GetWSToken(c)
+	logger.Info("Watch collection projects",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/oapi/v1/watch/projects",token,c.Writer,c.Request)
 }
 
@@ -101,6 +105,7 @@ func UpdateProject(c *gin.Context){
 	if err != nil{
 		logger.Error("Update A Project Fail",err)
 	}
+	logger.Info("Update projects/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -114,6 +119,7 @@ func PatchAProject(c *gin.Context){
 	if err != nil{
 		fmt.Println("Patch A Project :%s Fail",name,err)
 	}
+	logger.Info("Patch projects/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.JSON(req.StatusCode, gin.H{"application/json": result})
@@ -127,6 +133,7 @@ func DeleteProject(c *gin.Context){
 	if err != nil{
 		logger.Error("Delete A Project Fail",err)
 	}
+	logger.Info("Delete projects/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)

@@ -42,7 +42,7 @@ func SliceToken(token string) string{
 	return ""
 }
 
-func GetUserFromToken(token string) ( string, error) {
+func GetUserFromToken(token string) string {
 
 	if len(UserMap) >100 {
 		UserMap = make(map[string]string)
@@ -50,21 +50,21 @@ func GetUserFromToken(token string) ( string, error) {
 
 	value,ok := UserMap[token]
 	if ok {
-		return value,nil
+		return value
 	}
 	u := &userapi.User{}
 	req,err := oapi.GenRequest("GET","/oapi/v1/users/~",token,[]byte{})
 	if err != nil{
-		return "",err
+		return ""
 	}
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	err = json.Unmarshal(result,u)
 	if err != nil{
-		return "",err
+		return ""
 	}
 	UserMap[token] = u.Name
-	return u.Name, nil
+	return u.Name
 }
 
 func GetTimeNow()  string{

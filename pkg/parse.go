@@ -53,7 +53,7 @@ func GetUserFromToken(token string) string {
 		return value
 	}
 	u := &userapi.User{}
-	req,err := oapi.GenRequest("GET","/oapi/v1/users/~",token,[]byte{})
+	req,err := oapi.GenRequest("GET","/oapi/v1/users/~","Bearer "+token,[]byte{})
 	if err != nil{
 		return ""
 	}

@@ -87,12 +87,14 @@ func watchAProject(c *gin.Context) {
 	name := c.Param("name")
 	logger.Info("Watch projects/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/oapi/v1/watch/projects/"+name,token,c.Writer,c.Request)
+	logger.Info("Watch projects/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 }
 
 func watchAllProjects(c *gin.Context){
 	token := pkg.GetWSToken(c)
 	logger.Info("Watch collection projects",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/oapi/v1/watch/projects",token,c.Writer,c.Request)
+	logger.Info("Watch collection projects",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 }
 
 

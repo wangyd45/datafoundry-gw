@@ -2,7 +2,6 @@ package build
 
 import (
 	"os"
-	//"fmt"
 	oapi "github.com/asiainfoLDP/datafoundry-gw/apirequest"
 	"github.com/asiainfoLDP/datafoundry-gw/pkg"
 	"github.com/gin-gonic/gin"
@@ -21,19 +20,26 @@ const (
 var log lager.Logger
 
 func init() {
-	log = lager.NewLogger("oapi_v1_Build.log")
+	log = lager.NewLogger("oapi_v1_Build")
 	log.RegisterSink(lager.NewWriterSink(os.Stdout, lager.DEBUG)) //默认日志级别
 }
 
 func CreateBuild(c *gin.Context) {
 	token := pkg.GetToken(c)
-	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	rBody, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil{
+		log.Error("CreateBuild Read Request.Body error",err)
+	}
 	defer c.Request.Body.Close()
 	req, err := oapi.GenRequest("POST", BUILD, token, rBody)
 	if err != nil {
 		log.Error("CreateBuild error ", err)
 	}
-	result, _ := ioutil.ReadAll(req.Body)
+	log.Info("Create Build",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
+	result, err := ioutil.ReadAll(req.Body)
+	if err != nil{
+		log.Error("CreateBuild Read req.Body error",err)
+	}
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
@@ -41,13 +47,20 @@ func CreateBuild(c *gin.Context) {
 func CreateBuildInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
-	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	rBody, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil{
+		log.Error("CreateBuildInNS Read Request.Body error",err)
+	}
 	defer c.Request.Body.Close()
 	req, err := oapi.GenRequest("POST", BUILDNAME + "/" +namespace+"/builds", token, rBody)
 	if err != nil {
 		log.Error("CreateBuildInNS error ", err)
 	}
-	result, _ := ioutil.ReadAll(req.Body)
+	log.Info("Create Build In Namespace",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
+	result, err := ioutil.ReadAll(req.Body)
+	if err != nil{
+		log.Error("CreateBuildInNS Read req.Body error",err)
+	}
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
@@ -56,13 +69,20 @@ func CreateCloneInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	rBody,err := ioutil.ReadAll(c.Request.Body)
+	if err != nil{
+		log.Error("CreateCloneInNS Read Request.Body error",err)
+	}
 	defer c.Request.Body.Close()
 	req, err := oapi.GenRequest("POST", BUILDNAME + "/" +namespace+"/builds/"+name+"/clone", token, rBody)
 	if err != nil {
 		log.Error("CreateCloneInNS error ", err)
 	}
-	result, _ := ioutil.ReadAll(req.Body)
+	log.Info("Create Clone In Namespace",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
+	result, err := ioutil.ReadAll(req.Body)
+	if err != nil{
+		log.Error("CreateCloneInNS Read req.Body error ",err)
+	}
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
@@ -78,7 +98,11 @@ func GetBuildFromNS(c *gin.Context) {
 		if err != nil {
 			log.Error("GetBuildFromNS error ", err)
 		}
-		result, _ := ioutil.ReadAll(req.Body)
+		log.Info("Cet Build From Namespace",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
+		result, err := ioutil.ReadAll(req.Body)
+		if err != nil{
+			log.Error("GetBuildFromNS Read req.Body error",err)
+		}
 		defer req.Body.Close()
 		c.Data(req.StatusCode, JSON, result)
 	}
@@ -93,7 +117,11 @@ func GetAllBuilds(c *gin.Context) {
 		if err != nil {
 			log.Error("GetAllBuilds error ", err)
 		}
-		result, _ := ioutil.ReadAll(req.Body)
+		log.Info("List Builds ",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
+		result, err := ioutil.ReadAll(req.Body)
+		if err != nil {
+			log.Error("GetAllBuilds Read req.Body error ", err)
+		}
 		defer req.Body.Close()
 		c.Data(req.StatusCode, JSON, result)
 	}
@@ -109,7 +137,11 @@ func GetAllBuildFromNS(c *gin.Context) {
 		if err != nil {
 			log.Error("GetAllBuildFromNS error ", err)
 		}
-		result, _ := ioutil.ReadAll(req.Body)
+		log.Info("List Builds From NameSpace",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
+		result, err := ioutil.ReadAll(req.Body)
+		if err != nil {
+			log.Error("GetAllBuildFromNS Read req.Body error ", err)
+		}
 		defer req.Body.Close()
 		c.Data(req.StatusCode, JSON, result)
 	}
@@ -123,7 +155,11 @@ func GetLogBuildFromNS(c *gin.Context) {
 	if err != nil {
 		log.Error("GetLogBuildFromNS error ", err)
 	}
-	result, _ := ioutil.ReadAll(req.Body)
+	log.Info("Get Build Log From NameSpace",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
+	result, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		log.Error("GetLogBuildFromNS Read req.Body error ", err)
+	}
 	defer req.Body.Close()
 	jstring := "{ \"message\": \""+string(result)+"\"}"
 	c.Data(req.StatusCode, JSON, []byte(jstring))
@@ -133,31 +169,44 @@ func watchBuildFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetWSToken(c)
+	log.Info("Watch Build From NameSpace",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":"start watch"})
 	oapi.WSRequest(WATCH+ "/" +namespace+"/builds/" + name,token,c.Writer,c.Request)
+	log.Info("Watch Build From NameSpace",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":"end watch"})
 }
 
 func watchAllBuilds(c *gin.Context) {
 	token := pkg.GetWSToken(c)
+	log.Info("Watch collection Builds",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":"start watch"})
 	oapi.WSRequest(WATCHALL,token,c.Writer,c.Request)
+	log.Info("Watch collection Builds",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":"end watch"})
 }
 
 func watchAllBuildFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetWSToken(c)
+	log.Info("Watch collection Builds From Namespace",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":"start watch"})
 	oapi.WSRequest(WATCH+ "/" +namespace+"/builds", token, c.Writer,c.Request)
+	log.Info("Watch collection Builds From Namespace",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":"end watch"})
 }
 
 func UpdataBuildFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	rBody, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil{
+		log.Error("UpdataBuildFromNS read Request.Body error ",err)
+	}
 	defer c.Request.Body.Close()
 	req, err := oapi.GenRequest("PUT", BUILDNAME+ "/" +namespace+"/builds/"+name, token, rBody)
 	if err != nil {
 		log.Error("UpdataBuildFromNS error ", err)
 	}
-	result, _ := ioutil.ReadAll(req.Body)
+	log.Info("Updata A Build From Namespace",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
+	result, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		log.Error("UpdataBuildFromNS Read req.Body error ", err)
+	}
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
@@ -166,13 +215,20 @@ func UpdataDetailsInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	rBody, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil{
+		log.Error("UpdataDetailsInNS read Request.Body error ",err)
+	}
 	defer c.Request.Body.Close()
 	req, err := oapi.GenRequest("PUT", BUILDNAME+ "/" +namespace+"/builds/"+name+"/details", token, rBody)
 	if err != nil {
-		log.Error("UpdataDetailsInNS error ", err)
+		log.Error("UpdataDetailsInNS request error ", err)
 	}
-	result, _ := ioutil.ReadAll(req.Body)
+	log.Info("Updata Deatils In Namespace",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
+	result, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		log.Error("UpdataDetailsInNS Read req.Body error ", err)
+	}
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
@@ -181,13 +237,20 @@ func PatchBuildFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	rBody, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil{
+		log.Error("PatchBuildFromNS read Request.Body error ",err)
+	}
 	defer c.Request.Body.Close()
 	req, err := oapi.GenRequest("PATCH", BUILDNAME+ "/" +namespace+"/builds/"+name, token, rBody)
 	if err != nil {
 		log.Error("PatchBuildFromNS error ", err)
 	}
-	result, _ := ioutil.ReadAll(req.Body)
+	log.Info("Patch Build From Namespace",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
+	result, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		log.Error("UpdataDetailsInNS Read req.Body error ", err)
+	}
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
@@ -196,13 +259,20 @@ func DeleteBuildFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	rBody, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil{
+		log.Error("DeleteBuildFromNS read Request.Body error ",err)
+	}
 	defer c.Request.Body.Close()
 	req, err := oapi.GenRequest( "DELETE", BUILDNAME+ "/" +namespace+"/builds/"+name, token, rBody)
 	if err != nil {
 		log.Error("DeleteBuildFromNS error ", err)
 	}
-	result, _ := ioutil.ReadAll(req.Body)
+	log.Info("Delete Build From Namespace",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
+	result, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		log.Error("DeleteBuildFromNS Read req.Body error ", err)
+	}
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
@@ -210,13 +280,20 @@ func DeleteBuildFromNS(c *gin.Context) {
 func DeleteAllBuildFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
-	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	rBody, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil{
+		log.Error("DeleteAllBuildFromNS read Request.Body error ",err)
+	}
 	defer c.Request.Body.Close()
 	req, err := oapi.GenRequest("DELETE", BUILDNAME+ "/" +namespace+"/builds", token, rBody)
 	if err != nil {
 		log.Error("DeleteAllBuildFromNS error ", err)
 	}
-	result, _ := ioutil.ReadAll(req.Body)
+	log.Info("Delete Collection Build From Namespace",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
+	result, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		log.Error("DeleteAllBuildFromNS Read req.Body error ", err)
+	}
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }

@@ -129,7 +129,7 @@ func handle() (router *gin.Engine) {
 	router.PUT("/oapi/v1/namespaces/:namespace/buildconfigs/:name", buildconfig.UpdataBCFromNS)
 	router.PATCH("/oapi/v1/namespaces/:namespace/buildconfigs/:name", buildconfig.PatchBCFromNS)
 	router.DELETE("/oapi/v1/namespaces/:namespace/buildconfigs/:name", buildconfig.DeleteBCFromNS)
-	router.DELETE("/oapi/v1/namespaces/:namespace/buildconfigs", buildconfig.DeleteAllBuildFromNS)
+	router.DELETE("/oapi/v1/namespaces/:namespace/buildconfigs", buildconfig.DeleteAllBuildConFromNS)
 
 	//v1.DeploymentConfig DC -> DeploymentConfig Dep -> Deployment
 	router.POST("/oapi/v1/deploymentconfigs", dep.CreateDC)

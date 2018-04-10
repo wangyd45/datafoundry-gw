@@ -24,12 +24,12 @@ func main() {
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt)
 
-	u := url.URL{Scheme: "ws", Host: *addr, Path: "/api/v1/namespaces/jiangtong/pods/test-1-7z03s/log"}
+	u := url.URL{Scheme: "ws", Host: *addr, Path: "/oapi/v1/watch/projects"}
 	log.Printf("connecting to %s", u.String())
 
 	var rh http.Header
 	rh = make(map[string] []string)
-	rh.Set("Authorization","Bearer X4btAQYN7vbyATuDloIwCa15brfT-iHwMFceQexI_Zo")
+	rh.Set("Authorization","Bearer v2lnb5Ia-x2GEeYZb0Bl8DZbx92oHE3m1MLgjGAliyY")
 	fmt.Println(u.String())
 	//time.Sleep(20*time.Second)
 	c, _, err := websocket.DefaultDialer.Dial(u.String(), rh)

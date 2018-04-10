@@ -21,8 +21,9 @@ func CreateNetNamespace(c *gin.Context){
 	rBody,_ := ioutil.ReadAll(c.Request.Body)
 	req,err := oapi.GenRequest("POST","/oapi/v1/netnamespaces",token,rBody)
 	if err != nil{
-		logger.Error("Create A NetNamespaces Fail",err)
+		logger.Error("Create A NetNamespace Fail",err)
 	}
+	logger.Info("Create netnamespace",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -51,6 +52,7 @@ func getNetNamespace(c *gin.Context){
 	if err != nil{
 		logger.Error("Get A NetNamespaces Fail",err)
 	}
+	logger.Info("Get netnamespaces/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -62,6 +64,7 @@ func getAllNetNamespaces(c *gin.Context){
 	if err != nil{
 		logger.Error("Get All NetNamespaces Fail",err)
 	}
+	logger.Info("List netnamespaces",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -71,14 +74,18 @@ func watchNetNamespace(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
 	name := c.Param("name")
+	logger.Info("Watch netnamespaces/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/oapi/v1/watch/netnamespaces/"+name,token,c.Writer,c.Request)
+	logger.Info("Watch netnamespaces/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 
 }
 
 func watchAllNetNamespaces(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
+	logger.Info("Watch collection netnamespaces",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/oapi/v1/watch/netnamespaces",token,c.Writer,c.Request)
+	logger.Info("Watch collection netnamespaces",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 
 }
 
@@ -88,8 +95,9 @@ func UpdateNetNamespace(c *gin.Context){
 	rBody,_ := ioutil.ReadAll(c.Request.Body)
 	req,err := oapi.GenRequest("PUT","/oapi/v1/netnamespaces/"+name,token,rBody)
 	if err != nil{
-		logger.Error("Update A NetNamespaces Fail",err)
+		logger.Error("Update A NetNamespace Fail",err)
 	}
+	logger.Info("Update netnamespaces/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -104,6 +112,7 @@ func PatchNetNamespace(c *gin.Context){
 	if err != nil{
 		logger.Error("Patch A NetNamespaces Fail",err)
 	}
+	logger.Info("Patch netnamespaces/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -115,8 +124,9 @@ func DeleteNetNamespace(c *gin.Context){
 	rBody,_ := ioutil.ReadAll(c.Request.Body)
 	req,err := oapi.GenRequest("DELETE","/oapi/v1/netnamespaces/"+name,token,rBody)
 	if err != nil{
-		logger.Error("Delete A NetNamespaces Fail",err)
+		logger.Error("Delete A NetNamespace Fail",err)
 	}
+	logger.Info("Delete netnamespaces/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -128,6 +138,7 @@ func DeleteAllNetNamespaces(c *gin.Context){
 	if err != nil{
 		logger.Error("Delete All NetNamespaces Fail",err)
 	}
+	logger.Info("Delete collection netnamespaces",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)

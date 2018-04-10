@@ -23,6 +23,7 @@ func CreateTemplate(c *gin.Context){
 	if err != nil{
 		logger.Error("Create A Template Fail",err)
 	}
+	logger.Info("Create template",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -36,6 +37,7 @@ func CreateTemplatenNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Create A Template In A Namespace Fail",err)
 	}
+	logger.Info("Create template namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -76,6 +78,7 @@ func getTemplateInNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Get A Template In A Namespace Fail",err)
 	}
+	logger.Info("Get template namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -87,6 +90,7 @@ func getAllTemplates(c *gin.Context){
 	if err != nil{
 		logger.Error("Get All Templates Fail",err)
 	}
+	logger.Info("List template",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -99,6 +103,7 @@ func getAllTemplatesInNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Get All Templates In A Namespace Fail",err)
 	}
+	logger.Info("List template namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -109,14 +114,18 @@ func watchTemplateInNS(c *gin.Context){
 	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
+	logger.Info("Watch template namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/oapi/v1/watch/namespaces/"+namespace+"/templates/"+name,token,c.Writer,c.Request)
+	logger.Info("Watch template namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 
 }
 
 func watchAllTemplates(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
+	logger.Info("Watch collection template",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/oapi/v1/watch/templates",token,c.Writer,c.Request)
+	logger.Info("Watch collection template",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 
 }
 
@@ -124,7 +133,9 @@ func watchAllTemplatesInNS(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
+	logger.Info("Watch collection template namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/oapi/v1/watch/namespaces/"+namespace+"/templates",token,c.Writer,c.Request)
+	logger.Info("Watch collection template namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 
 }
 
@@ -137,6 +148,7 @@ func UpdateTemplateInNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Update A Template In A Namespace Fail",err)
 	}
+	logger.Info("Update template namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -151,6 +163,7 @@ func PatchTemplateInNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Patch A Template In A Namespace Fail",err)
 	}
+	logger.Info("Patch template namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -165,6 +178,7 @@ func DeleteTemplateInNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Delete A Template In A Namespace Fail",err)
 	}
+	logger.Info("Delete template namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -177,6 +191,7 @@ func DeleteAllTemplatesInNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Delete All Templates In A Namespace Fail",err)
 	}
+	logger.Info("Delete collection template namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)

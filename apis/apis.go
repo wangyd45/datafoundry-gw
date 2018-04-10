@@ -15,7 +15,7 @@ func init() {
 	logger = lager.NewLogger("apis")
 	logger.RegisterSink(lager.NewWriterSink(os.Stdout, lager.DEBUG))
 }
-
+//apihost=lab.new.dataos.io
 
 func GetHPAns(c *gin.Context){
 	token := pkg.GetToken(c)

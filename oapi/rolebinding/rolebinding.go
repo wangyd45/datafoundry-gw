@@ -23,6 +23,7 @@ func CreateRoleBinding(c *gin.Context){
 	if err != nil{
 		logger.Error("Create A RoleBinding Fail",err)
 	}
+	logger.Info("Create rolebinding",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -36,6 +37,7 @@ func CreateRoleBindingInNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Create A RoleBinding In A Namespace Fail",err)
 	}
+	logger.Info("Create rolebinding namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -49,6 +51,7 @@ func GetRoleBindingInNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Get A RoleBinding In A Namespace Fail",err)
 	}
+	logger.Info("Get rolebinding namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -60,6 +63,7 @@ func GetAllRoleBindings(c *gin.Context){
 	if err != nil{
 		logger.Error("Get All RoleBindings Fail",err)
 	}
+	logger.Info("List rolebindings",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -72,6 +76,7 @@ func GetRoleBindingsInNS(c *gin.Context)  {
 	if err != nil{
 		logger.Error("Get All RoleBindings In A Namespace Fail",err)
 	}
+	logger.Info("List rolebindings namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -86,6 +91,7 @@ func UpdateRoleBindingInNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Update A RoleBinding In A Namespace Fail",err)
 	}
+	logger.Info("Update rolebinding namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -100,6 +106,7 @@ func PatchRoleBindingInNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Patch A RoleBinding In A Namespace Fail",err)
 	}
+	logger.Info("Patch rolebinding namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -114,6 +121,7 @@ func DeleteRoleBindingInNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Delete A RoleBinding In A Namespace Fail",err)
 	}
+	logger.Info("Delete rolebinding namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)

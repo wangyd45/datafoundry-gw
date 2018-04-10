@@ -23,6 +23,7 @@ func CreateRole(c *gin.Context){
 	if err != nil{
 		logger.Error("Create A Role Fail",err)
 	}
+	logger.Info("Create role",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -36,6 +37,7 @@ func CreateRoleInNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Create A Role In A Namespace Fail",err)
 	}
+	logger.Info("Create role namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -50,6 +52,7 @@ func GetRoleInNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Get A Role In A Namespace Fail",err)
 	}
+	logger.Info("Get role namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -61,6 +64,7 @@ func GetAllRoles(c *gin.Context){
 	if err != nil{
 		logger.Error("Get All Roles Fail",err)
 	}
+	logger.Info("List roles",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -73,6 +77,7 @@ func GetRolesInNS(c *gin.Context)  {
 	if err != nil{
 		logger.Error("Get All Roles In A Namespace Fail",err)
 	}
+	logger.Info("List roles namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -87,6 +92,7 @@ func UpdateRoleInNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Update A Role In A Namespace Fail",err)
 	}
+	logger.Info("Update role namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -101,6 +107,7 @@ func PatchRoleInNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Patch A Role In A Namespace Fail",err)
 	}
+	logger.Info("Patch role namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -115,6 +122,7 @@ func DeleteRoleInNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Delete A Role In A Namespace Fail",err)
 	}
+	logger.Info("Delete role namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)

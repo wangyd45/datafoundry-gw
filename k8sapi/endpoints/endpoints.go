@@ -24,7 +24,7 @@ func CreateEndpoints(c *gin.Context){
 	if err != nil{
 		logger.Error("Create A Endpoints Fail",err)
 	}
-	//返回结果JSON格式
+	logger.Info("Create endpoints",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -39,6 +39,7 @@ func CreateEndpointsNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Create A Endpoints In A Namespace Fail",err)
 	}
+	logger.Info("Create endpoints namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	//返回结果JSON格式
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
@@ -77,6 +78,7 @@ func getEndpointsNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Get A Endpoints In A Namespace Fail",err)
 	}
+	logger.Info("Get endpoints namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -88,6 +90,7 @@ func getAllEndpoints(c *gin.Context){
 	if err != nil{
 		logger.Error("Get All Endpoints Fail",err)
 	}
+	logger.Info("List endpoints",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -100,6 +103,7 @@ func getAllEndpointsNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Get All Endpoints In A Namespace Fail",err)
 	}
+	logger.Info("List endpoints namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -110,14 +114,18 @@ func watchEndpointsNS(c *gin.Context){
 	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
+	logger.Info("Watch endpoints namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/endpoints/"+name,token,c.Writer,c.Request)
+	logger.Info("Watch endpoints namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 
 }
 
 func watchAllEndpoints(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
+	logger.Info("Watch collection endpoints",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/api/v1/watch/endpoints",token,c.Writer,c.Request)
+	logger.Info("Watch collection endpoints",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 
 }
 
@@ -125,7 +133,9 @@ func watchAllEndpointsNS(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
+	logger.Info("Watch collection endpoints namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/endpoints",token,c.Writer,c.Request)
+	logger.Info("Watch collection endpoints namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 
 }
 
@@ -138,6 +148,7 @@ func UpdateEndpointsNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Update A Endpoints In A Namespace Fail",err)
 	}
+	logger.Info("Update endpoints namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -152,6 +163,7 @@ func PatchEndpointsNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Patch A Endpoints In A Namespace Fail",err)
 	}
+	logger.Info("Patch endpoints namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -166,6 +178,7 @@ func DeleteEndpointsNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Delete A Endpoints In A Namespace Fail",err)
 	}
+	logger.Info("Delete endpoints namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -178,6 +191,7 @@ func DeleteAllEndpointsNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Delete All Endpoints In A Namespace Fail",err)
 	}
+	logger.Info("Delete collection endpoints namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)

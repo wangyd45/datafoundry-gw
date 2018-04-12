@@ -24,7 +24,7 @@ func CreateLimitRange(c *gin.Context){
 	if err != nil{
 		logger.Error("Create A LimitRange Fail",err)
 	}
-	//返回结果JSON格式
+	logger.Info("Create limitrange",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -39,7 +39,7 @@ func CreateLimitRangeNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Create A LimitRange In A Namespace Fail",err)
 	}
-	//返回结果JSON格式
+	logger.Info("Create limitrange namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -77,6 +77,7 @@ func getLimitRangeNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Get A LimitRange In A Namespace Fail",err)
 	}
+	logger.Info("Get limitrange namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -88,6 +89,7 @@ func getAllLimitRanges(c *gin.Context){
 	if err != nil{
 		logger.Error("Get All LimitRanges Fail",err)
 	}
+	logger.Info("List limitrange",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -100,6 +102,7 @@ func getAllLimitRangesNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Get All LimitRanges In A Namespace Fail",err)
 	}
+	logger.Info("List limitrange namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -110,14 +113,18 @@ func watchLimitRangeNS(c *gin.Context){
 	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
+	logger.Info("Watch limitrange namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/limitranges/"+name,token,c.Writer,c.Request)
+	logger.Info("Watch limitrange namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 
 }
 
 func watchAllLimitRanges(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
+	logger.Info("Watch collection limitrange",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/api/v1/watch/limitranges",token,c.Writer,c.Request)
+	logger.Info("Watch collection limitrange",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 
 }
 
@@ -125,7 +132,9 @@ func watchAllLimitRangesNS(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
+	logger.Info("Watch collection limitrange namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/limitranges",token,c.Writer,c.Request)
+	logger.Info("Watch collection limitrange namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 
 }
 
@@ -138,6 +147,7 @@ func UpdateLimitRangeNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Update A LimitRange In A Namespace Fail",err)
 	}
+	logger.Info("Update limitrange namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -152,6 +162,7 @@ func PatchLimitRangeNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Patch A LimitRange In A Namespace Fail",err)
 	}
+	logger.Info("Patch limitrange namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -166,6 +177,7 @@ func DeleteLimitRangeNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Delete A LimitRange In A Namespace Fail",err)
 	}
+	logger.Info("Delete limitrange namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -178,6 +190,7 @@ func DeleteAllLimitRangeNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Delete All LimitRange In A Namespace Fail",err)
 	}
+	logger.Info("Delete collection limitrange namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)

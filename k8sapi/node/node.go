@@ -24,7 +24,7 @@ func CreateNode(c *gin.Context){
 	if err != nil{
 		logger.Error("Create A Node Fail",err)
 	}
-	//返回结果JSON格式
+	logger.Info("Create node",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -53,6 +53,7 @@ func getNode(c *gin.Context){
 	if err != nil{
 		logger.Error("Get A Node Fail",err)
 	}
+	logger.Info("Get node",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -64,6 +65,7 @@ func getAllNodes(c *gin.Context){
 	if err != nil{
 		logger.Error("Get All Nodes Fail",err)
 	}
+	logger.Info("List node",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -73,14 +75,18 @@ func watchNode(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
 	name := c.Param("name")
+	logger.Info("Watch node names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/api/v1/watch/nodes/"+name,token,c.Writer,c.Request)
+	logger.Info("Watch node names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 
 }
 
 func watchAllNodes(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
+	logger.Info("Watch collection node",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/api/v1/watch/nodes",token,c.Writer,c.Request)
+	logger.Info("Watch collection node",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 
 }
 
@@ -92,6 +98,7 @@ func UpdateNode(c *gin.Context){
 	if err != nil{
 		logger.Error("Update A Node Fail",err)
 	}
+	logger.Info("Update node names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -105,6 +112,7 @@ func PatchNode(c *gin.Context){
 	if err != nil{
 		logger.Error("Patch A Node Fail",err)
 	}
+	logger.Info("Patch node names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -118,6 +126,7 @@ func DeleteNode(c *gin.Context){
 	if err != nil{
 		logger.Error("Delete A Node Fail",err)
 	}
+	logger.Info("Delete node names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -129,6 +138,7 @@ func DeleteAllNodes(c *gin.Context){
 	if err != nil{
 		logger.Error("Delete All Nodes Fail",err)
 	}
+	logger.Info("Delete collection node",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -141,6 +151,7 @@ func GetStatusOfNode(c *gin.Context){
 	if err != nil{
 		logger.Error("Get Status Of A Node Fail",err)
 	}
+	logger.Info("Get status of node names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -154,6 +165,7 @@ func UpdateStatusOfNode(c *gin.Context){
 	if err != nil{
 		logger.Error("Update Status Of A Node Fail",err)
 	}
+	logger.Info("Update status of node names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -167,6 +179,7 @@ func PatchStatusOfNode(c *gin.Context){
 	if err != nil{
 		logger.Error("Patch Status Of A Node Fail",err)
 	}
+	logger.Info("Patch status of node names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -179,6 +192,7 @@ func ProxyOpnReqToNode(c *gin.Context){
 	if err != nil{
 		logger.Error("Proxy OPTIONS Request To A Node Fail",err)
 	}
+	logger.Info("Proxy OPTIONS node names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -191,6 +205,7 @@ func ProxyPostReqToNode(c *gin.Context){
 	if err != nil{
 		logger.Error("Proxy Post Request To A Node Fail",err)
 	}
+	logger.Info("Proxy Post node names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -203,6 +218,7 @@ func ProxyHeadReqToNode(c *gin.Context){
 	if err != nil{
 		logger.Error("Proxy Head Request To A Node Fail",err)
 	}
+	logger.Info("Proxy Head node names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -215,6 +231,7 @@ func ProxyGetReqToNode(c *gin.Context){
 	if err != nil{
 		logger.Error("Proxy Get Request To A Node Fail",err)
 	}
+	logger.Info("Proxy Get node names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -227,6 +244,7 @@ func ProxyPutReqToNode(c *gin.Context){
 	if err != nil{
 		logger.Error("Proxy Put Request To A Node Fail",err)
 	}
+	logger.Info("Proxy Put node names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -239,6 +257,7 @@ func ProxyPatchReqToNode(c *gin.Context){
 	if err != nil{
 		logger.Error("Proxy Patch Request To A Node Fail",err)
 	}
+	logger.Info("Proxy Patch node names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -251,6 +270,7 @@ func ProxyDelReqToNode(c *gin.Context){
 	if err != nil{
 		logger.Error("Proxy Delete Request To A Node Fail",err)
 	}
+	logger.Info("Proxy Delete node names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -264,6 +284,7 @@ func ProxyOpnReqToNodeP(c *gin.Context){
 	if err != nil{
 		logger.Error("Proxy OPTIONS Request To A Node(with path) Fail",err)
 	}
+	logger.Info("Proxy OPTIONS node names/"+name+"/path/"+path,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -277,6 +298,7 @@ func ProxyPostReqToNodeP(c *gin.Context){
 	if err != nil{
 		logger.Error("Proxy Post Request To A Node(with path) Fail",err)
 	}
+	logger.Info("Proxy Post node names/"+name+"/path/"+path,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -290,6 +312,7 @@ func ProxyHeadReqToNodeP(c *gin.Context){
 	if err != nil{
 		logger.Error("Proxy Head Request To A Node(with path) Fail",err)
 	}
+	logger.Info("Proxy Head node names/"+name+"/path/"+path,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -303,6 +326,7 @@ func ProxyGetReqToNodeP(c *gin.Context){
 	if err != nil{
 		logger.Error("Proxy Get Request To A Node(with path) Fail",err)
 	}
+	logger.Info("Proxy Get node names/"+name+"/path/"+path,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -316,6 +340,7 @@ func ProxyPutReqToNodeP(c *gin.Context){
 	if err != nil{
 		logger.Error("Proxy Put Request To A Node(with path) Fail",err)
 	}
+	logger.Info("Proxy Put node names/"+name+"/path/"+path,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -329,6 +354,7 @@ func ProxyPatchReqToNodeP(c *gin.Context){
 	if err != nil{
 		logger.Error("Proxy Patch Request To A Node(with path) Fail",err)
 	}
+	logger.Info("Proxy Patch node names/"+name+"/path/"+path,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -342,6 +368,7 @@ func ProxyDelReqToNodeP(c *gin.Context){
 	if err != nil{
 		logger.Error("Proxy Delete Request To A Node(with path) Fail",err)
 	}
+	logger.Info("Proxy Delete node names/"+name+"/path/"+path,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)

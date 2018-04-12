@@ -24,7 +24,7 @@ func CreatePVC(c *gin.Context){
 	if err != nil{
 		logger.Error("Create A PersistentVolumeClaim Fail",err)
 	}
-	//返回结果JSON格式
+	logger.Info("Create persistentvolumeclaim",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -39,7 +39,7 @@ func CreatePVCns(c *gin.Context){
 	if err != nil{
 		logger.Error("Create A PersistentVolumeClaim In A Namespace Fail",err)
 	}
-	//返回结果JSON格式
+	logger.Info("Create persistentvolumeclaim namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -77,6 +77,7 @@ func getPVCns(c *gin.Context){
 	if err != nil{
 		logger.Error("Get A PersistentVolumeClaim In A Namespace Fail",err)
 	}
+	logger.Info("Get persistentvolumeclaim namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -88,6 +89,7 @@ func getAllPVC(c *gin.Context){
 	if err != nil{
 		logger.Error("Get All PersistentVolumeClaims Fail",err)
 	}
+	logger.Info("List persistentvolumeclaim",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -100,6 +102,7 @@ func getAllPVCns(c *gin.Context){
 	if err != nil{
 		logger.Error("Get All PersistentVolumeClaim In A Namespace Fail",err)
 	}
+	logger.Info("List persistentvolumeclaim namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -110,14 +113,18 @@ func watchPVCns(c *gin.Context){
 	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
+	logger.Info("Watch persistentvolumeclaim namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/persistentvolumeclaims/"+name,token,c.Writer,c.Request)
+	logger.Info("Watch persistentvolumeclaim namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 
 }
 
 func watchAllPVC(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
+	logger.Info("Watch collection persistentvolumeclaim",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/api/v1/watch/persistentvolumeclaims",token,c.Writer,c.Request)
+	logger.Info("Watch collection persistentvolumeclaim",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 
 }
 
@@ -125,7 +132,9 @@ func watchAllPVCns(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
+	logger.Info("Watch collection persistentvolumeclaim namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/persistentvolumeclaims",token,c.Writer,c.Request)
+	logger.Info("Watch collection persistentvolumeclaim namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 
 }
 
@@ -138,6 +147,7 @@ func UpdatePVCns(c *gin.Context){
 	if err != nil{
 		logger.Error("Update A PersistentVolumeClaim In A Namespace Fail",err)
 	}
+	logger.Info("Update persistentvolumeclaim namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -152,6 +162,7 @@ func PatchPVCns(c *gin.Context){
 	if err != nil{
 		logger.Error("Patch A PersistentVolumeClaim In A Namespace Fail",err)
 	}
+	logger.Info("Patch persistentvolumeclaim namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -166,6 +177,7 @@ func DeletePVCns(c *gin.Context){
 	if err != nil{
 		logger.Error("Delete A PersistentVolumeClaim In A Namespace Fail",err)
 	}
+	logger.Info("Delete persistentvolumeclaim namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -178,6 +190,7 @@ func DeleteAllPVCns(c *gin.Context){
 	if err != nil{
 		logger.Error("Delete All PersistentVolumeClaim In A Namespace Fail",err)
 	}
+	logger.Info("Delete collection persistentvolumeclaim",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -191,6 +204,7 @@ func GetstatusofPVCns(c *gin.Context){
 	if err != nil{
 		logger.Error("Get status of a PersistentVolumeClaim In A Namespace Fail",err)
 	}
+	logger.Info("Get status of persistentvolumeclaim namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -205,6 +219,7 @@ func UpdatestatusofPVCns(c *gin.Context){
 	if err != nil{
 		logger.Error("Update status of a PersistentVolumeClaim In A Namespace Fail",err)
 	}
+	logger.Info("Update status of persistentvolumeclaim namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -219,6 +234,7 @@ func PatchstatusofPVCns(c *gin.Context){
 	if err != nil{
 		logger.Error("Patch status of a PersistentVolumeClaim In A Namespace Fail",err)
 	}
+	logger.Info("Patch status of persistentvolumeclaim namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)

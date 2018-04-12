@@ -24,7 +24,7 @@ func CreateEvent(c *gin.Context){
 	if err != nil{
 		logger.Error("Create A Event Fail",err)
 	}
-	//返回结果JSON格式
+	logger.Info("Create event",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -39,7 +39,7 @@ func CreateEventNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Create A Event In A Namespace Fail",err)
 	}
-	//返回结果JSON格式
+	logger.Info("Create event namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -77,6 +77,7 @@ func getEventNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Get A Event In A Namespace Fail",err)
 	}
+	logger.Info("Get event namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -88,6 +89,7 @@ func getAllEvents(c *gin.Context){
 	if err != nil{
 		logger.Error("Get All Events Fail",err)
 	}
+	logger.Info("List event",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -100,6 +102,7 @@ func getAllEventsNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Get All Events In A Namespace Fail",err)
 	}
+	logger.Info("List event namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -110,14 +113,18 @@ func watchEventNS(c *gin.Context){
 	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
+	logger.Info("Watch event namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/events/"+name,token,c.Writer,c.Request)
+	logger.Info("Watch event namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 
 }
 
 func watchAllEvents(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
+	logger.Info("Watch collection event",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/api/v1/watch/events",token,c.Writer,c.Request)
+	logger.Info("Watch collection event",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 
 }
 
@@ -125,7 +132,9 @@ func watchAllEventsNS(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
+	logger.Info("Watch collection event namespces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/events",token,c.Writer,c.Request)
+	logger.Info("Watch collection event namespces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 
 }
 
@@ -138,6 +147,7 @@ func UpdateEventNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Update A Event In A Namespace Fail",err)
 	}
+	logger.Info("Update event namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -152,6 +162,7 @@ func PatchEventNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Patch A Event In A Namespace Fail",err)
 	}
+	logger.Info("Patch event namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -166,6 +177,7 @@ func DeleteEventNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Delete A Event In A Namespace Fail",err)
 	}
+	logger.Info("Delete event namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -178,6 +190,7 @@ func DeleteAllEventNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Delete All Event In A Namespace Fail",err)
 	}
+	logger.Info("Delete collection event namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)

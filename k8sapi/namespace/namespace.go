@@ -24,7 +24,7 @@ func CreateNamespace(c *gin.Context){
 	if err != nil{
 		logger.Error("Create A Namespace Fail",err)
 	}
-	//返回结果JSON格式
+	logger.Info("Create namespace",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -53,6 +53,7 @@ func getNamespace(c *gin.Context){
 	if err != nil{
 		logger.Error("Get A Namespace Fail",err)
 	}
+	logger.Info("Get namespace names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -64,6 +65,7 @@ func getAllNamespaces(c *gin.Context){
 	if err != nil{
 		logger.Error("Get All Namespaces Fail",err)
 	}
+	logger.Info("List namespace",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -73,14 +75,18 @@ func watchNamespace(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
 	name := c.Param("namespace")
+	logger.Info("Watch namespace names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/api/v1/watch/namespaces/"+name,token,c.Writer,c.Request)
+	logger.Info("Watch namespace names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 
 }
 
 func watchAllNamespaces(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
+	logger.Info("Watch collection namespace",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/api/v1/watch/namespaces",token,c.Writer,c.Request)
+	logger.Info("Watch collection namespace",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 
 }
 
@@ -92,6 +98,7 @@ func UpdateNamespace(c *gin.Context){
 	if err != nil{
 		logger.Error("Update A Namespace Fail",err)
 	}
+	logger.Info("Update namespace names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -105,6 +112,7 @@ func PatchNamespace(c *gin.Context){
 	if err != nil{
 		logger.Error("Patch A Namespace Fail",err)
 	}
+	logger.Info("Patch namespace names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -118,6 +126,7 @@ func DeleteNamespace(c *gin.Context){
 	if err != nil{
 		logger.Error("Delete A Namespace Fail",err)
 	}
+	logger.Info("Delete namespace names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -131,6 +140,7 @@ func UpdatefinalizeofNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Update finalize of a Namespace Fail",err)
 	}
+	logger.Info("Update finalize of namespace names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -143,6 +153,7 @@ func GetstatusofNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Get status of a Namespace Fail",err)
 	}
+	logger.Info("Get status of namespace names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -156,6 +167,7 @@ func UpdatestatusofNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Update status of a Namespace Fail",err)
 	}
+	logger.Info("Update status of namespace names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -169,6 +181,7 @@ func PatchstatusofNS(c *gin.Context){
 	if err != nil{
 		logger.Error("Patch status of a Namespace Fail",err)
 	}
+	logger.Info("Patch status of namespace names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)

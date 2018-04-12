@@ -24,7 +24,7 @@ func CreatePV(c *gin.Context){
 	if err != nil{
 		logger.Error("Create A PersistentVolume Fail",err)
 	}
-	//返回结果JSON格式
+	logger.Info("Create persistentvolume",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -53,6 +53,7 @@ func getPV(c *gin.Context){
 	if err != nil{
 		logger.Error("Get A PersistentVolume Fail",err)
 	}
+	logger.Info("Get persistentvolume names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -64,6 +65,7 @@ func getAllPVs(c *gin.Context){
 	if err != nil{
 		logger.Error("Get All PersistentVolumes Fail",err)
 	}
+	logger.Info("List persistentvolume",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -73,14 +75,18 @@ func watchPV(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
 	name := c.Param("name")
+	logger.Info("Watch persistentvolume names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/api/v1/watch/persistentvolumes/"+name,token,c.Writer,c.Request)
+	logger.Info("Watch persistentvolume names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 
 }
 
 func watchAllPVs(c *gin.Context){
 
 	token := pkg.GetWSToken(c)
+	logger.Info("Watch collection persistentvolume",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	oapi.WSRequest("/api/v1/watch/persistentvolumes",token,c.Writer,c.Request)
+	logger.Info("Watch collection persistentvolume",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 
 }
 
@@ -92,6 +98,7 @@ func UpdatePV(c *gin.Context){
 	if err != nil{
 		logger.Error("Update A PersistentVolume Fail",err)
 	}
+	logger.Info("Update persistentvolume names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -105,6 +112,7 @@ func PatchPV(c *gin.Context){
 	if err != nil{
 		logger.Error("Patch A PersistentVolume Fail",err)
 	}
+	logger.Info("Patch persistentvolume names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -118,6 +126,7 @@ func DeletePV(c *gin.Context){
 	if err != nil{
 		logger.Error("Delete A PersistentVolume Fail",err)
 	}
+	logger.Info("Delete persistentvolume names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -129,6 +138,7 @@ func DeleteAllPVs(c *gin.Context){
 	if err != nil{
 		logger.Error("Delete All PersistentVolumes Fail",err)
 	}
+	logger.Info("Delete collection persistentvolume",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -141,6 +151,7 @@ func GetstatusofPV(c *gin.Context){
 	if err != nil{
 		logger.Error("Get status of a PersistentVolume Fail",err)
 	}
+	logger.Info("Get status of persistentvolume names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -154,6 +165,7 @@ func UpdatestatusofPV(c *gin.Context){
 	if err != nil{
 		logger.Error("Update status of a PersistentVolume Fail",err)
 	}
+	logger.Info("Update status of persistentvolume names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -167,6 +179,7 @@ func PatchstatusofPV(c *gin.Context){
 	if err != nil{
 		logger.Error("Patch status of a PersistentVolume Fail",err)
 	}
+	logger.Info("Patch status of persistentvolume names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)

@@ -25,6 +25,7 @@ func GetHPAns(c *gin.Context){
 	if err != nil{
 		logger.Error("Get a HorizontalPodAutoscaler in a namespace Fail",err)
 	}
+	logger.Info("Get horizontalpodautoscaler namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -40,6 +41,7 @@ func UpdateHPAns(c *gin.Context) {
 	if err != nil {
 		logger.Error("Update HorizontalPodAutoscaler in a namespace error ", err)
 	}
+	logger.Info("Update horizontalpodautoscaler namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json", result)
@@ -55,6 +57,7 @@ func PatchHPAns(c *gin.Context) {
 	if err != nil {
 		logger.Error("Patch HorizontalPodAutoscaler in a namespace error ", err)
 	}
+	logger.Info("Patch horizontalpodautoscaler namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json", result)
@@ -70,6 +73,7 @@ func DeleteHPAns(c *gin.Context) {
 	if err != nil {
 		logger.Error("Delete HorizontalPodAutoscaler in a namespace error ", err)
 	}
+	logger.Info("Delete horizontalpodautoscaler namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json", result)
@@ -84,6 +88,7 @@ func GetSFSns(c *gin.Context){
 	if err != nil{
 		logger.Error("Get a StatefulSet in a namespace Fail",err)
 	}
+	logger.Info("Get statefulset namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -99,6 +104,7 @@ func UpdateSFSns(c *gin.Context) {
 	if err != nil {
 		logger.Error("Update StatefulSet in a namespace error ", err)
 	}
+	logger.Info("Update statefulset namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json", result)
@@ -114,6 +120,7 @@ func PatchSFSns(c *gin.Context) {
 	if err != nil {
 		logger.Error("Patch StatefulSet in a namespace error ", err)
 	}
+	logger.Info("Patch statefulset namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json", result)
@@ -129,6 +136,7 @@ func DeleteSFSns(c *gin.Context) {
 	if err != nil {
 		logger.Error("Delete StatefulSet in a namespace error ", err)
 	}
+	logger.Info("Delete statefulset namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json", result)
@@ -142,6 +150,7 @@ func GetDeploymentns(c *gin.Context){
 	if err != nil{
 		logger.Error("Get a Deployment in a namespace Fail",err)
 	}
+	logger.Info("Get extension/deployment namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -157,6 +166,7 @@ func UpdateDeploymentns(c *gin.Context) {
 	if err != nil {
 		logger.Error("Update Deployment in a namespace error ", err)
 	}
+	logger.Info("Update extension/deployment namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json", result)
@@ -172,6 +182,7 @@ func PatchDeploymentns(c *gin.Context) {
 	if err != nil {
 		logger.Error("Patch Deployment in a namespace error ", err)
 	}
+	logger.Info("Patch extension/deployment namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json", result)
@@ -187,6 +198,7 @@ func DeleteDeploymentns(c *gin.Context) {
 	if err != nil {
 		logger.Error("Delete Deployment in a namespace error ", err)
 	}
+	logger.Info("Delete extension/deployment namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json", result)
@@ -200,6 +212,7 @@ func GetDeploymentScalens(c *gin.Context){
 	if err != nil{
 		logger.Error("Get scale of a Deployment in a namespace Fail",err)
 	}
+	logger.Info("Get extension/deployment/scale namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -215,6 +228,7 @@ func UpdateDeploymentScalens(c *gin.Context) {
 	if err != nil {
 		logger.Error("Update scale of a Deployment in a namespace error ", err)
 	}
+	logger.Info("Update extension/deployment/scale namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json", result)
@@ -230,6 +244,7 @@ func PatchDeploymentScalens(c *gin.Context) {
 	if err != nil {
 		logger.Error("Patch scale of a Deployment in a namespace error ", err)
 	}
+	logger.Info("Patch extension/deployment/scale namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json", result)
@@ -243,6 +258,7 @@ func GetRSns(c *gin.Context){
 	if err != nil{
 		logger.Error("Get a ReplicaSet in a namespace Fail",err)
 	}
+	logger.Info("Get replicaset namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _:= ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json",result)
@@ -258,6 +274,7 @@ func UpdateRSns(c *gin.Context) {
 	if err != nil {
 		logger.Error("Update ReplicaSet in a namespace error ", err)
 	}
+	logger.Info("Update replicaset namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json", result)
@@ -273,6 +290,7 @@ func PatchRSns(c *gin.Context) {
 	if err != nil {
 		logger.Error("Patch ReplicaSet in a namespace error ", err)
 	}
+	logger.Info("Patch replicaset namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json", result)
@@ -288,6 +306,7 @@ func DeleteRSns(c *gin.Context) {
 	if err != nil {
 		logger.Error("Delete ReplicaSet in a namespace error ", err)
 	}
+	logger.Info("Delete replicaset namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json", result)
@@ -296,11 +315,15 @@ func DeleteRSns(c *gin.Context) {
 func WatchAllRSns(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetWSToken(c)
+	logger.Info("Watch collection replicaset",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	apirequest.WSRequest("/apis/extensions/v1beta1/watch/namespaces/"+namespace+"/replicasets", token, c.Writer,c.Request)
+	logger.Info("Watch collection replicaset",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 }
 
 func WatchAllDeployns(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetWSToken(c)
+	logger.Info("Watch collection extension/deployment namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
 	apirequest.WSRequest("/apis/extensions/v1beta1/watch/namespaces/"+namespace+"/deployments", token, c.Writer,c.Request)
+	logger.Info("Watch collection extension/deployment namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
 }

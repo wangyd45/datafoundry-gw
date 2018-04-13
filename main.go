@@ -4,11 +4,21 @@ import (
 
 	//_ "net/http/pprof"
 	//"github.com/DeanThompson/ginpprof"
-    "os"
-    "time"
-    "net/http"
-    "github.com/gin-gonic/gin"
-    "github.com/pivotal-golang/lager"
+	"github.com/asiainfoLDP/datafoundry-gw/apis"
+	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/configmap"
+	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/endpoints"
+	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/event"
+	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/limitrange"
+	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/namespace"
+	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/node"
+	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/persistentvolume"
+	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/persistentvolumeclaim"
+	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/pod"
+	rc "github.com/asiainfoLDP/datafoundry-gw/k8sapi/replicationcontroller"
+	rq "github.com/asiainfoLDP/datafoundry-gw/k8sapi/resourcequota"
+	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/secret"
+	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/service"
+	"github.com/asiainfoLDP/datafoundry-gw/lapi"
 	"github.com/asiainfoLDP/datafoundry-gw/oapi/build"
 	"github.com/asiainfoLDP/datafoundry-gw/oapi/buildconfig"
 	dep "github.com/asiainfoLDP/datafoundry-gw/oapi/deploymentconfig"
@@ -22,22 +32,12 @@ import (
 	"github.com/asiainfoLDP/datafoundry-gw/oapi/route"
 	"github.com/asiainfoLDP/datafoundry-gw/oapi/template"
 	"github.com/asiainfoLDP/datafoundry-gw/oapi/user"
-	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/service"
-	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/secret"
-	rq "github.com/asiainfoLDP/datafoundry-gw/k8sapi/resourcequota"
-	rc "github.com/asiainfoLDP/datafoundry-gw/k8sapi/replicationcontroller"
-	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/pod"
-	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/configmap"
-	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/endpoints"
-	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/event"
-	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/limitrange"
-	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/namespace"
-	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/node"
-	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/persistentvolume"
-	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/persistentvolumeclaim"
-	"github.com/asiainfoLDP/datafoundry-gw/lapi"
-	"github.com/asiainfoLDP/datafoundry-gw/apis"
 	"github.com/asiainfoLDP/datafoundry-gw/pkg"
+	"github.com/gin-gonic/gin"
+	"github.com/pivotal-golang/lager"
+	"net/http"
+	"os"
+	"time"
 )
 
 //定义日志以及其他变量
@@ -57,7 +57,7 @@ func main() {
 		WriteTimeout:   30 * time.Second,
 		MaxHeaderBytes: 0,
 	}
-	logger.Info("Service starting ...",map[string]interface{}{"user": "master", "time": pkg.GetTimeNow()})
+	logger.Info("Service starting ...", map[string]interface{}{"user": "master", "time": pkg.GetTimeNow()})
 	//监听端口
 	s.ListenAndServe()
 }
@@ -71,7 +71,7 @@ func handle() (router *gin.Engine) {
 	//v1.user
 	//router.POST("/users",user.CreateUser)
 	//router.Any()
-	router.Group("/oapi/v1/users/~",user.GetSelf)
+	router.Group("/oapi/v1/users/~", user.GetSelf)
 	router.GET("/oapi/v1/users/:name", user.GetUser)
 	router.GET("/oapi/v1/users/", user.GetAllUser)
 	router.GET("/oapi/v1/users", user.GetAllUser)
@@ -92,7 +92,7 @@ func handle() (router *gin.Engine) {
 	//router.GET("/oapi/v1/watch/projects/:name",project.WatchAProject)
 	//router.GET("/oapi/v1/watch/projects",project.WatchAllProjects)
 	router.PUT("/oapi/v1/projects/:name", project.UpdateProject)
-	router.PATCH("/oapi/v1/projects/:name",project.PatchAProject)
+	router.PATCH("/oapi/v1/projects/:name", project.PatchAProject)
 	router.DELETE("/oapi/v1/projects/:name", project.DeleteProject)
 
 	//v1.Build NS -> NameSpace
@@ -269,7 +269,7 @@ func handle() (router *gin.Engine) {
 
 	//k8s api
 	//v1.Pod
-	router.POST("/api/v1/pods",pod.CreatePod)
+	router.POST("/api/v1/pods", pod.CreatePod)
 	router.POST("/api/v1/namespaces/:namespace/pods", pod.CreatePodInNS)
 	router.POST("/api/v1/namespaces/:namespace/pods/:name/attach", pod.AttachPodInNS)
 	router.POST("/api/v1/namespaces/:namespace/pods/:name/binding", pod.CreateBindPodInNS)
@@ -280,17 +280,17 @@ func handle() (router *gin.Engine) {
 	router.POST("/api/v1/namespaces/:namespace/pods/:name/proxy/:path", pod.ProxysPathInNS)
 	router.HEAD("/api/v1/namespaces/:namespace/pods/:name/proxy", pod.HeadPodInNS)
 	router.HEAD("/api/v1/namespaces/:namespace/pods/:name/proxy/:path", pod.HeadProxysPathInNS)
-	router.GET("/api/v1/namespaces/:namespace/pods/:name",pod.GetPodFromNS)
+	router.GET("/api/v1/namespaces/:namespace/pods/:name", pod.GetPodFromNS)
 	router.GET("/api/v1/pods", pod.GetAllPod)
 	router.GET("/api/v1/namespaces/:namespace/pods", pod.GetAllPodFromNS)
 	router.GET("/api/v1/namespaces/:namespace/pods/", pod.GetAllPodFromNS)
-	router.GET("/api/v1/namespaces/:namespace/pods/:name/attach",pod.GetAtaPodFromNS)
-	router.GET("/api/v1/namespaces/:namespace/pods/:name/exec",pod.GetExecPodFromNS)
-	router.GET("/api/v1/namespaces/:namespace/pods/:name/log",pod.GetLogPodFromNS)
-	router.GET("/api/v1/namespaces/:namespace/pods/:name/portforward",pod.GetPortPodFromNS)
-	router.GET("/api/v1/namespaces/:namespace/pods/:name/status",pod.GetStatusPodFromNS)
-	router.GET("/api/v1/namespaces/:namespace/pods/:name/proxy",pod.GetProxyPodFromNS)
-	router.GET("/api/v1/namespaces/:namespace/pods/:name/proxy/:path",pod.GetProxyPathPodFromNS)
+	router.GET("/api/v1/namespaces/:namespace/pods/:name/attach", pod.GetAtaPodFromNS)
+	router.GET("/api/v1/namespaces/:namespace/pods/:name/exec", pod.GetExecPodFromNS)
+	router.GET("/api/v1/namespaces/:namespace/pods/:name/log", pod.GetLogPodFromNS)
+	router.GET("/api/v1/namespaces/:namespace/pods/:name/portforward", pod.GetPortPodFromNS)
+	router.GET("/api/v1/namespaces/:namespace/pods/:name/status", pod.GetStatusPodFromNS)
+	router.GET("/api/v1/namespaces/:namespace/pods/:name/proxy", pod.GetProxyPodFromNS)
+	router.GET("/api/v1/namespaces/:namespace/pods/:name/proxy/:path", pod.GetProxyPathPodFromNS)
 	router.PUT("/api/v1/namespaces/:namespace/pods/:name", pod.UpdataPodFromNS)
 	router.PUT("/api/v1/namespaces/:namespace/pods/:name/status", pod.UpdataStuPodFromNS)
 	router.PUT("/api/v1/namespaces/:namespace/pods/:name/proxy", pod.UpdataProxyPodFromNS)
@@ -307,15 +307,15 @@ func handle() (router *gin.Engine) {
 	router.DELETE("/api/v1/namespaces/:namespace/pods", pod.DeleteAllPodFromNS)
 
 	//v1.ReplicationController
-	router.POST("/api/v1/replicationcontrollers",rc.CreateRc)
+	router.POST("/api/v1/replicationcontrollers", rc.CreateRc)
 	router.POST("/api/v1/namespaces/:namespace/replicationcontrollers", rc.CreateRcInNS)
-	router.GET("/api/v1/namespaces/:namespace/replicationcontrollers/:name",rc.GetRcFromNS)
+	router.GET("/api/v1/namespaces/:namespace/replicationcontrollers/:name", rc.GetRcFromNS)
 	router.GET("/api/v1/replicationcontrollers", rc.GetAllRc)
 	router.GET("/api/v1/namespaces/:namespace/replicationcontrollers", rc.GetAllRcFromNS)
 	router.GET("/api/v1/namespaces/:namespace/replicationcontrollers/", rc.GetAllRcFromNS)
-	router.GET("/api/v1/namespaces/:namespace/replicationcontrollers/:name/scale",rc.GetScaleRcFromNS)
-	router.GET("/apis/extensions/v1beta1/namespaces/:namespace/replicationcontrollers/:name/scale",rc.GetExScaleRcFromNS)
-	router.GET("/api/v1/namespaces/:namespace/replicationcontrollers/:name/status",rc.GetStatusRcFromNS)
+	router.GET("/api/v1/namespaces/:namespace/replicationcontrollers/:name/scale", rc.GetScaleRcFromNS)
+	router.GET("/apis/extensions/v1beta1/namespaces/:namespace/replicationcontrollers/:name/scale", rc.GetExScaleRcFromNS)
+	router.GET("/api/v1/namespaces/:namespace/replicationcontrollers/:name/status", rc.GetStatusRcFromNS)
 	router.PUT("/api/v1/namespaces/:namespace/replicationcontrollers/:name", rc.UpdataRcFromNS)
 	router.PUT("/api/v1/namespaces/:namespace/replicationcontrollers/:name/scale", rc.UpdataScaleRcFromNS)
 	router.PUT("/apis/extensions/v1beta1/namespaces/:namespace/replicationcontrollers/:name/scale", rc.UpdataExScaleRcFromNS)
@@ -328,24 +328,24 @@ func handle() (router *gin.Engine) {
 	router.DELETE("/api/v1/namespaces/:namespace/replicationcontrollers", rc.DeleteAllRcFromNS)
 
 	//v1.ResourceQuota
-	router.POST("/api/v1/resourcequotas",rq.CreateRq)
+	router.POST("/api/v1/resourcequotas", rq.CreateRq)
 	router.POST("/api/v1/namespaces/:namespace/resourcequotas", rq.CreateRqInNS)
-	router.GET("/api/v1/namespaces/:namespace/resourcequotas/:name",rq.GetRqFromNS)
+	router.GET("/api/v1/namespaces/:namespace/resourcequotas/:name", rq.GetRqFromNS)
 	router.GET("/api/v1/resourcequotas", rq.GetAllRq)
 	router.GET("/api/v1/namespaces/:namespace/resourcequotas", rq.GetAllRqFromNS)
 	router.GET("/api/v1/namespaces/:namespace/resourcequotas/", rq.GetAllRqFromNS)
-	router.GET("/api/v1/namespaces/:namespace/resourcequotas/:name/status",rq.GetStuRqFromNS)
+	router.GET("/api/v1/namespaces/:namespace/resourcequotas/:name/status", rq.GetStuRqFromNS)
 	router.PUT("/api/v1/namespaces/:namespace/resourcequotas/:name", rq.UpdataRqFromNS)
-	router.PUT("/api/v1/namespaces/:namespace/resourcequotas/:name/status",rq.UpdataStuRqFromNS)
+	router.PUT("/api/v1/namespaces/:namespace/resourcequotas/:name/status", rq.UpdataStuRqFromNS)
 	router.PATCH("/api/v1/namespaces/:namespace/resourcequotas/:name", rq.PatchRqFromNS)
-	router.PATCH("/api/v1/namespaces/:namespace/resourcequotas/:name/status",rq.PatchStuRqFromNS)
+	router.PATCH("/api/v1/namespaces/:namespace/resourcequotas/:name/status", rq.PatchStuRqFromNS)
 	router.DELETE("/api/v1/namespaces/:namespace/resourcequotas/:name", rq.DeleteRqFromNS)
 	router.DELETE("/api/v1/namespaces/:namespace/resourcequotas", rq.DeleteAllRqFromNS)
 
 	//v1.Secret
-	router.POST("/api/v1/secrets",secret.CreateSecret)
+	router.POST("/api/v1/secrets", secret.CreateSecret)
 	router.POST("/api/v1/namespaces/:namespace/secrets", secret.CreateSecretInNS)
-	router.GET("/api/v1/namespaces/:namespace/secrets/:name",secret.GetSecretFromNS)
+	router.GET("/api/v1/namespaces/:namespace/secrets/:name", secret.GetSecretFromNS)
 	router.GET("/api/v1/secrets", secret.GetAllSecret)
 	router.GET("/api/v1/namespaces/:namespace/secrets", secret.GetAllSecretFromNS)
 	router.GET("/api/v1/namespaces/:namespace/secrets/", secret.GetAllSecretFromNS)
@@ -355,19 +355,19 @@ func handle() (router *gin.Engine) {
 	router.DELETE("/api/v1/namespaces/:namespace/secrets", secret.DeleteAllSecretFromNS)
 
 	//v1.Service
-	router.POST("/api/v1/services",service.CreateService)
+	router.POST("/api/v1/services", service.CreateService)
 	router.POST("/api/v1/namespaces/:namespace/services", service.CreateServiceInNS)
 	router.POST("/api/v1/namespaces/:namespace/services/:name/proxy", service.CreateProxysInNS)
 	router.POST("/api/v1/namespaces/:namespace/services/:name/proxy/:path", service.CreateProxysPathInNS)
 	router.HEAD("/api/v1/namespaces/:namespace/services/:name/proxy", service.HeadProxysInNS)
 	router.HEAD("/api/v1/namespaces/:namespace/services/:name/proxy/:path", service.HeadProxysPathInNS)
-	router.GET("/api/v1/namespaces/:namespace/services/:name",service.GetServiceFromNS)
+	router.GET("/api/v1/namespaces/:namespace/services/:name", service.GetServiceFromNS)
 	router.GET("/api/v1/services", service.GetAllServices)
 	router.GET("/api/v1/namespaces/:namespace/services", service.GetAllServicesFromNS)
 	router.GET("/api/v1/namespaces/:namespace/services/", service.GetAllServicesFromNS)
-	router.GET("/api/v1/namespaces/:namespace/services/:name/status",service.GetStuServiceFromNS)
-	router.GET("/api/v1/namespaces/:namespace/services/:name/proxy",service.GetProServiceFromNS)
-	router.GET("/api/v1/namespaces/:namespace/services/:name/proxy/:path",service.GetProPathServiceFromNS)
+	router.GET("/api/v1/namespaces/:namespace/services/:name/status", service.GetStuServiceFromNS)
+	router.GET("/api/v1/namespaces/:namespace/services/:name/proxy", service.GetProServiceFromNS)
+	router.GET("/api/v1/namespaces/:namespace/services/:name/proxy/:path", service.GetProPathServiceFromNS)
 	router.PUT("/api/v1/namespaces/:namespace/services/:name", service.UpdataServicesFromNS)
 	router.PUT("/api/v1/namespaces/:namespace/services/:name/status", service.UpdataStuServicesFromNS)
 	router.PUT("/api/v1/namespaces/:namespace/services/:name/proxy", service.UpdataProServicesFromNS)
@@ -393,7 +393,6 @@ func handle() (router *gin.Engine) {
 	router.DELETE("/api/v1/namespaces/:namespace/configmaps/:name", configmap.DeleteConfigMapNS)
 	router.DELETE("/api/v1/namespaces/:namespace/configmaps", configmap.DeleteAllConfigMapNS)
 
-
 	//v1.Endpoints
 	router.POST("/api/v1/endpoints", endpoints.CreateEndpoints)
 	router.POST("/api/v1/namespaces/:namespace/endpoints", endpoints.CreateEndpointsNS)
@@ -417,7 +416,6 @@ func handle() (router *gin.Engine) {
 	router.PATCH("/api/v1/namespaces/:namespace/events/:name", event.PatchEventNS)
 	router.DELETE("/api/v1/namespaces/:namespace/events/:name", event.DeleteEventNS)
 	router.DELETE("/api/v1/namespaces/:namespace/events", event.DeleteAllEventNS)
-
 
 	//v1.LimitRange
 	router.POST("/api/v1/limitranges", limitrange.CreateLimitRange)
@@ -456,20 +454,20 @@ func handle() (router *gin.Engine) {
 	router.GET("/api/v1/nodes/:name/status", node.GetStatusOfNode)
 	router.PUT("/api/v1/nodes/:name/status", node.UpdateStatusOfNode)
 	router.PATCH("/api/v1/nodes/:name/status", node.PatchStatusOfNode)
-	router.OPTIONS("/api/v1/nodes/:name/proxy",node.ProxyOpnReqToNode)
-	router.POST("/api/v1/nodes/:name/proxy",node.ProxyPostReqToNode)
-	router.HEAD("/api/v1/nodes/:name/proxy",node.ProxyHeadReqToNode)
-	router.GET("/api/v1/nodes/:name/proxy",node.ProxyGetReqToNode)
-	router.PUT("/api/v1/nodes/:name/proxy",node.ProxyPutReqToNode)
-	router.PATCH("/api/v1/nodes/:name/proxy",node.ProxyPatchReqToNode)
-	router.DELETE("/api/v1/nodes/:name/proxy",node.ProxyDelReqToNode)
-	router.OPTIONS("/api/v1/nodes/:name/proxy/:path",node.ProxyOpnReqToNodeP)
-	router.POST("/api/v1/nodes/:name/proxy/:path",node.ProxyPostReqToNodeP)
-	router.HEAD("/api/v1/nodes/:name/proxy/:path",node.ProxyHeadReqToNodeP)
-	router.GET("/api/v1/nodes/:name/proxy/:path",node.ProxyGetReqToNodeP)
-	router.PUT("/api/v1/nodes/:name/proxy/:path",node.ProxyPutReqToNodeP)
-	router.PATCH("/api/v1/nodes/:name/proxy/:path",node.ProxyPatchReqToNodeP)
-	router.DELETE("/api/v1/nodes/:name/proxy/:path",node.ProxyDelReqToNodeP)
+	router.OPTIONS("/api/v1/nodes/:name/proxy", node.ProxyOpnReqToNode)
+	router.POST("/api/v1/nodes/:name/proxy", node.ProxyPostReqToNode)
+	router.HEAD("/api/v1/nodes/:name/proxy", node.ProxyHeadReqToNode)
+	router.GET("/api/v1/nodes/:name/proxy", node.ProxyGetReqToNode)
+	router.PUT("/api/v1/nodes/:name/proxy", node.ProxyPutReqToNode)
+	router.PATCH("/api/v1/nodes/:name/proxy", node.ProxyPatchReqToNode)
+	router.DELETE("/api/v1/nodes/:name/proxy", node.ProxyDelReqToNode)
+	router.OPTIONS("/api/v1/nodes/:name/proxy/:path", node.ProxyOpnReqToNodeP)
+	router.POST("/api/v1/nodes/:name/proxy/:path", node.ProxyPostReqToNodeP)
+	router.HEAD("/api/v1/nodes/:name/proxy/:path", node.ProxyHeadReqToNodeP)
+	router.GET("/api/v1/nodes/:name/proxy/:path", node.ProxyGetReqToNodeP)
+	router.PUT("/api/v1/nodes/:name/proxy/:path", node.ProxyPutReqToNodeP)
+	router.PATCH("/api/v1/nodes/:name/proxy/:path", node.ProxyPatchReqToNodeP)
+	router.DELETE("/api/v1/nodes/:name/proxy/:path", node.ProxyDelReqToNodeP)
 
 	//v1.PersistentVolume
 	router.POST("/api/v1/persistentvolumes", persistentvolume.CreatePV)
@@ -530,4 +528,3 @@ func handle() (router *gin.Engine) {
 
 	return
 }
-

@@ -28,8 +28,8 @@ func main() {
 	log.Printf("connecting to %s", u.String())
 
 	var rh http.Header
-	rh = make(map[string] []string)
-	rh.Set("Authorization","Bearer v2lnb5Ia-x2GEeYZb0Bl8DZbx92oHE3m1MLgjGAliyY")
+	rh = make(map[string][]string)
+	rh.Set("Authorization", "Bearer v2lnb5Ia-x2GEeYZb0Bl8DZbx92oHE3m1MLgjGAliyY")
 	fmt.Println(u.String())
 	//time.Sleep(20*time.Second)
 	c, _, err := websocket.DefaultDialer.Dial(u.String(), rh)
@@ -53,14 +53,10 @@ func main() {
 		}
 	}()
 
-
-
 	ticker := time.NewTicker(time.Second)
 	defer ticker.Stop()
 
-	for{
-
-
+	for {
 
 		select {
 		case t := <-ticker.C:
@@ -88,4 +84,3 @@ func main() {
 
 	}
 }
-

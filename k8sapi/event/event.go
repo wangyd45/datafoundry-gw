@@ -1,12 +1,12 @@
 package event
 
 import (
-	"os"
-	"io/ioutil"
+	oapi "github.com/asiainfoLDP/datafoundry-gw/apirequest"
+	"github.com/asiainfoLDP/datafoundry-gw/pkg"
 	"github.com/gin-gonic/gin"
 	"github.com/pivotal-golang/lager"
-	"github.com/asiainfoLDP/datafoundry-gw/pkg"
-	oapi "github.com/asiainfoLDP/datafoundry-gw/apirequest"
+	"io/ioutil"
+	"os"
 )
 
 var logger lager.Logger
@@ -16,169 +16,182 @@ func init() {
 	logger.RegisterSink(lager.NewWriterSink(os.Stdout, lager.DEBUG))
 }
 
-func CreateEvent(c *gin.Context){
+func CreateEvent(c *gin.Context) {
 	token := pkg.GetToken(c)
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
+	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	//调用原生接口
-	req,err := oapi.GenRequest("POST","/api/v1/events",token,rBody)
-	if err != nil{
-		logger.Error("Create A Event Fail",err)
+	req, err := oapi.GenRequest("POST", "/api/v1/events", token, rBody)
+	if err != nil {
+		logger.Error("Create A Event Fail", err)
 	}
-	//返回结果JSON格式
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Create event", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func CreateEventNS(c *gin.Context){
+func CreateEventNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
+	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	//调用原生接口
-	req,err := oapi.GenRequest("POST","/api/v1/namespaces/"+namespace+"/events",token,rBody)
-	if err != nil{
-		logger.Error("Create A Event In A Namespace Fail",err)
+	req, err := oapi.GenRequest("POST", "/api/v1/namespaces/"+namespace+"/events", token, rBody)
+	if err != nil {
+		logger.Error("Create A Event In A Namespace Fail", err)
 	}
-	//返回结果JSON格式
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Create event namespaces/"+namespace, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func GorWEventNS(c *gin.Context){
-	if pkg.IsWebsocket(c){
+func GorWEventNS(c *gin.Context) {
+	if pkg.IsWebsocket(c) {
 		watchEventNS(c)
-	}else{
+	} else {
 		getEventNS(c)
 	}
 }
 
-func GorWAllEvents(c *gin.Context){
-	if pkg.IsWebsocket(c){
+func GorWAllEvents(c *gin.Context) {
+	if pkg.IsWebsocket(c) {
 		watchAllEvents(c)
-	}else{
+	} else {
 		getAllEvents(c)
 	}
 }
 
-func GorWAllEventsNS(c *gin.Context){
-	if pkg.IsWebsocket(c){
+func GorWAllEventsNS(c *gin.Context) {
+	if pkg.IsWebsocket(c) {
 		watchAllEventsNS(c)
-	}else{
+	} else {
 		getAllEventsNS(c)
 	}
 }
 
-func getEventNS(c *gin.Context){
+func getEventNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	req,err := oapi.GenRequest("GET","/api/v1/namespaces/"+namespace+"/events/"+name,token,nil)
-	if err != nil{
-		logger.Error("Get A Event In A Namespace Fail",err)
+	req, err := oapi.GenRequest("GET", "/api/v1/namespaces/"+namespace+"/events/"+name, token, nil)
+	if err != nil {
+		logger.Error("Get A Event In A Namespace Fail", err)
 	}
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Get event namespaces/"+namespace+"/names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func getAllEvents(c *gin.Context){
+func getAllEvents(c *gin.Context) {
 	token := pkg.GetToken(c)
-	req,err := oapi.GenRequest("GET","/api/v1/events",token,nil)
-	if err != nil{
-		logger.Error("Get All Events Fail",err)
+	req, err := oapi.GenRequest("GET", "/api/v1/events", token, nil)
+	if err != nil {
+		logger.Error("Get All Events Fail", err)
 	}
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("List event", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func getAllEventsNS(c *gin.Context){
+func getAllEventsNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
-	req,err := oapi.GenRequest("GET","/api/v1/namespaces/"+namespace+"/events",token,nil)
-	if err != nil{
-		logger.Error("Get All Events In A Namespace Fail",err)
+	req, err := oapi.GenRequest("GET", "/api/v1/namespaces/"+namespace+"/events", token, nil)
+	if err != nil {
+		logger.Error("Get All Events In A Namespace Fail", err)
 	}
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("List event namespaces/"+namespace, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func watchEventNS(c *gin.Context){
+func watchEventNS(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/events/"+name,token,c.Writer,c.Request)
+	logger.Info("Watch event namespaces/"+namespace+"/names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
+	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/events/"+name, token, c.Writer, c.Request)
+	logger.Info("Watch event namespaces/"+namespace+"/names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
 
-func watchAllEvents(c *gin.Context){
+func watchAllEvents(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
-	oapi.WSRequest("/api/v1/watch/events",token,c.Writer,c.Request)
+	logger.Info("Watch collection event", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
+	oapi.WSRequest("/api/v1/watch/events", token, c.Writer, c.Request)
+	logger.Info("Watch collection event", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
 
-func watchAllEventsNS(c *gin.Context){
+func watchAllEventsNS(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
-	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/events",token,c.Writer,c.Request)
+	logger.Info("Watch collection event namespces/"+namespace, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
+	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/events", token, c.Writer, c.Request)
+	logger.Info("Watch collection event namespces/"+namespace, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
 
-func UpdateEventNS(c *gin.Context){
+func UpdateEventNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.GenRequest("PUT","/api/v1/namespaces/"+namespace+"/events/"+name,token,rBody)
-	if err != nil{
-		logger.Error("Update A Event In A Namespace Fail",err)
+	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	req, err := oapi.GenRequest("PUT", "/api/v1/namespaces/"+namespace+"/events/"+name, token, rBody)
+	if err != nil {
+		logger.Error("Update A Event In A Namespace Fail", err)
 	}
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Update event namespaces/"+namespace+"/names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func PatchEventNS(c *gin.Context){
+func PatchEventNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.GenRequest("PATCH","/api/v1/namespaces/"+namespace+"/events/"+name,token,rBody)
-	if err != nil{
-		logger.Error("Patch A Event In A Namespace Fail",err)
+	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	req, err := oapi.GenRequest("PATCH", "/api/v1/namespaces/"+namespace+"/events/"+name, token, rBody)
+	if err != nil {
+		logger.Error("Patch A Event In A Namespace Fail", err)
 	}
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Patch event namespaces/"+namespace+"/names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func DeleteEventNS(c *gin.Context){
+func DeleteEventNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.GenRequest("DELETE","/api/v1/namespaces/"+namespace+"/events/"+name,token,rBody)
-	if err != nil{
-		logger.Error("Delete A Event In A Namespace Fail",err)
+	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	req, err := oapi.GenRequest("DELETE", "/api/v1/namespaces/"+namespace+"/events/"+name, token, rBody)
+	if err != nil {
+		logger.Error("Delete A Event In A Namespace Fail", err)
 	}
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Delete event namespaces/"+namespace+"/names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func DeleteAllEventNS(c *gin.Context){
+func DeleteAllEventNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
-	req,err := oapi.GenRequest("DELETE","/api/v1/namespaces/"+namespace+"/events",token,nil)
-	if err != nil{
-		logger.Error("Delete All Event In A Namespace Fail",err)
+	req, err := oapi.GenRequest("DELETE", "/api/v1/namespaces/"+namespace+"/events", token, nil)
+	if err != nil {
+		logger.Error("Delete All Event In A Namespace Fail", err)
 	}
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Delete collection event namespaces/"+namespace, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }

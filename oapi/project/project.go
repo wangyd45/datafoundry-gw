@@ -1,13 +1,13 @@
 package project
 
 import (
-	"os"
-	"io/ioutil"
+	"fmt"
+	oapi "github.com/asiainfoLDP/datafoundry-gw/apirequest"
+	"github.com/asiainfoLDP/datafoundry-gw/pkg"
 	"github.com/gin-gonic/gin"
 	"github.com/pivotal-golang/lager"
-	"github.com/asiainfoLDP/datafoundry-gw/pkg"
-	oapi "github.com/asiainfoLDP/datafoundry-gw/apirequest"
-	"fmt"
+	"io/ioutil"
+	"os"
 )
 
 var logger lager.Logger
@@ -18,126 +18,123 @@ func init() {
 }
 
 //创建project-OK
-func CreateProject(c *gin.Context){
+func CreateProject(c *gin.Context) {
 	//获取前端传递的Token，无需拼接"Bearer XXXXXXXXXX"
 	token := pkg.GetToken(c)
 	//获取前端参数
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
+	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	//调用原生接口
-	req,err := oapi.GenRequest("POST","/oapi/v1/projectrequests",token,rBody)
-	if err != nil{
-		logger.Error("Create A Project Fail",err)
+	req, err := oapi.GenRequest("POST", "/oapi/v1/projectrequests", token, rBody)
+	if err != nil {
+		logger.Error("Create A Project Fail", err)
 	}
-	logger.Info("Create project",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
+	logger.Info("Create project", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
 	//返回结果JSON格式
-	result, _:= ioutil.ReadAll(req.Body)
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
 //获取project-OK
-func getProject(c *gin.Context){
+func getProject(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("name")
-	req,err := oapi.GenRequest("GET","/oapi/v1/projects/"+name,token,nil)
-	if err != nil{
-		logger.Error("Get A Project Fail",err)
+	req, err := oapi.GenRequest("GET", "/oapi/v1/projects/"+name, token, nil)
+	if err != nil {
+		logger.Error("Get A Project Fail", err)
 	}
-	logger.Info("Get projects/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Get projects/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
-
 
 func GorWProject(c *gin.Context) {
 
-	if pkg.IsWebsocket(c){
+	if pkg.IsWebsocket(c) {
 		watchAProject(c)
-	}else{
+	} else {
 		getProject(c)
 	}
 }
 
 func GorWAllProjects(c *gin.Context) {
 
-	if pkg.IsWebsocket(c){
+	if pkg.IsWebsocket(c) {
 		watchAllProjects(c)
-	}else{
+	} else {
 		getAllProjects(c)
 	}
 }
 
 //获取project列表-OK
-func getAllProjects(c *gin.Context){
+func getAllProjects(c *gin.Context) {
 	token := pkg.GetToken(c)
-	req,err := oapi.GenRequest("GET","/oapi/v1/projects",token,nil)
-	if err != nil{
-		logger.Error("Get All Projects Fail",err)
+	req, err := oapi.GenRequest("GET", "/oapi/v1/projects", token, nil)
+	if err != nil {
+		logger.Error("Get All Projects Fail", err)
 	}
-	logger.Info("List projects",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("List projects", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
 func watchAProject(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
 	name := c.Param("name")
-	logger.Info("Watch projects/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
-	oapi.WSRequest("/oapi/v1/watch/projects/"+name,token,c.Writer,c.Request)
-	logger.Info("Watch projects/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
+	logger.Info("Watch projects/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
+	oapi.WSRequest("/oapi/v1/watch/projects/"+name, token, c.Writer, c.Request)
+	logger.Info("Watch projects/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 }
 
-func watchAllProjects(c *gin.Context){
+func watchAllProjects(c *gin.Context) {
 	token := pkg.GetWSToken(c)
-	logger.Info("Watch collection projects",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
-	oapi.WSRequest("/oapi/v1/watch/projects",token,c.Writer,c.Request)
-	logger.Info("Watch collection projects",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
+	logger.Info("Watch collection projects", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
+	oapi.WSRequest("/oapi/v1/watch/projects", token, c.Writer, c.Request)
+	logger.Info("Watch collection projects", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 }
-
 
 //更新project
-func UpdateProject(c *gin.Context){
+func UpdateProject(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("name")
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.GenRequest("PUT","/oapi/v1/projects/"+name,token,rBody)
-	if err != nil{
-		logger.Error("Update A Project Fail",err)
+	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	req, err := oapi.GenRequest("PUT", "/oapi/v1/projects/"+name, token, rBody)
+	if err != nil {
+		logger.Error("Update A Project Fail", err)
 	}
-	logger.Info("Update projects/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Update projects/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func PatchAProject(c *gin.Context){
+func PatchAProject(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("name")
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.GenRequest("PATCH","/oapi/v1/projects/"+name,token,rBody)
-	if err != nil{
-		fmt.Println("Patch A Project :%s Fail",name,err)
+	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	req, err := oapi.GenRequest("PATCH", "/oapi/v1/projects/"+name, token, rBody)
+	if err != nil {
+		fmt.Println("Patch A Project :%s Fail", name, err)
 	}
-	logger.Info("Patch projects/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Patch projects/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
 	c.JSON(req.StatusCode, gin.H{"application/json": result})
 }
 
 //删除project-OK
-func DeleteProject(c *gin.Context){
+func DeleteProject(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("name")
-	req,err := oapi.GenRequest("DELETE","/oapi/v1/projects/"+name,token,nil)
-	if err != nil{
-		logger.Error("Delete A Project Fail",err)
+	req, err := oapi.GenRequest("DELETE", "/oapi/v1/projects/"+name, token, nil)
+	if err != nil {
+		logger.Error("Delete A Project Fail", err)
 	}
-	logger.Info("Delete projects/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Delete projects/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
-

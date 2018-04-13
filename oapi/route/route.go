@@ -1,12 +1,12 @@
 package route
 
 import (
-	"os"
-	"io/ioutil"
+	oapi "github.com/asiainfoLDP/datafoundry-gw/apirequest"
+	"github.com/asiainfoLDP/datafoundry-gw/pkg"
 	"github.com/gin-gonic/gin"
 	"github.com/pivotal-golang/lager"
-	"github.com/asiainfoLDP/datafoundry-gw/pkg"
-	oapi "github.com/asiainfoLDP/datafoundry-gw/apirequest"
+	"io/ioutil"
+	"os"
 )
 
 var logger lager.Logger
@@ -16,224 +16,224 @@ func init() {
 	logger.RegisterSink(lager.NewWriterSink(os.Stdout, lager.DEBUG))
 }
 
-func CreateRoute(c *gin.Context){
+func CreateRoute(c *gin.Context) {
 	token := pkg.GetToken(c)
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.GenRequest("POST","/oapi/v1/routes",token,rBody)
-	if err != nil{
-		logger.Error("Create A Route Fail",err)
+	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	req, err := oapi.GenRequest("POST", "/oapi/v1/routes", token, rBody)
+	if err != nil {
+		logger.Error("Create A Route Fail", err)
 	}
-	logger.Info("Create route",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Create route", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func CreateRouteInNS(c *gin.Context){
+func CreateRouteInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.GenRequest("POST","/oapi/v1/namespaces/"+namespace+"/routes",token,rBody)
-	if err != nil{
-		logger.Error("Create A Route In A Namespace Fail",err)
+	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	req, err := oapi.GenRequest("POST", "/oapi/v1/namespaces/"+namespace+"/routes", token, rBody)
+	if err != nil {
+		logger.Error("Create A Route In A Namespace Fail", err)
 	}
-	logger.Info("Create route namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Create route namespaces/"+namespace, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func GorWRouteInNS(c *gin.Context){
-	if pkg.IsWebsocket(c){
+func GorWRouteInNS(c *gin.Context) {
+	if pkg.IsWebsocket(c) {
 		watchRouteInNS(c)
-	}else {
+	} else {
 		getRouteInNS(c)
 	}
 }
 
-func GorWAllRoutes(c *gin.Context){
-	if pkg.IsWebsocket(c){
+func GorWAllRoutes(c *gin.Context) {
+	if pkg.IsWebsocket(c) {
 		watchAllRoutes(c)
-	}else {
+	} else {
 		getAllRoutes(c)
 	}
 }
 
-func GorWAllRoutesInNS(c *gin.Context){
-	if pkg.IsWebsocket(c){
+func GorWAllRoutesInNS(c *gin.Context) {
+	if pkg.IsWebsocket(c) {
 		watchAllRoutesInNS(c)
-	}else {
+	} else {
 		getAllRoutesInNS(c)
 	}
 }
 
-func getRouteInNS(c *gin.Context){
+func getRouteInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	req,err := oapi.GenRequest("GET","/oapi/v1/namespaces/"+namespace+"/routes/"+name,token,nil)
-	if err != nil{
-		logger.Error("Get A Route In A Namespace Fail",err)
+	req, err := oapi.GenRequest("GET", "/oapi/v1/namespaces/"+namespace+"/routes/"+name, token, nil)
+	if err != nil {
+		logger.Error("Get A Route In A Namespace Fail", err)
 	}
-	logger.Info("Get route namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Get route namespaces/"+namespace+"/names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func getAllRoutes(c *gin.Context){
+func getAllRoutes(c *gin.Context) {
 	token := pkg.GetToken(c)
-	req,err := oapi.GenRequest("GET","/oapi/v1/routes",token,nil)
-	if err != nil{
-		logger.Error("Get All Routes Fail",err)
+	req, err := oapi.GenRequest("GET", "/oapi/v1/routes", token, nil)
+	if err != nil {
+		logger.Error("Get All Routes Fail", err)
 	}
-	logger.Info("List route",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("List route", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func getAllRoutesInNS(c *gin.Context){
+func getAllRoutesInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
-	req,err := oapi.GenRequest("GET","/oapi/v1/namespaces/"+namespace+"/routes",token,nil)
-	if err != nil{
-		logger.Error("Get All Routes In A Namespace Fail",err)
+	req, err := oapi.GenRequest("GET", "/oapi/v1/namespaces/"+namespace+"/routes", token, nil)
+	if err != nil {
+		logger.Error("Get All Routes In A Namespace Fail", err)
 	}
-	logger.Info("List route namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("List route namespaces/"+namespace, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func watchRouteInNS(c *gin.Context){
+func watchRouteInNS(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	logger.Info("Watch route namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
-	oapi.WSRequest("/oapi/v1/watch/namespaces/"+namespace+"/routes/"+name,token,c.Writer,c.Request)
-	logger.Info("Watch route namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
+	logger.Info("Watch route namespaces/"+namespace+"/names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
+	oapi.WSRequest("/oapi/v1/watch/namespaces/"+namespace+"/routes/"+name, token, c.Writer, c.Request)
+	logger.Info("Watch route namespaces/"+namespace+"/names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
 
-func watchAllRoutes(c *gin.Context){
+func watchAllRoutes(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
-	logger.Info("Watch collection route",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
-	oapi.WSRequest("/oapi/v1/watch/routes",token,c.Writer,c.Request)
-	logger.Info("Watch collection route",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
+	logger.Info("Watch collection route", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
+	oapi.WSRequest("/oapi/v1/watch/routes", token, c.Writer, c.Request)
+	logger.Info("Watch collection route", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
 
-func watchAllRoutesInNS(c *gin.Context){
+func watchAllRoutesInNS(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
-	logger.Info("Watch collection route namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
-	oapi.WSRequest("/oapi/v1/watch/namespaces/"+namespace+"/routes",token,c.Writer,c.Request)
-	logger.Info("Watch collection route namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
+	logger.Info("Watch collection route namespaces/"+namespace, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
+	oapi.WSRequest("/oapi/v1/watch/namespaces/"+namespace+"/routes", token, c.Writer, c.Request)
+	logger.Info("Watch collection route namespaces/"+namespace, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
 
-func UpdateRouteInNS(c *gin.Context){
+func UpdateRouteInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.GenRequest("PUT","/oapi/v1/namespaces/"+namespace+"/routes/"+name,token,rBody)
-	if err != nil{
-		logger.Error("Update A Route In A Namespace Fail",err)
+	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	req, err := oapi.GenRequest("PUT", "/oapi/v1/namespaces/"+namespace+"/routes/"+name, token, rBody)
+	if err != nil {
+		logger.Error("Update A Route In A Namespace Fail", err)
 	}
-	logger.Info("Update route",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Update route", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func PatchRouteInNS(c *gin.Context){
+func PatchRouteInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.GenRequest("PATCH","/oapi/v1/namespaces/"+namespace+"/routes/"+name,token,rBody)
-	if err != nil{
-		logger.Error("Patch A Route In A Namespace Fail",err)
+	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	req, err := oapi.GenRequest("PATCH", "/oapi/v1/namespaces/"+namespace+"/routes/"+name, token, rBody)
+	if err != nil {
+		logger.Error("Patch A Route In A Namespace Fail", err)
 	}
-	logger.Info("Patch route namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Patch route namespaces/"+namespace+"/names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func DeleteRouteInNS(c *gin.Context){
+func DeleteRouteInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.GenRequest("DELETE","/oapi/v1/namespaces/"+namespace+"/routes/"+name,token,rBody)
-	if err != nil{
-		logger.Error("Delete A Route In A Namespace Fail",err)
+	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	req, err := oapi.GenRequest("DELETE", "/oapi/v1/namespaces/"+namespace+"/routes/"+name, token, rBody)
+	if err != nil {
+		logger.Error("Delete A Route In A Namespace Fail", err)
 	}
-	logger.Info("Delete route namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Delete route namespaces/"+namespace+"/names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func DeleteAllRoutesInNS(c *gin.Context){
+func DeleteAllRoutesInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
-	req,err := oapi.GenRequest("DELETE","/oapi/v1/namespaces/"+namespace+"/routes",token,nil)
-	if err != nil{
-		logger.Error("Delete All Routes In A Namespace Fail",err)
+	req, err := oapi.GenRequest("DELETE", "/oapi/v1/namespaces/"+namespace+"/routes", token, nil)
+	if err != nil {
+		logger.Error("Delete All Routes In A Namespace Fail", err)
 	}
-	logger.Info("Delete collection route namespaces/"+namespace,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Delete collection route namespaces/"+namespace, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func GetRouteStatusInNS(c *gin.Context){
-	token := pkg.GetToken(c)
-	namespace := c.Param("namespace")
-	name := c.Param("name")
-	req,err := oapi.GenRequest("GET","/oapi/v1/namespaces/"+namespace+"/routes/"+name+"/status",token,nil)
-	if err != nil{
-		logger.Error("Get Status Of A Route In A Namespace Fail",err)
-	}
-	logger.Info("Get route status namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
-}
-
-func UpdateRouteStatusInNS(c *gin.Context){
+func GetRouteStatusInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.GenRequest("PUT","/oapi/v1/namespaces/"+namespace+"/routes/"+name+"/status",token,rBody)
-	if err != nil{
-		logger.Error("Update Status Of A Route In A Namespace Fail",err)
+	req, err := oapi.GenRequest("GET", "/oapi/v1/namespaces/"+namespace+"/routes/"+name+"/status", token, nil)
+	if err != nil {
+		logger.Error("Get Status Of A Route In A Namespace Fail", err)
 	}
-	logger.Info("Update route status namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Get route status namespaces/"+namespace+"/names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func PatchRouteStatusInNS(c *gin.Context){
+func UpdateRouteStatusInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.GenRequest("PATCH","/oapi/v1/namespaces/"+namespace+"/routes/"+name+"/status",token,rBody)
-	if err != nil{
-		logger.Error("Patch Status Of A Route In A Namespace Fail",err)
+	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	req, err := oapi.GenRequest("PUT", "/oapi/v1/namespaces/"+namespace+"/routes/"+name+"/status", token, rBody)
+	if err != nil {
+		logger.Error("Update Status Of A Route In A Namespace Fail", err)
 	}
-	logger.Info("Patch route status namespaces/"+namespace+"/names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Update route status namespaces/"+namespace+"/names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
+}
+
+func PatchRouteStatusInNS(c *gin.Context) {
+	token := pkg.GetToken(c)
+	namespace := c.Param("namespace")
+	name := c.Param("name")
+	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	req, err := oapi.GenRequest("PATCH", "/oapi/v1/namespaces/"+namespace+"/routes/"+name+"/status", token, rBody)
+	if err != nil {
+		logger.Error("Patch Status Of A Route In A Namespace Fail", err)
+	}
+	logger.Info("Patch route status namespaces/"+namespace+"/names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
+	defer req.Body.Close()
+	c.Data(req.StatusCode, "application/json", result)
 }

@@ -1,12 +1,12 @@
 package namespace
 
 import (
-	"os"
-	"io/ioutil"
+	oapi "github.com/asiainfoLDP/datafoundry-gw/apirequest"
+	"github.com/asiainfoLDP/datafoundry-gw/pkg"
 	"github.com/gin-gonic/gin"
 	"github.com/pivotal-golang/lager"
-	"github.com/asiainfoLDP/datafoundry-gw/pkg"
-	oapi "github.com/asiainfoLDP/datafoundry-gw/apirequest"
+	"io/ioutil"
+	"os"
 )
 
 var logger lager.Logger
@@ -16,173 +16,173 @@ func init() {
 	logger.RegisterSink(lager.NewWriterSink(os.Stdout, lager.DEBUG))
 }
 
-func CreateNamespace(c *gin.Context){
+func CreateNamespace(c *gin.Context) {
 	token := pkg.GetToken(c)
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
+	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	//调用原生接口
-	req,err := oapi.GenRequest("POST","/api/v1/namespaces",token,rBody)
-	if err != nil{
-		logger.Error("Create A Namespace Fail",err)
+	req, err := oapi.GenRequest("POST", "/api/v1/namespaces", token, rBody)
+	if err != nil {
+		logger.Error("Create A Namespace Fail", err)
 	}
-	logger.Info("Create namespace",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Create namespace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func GorWNamespace(c *gin.Context){
-	if pkg.IsWebsocket(c){
+func GorWNamespace(c *gin.Context) {
+	if pkg.IsWebsocket(c) {
 		watchNamespace(c)
-	}else{
+	} else {
 		getNamespace(c)
 	}
 }
 
-func GorWAllNamespaces(c *gin.Context){
-	if pkg.IsWebsocket(c){
+func GorWAllNamespaces(c *gin.Context) {
+	if pkg.IsWebsocket(c) {
 		watchAllNamespaces(c)
-	}else{
+	} else {
 		getAllNamespaces(c)
 	}
 }
 
-func getNamespace(c *gin.Context){
+func getNamespace(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("namespace")
-	req,err := oapi.GenRequest("GET","/api/v1/namespaces/"+name,token,nil)
-	if err != nil{
-		logger.Error("Get A Namespace Fail",err)
+	req, err := oapi.GenRequest("GET", "/api/v1/namespaces/"+name, token, nil)
+	if err != nil {
+		logger.Error("Get A Namespace Fail", err)
 	}
-	logger.Info("Get namespace names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Get namespace names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func getAllNamespaces(c *gin.Context){
+func getAllNamespaces(c *gin.Context) {
 	token := pkg.GetToken(c)
-	req,err := oapi.GenRequest("GET","/api/v1/namespaces",token,nil)
-	if err != nil{
-		logger.Error("Get All Namespaces Fail",err)
+	req, err := oapi.GenRequest("GET", "/api/v1/namespaces", token, nil)
+	if err != nil {
+		logger.Error("Get All Namespaces Fail", err)
 	}
-	logger.Info("List namespace",map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("List namespace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func watchNamespace(c *gin.Context){
+func watchNamespace(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
 	name := c.Param("namespace")
-	logger.Info("Watch namespace names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
-	oapi.WSRequest("/api/v1/watch/namespaces/"+name,token,c.Writer,c.Request)
-	logger.Info("Watch namespace names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
+	logger.Info("Watch namespace names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
+	oapi.WSRequest("/api/v1/watch/namespaces/"+name, token, c.Writer, c.Request)
+	logger.Info("Watch namespace names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
 
-func watchAllNamespaces(c *gin.Context){
+func watchAllNamespaces(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
-	logger.Info("Watch collection namespace",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"begin"})
-	oapi.WSRequest("/api/v1/watch/namespaces",token,c.Writer,c.Request)
-	logger.Info("Watch collection namespace",map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(),"result":"end"})
+	logger.Info("Watch collection namespace", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
+	oapi.WSRequest("/api/v1/watch/namespaces", token, c.Writer, c.Request)
+	logger.Info("Watch collection namespace", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
 
-func UpdateNamespace(c *gin.Context){
+func UpdateNamespace(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("namespace")
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.GenRequest("PUT","/api/v1/namespaces/"+name,token,rBody)
-	if err != nil{
-		logger.Error("Update A Namespace Fail",err)
+	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	req, err := oapi.GenRequest("PUT", "/api/v1/namespaces/"+name, token, rBody)
+	if err != nil {
+		logger.Error("Update A Namespace Fail", err)
 	}
-	logger.Info("Update namespace names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Update namespace names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func PatchNamespace(c *gin.Context){
+func PatchNamespace(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("namespace")
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.GenRequest("PATCH","/api/v1/namespaces/"+name,token,rBody)
-	if err != nil{
-		logger.Error("Patch A Namespace Fail",err)
+	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	req, err := oapi.GenRequest("PATCH", "/api/v1/namespaces/"+name, token, rBody)
+	if err != nil {
+		logger.Error("Patch A Namespace Fail", err)
 	}
-	logger.Info("Patch namespace names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Patch namespace names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func DeleteNamespace(c *gin.Context){
+func DeleteNamespace(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("namespace")
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.GenRequest("DELETE","/api/v1/namespaces/"+name,token,rBody)
-	if err != nil{
-		logger.Error("Delete A Namespace Fail",err)
+	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	req, err := oapi.GenRequest("DELETE", "/api/v1/namespaces/"+name, token, rBody)
+	if err != nil {
+		logger.Error("Delete A Namespace Fail", err)
 	}
-	logger.Info("Delete namespace names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Delete namespace names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func UpdatefinalizeofNS(c *gin.Context){
+func UpdatefinalizeofNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("namespace")
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.GenRequest("PUT","/api/v1/namespaces/"+name+"/finalize",token,rBody)
-	if err != nil{
-		logger.Error("Update finalize of a Namespace Fail",err)
+	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	req, err := oapi.GenRequest("PUT", "/api/v1/namespaces/"+name+"/finalize", token, rBody)
+	if err != nil {
+		logger.Error("Update finalize of a Namespace Fail", err)
 	}
-	logger.Info("Update finalize of namespace names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Update finalize of namespace names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func GetstatusofNS(c *gin.Context){
+func GetstatusofNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("namespace")
-	req,err := oapi.GenRequest("GET","/api/v1/namespaces/"+name+"/status",token,nil)
-	if err != nil{
-		logger.Error("Get status of a Namespace Fail",err)
+	req, err := oapi.GenRequest("GET", "/api/v1/namespaces/"+name+"/status", token, nil)
+	if err != nil {
+		logger.Error("Get status of a Namespace Fail", err)
 	}
-	logger.Info("Get status of namespace names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Get status of namespace names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func UpdatestatusofNS(c *gin.Context){
+func UpdatestatusofNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("namespace")
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.GenRequest("PUT","/api/v1/namespaces/"+name+"/status",token,rBody)
-	if err != nil{
-		logger.Error("Update status of a Namespace Fail",err)
+	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	req, err := oapi.GenRequest("PUT", "/api/v1/namespaces/"+name+"/status", token, rBody)
+	if err != nil {
+		logger.Error("Update status of a Namespace Fail", err)
 	}
-	logger.Info("Update status of namespace names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Update status of namespace names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func PatchstatusofNS(c *gin.Context){
+func PatchstatusofNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("namespace")
-	rBody,_ := ioutil.ReadAll(c.Request.Body)
-	req,err := oapi.GenRequest("PATCH","/api/v1/namespaces/"+name+"/status",token,rBody)
-	if err != nil{
-		logger.Error("Patch status of a Namespace Fail",err)
+	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	req, err := oapi.GenRequest("PATCH", "/api/v1/namespaces/"+name+"/status", token, rBody)
+	if err != nil {
+		logger.Error("Patch status of a Namespace Fail", err)
 	}
-	logger.Info("Patch status of namespace names/"+name,map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(),"result":req.StatusCode})
-	result, _:= ioutil.ReadAll(req.Body)
+	logger.Info("Patch status of namespace names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }

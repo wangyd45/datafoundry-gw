@@ -1,13 +1,12 @@
 package resourcequota
 
-
 import (
-	"os"
-	"io/ioutil"
+	api "github.com/asiainfoLDP/datafoundry-gw/apirequest"
+	"github.com/asiainfoLDP/datafoundry-gw/pkg"
 	"github.com/gin-gonic/gin"
 	"github.com/pivotal-golang/lager"
-	"github.com/asiainfoLDP/datafoundry-gw/pkg"
-	api "github.com/asiainfoLDP/datafoundry-gw/apirequest"
+	"io/ioutil"
+	"os"
 )
 
 var log lager.Logger
@@ -17,7 +16,7 @@ const (
 	SERVICENAME = "/api/v1/namespaces"
 	WATCH       = "/api/v1/watch/namespaces"
 	WATCHALL    = "/api/v1/watch/resourcequota"
-	JSON      = "application/json"
+	JSON        = "application/json"
 )
 
 func init() {
@@ -25,15 +24,22 @@ func init() {
 	log.RegisterSink(lager.NewWriterSink(os.Stdout, lager.DEBUG))
 }
 
-func CreateRq(c *gin.Context){
+func CreateRq(c *gin.Context) {
 	token := pkg.GetToken(c)
-	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	rBody, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil {
+		log.Error("CreateRq Read Request.Body error", err)
+	}
 	defer c.Request.Body.Close()
 	req, err := api.GenRequest("POST", SERVICE, token, rBody)
 	if err != nil {
 		log.Error("CreateRq error ", err)
 	}
-	result, _ := ioutil.ReadAll(req.Body)
+	log.Info("Create Rq", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		log.Error("CreateRq Read req.Body error", err)
+	}
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
@@ -41,60 +47,79 @@ func CreateRq(c *gin.Context){
 func CreateRqInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
-	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	rBody, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil {
+		log.Error("CreateRqInNS Read Request.Body error", err)
+	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("POST", SERVICENAME + "/" +namespace+"/resourcequotas", token, rBody)
+	req, err := api.GenRequest("POST", SERVICENAME+"/"+namespace+"/resourcequotas", token, rBody)
 	if err != nil {
 		log.Error("CreateRqInNS error ", err)
 	}
-	result, _ := ioutil.ReadAll(req.Body)
+	log.Info("Create Rq In NameSpace ", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		log.Error("CreateRqInNS Read req.Body error", err)
+	}
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
 
 func GetRqFromNS(c *gin.Context) {
-	if pkg.IsWebsocket(c){
+	if pkg.IsWebsocket(c) {
 		watchRqFromNS(c)
-	}else {
+	} else {
 		namespace := c.Param("namespace")
 		name := c.Param("name")
 		token := pkg.GetToken(c)
-		req, err := api.GenRequest("GET", SERVICENAME + "/" +namespace+"/resourcequotas/"+name, token, []byte{})
+		req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/resourcequotas/"+name, token, []byte{})
 		if err != nil {
 			log.Error("GetRqFromNS error ", err)
 		}
-		result, _ := ioutil.ReadAll(req.Body)
+		log.Info("Get Rq From NameSpace ", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+		result, err := ioutil.ReadAll(req.Body)
+		if err != nil {
+			log.Error("GetRqFromNS Read req.Body error", err)
+		}
 		defer req.Body.Close()
 		c.Data(req.StatusCode, JSON, result)
 	}
 }
 
 func GetAllRq(c *gin.Context) {
-	if pkg.IsWebsocket(c){
+	if pkg.IsWebsocket(c) {
 		watchAllRq(c)
-	}else {
+	} else {
 		token := pkg.GetToken(c)
 		req, err := api.GenRequest("GET", SERVICE, token, []byte{})
 		if err != nil {
 			log.Error("GetAllRq error ", err)
 		}
-		result, _ := ioutil.ReadAll(req.Body)
+		log.Info("List Rq ", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+		result, err := ioutil.ReadAll(req.Body)
+		if err != nil {
+			log.Error("GetAllRq Read req.Body error", err)
+		}
 		defer req.Body.Close()
 		c.Data(req.StatusCode, JSON, result)
 	}
 }
 
 func GetAllRqFromNS(c *gin.Context) {
-	if pkg.IsWebsocket(c){
+	if pkg.IsWebsocket(c) {
 		watchAllRqFromNS(c)
-	}else {
+	} else {
 		namespace := c.Param("namespace")
 		token := pkg.GetToken(c)
 		req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/resourcequotas", token, []byte{})
 		if err != nil {
 			log.Error("GetAllRqFromNS error ", err)
 		}
-		result, _ := ioutil.ReadAll(req.Body)
+		log.Info("List Rq From NameSpace ", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+		result, err := ioutil.ReadAll(req.Body)
+		if err != nil {
+			log.Error("GetAllRq Read req.Body error", err)
+		}
 		defer req.Body.Close()
 		c.Data(req.StatusCode, JSON, result)
 	}
@@ -104,11 +129,15 @@ func GetStuRqFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	req, err := api.GenRequest("GET", SERVICENAME + "/" +namespace+"/resourcequotas/"+name + "/status", token, []byte{})
+	req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/resourcequotas/"+name+"/status", token, []byte{})
 	if err != nil {
 		log.Error("GetStuRqFromNS error ", err)
 	}
-	result, _ := ioutil.ReadAll(req.Body)
+	log.Info("Get Status Rq From NameSpace ", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		log.Error("GetStuRqFromNS Read req.Body error", err)
+	}
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
@@ -117,31 +146,44 @@ func watchRqFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetWSToken(c)
-	api.WSRequest(WATCH+ "/" +namespace+"/resourcequotas/" + name,token,c.Writer,c.Request)
+	log.Info("Watch Rq From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "start watch"})
+	api.WSRequest(WATCH+"/"+namespace+"/resourcequotas/"+name, token, c.Writer, c.Request)
+	log.Info("Watch Rq From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "end watch"})
 }
 
 func watchAllRq(c *gin.Context) {
 	token := pkg.GetWSToken(c)
-	api.WSRequest(WATCHALL,token,c.Writer,c.Request)
+	log.Info("Watch Collection Rq", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "start watch"})
+	api.WSRequest(WATCHALL, token, c.Writer, c.Request)
+	log.Info("Watch Collection Rq", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "end watch"})
 }
 
 func watchAllRqFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetWSToken(c)
-	api.WSRequest(WATCH+ "/" +namespace+"/resourcequotas", token, c.Writer,c.Request)
+	log.Info("Watch Collection Rq From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "start watch"})
+	api.WSRequest(WATCH+"/"+namespace+"/resourcequotas", token, c.Writer, c.Request)
+	log.Info("Watch Collection Rq From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "end watch"})
 }
 
 func UpdataRqFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	rBody, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil {
+		log.Error("UpdataRqFromNS Read Request.Body error", err)
+	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PUT", SERVICENAME+ "/" +namespace+"/resourcequotas/"+name, token, rBody)
+	req, err := api.GenRequest("PUT", SERVICENAME+"/"+namespace+"/resourcequotas/"+name, token, rBody)
 	if err != nil {
 		log.Error("UpdataRqFromNS error ", err)
 	}
-	result, _ := ioutil.ReadAll(req.Body)
+	log.Info("Upadata Rq From NameSpace  ", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		log.Error("UpdataRqFromNS Read req.Body error", err)
+	}
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
@@ -150,13 +192,20 @@ func UpdataStuRqFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	rBody, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil {
+		log.Error("UpdataStuRqFromNS Read Request.Body error", err)
+	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PUT", SERVICENAME+ "/" + namespace + "/resourcequotas/" + name + "/status", token, rBody)
+	req, err := api.GenRequest("PUT", SERVICENAME+"/"+namespace+"/resourcequotas/"+name+"/status", token, rBody)
 	if err != nil {
 		log.Error("UpdataStuRqFromNS error ", err)
 	}
-	result, _ := ioutil.ReadAll(req.Body)
+	log.Info("Upadata Status Rq From NameSpace  ", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		log.Error("UpdataStuRqFromNS Read req.Body error", err)
+	}
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
@@ -165,13 +214,20 @@ func PatchRqFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	rBody, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil {
+		log.Error("PatchRqFromNS Read Request.Body error", err)
+	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PATCH", SERVICENAME + "/" +namespace+"/resourcequotas/"+name, token, rBody)
+	req, err := api.GenRequest("PATCH", SERVICENAME+"/"+namespace+"/resourcequotas/"+name, token, rBody)
 	if err != nil {
 		log.Error("PatchRqFromNS error ", err)
 	}
-	result, _ := ioutil.ReadAll(req.Body)
+	log.Info("Patch Rq From NameSpace  ", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		log.Error("PatchRqFromNS Read req.Body error", err)
+	}
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
@@ -180,13 +236,20 @@ func PatchStuRqFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PATCH", SERVICENAME+ "/" + namespace + "/resourcequotas/" + name + "/status", token, rBody)
+	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
-		log.Error("UpdataStuRqFromNS error ", err)
+		log.Error("PatchStuRqFromNS Read Request.Body error", err)
 	}
-	result, _ := ioutil.ReadAll(req.Body)
+	defer c.Request.Body.Close()
+	req, err := api.GenRequest("PATCH", SERVICENAME+"/"+namespace+"/resourcequotas/"+name+"/status", token, rBody)
+	if err != nil {
+		log.Error("PatchStuRqFromNS error ", err)
+	}
+	log.Info("Patch Status Rq From NameSpace  ", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		log.Error("PatchStuRqFromNS Read req.Body error", err)
+	}
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
@@ -195,13 +258,20 @@ func DeleteRqFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	rBody, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil {
+		log.Error("DeleteRqFromNS Read Request.Body error", err)
+	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest( "DELETE", SERVICENAME+ "/" +namespace+"/resourcequotas/"+name, token, rBody)
+	req, err := api.GenRequest("DELETE", SERVICENAME+"/"+namespace+"/resourcequotas/"+name, token, rBody)
 	if err != nil {
 		log.Error("DeleteRqFromNS error ", err)
 	}
-	result, _ := ioutil.ReadAll(req.Body)
+	log.Info("Delete Rq From NameSpace  ", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		log.Error("DeleteRqFromNS Read req.Body error", err)
+	}
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }
@@ -209,13 +279,20 @@ func DeleteRqFromNS(c *gin.Context) {
 func DeleteAllRqFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
-	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	rBody, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil {
+		log.Error("DeleteRqFromNS Read Request.Body error", err)
+	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest( "DELETE", SERVICENAME+ "/" +namespace+"/resourcequotas", token, rBody)
+	req, err := api.GenRequest("DELETE", SERVICENAME+"/"+namespace+"/resourcequotas", token, rBody)
 	if err != nil {
 		log.Error("DeleteAllRqFromNS error ", err)
 	}
-	result, _ := ioutil.ReadAll(req.Body)
+	log.Info("Delete Collection Rq From NameSpace  ", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		log.Error("DeleteRqFromNS Read req.Body error", err)
+	}
 	defer req.Body.Close()
 	c.Data(req.StatusCode, JSON, result)
 }

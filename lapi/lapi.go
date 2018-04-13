@@ -1,21 +1,21 @@
 package lapi
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/pivotal-golang/lager"
-	"os"
-	"net/http"
-	"io/ioutil"
 	"encoding/json"
-	"math/rand"
 	"errors"
-	"time"
-	rolebindingapi "github.com/openshift/rolebinding/api/v1"
-	projectapi "github.com/openshift/project/api/v1"
-	kapi "k8s.io/kubernetes/pkg/api/v1"
 	oapi "github.com/asiainfoLDP/datafoundry-gw/apirequest"
-	userapi "github.com/openshift/user/api/v1"
 	"github.com/asiainfoLDP/datafoundry-gw/pkg"
+	"github.com/gin-gonic/gin"
+	projectapi "github.com/openshift/project/api/v1"
+	rolebindingapi "github.com/openshift/rolebinding/api/v1"
+	userapi "github.com/openshift/user/api/v1"
+	"github.com/pivotal-golang/lager"
+	"io/ioutil"
+	kapi "k8s.io/kubernetes/pkg/api/v1"
+	"math/rand"
+	"net/http"
+	"os"
+	"time"
 )
 
 var log lager.Logger
@@ -34,17 +34,15 @@ type OrgMember struct {
 }
 
 type Orgnazition struct {
-	ID          string         `json:"id"`
-	Name        string         `json:"name"`
-	CreateBy    string         `json:"create_by"`
-	CreateTime  string         `json:"creation_time"`
-	MemberList  []OrgMember    `json:"members"`
-	Status      string         `json:"status"`
-	RoleBinding bool           `json:"rolebinding"`
-	Reason      string         `json:"reason,omitempty"`
+	ID          string      `json:"id"`
+	Name        string      `json:"name"`
+	CreateBy    string      `json:"create_by"`
+	CreateTime  string      `json:"creation_time"`
+	MemberList  []OrgMember `json:"members"`
+	Status      string      `json:"status"`
+	RoleBinding bool        `json:"rolebinding"`
+	Reason      string      `json:"reason,omitempty"`
 }
-
-
 
 type MemberStatusPhase string
 
@@ -58,36 +56,38 @@ func genRandomName(strlen int) (name string) {
 	return string(result)
 }
 
-func authDF(token string) ( string, error) {
+func authDF(token string) (string, error) {
 	u := &userapi.User{}
-	req,err := oapi.GenRequest("GET","/oapi/v1/users/~",token,[]byte{})
-	if err != nil{
-		log.Error("GetUser error ",err)
+	req, err := oapi.GenRequest("GET", "/oapi/v1/users/~", token, []byte{})
+	if err != nil {
+		log.Error("GetUser error ", err)
 	}
-	result, _:= ioutil.ReadAll(req.Body)
+	result, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		log.Error("GetUser ioutil.ReadAll error ", err)
+	}
 	defer req.Body.Close()
-	err = json.Unmarshal(result,u)
-	if err != nil{
-		log.Error("json unmarshal error ",err)
-		return "",err
+	err = json.Unmarshal(result, u)
+	if err != nil {
+		log.Error("json unmarshal error ", err)
+		return "", err
 	}
 	return u.Name, nil
 }
 
-
-func CreateProject(c *gin.Context){
+func CreateProject(c *gin.Context) {
 	org := new(Orgnazition)
 	if err := parseRequestBody(c.Request, org); err != nil {
-		log.Error("read request body error ",err)
+		log.Error("read request body error ", err)
 		return
 	}
 	token := pkg.GetToken(c)
-	if "" == token{
-		log.Error("get token error ",nil)
+	if "" == token {
+		log.Error("get token error ", nil)
 	}
-	user,err := authDF(token)
-	if err != nil{
-		log.Error("get user error!",err)
+	user, err := authDF(token)
+	if err != nil {
+		log.Error("get user error!", err)
 		return
 	}
 	//region := c.Request.FormValue("region")
@@ -96,36 +96,44 @@ func CreateProject(c *gin.Context){
 		projRequest.DisplayName = org.Name
 		projRequest.Name = user + "-org-" + genRandomName(8)
 	}
-	rBody,err := json.Marshal(projRequest)
-	if err != nil{
-		log.Error("json Masrshal error ",err)
+	rBody, err := json.Marshal(projRequest)
+	if err != nil {
+		log.Error("json Masrshal error ", err)
 		return
 	}
-	req,err := oapi.GenRequest("POST","/oapi/v1/projectrequests",token,rBody)
-	if err != nil{
-		log.Error("Create A Project Fail",err)
+	req, err := oapi.GenRequest("POST", "/oapi/v1/projectrequests", token, rBody)
+	if err != nil {
+		log.Error("Create A Project Fail", err)
 		return
 	}
 	//返回结果JSON格式
-	result, _:= ioutil.ReadAll(req.Body)
+	log.Info("Create Project ", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		log.Error("CreateProject Read req.Body error", err)
+	}
 	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json",result)
+	c.Data(req.StatusCode, "application/json", result)
 }
 
-func ListMembers(c *gin.Context){
+func ListMembers(c *gin.Context) {
 	project := c.Param("project")
 	token := pkg.GetToken(c)
-	resp,err := oapi.GenRequest("GET","/oapi/v1/namespaces/"+project+"/rolebindings",token,nil)
+	req, err := oapi.GenRequest("GET", "/oapi/v1/namespaces/"+project+"/rolebindings", token, nil)
 	if err != nil {
 		log.Error("ListMembers error ", err)
 	}
-	result, _ := ioutil.ReadAll(resp.Body)
-	defer resp.Body.Close()
+	log.Info("List Members ", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		log.Error("ListMembers Read req.Body error", err)
+	}
+	defer req.Body.Close()
 	roles := new(rolebindingapi.RoleBindingList)
 	rolesResult := new(rolebindingapi.RoleBindingList)
-	err = json.Unmarshal(result,roles)
-	if err != nil{
-		log.Error("json Unmarshal error ",err)
+	err = json.Unmarshal(result, roles)
+	if err != nil {
+		log.Error("json Unmarshal error ", err)
 		return
 	}
 	for _, role := range roles.Items {
@@ -144,52 +152,56 @@ func ListMembers(c *gin.Context){
 			}
 		}
 	}
-	res,err := json.Marshal(rolesResult)
-	if err != nil{
-		log.Error("json Masrshal error ",err)
+	res, err := json.Marshal(rolesResult)
+	if err != nil {
+		log.Error("json Masrshal error ", err)
 		return
 	}
-	c.Data(resp.StatusCode, "application/json", res)
+	c.Data(req.StatusCode, "application/json", res)
 
 }
 
-func InviteMember(c *gin.Context){
+func InviteMember(c *gin.Context) {
 
-	datainfo := make(map[string] interface{})
+	datainfo := make(map[string]interface{})
 	datainfo["RemoteAddr"] = c.Request.RemoteAddr
 	datainfo["Method"] = c.Request.Method
 	datainfo["URL"] = c.Request.URL.RequestURI()
 	datainfo["Proto"] = c.Request.Proto
-    log.Info("from",datainfo)
+	log.Info("from", datainfo)
 
 	member := new(OrgMember)
 
 	if err := parseRequestBody(c.Request, member); err != nil {
-		log.Error("read request body error.", err)
+		log.Error("InviteMember read request body error.", err)
 		return
 	}
 
 	project := c.Param("project")
 
-	req, err :=roleAdd(c.Request,project,member.Name, member.IsAdmin)
+	req, err := roleAdd(c.Request, project, member.Name, member.IsAdmin)
 
 	if err != nil {
 		log.Error("InviteMember error ", err)
 	}
-	result, _ := ioutil.ReadAll(req.Body)
+	log.Info("Invite Members ", map[string]interface{}{"user": "", "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		log.Error("ListMembers Read req.Body error", err)
+	}
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json", result)
 
 }
 
-func RemoveMember(c *gin.Context){
+func RemoveMember(c *gin.Context) {
 
-	datainfo := make(map[string] interface{})
+	datainfo := make(map[string]interface{})
 	datainfo["RemoteAddr"] = c.Request.RemoteAddr
 	datainfo["Method"] = c.Request.Method
 	datainfo["URL"] = c.Request.URL.RequestURI()
 	datainfo["Proto"] = c.Request.Proto
-	log.Info("from",datainfo)
+	log.Info("from", datainfo)
 
 	member := new(OrgMember)
 
@@ -200,12 +212,16 @@ func RemoveMember(c *gin.Context){
 
 	project := c.Param("project")
 
-	req, err :=roleRemove(c.Request,project,member.Name)
+	req, err := roleRemove(c.Request, project, member.Name)
 
 	if err != nil {
 		log.Error("RemoveMember error ", err)
 	}
-	result, _ := ioutil.ReadAll(req.Body)
+	log.Info("Invite Members ", map[string]interface{}{"user": "", "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		log.Error("ListMembers Read req.Body error", err)
+	}
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json", result)
 }
@@ -216,7 +232,7 @@ func parseRequestBody(r *http.Request, v interface{}) error {
 	if err != nil {
 		return err
 	}
-	log.Debug("Request Body:"+string(b))
+	log.Debug("Request Body:" + string(b))
 	if err := json.Unmarshal(b, v); err != nil {
 		return err
 	}
@@ -241,13 +257,12 @@ func roleRemove(r *http.Request, project, name string) (*http.Response, error) {
 
 	role := findUserInRoles(roleList, name)
 	if role == nil {
-		return nil,errors.New("can't find user '"+name+"' from roles in project '"+project+"'")
+		return nil, errors.New("can't find user '" + name + "' from roles in project '" + project + "'")
 	} else {
 		role = removeUserInRole(role, name)
-		body,_ :=json.Marshal(role)
-		req,err = oapi.GenRequest("PUT","/oapi/v1/namespaces/"+project+"/rolebindings/"+role.Name,token,body)
+		body, _ := json.Marshal(role)
+		req, err = oapi.GenRequest("PUT", "/oapi/v1/namespaces/"+project+"/rolebindings/"+role.Name, token, body)
 	}
-
 
 	return req, err
 }
@@ -270,7 +285,7 @@ func roleAdd(r *http.Request, project, name string, admin bool) (*http.Response,
 
 	if exist := findUserInRoles(roleList, name); exist != nil {
 
-		return nil, errors.New("duplicate user: "+name+", role: "+exist.RoleRef.Name+", project: "+project)
+		return nil, errors.New("duplicate user: " + name + ", role: " + exist.RoleRef.Name + ", project: " + project)
 	}
 
 	roleRef := "edit"
@@ -298,12 +313,12 @@ func roleAdd(r *http.Request, project, name string, admin bool) (*http.Response,
 	}
 	role.Annotations["joinedTime/"+name] = time.Now().Format(time.RFC3339)
 
-	body,_ :=json.Marshal(role)
+	body, _ := json.Marshal(role)
 	if create {
-		req,err = oapi.GenRequest("POST","/oapi/v1/namespaces/"+project+"/rolebindings",token,body)
+		req, err = oapi.GenRequest("POST", "/oapi/v1/namespaces/"+project+"/rolebindings", token, body)
 
 	} else {
-		req,err = oapi.GenRequest("PUT","/oapi/v1/namespaces/"+project+"/rolebindings/"+roleRef,token,body)
+		req, err = oapi.GenRequest("PUT", "/oapi/v1/namespaces/"+project+"/rolebindings/"+roleRef, token, body)
 	}
 
 	return req, err
@@ -317,10 +332,10 @@ func getListRoles(r *http.Request, project string) (*rolebindingapi.RoleBindingL
 
 	token := r.Header.Get("Authorization")
 
-	resp,err := oapi.GenRequest("GET","/oapi/v1/namespaces/"+project+"/rolebindings",token,nil)
-	if err != nil{
-		log.Error("Get All RoleBindings In A Namespace Fail",err)
-		return nil,err
+	resp, err := oapi.GenRequest("GET", "/oapi/v1/namespaces/"+project+"/rolebindings", token, nil)
+	if err != nil {
+		log.Error("Get All RoleBindings In A Namespace Fail", err)
+		return nil, err
 	}
 
 	defer resp.Body.Close()

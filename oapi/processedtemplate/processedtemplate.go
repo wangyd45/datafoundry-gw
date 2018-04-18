@@ -25,7 +25,10 @@ func CDProcessedTemplate(c *gin.Context) {
 	namespace := c.Param("namespace")
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 
-	cdptMap := pkg.BreakBody(rBody)
+	cdptMap, err := pkg.BreakBody(rBody)
+	if err != nil {
+		logger.Error("CDProcessedTemplate BreakBody error ", err)
+	}
 	cdStatusMap = make(map[string]int)
 
 	for k, v := range cdptMap {

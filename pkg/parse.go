@@ -11,6 +11,20 @@ import (
 
 var UserMap map[string]string
 
+type Data struct {
+	ApiVersion string      `json:"apiVersion"`
+	Kind       string      `json:"kind"`
+	GroupNames interface{} `json:"groupNames"`
+	Metadata   interface{} `json:"metadata"`
+	Spec       interface{} `json:"spec"`
+	RoleRef    interface{} `json:"roleRef"`
+	Subjects   interface{} `json:"subjects"`
+}
+
+type Object struct {
+	Objects []Data `json:"objects"`
+}
+
 func init() {
 	UserMap = make(map[string]string)
 }
@@ -72,7 +86,19 @@ func GetTimeNow() string {
 	return time.Now().Format("2006-01-02 15:04:05.00")
 }
 
-func BreakBody(body []byte) (ret map[string][]byte){
+func BreakBody(body []byte) (ret map[string][]byte, err error) {
 	ret = make(map[string][]byte)
-	return ret
+	obj := Object{}
+	err = json.Unmarshal(body, &obj)
+	if err != nil {
+		return nil, err
+	}
+	for i := 0; i < len(obj.Objects); i++ {
+		body, err := json.Marshal(obj.Objects[i])
+		if err != nil {
+			return nil, err
+		}
+		ret[obj.Objects[i].Kind] = body
+	}
+	return ret, nil
 }

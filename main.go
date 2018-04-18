@@ -26,6 +26,7 @@ import (
 	"github.com/asiainfoLDP/datafoundry-gw/oapi/imagestreamimport"
 	tag "github.com/asiainfoLDP/datafoundry-gw/oapi/imagestreamtag"
 	"github.com/asiainfoLDP/datafoundry-gw/oapi/netnamespace"
+	"github.com/asiainfoLDP/datafoundry-gw/oapi/processedtemplate"
 	"github.com/asiainfoLDP/datafoundry-gw/oapi/project"
 	"github.com/asiainfoLDP/datafoundry-gw/oapi/role"
 	"github.com/asiainfoLDP/datafoundry-gw/oapi/rolebinding"
@@ -266,6 +267,12 @@ func handle() (router *gin.Engine) {
 	router.PATCH("/oapi/v1/namespaces/:namespace/templates/:name", template.PatchTemplateInNS)
 	router.DELETE("/oapi/v1/namespaces/:namespace/templates/:name", template.DeleteTemplateInNS)
 	router.DELETE("/oapi/v1/namespaces/:namespace/templates", template.DeleteAllTemplatesInNS)
+
+	//v1.ProcessedTemplate
+	//router.POST("/oapi/v1/processedtemplates",nil)
+	//router.POST("/oapi/v1/namespaces/:namespace/processedtemplates",nil)
+	//自定义接口
+	router.PUT("/oapi/v1/namespaces/:namespace/processedtemplates", processedtemplate.CDProcessedTemplate)
 
 	//k8s api
 	//v1.Pod

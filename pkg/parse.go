@@ -71,3 +71,8 @@ func GetTimeNow() string {
 	//格式化必须是这个时间点，Go语言诞生时间？
 	return time.Now().Format("2006-01-02 15:04:05.00")
 }
+
+func BreakBody(body []byte) (ret map[string][]byte){
+	ret = make(map[string][]byte)
+	return ret
+}

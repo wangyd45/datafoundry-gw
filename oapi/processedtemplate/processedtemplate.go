@@ -1,15 +1,19 @@
 package processedtemplate
 
 import (
+	"encoding/json"
 	oapi "github.com/asiainfoLDP/datafoundry-gw/apirequest"
 	"github.com/asiainfoLDP/datafoundry-gw/pkg"
 	"github.com/gin-gonic/gin"
 	"github.com/pivotal-golang/lager"
 	"io/ioutil"
+	"net/http"
 	"os"
+	"strings"
 )
 
 var logger lager.Logger
+var cdStatusMap map[string]int
 
 func init() {
 	logger = lager.NewLogger("oapi_v1_ProcessedTemplate")
@@ -17,18 +21,23 @@ func init() {
 }
 
 func CDProcessedTemplate(c *gin.Context) {
-	//获取前端传递的Token，无需拼接"Bearer XXXXXXXXXX"
 	token := pkg.GetToken(c)
-	//获取前端参数
+	namespace := c.Param("namespace")
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	//调用原生接口
-	req, err := oapi.GenRequest("POST", "/oapi/v1/projectrequests", token, rBody)
-	if err != nil {
-		logger.Error("Create A Project Fail", err)
+
+	cdptMap := pkg.BreakBody(rBody)
+	cdStatusMap = make(map[string]int)
+
+	for k, v := range cdptMap {
+		req, err := oapi.GenRequest("POST", "/oapi/v1/namespaces/"+namespace+"/"+strings.ToLower(k)+"s", token, v)
+		if err != nil {
+			logger.Error("Create A "+k+" Fail", err)
+		}
+		logger.Info("Create "+k, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+		defer req.Body.Close()
+		cdStatusMap[k] = req.StatusCode
 	}
-	logger.Info("Create project", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
-	//返回结果JSON格式
-	result, _ := ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
-	c.Data(req.StatusCode, "application/json", result)
+	b, _ := json.Marshal(cdStatusMap)
+
+	c.Data(http.StatusOK, "application/json", b)
 }

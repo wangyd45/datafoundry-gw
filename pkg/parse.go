@@ -29,15 +29,18 @@ func init() {
 	UserMap = make(map[string]string)
 }
 
+//http请求获取Token "Beaer ......"
 func GetToken(c *gin.Context) string {
 	return c.Request.Header.Get("Authorization")
 }
 
+//WS请求获取Token "Beaer ......"
 func GetWSToken(c *gin.Context) (ret string) {
 	ret = "Bearer " + c.Query("access_token")
 	return ret
 }
 
+//判断请求是否WS请求
 func IsWebsocket(c *gin.Context) (bret bool) {
 	bret = false
 	value := c.Request.Header.Get("Upgrade")
@@ -49,6 +52,7 @@ func IsWebsocket(c *gin.Context) (bret bool) {
 	return bret
 }
 
+//截取Token
 func SliceToken(token string) string {
 	if len(token) > 7 {
 		return token[7:]
@@ -56,6 +60,7 @@ func SliceToken(token string) string {
 	return ""
 }
 
+//根据Token获取用户名
 func GetUserFromToken(token string) string {
 
 	if len(UserMap) > 100 {
@@ -81,11 +86,13 @@ func GetUserFromToken(token string) string {
 	return u.Name
 }
 
+//获取实时时间
 func GetTimeNow() string {
 	//格式化必须是这个时间点，Go语言诞生时间？
 	return time.Now().Format("2006-01-02 15:04:05.00")
 }
 
+//解析并返回http请求体
 func BreakBody(body []byte) (ret map[string][]byte, err error) {
 	ret = make(map[string][]byte)
 	obj := Object{}

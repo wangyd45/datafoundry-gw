@@ -70,6 +70,7 @@ func handle() (router *gin.Engine) {
 	//获取路由实例
 	router = gin.Default()
 
+	//OpenShift API
 	//v1.user
 	router.Group("/oapi/v1/users/~", user.GetSelf)
 	router.GET("/oapi/v1/users/:name", user.GetUser)
@@ -231,7 +232,7 @@ func handle() (router *gin.Engine) {
 	//自定义接口
 	router.PUT("/oapi/v1/namespaces/:namespace/processedtemplates", processedtemplate.CDProcessedTemplate)
 
-	//k8s api
+	//K8S API
 	//v1.Pod
 	router.POST("/api/v1/pods", pod.CreatePod)
 	router.POST("/api/v1/namespaces/:namespace/pods", pod.CreatePodInNS)

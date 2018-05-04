@@ -198,6 +198,7 @@ func RemoveMember(c *gin.Context) {
 	c.Data(req.StatusCode, "application/json", result)
 }
 
+//获取长度为strlen的随机码
 func genRandomName(strlen int) (name string) {
 	rand.Seed(time.Now().UTC().UnixNano())
 	const chars = "abcdefghijklmnopqrstuvwxyz0123456789"
@@ -208,6 +209,7 @@ func genRandomName(strlen int) (name string) {
 	return string(result)
 }
 
+//根据Token获取用户名称
 func authDF(token string) (string, error) {
 	u := &userapi.User{}
 	req, err := oapi.GenRequest("GET", "/oapi/v1/users/~", token, []byte{})
@@ -227,6 +229,7 @@ func authDF(token string) (string, error) {
 	return u.Name, nil
 }
 
+//检验请求体正确性
 func parseRequestBody(r *http.Request, v interface{}) error {
 	b, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
@@ -241,6 +244,7 @@ func parseRequestBody(r *http.Request, v interface{}) error {
 	return nil
 }
 
+//移除rolebindings
 func roleRemove(r *http.Request, project, name string) (*http.Response, error) {
 
 	var req *http.Response
@@ -268,6 +272,7 @@ func roleRemove(r *http.Request, project, name string) (*http.Response, error) {
 	return req, err
 }
 
+//创建或更新rolebindings
 func roleAdd(r *http.Request, project, name string, admin bool) (*http.Response, error) {
 
 	var req *http.Response
@@ -325,6 +330,7 @@ func roleAdd(r *http.Request, project, name string, admin bool) (*http.Response,
 	return req, err
 }
 
+//获取rolebindings列表
 func getListRoles(r *http.Request, project string) (*rolebindingapi.RoleBindingList, error) {
 
 	var err error
@@ -364,6 +370,7 @@ func getListRoles(r *http.Request, project string) (*rolebindingapi.RoleBindingL
 	return rolesResult, nil
 }
 
+//根据Role名称查询rolebindings
 func findRole(roles *rolebindingapi.RoleBindingList, roleRef string) *rolebindingapi.RoleBinding {
 	for _, role := range roles.Items {
 		if role.Name == roleRef {
@@ -373,6 +380,7 @@ func findRole(roles *rolebindingapi.RoleBindingList, roleRef string) *rolebindin
 	return nil
 }
 
+//根据用户名查询rolebindings
 func findUserInRoles(roles *rolebindingapi.RoleBindingList, username string) *rolebindingapi.RoleBinding {
 	for _, role := range roles.Items {
 		for _, v := range role.UserNames {
@@ -384,6 +392,7 @@ func findUserInRoles(roles *rolebindingapi.RoleBindingList, username string) *ro
 	return nil
 }
 
+//根据用户名删除rolebindings
 func removeUserInRole(role *rolebindingapi.RoleBinding, user string) *rolebindingapi.RoleBinding {
 	for idx, userName := range role.UserNames {
 		if userName == user {

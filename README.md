@@ -4,6 +4,9 @@
 
 https://docs.openshift.org/latest/rest_api/index.html
 
+## ENV
+#APIHOST
+
 *api list*
 
 ## /api/v1

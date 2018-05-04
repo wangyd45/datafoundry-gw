@@ -46,34 +46,6 @@ type Orgnazition struct {
 
 type MemberStatusPhase string
 
-func genRandomName(strlen int) (name string) {
-	rand.Seed(time.Now().UTC().UnixNano())
-	const chars = "abcdefghijklmnopqrstuvwxyz0123456789"
-	result := make([]byte, strlen)
-	for i := 0; i < strlen; i++ {
-		result[i] = chars[rand.Intn(len(chars))]
-	}
-	return string(result)
-}
-
-func authDF(token string) (string, error) {
-	u := &userapi.User{}
-	req, err := oapi.GenRequest("GET", "/oapi/v1/users/~", token, []byte{})
-	if err != nil {
-		log.Error("GetUser error ", err)
-	}
-	result, err := ioutil.ReadAll(req.Body)
-	if err != nil {
-		log.Error("GetUser ioutil.ReadAll error ", err)
-	}
-	defer req.Body.Close()
-	err = json.Unmarshal(result, u)
-	if err != nil {
-		log.Error("json unmarshal error ", err)
-		return "", err
-	}
-	return u.Name, nil
-}
 
 func CreateProject(c *gin.Context) {
 	org := new(Orgnazition)
@@ -90,7 +62,7 @@ func CreateProject(c *gin.Context) {
 		log.Error("get user error!", err)
 		return
 	}
-	//region := c.Request.FormValue("region")
+
 	projRequest := new(projectapi.ProjectRequest)
 	{
 		projRequest.DisplayName = org.Name
@@ -224,6 +196,35 @@ func RemoveMember(c *gin.Context) {
 	}
 	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json", result)
+}
+
+func genRandomName(strlen int) (name string) {
+	rand.Seed(time.Now().UTC().UnixNano())
+	const chars = "abcdefghijklmnopqrstuvwxyz0123456789"
+	result := make([]byte, strlen)
+	for i := 0; i < strlen; i++ {
+		result[i] = chars[rand.Intn(len(chars))]
+	}
+	return string(result)
+}
+
+func authDF(token string) (string, error) {
+	u := &userapi.User{}
+	req, err := oapi.GenRequest("GET", "/oapi/v1/users/~", token, []byte{})
+	if err != nil {
+		log.Error("GetUser error ", err)
+	}
+	result, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		log.Error("GetUser ioutil.ReadAll error ", err)
+	}
+	defer req.Body.Close()
+	err = json.Unmarshal(result, u)
+	if err != nil {
+		log.Error("json unmarshal error ", err)
+		return "", err
+	}
+	return u.Name, nil
 }
 
 func parseRequestBody(r *http.Request, v interface{}) error {

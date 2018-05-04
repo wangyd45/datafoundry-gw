@@ -89,7 +89,7 @@ func WSRequest(url, token string, w http.ResponseWriter, r *http.Request) {
 	url = "https://" + apiHost + url
 	request, err = http.NewRequest("GET", url, nil)
 	if err != nil {
-		fmt.Errorf("request err:", err)
+		fmt.Errorf("Request err:", err)
 	}
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Authorization", token)
@@ -136,7 +136,7 @@ func WSRequestRL(len int, url, token string, w http.ResponseWriter, r *http.Requ
 	url = "https://" + apiHost + url
 	request, err = http.NewRequest("GET", url, nil)
 	if err != nil {
-		fmt.Errorf("request err:", err)
+		fmt.Errorf("Request err:", err)
 	}
 	request.Header.Set("Authorization", token)
 

@@ -15,6 +15,9 @@ import (
 	"net/http"
 )
 
+/*
+ 测试WebSocket功能的客户端代码，与其他功能无关
+*/
 var addr = flag.String("addr", "127.0.0.1:10012", "http service address")
 
 func main() {

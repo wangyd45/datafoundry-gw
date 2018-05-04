@@ -25,6 +25,7 @@ var httpClientG = &http.Client{
 	Timeout:   time.Duration(10) * time.Second,
 }
 
+//为了避免WebSocket,Host地址不一致，CheckOrigin函数需自己根据实际情况编写，此处设置为True
 var wsupgrader = websocket.Upgrader{
 	ReadBufferSize:  2048,
 	WriteBufferSize: 2048,

@@ -78,9 +78,17 @@ v1.Template
 v1.User
 #v1.UserIdentityMapping
 ```
+## /lapi
+
+```sh
+#v1.Orgs
+```
+
 
 ## /apis
 
 ```sh
-#TODO
+#v1.Autoscaling
+#v1.Apps
+#v1.Extensions
 ```

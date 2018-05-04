@@ -32,8 +32,8 @@ var wsupgrader = websocket.Upgrader{
 }
 
 func init() {
-	//apiHost = getenv("APIHOST")
-	apiHost = "new.dataos.io:8443"
+	apiHost = getenv("APIHOST")
+	//apiHost = "new.dataos.io:8443"
 }
 
 //获取环境变量

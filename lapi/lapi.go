@@ -46,7 +46,6 @@ type Orgnazition struct {
 
 type MemberStatusPhase string
 
-
 func CreateProject(c *gin.Context) {
 	org := new(Orgnazition)
 	if err := parseRequestBody(c.Request, org); err != nil {

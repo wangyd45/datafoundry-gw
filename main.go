@@ -50,6 +50,7 @@ func main() {
 	logger = lager.NewLogger(ocAPIName)
 	logger.RegisterSink(lager.NewWriterSink(os.Stdout, lager.INFO)) //默认日志级别
 	router := handle()
+	//运行测试调优代码需打开依赖包及下面一条语句，并设置WriteTimeout需大约测试设置的时间或直接注释掉
 	//ginpprof.Wrap(router)
 	s := &http.Server{
 		Addr:           ":10012",

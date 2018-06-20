@@ -12,6 +12,7 @@ import (
 )
 
 var apiHost string
+var lapiHost string
 
 var httpClientB = &http.Client{
 	Transport: &http.Transport{
@@ -34,7 +35,9 @@ var wsupgrader = websocket.Upgrader{
 
 func init() {
 	apiHost = getenv("APIHOST")
+	lapiHost = getenv("LAPIHOST")
 	//apiHost = "new.dataos.io:8443"
+	//lapiHost = "prd.dataos.io:443"
 }
 
 //获取环境变量
@@ -53,6 +56,32 @@ func GenRequest(method, url, token string, body []byte) (*http.Response, error) 
 	var req *http.Request
 	var err error
 	url = "https://" + apiHost + url
+
+	if len(body) == 0 {
+		req, err = http.NewRequest(method, url, nil)
+	} else {
+		req, err = http.NewRequest(method, url, bytes.NewReader(body))
+	}
+	if err != nil {
+		return nil, err
+	}
+
+	if method == "PATCH" {
+		req.Header.Set("Content-Type", "application/json-patch+json")
+	} else {
+		req.Header.Set("Content-Type", "application/json")
+	}
+
+	req.Header.Set("Authorization", token)
+
+	return httpClientG.Do(req)
+
+}
+
+func GenLRequest(method, url, token string, body []byte) (*http.Response, error) {
+	var req *http.Request
+	var err error
+	url = "https://" + lapiHost + url
 
 	if len(body) == 0 {
 		req, err = http.NewRequest(method, url, nil)

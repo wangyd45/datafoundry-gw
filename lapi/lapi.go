@@ -90,7 +90,7 @@ func CreateProject(c *gin.Context) {
 func ListMembers(c *gin.Context) {
 	project := c.Param("project")
 	token := pkg.GetToken(c)
-	req, err := oapi.GenRequest("GET", "/oapi/v1/namespaces/"+project+"/rolebindings", token, nil)
+	req, err := oapi.GenLRequest("GET", "/oapi/v1/namespaces/"+project+"/rolebindings", token, nil)
 	if err != nil {
 		log.Error("ListMembers error ", err)
 	}
@@ -149,11 +149,13 @@ func InviteMember(c *gin.Context) {
 	}
 
 	project := c.Param("project")
-
 	req, err := roleAdd(c.Request, project, member.Name, member.IsAdmin)
 
 	if err != nil {
 		log.Error("InviteMember error ", err)
+		rstring := "{\"messages\": \"" + err.Error() + "\"}"
+		c.Data(409, "application/json", []byte(rstring))
+		return
 	}
 	log.Info("Invite Members ", map[string]interface{}{"user": "", "time": pkg.GetTimeNow(), "result": req.StatusCode})
 	result, err := ioutil.ReadAll(req.Body)
@@ -184,16 +186,18 @@ func RemoveMember(c *gin.Context) {
 	project := c.Param("project")
 
 	req, err := roleRemove(c.Request, project, member.Name)
-
 	if err != nil {
 		log.Error("RemoveMember error ", err)
+		rstring := "{\"messages\": \"" + err.Error() + "\"}"
+		c.Data(404, "application/json", []byte(rstring))
+		return
 	}
-	log.Info("Invite Members ", map[string]interface{}{"user": "", "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	log.Info("Remove Members ", map[string]interface{}{"user": "", "time": pkg.GetTimeNow(), "result": req.StatusCode})
 	result, err := ioutil.ReadAll(req.Body)
+	defer req.Body.Close()
 	if err != nil {
 		log.Error("ListMembers Read req.Body error", err)
 	}
-	defer req.Body.Close()
 	c.Data(req.StatusCode, "application/json", result)
 }
 
@@ -254,9 +258,10 @@ func roleRemove(r *http.Request, project, name string) (*http.Response, error) {
 		return nil, errors.New("namespace or username is null")
 	}
 
-	roleList, err := getListRoles(r, project)
-	if err != nil {
-		return nil, err
+	println("project:" + project)
+	roleList, _ := getListRoles(r, project)
+	if len(roleList.Items) == 0 {
+		return nil, errors.New("can't find project '" + project + "'")
 	}
 
 	role := findUserInRoles(roleList, name)
@@ -265,10 +270,10 @@ func roleRemove(r *http.Request, project, name string) (*http.Response, error) {
 	} else {
 		role = removeUserInRole(role, name)
 		body, _ := json.Marshal(role)
-		req, err = oapi.GenRequest("PUT", "/oapi/v1/namespaces/"+project+"/rolebindings/"+role.Name, token, body)
+		req, err = oapi.GenLRequest("PUT", "/oapi/v1/namespaces/"+project+"/rolebindings/"+role.Name, token, body)
+		return req, err
 	}
 
-	return req, err
 }
 
 //创建或更新rolebindings
@@ -284,13 +289,12 @@ func roleAdd(r *http.Request, project, name string, admin bool) (*http.Response,
 	}
 
 	roleList, err := getListRoles(r, project)
-	if err != nil {
-		return nil, err
+	if len(roleList.Items) == 0 {
+		return nil, errors.New("can't find project '" + project + "'")
 	}
 
 	if exist := findUserInRoles(roleList, name); exist != nil {
-
-		return nil, errors.New("duplicate user: " + name + ", role: " + exist.RoleRef.Name + ", project: " + project)
+		return nil, errors.New("duplicate user: " + name + ", role: " + exist.RoleRef.Name + ", project: " + project + ", reason: exist")
 	}
 
 	roleRef := "edit"
@@ -320,10 +324,10 @@ func roleAdd(r *http.Request, project, name string, admin bool) (*http.Response,
 
 	body, _ := json.Marshal(role)
 	if create {
-		req, err = oapi.GenRequest("POST", "/oapi/v1/namespaces/"+project+"/rolebindings", token, body)
+		req, err = oapi.GenLRequest("POST", "/oapi/v1/namespaces/"+project+"/rolebindings", token, body)
 
 	} else {
-		req, err = oapi.GenRequest("PUT", "/oapi/v1/namespaces/"+project+"/rolebindings/"+roleRef, token, body)
+		req, err = oapi.GenLRequest("PUT", "/oapi/v1/namespaces/"+project+"/rolebindings/"+roleRef, token, body)
 	}
 
 	return req, err
@@ -337,8 +341,7 @@ func getListRoles(r *http.Request, project string) (*rolebindingapi.RoleBindingL
 	roles := new(rolebindingapi.RoleBindingList)
 
 	token := r.Header.Get("Authorization")
-
-	resp, err := oapi.GenRequest("GET", "/oapi/v1/namespaces/"+project+"/rolebindings", token, nil)
+	resp, err := oapi.GenLRequest("GET", "/oapi/v1/namespaces/"+project+"/rolebindings", token, nil)
 	if err != nil {
 		log.Error("Get All RoleBindings In A Namespace Fail", err)
 		return nil, err

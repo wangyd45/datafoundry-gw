@@ -1,12 +1,8 @@
-FROM golang:1.9.2
-
+FROM registry.new.dataos.io/lixw/golang:latest
 EXPOSE 10012
-
-COPY . /go/src/github.com/asiainfoLDP/datafoundry-gw
-
+ADD . /go/src/github.com/asiainfoLDP/datafoundry-gw
 WORKDIR /go/src/github.com/asiainfoLDP/datafoundry-gw
-
-# NOT DO RUN go run main.go
-RUN go build
-
-CMD ./datafoundry-gw
+RUN go build -o server main.go
+RUN chmod +x server
+EXPOSE 10012
+CMD ["./server"]

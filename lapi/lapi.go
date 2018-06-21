@@ -55,6 +55,9 @@ func CreateProject(c *gin.Context) {
 	token := pkg.GetToken(c)
 	if "" == token {
 		log.Error("get token error ", nil)
+		rstring := "{\"messages\": \"Unauthorized\",\"reason\": \"TokenNull\"}"
+		c.Data(403, "application/json", []byte(rstring))
+		return
 	}
 	user, err := authDF(token)
 	if err != nil {
@@ -90,6 +93,12 @@ func CreateProject(c *gin.Context) {
 func ListMembers(c *gin.Context) {
 	project := c.Param("project")
 	token := pkg.GetToken(c)
+	if "" == token {
+		log.Error("get token error ", nil)
+		rstring := "{\"messages\": \"Unauthorized\",\"reason\": \"TokenNull\"}"
+		c.Data(403, "application/json", []byte(rstring))
+		return
+	}
 	req, err := oapi.GenRequest("GET", "/oapi/v1/namespaces/"+project+"/rolebindings", token, nil)
 	if err != nil {
 		log.Error("ListMembers error ", err)
@@ -134,6 +143,13 @@ func ListMembers(c *gin.Context) {
 
 func InviteMember(c *gin.Context) {
 
+	token := pkg.GetToken(c)
+	if "" == token {
+		log.Error("get token error ", nil)
+		rstring := "{\"messages\": \"Unauthorized\",\"reason\": \"TokenNull\"}"
+		c.Data(403, "application/json", []byte(rstring))
+		return
+	}
 	datainfo := make(map[string]interface{})
 	datainfo["RemoteAddr"] = c.Request.RemoteAddr
 	datainfo["Method"] = c.Request.Method
@@ -149,7 +165,7 @@ func InviteMember(c *gin.Context) {
 	}
 
 	project := c.Param("project")
-	req, err := roleAdd(c.Request, project, member.Name, member.IsAdmin)
+	req, err := roleAdd(token, project, member.Name, member.IsAdmin)
 
 	if err != nil {
 		log.Error("InviteMember error ", err)
@@ -169,6 +185,13 @@ func InviteMember(c *gin.Context) {
 
 func RemoveMember(c *gin.Context) {
 
+	token := pkg.GetToken(c)
+	if "" == token {
+		log.Error("get token error ", nil)
+		rstring := "{\"messages\": \"Unauthorized\",\"reason\": \"TokenNull\"}"
+		c.Data(403, "application/json", []byte(rstring))
+		return
+	}
 	datainfo := make(map[string]interface{})
 	datainfo["RemoteAddr"] = c.Request.RemoteAddr
 	datainfo["Method"] = c.Request.Method
@@ -185,7 +208,7 @@ func RemoveMember(c *gin.Context) {
 
 	project := c.Param("project")
 
-	req, err := roleRemove(c.Request, project, member.Name)
+	req, err := roleRemove(token, project, member.Name)
 	if err != nil {
 		log.Error("RemoveMember error ", err)
 		rstring := "{\"messages\": \"" + err.Error() + "\"}"
@@ -248,18 +271,17 @@ func parseRequestBody(r *http.Request, v interface{}) error {
 }
 
 //移除rolebindings
-func roleRemove(r *http.Request, project, name string) (*http.Response, error) {
+func roleRemove(token, project, name string) (*http.Response, error) {
 
 	var req *http.Response
 	var err error
 
-	token := r.Header.Get("Authorization")
 	if name == "" || project == "" {
 		return nil, errors.New("namespace or username is null")
 	}
 
 	println("project:" + project)
-	roleList, _ := getListRoles(r, project)
+	roleList, _ := getListRoles(token, project)
 	if err != nil {
 		return nil, err
 	}
@@ -277,18 +299,16 @@ func roleRemove(r *http.Request, project, name string) (*http.Response, error) {
 }
 
 //创建或更新rolebindings
-func roleAdd(r *http.Request, project, name string, admin bool) (*http.Response, error) {
+func roleAdd(token, project, name string, admin bool) (*http.Response, error) {
 
 	var req *http.Response
 	var err error
-
-	token := r.Header.Get("Authorization")
 
 	if name == "" || project == "" {
 		return nil, errors.New("namespace or username is null")
 	}
 
-	roleList, err := getListRoles(r, project)
+	roleList, err := getListRoles(token, project)
 	if err != nil {
 		return nil, err
 	}
@@ -334,13 +354,12 @@ func roleAdd(r *http.Request, project, name string, admin bool) (*http.Response,
 }
 
 //获取rolebindings列表
-func getListRoles(r *http.Request, project string) (*rolebindingapi.RoleBindingList, error) {
+func getListRoles(token, project string) (*rolebindingapi.RoleBindingList, error) {
 
 	var err error
 
 	roles := new(rolebindingapi.RoleBindingList)
 
-	token := r.Header.Get("Authorization")
 	resp, err := oapi.GenRequest("GET", "/oapi/v1/namespaces/"+project+"/rolebindings", token, nil)
 	if err != nil {
 		log.Error("Get All RoleBindings In A Namespace Fail", err)

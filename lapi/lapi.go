@@ -90,7 +90,7 @@ func CreateProject(c *gin.Context) {
 func ListMembers(c *gin.Context) {
 	project := c.Param("project")
 	token := pkg.GetToken(c)
-	req, err := oapi.GenLRequest("GET", "/oapi/v1/namespaces/"+project+"/rolebindings", token, nil)
+	req, err := oapi.GenRequest("GET", "/oapi/v1/namespaces/"+project+"/rolebindings", token, nil)
 	if err != nil {
 		log.Error("ListMembers error ", err)
 	}
@@ -270,7 +270,7 @@ func roleRemove(r *http.Request, project, name string) (*http.Response, error) {
 	} else {
 		role = removeUserInRole(role, name)
 		body, _ := json.Marshal(role)
-		req, err = oapi.GenLRequest("PUT", "/oapi/v1/namespaces/"+project+"/rolebindings/"+role.Name, token, body)
+		req, err = oapi.GenRequest("PUT", "/oapi/v1/namespaces/"+project+"/rolebindings/"+role.Name, token, body)
 		return req, err
 	}
 
@@ -324,10 +324,10 @@ func roleAdd(r *http.Request, project, name string, admin bool) (*http.Response,
 
 	body, _ := json.Marshal(role)
 	if create {
-		req, err = oapi.GenLRequest("POST", "/oapi/v1/namespaces/"+project+"/rolebindings", token, body)
+		req, err = oapi.GenRequest("POST", "/oapi/v1/namespaces/"+project+"/rolebindings", token, body)
 
 	} else {
-		req, err = oapi.GenLRequest("PUT", "/oapi/v1/namespaces/"+project+"/rolebindings/"+roleRef, token, body)
+		req, err = oapi.GenRequest("PUT", "/oapi/v1/namespaces/"+project+"/rolebindings/"+roleRef, token, body)
 	}
 
 	return req, err
@@ -341,7 +341,7 @@ func getListRoles(r *http.Request, project string) (*rolebindingapi.RoleBindingL
 	roles := new(rolebindingapi.RoleBindingList)
 
 	token := r.Header.Get("Authorization")
-	resp, err := oapi.GenLRequest("GET", "/oapi/v1/namespaces/"+project+"/rolebindings", token, nil)
+	resp, err := oapi.GenRequest("GET", "/oapi/v1/namespaces/"+project+"/rolebindings", token, nil)
 	if err != nil {
 		log.Error("Get All RoleBindings In A Namespace Fail", err)
 		return nil, err

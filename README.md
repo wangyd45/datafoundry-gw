@@ -6,7 +6,6 @@ https://docs.openshift.org/latest/rest_api/index.html
 
 ## ENV
 #APIHOST
-#LAPIHOST
 
 *api list*
 

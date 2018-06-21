@@ -260,8 +260,8 @@ func roleRemove(r *http.Request, project, name string) (*http.Response, error) {
 
 	println("project:" + project)
 	roleList, _ := getListRoles(r, project)
-	if len(roleList.Items) == 0 {
-		return nil, errors.New("can't find project '" + project + "'")
+	if err != nil {
+		return nil, err
 	}
 
 	role := findUserInRoles(roleList, name)
@@ -289,8 +289,8 @@ func roleAdd(r *http.Request, project, name string, admin bool) (*http.Response,
 	}
 
 	roleList, err := getListRoles(r, project)
-	if len(roleList.Items) == 0 {
-		return nil, errors.New("can't find project '" + project + "'")
+	if err != nil {
+		return nil, err
 	}
 
 	if exist := findUserInRoles(roleList, name); exist != nil {

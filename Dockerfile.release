@@ -1,0 +1,14 @@
+FROM alpine
+
+ADD libpthread.so.0 /lib/x86_64-linux-gnu/libpthread.so.0
+
+ADD libc.so.6 /lib/x86_64-linux-gnu/libc.so.6
+
+ADD ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2
+
+ADD server /app/server
+
+EXPOSE 10012
+
+ENTRYPOINT ["/app/server"]
+

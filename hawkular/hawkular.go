@@ -50,9 +50,8 @@ func init() {
 func GainCpu(c *gin.Context) {
 	//获取前端传递的Token，无需拼接"Bearer XXXXXXXXXX"
 	token := pkg.GetToken(c)
-	bucketDuration := c.DefaultPostForm("bucketDuration","12mn")
-	start := c.DefaultPostForm("start","-6h")
-	fmt.Println("bucketDuration is ",bucketDuration," start is ",start)
+	bucketDuration := c.Query("bucketDuration")
+	start := c.Query("start")
 	//获取前端参数
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil{

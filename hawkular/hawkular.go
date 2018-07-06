@@ -39,11 +39,11 @@ type Response struct{
 	result string `json:"result"`
 }
 
-var logger lager.Logger
+var log lager.Logger
 
 func init() {
-	logger = lager.NewLogger("hawkular")
-	logger.RegisterSink(lager.NewWriterSink(os.Stdout, lager.DEBUG))
+	log = lager.NewLogger("hawkular")
+	log.RegisterSink(lager.NewWriterSink(os.Stdout, lager.DEBUG))
 }
 
 func GainCpu(c *gin.Context) {
@@ -52,20 +52,32 @@ func GainCpu(c *gin.Context) {
 	bucketDuration := c.Param("bucketDuration")
 	start := c.Param("start")
 	//获取前端参数
-	rBody, _ := ioutil.ReadAll(c.Request.Body)
+	rBody, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil{
+		log.Error("Read request body error ",err)
+		c.JSON(http.StatusExpectationFailed,gin.H{"error":err})
+		return
+	}
 	var cpuTags []Tags
 	var cpuResList []Response
-	json.Unmarshal(rBody,&cpuTags)
+	err = json.Unmarshal(rBody,&cpuTags)
+	if err != nil{
+		log.Error("request body json.Unmarshal error ",err)
+		c.JSON(http.StatusUnsupportedMediaType,gin.H{"error":err})
+		return
+	}
 	for _,v := range cpuTags{
 		URL := CPUURL + "bucketDuration=" + bucketDuration + "&start=" + start + "&tags=descriptor_name:"+ v.Descriptor_name + ",pod_namespace:" + v.Pod_namespace
-		req, err := haw.GenRequest("POST", URL, token, rBody)
+		req, err := haw.GenRequest("GET", URL, token, rBody)
 		if err != nil {
-			logger.Error("Gain cpu information fail", err)
+			log.Error("Gain cpu information fail", err)
+			c.JSON(http.StatusInternalServerError,gin.H{"error":err})
 			return
 		}
 		result, err := ioutil.ReadAll(req.Body)
 		if err != nil{
-			logger.Error("read response body error ",err)
+			log.Error("read response body error ",err)
+			c.JSON(http.StatusInternalServerError,gin.H{"error":err})
 			return
 		}
 		defer req.Body.Close()

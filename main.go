@@ -74,8 +74,8 @@ func handle() (router *gin.Engine) {
 
 	//hawkular
 	router.POST("/hawkular/cpu",hawkular.GainCpu)
-	//router.POST("/hawkular/memory",hawkular.GainMemory)
-	//router.POST("/hawkular/network",hawkular.GainNetwork)
+	router.POST("/hawkular/memory",hawkular.GainMemory)
+	router.POST("/hawkular/network/:sigin",hawkular.GainNetwork)
 
 	//OpenShift API
 	//v1.user

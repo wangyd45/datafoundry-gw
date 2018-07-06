@@ -75,6 +75,27 @@ func GenRequest(method, url, token string, body []byte) (*http.Response, error) 
 
 }
 
+func GenHawRequest(method, url, token,namespace string, body []byte) (*http.Response, error) {
+	var req *http.Request
+	var err error
+	url = "https://" + apiHost + url
+
+	if len(body) == 0 {
+		req, err = http.NewRequest(method, url, nil)
+	} else {
+		req, err = http.NewRequest(method, url, bytes.NewReader(body))
+	}
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Hawkular-Tenant", namespace)
+	req.Header.Set("Authorization", token)
+
+	return httpClientG.Do(req)
+
+}
+
 func WSRequest(url, token string, w http.ResponseWriter, r *http.Request) {
 	var conn *websocket.Conn
 	var request *http.Request

@@ -9,6 +9,8 @@ import (
 	"os"
 	"encoding/json"
 	"net/http"
+	//"fmt"
+	"fmt"
 )
 
 const (
@@ -18,11 +20,15 @@ const (
 )
 
 type Tags struct{
-	Descriptor_name string `json:"descriptor_name"`
-	Pod_namespace string `json:"pod_namespace"`
+	Pod_namespace []string `json:"namespace"`
 }
-/*
-type Response struct {
+
+type Response struct{
+	Namespace string `json:"namespace"`
+	Info []info `json:"info"`
+}
+
+type info struct {
 	Start int `json:"start"`
 	End int `json:"end"`
 	Min float32 `json:"min"`
@@ -32,11 +38,6 @@ type Response struct {
 	Sum float32 `json:"sum"`
 	Samples int `json:"samples"`
 	Empty bool `json:"empty"`
-}*/
-
-type Response struct{
-	Namespace string `json:"namespace"`
-	result string `json:"result"`
 }
 
 var log lager.Logger
@@ -49,8 +50,9 @@ func init() {
 func GainCpu(c *gin.Context) {
 	//获取前端传递的Token，无需拼接"Bearer XXXXXXXXXX"
 	token := pkg.GetToken(c)
-	bucketDuration := c.Param("bucketDuration")
-	start := c.Param("start")
+	bucketDuration := c.DefaultPostForm("bucketDuration","12mn")
+	start := c.DefaultPostForm("start","-6h")
+	fmt.Println("bucketDuration is ",bucketDuration," start is ",start)
 	//获取前端参数
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil{
@@ -58,7 +60,7 @@ func GainCpu(c *gin.Context) {
 		c.JSON(http.StatusExpectationFailed,gin.H{"error":err})
 		return
 	}
-	var cpuTags []Tags
+	var cpuTags Tags
 	var cpuResList []Response
 	err = json.Unmarshal(rBody,&cpuTags)
 	if err != nil{
@@ -66,28 +68,36 @@ func GainCpu(c *gin.Context) {
 		c.JSON(http.StatusUnsupportedMediaType,gin.H{"error":err})
 		return
 	}
-	for _,v := range cpuTags{
-		URL := CPUURL + "bucketDuration=" + bucketDuration + "&start=" + start + "&tags=descriptor_name:"+ v.Descriptor_name + ",pod_namespace:" + v.Pod_namespace
-		req, err := haw.GenRequest("GET", URL, token, rBody)
-		if err != nil {
+	for _,v := range cpuTags.Pod_namespace{
+		URL := CPUURL + "bucketDuration=" + bucketDuration + "&start=" + start + "&tags=descriptor_name:cpu/usage,pod_namespace:" + v
+		req, err := haw.GenHawRequest("GET", URL, token,v, rBody)
+		if err != nil  || req.StatusCode != http.StatusOK{
 			log.Error("Gain cpu information fail", err)
-			c.JSON(http.StatusInternalServerError,gin.H{"error":err})
+			c.JSON(req.StatusCode,gin.H{"Namespace":v,"info":err})
 			return
 		}
 		result, err := ioutil.ReadAll(req.Body)
 		if err != nil{
 			log.Error("read response body error ",err)
-			c.JSON(http.StatusInternalServerError,gin.H{"error":err})
+			c.JSON(http.StatusInternalServerError,gin.H{"Namespace":v,"info":err})
+			return
+		}
+		var rinfo []info
+		err = json.Unmarshal(result,&rinfo)
+		if err != nil{
+			log.Error("result json.Unmarshal error ",err)
+			c.JSON(http.StatusUnsupportedMediaType,gin.H{"error":err})
 			return
 		}
 		defer req.Body.Close()
 		var cpuRes Response
-		cpuRes.Namespace = v.Pod_namespace
-		cpuRes.result = string(result)
+		cpuRes.Namespace = v
+		cpuRes.Info = rinfo
 		cpuResList = append(cpuResList,cpuRes)
 	}
-	c.JSON(http.StatusAccepted,gin.H{"cpuinfo":cpuResList})
+	c.JSON(http.StatusOK,cpuResList)
 }
+
 /*
 func GainMemory(c *gin.Context) {
 	//获取前端传递的Token，无需拼接"Bearer XXXXXXXXXX"

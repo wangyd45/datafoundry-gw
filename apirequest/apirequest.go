@@ -75,7 +75,7 @@ func GenRequest(method, url, token string, body []byte) (*http.Response, error) 
 
 }
 
-func GenHawRequest(method, url, token,namespace string, body []byte) (*http.Response, error) {
+func GenHawRequest(method, url, token, namespace string, body []byte) (*http.Response, error) {
 	var req *http.Request
 	var err error
 	url = "https://" + apiHost + url

@@ -48,14 +48,17 @@ func init() {
 func GainCpu(c *gin.Context) {
 	//获取前端传递的Token，无需拼接"Bearer XXXXXXXXXX"
 	token := pkg.GetToken(c)
-	bucketDuration := c.Query("bucketDuration")
-	start := c.Query("start")
-	if bucketDuration == "" {
-		bucketDuration = "12mn"
-	}
-	if start == "" {
-		start = "-8h"
-	}
+	/*
+		bucketDuration := c.Query("bucketDuration")
+		start := c.Query("start")
+		if bucketDuration == "" {
+			bucketDuration = "12mn"
+		}
+		if start == "" {
+			start = "-8h"
+		}
+	*/
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	//获取前端参数
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
@@ -72,8 +75,10 @@ func GainCpu(c *gin.Context) {
 		return
 	}
 	for _, v := range cpuTags.Pod_namespace {
-		URL := CPUURL + "bucketDuration=" + bucketDuration + "&start=" + start + "&tags=descriptor_name:cpu/usage,pod_namespace:" + v
+		//URL := CPUURL + "bucketDuration=" + bucketDuration + "&start=" + start + "&tags=descriptor_name:cpu/usage,pod_namespace:" + v
+		URL := CPUURL + urlParas + "&tags=descriptor_name:cpu/usage,pod_namespace:" + v
 		req, err := haw.GenHawRequest("GET", URL, token, v, nil)
+		defer req.Body.Close()
 		if err != nil || req.StatusCode != http.StatusOK {
 			log.Error("Gain cpu information fail", err)
 			c.JSON(req.StatusCode, gin.H{"Namespace": v, "info": err})
@@ -92,7 +97,6 @@ func GainCpu(c *gin.Context) {
 			c.JSON(http.StatusUnsupportedMediaType, gin.H{"error": err})
 			return
 		}
-		defer req.Body.Close()
 		var cpuRes Response
 		cpuRes.Namespace = v
 		cpuRes.Info = rinfo
@@ -104,14 +108,17 @@ func GainCpu(c *gin.Context) {
 func GainMemory(c *gin.Context) {
 	//获取前端传递的Token，无需拼接"Bearer XXXXXXXXXX"
 	token := pkg.GetToken(c)
-	bucketDuration := c.Query("bucketDuration")
-	start := c.Query("start")
-	if bucketDuration == "" {
-		bucketDuration = "12mn"
-	}
-	if start == "" {
-		start = "-8h"
-	}
+	/*
+		bucketDuration := c.Query("bucketDuration")
+		start := c.Query("start")
+		if bucketDuration == "" {
+			bucketDuration = "12mn"
+		}
+		if start == "" {
+			start = "-8h"
+		}
+	*/
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	//获取前端参数
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
@@ -119,19 +126,21 @@ func GainMemory(c *gin.Context) {
 		c.JSON(http.StatusExpectationFailed, gin.H{"error": err})
 		return
 	}
-	var cpuTags Tags
-	var cpuResList []Response
-	err = json.Unmarshal(rBody, &cpuTags)
+	var memoryTags Tags
+	var memoryResList []Response
+	err = json.Unmarshal(rBody, &memoryTags)
 	if err != nil {
 		log.Error("request body json.Unmarshal error ", err)
 		c.JSON(http.StatusUnsupportedMediaType, gin.H{"error": err})
 		return
 	}
-	for _, v := range cpuTags.Pod_namespace {
-		URL := CPUURL + "bucketDuration=" + bucketDuration + "&start=" + start + "&tags=descriptor_name:memory/usage,pod_namespace:" + v
+	for _, v := range memoryTags.Pod_namespace {
+		//URL := CPUURL + "bucketDuration=" + bucketDuration + "&start=" + start + "&tags=descriptor_name:memory/usage,pod_namespace:" + v
+		URL := MEMORYURL + urlParas + "&tags=descriptor_name:memory/usage,pod_namespace:" + v
 		req, err := haw.GenHawRequest("GET", URL, token, v, nil)
+		defer req.Body.Close()
 		if err != nil || req.StatusCode != http.StatusOK {
-			log.Error("Gain cpu information fail", err)
+			log.Error("Gain memory information fail", err)
 			c.JSON(req.StatusCode, gin.H{"Namespace": v, "info": err})
 			return
 		}
@@ -148,13 +157,13 @@ func GainMemory(c *gin.Context) {
 			c.JSON(http.StatusUnsupportedMediaType, gin.H{"error": err})
 			return
 		}
-		defer req.Body.Close()
-		var cpuRes Response
-		cpuRes.Namespace = v
-		cpuRes.Info = rinfo
-		cpuResList = append(cpuResList, cpuRes)
+
+		var memoryRes Response
+		memoryRes.Namespace = v
+		memoryRes.Info = rinfo
+		memoryResList = append(memoryResList, memoryRes)
 	}
-	c.JSON(http.StatusOK, cpuResList)
+	c.JSON(http.StatusOK, memoryResList)
 }
 
 func GainNetwork(c *gin.Context) {
@@ -162,19 +171,22 @@ func GainNetwork(c *gin.Context) {
 	token := pkg.GetToken(c)
 	sigin := c.Param("sigin")
 	var network string
-	if sigin == "rx"{
+	if sigin == "rx" {
 		network = "rx_rate"
-	}else{
+	} else {
 		network = "tx_rate"
 	}
-	bucketDuration := c.Query("bucketDuration")
-	start := c.Query("start")
-	if bucketDuration == "" {
-		bucketDuration = "12mn"
-	}
-	if start == "" {
-		start = "-8h"
-	}
+	/*
+		bucketDuration := c.Query("bucketDuration")
+		start := c.Query("start")
+		if bucketDuration == "" {
+			bucketDuration = "12mn"
+		}
+		if start == "" {
+			start = "-8h"
+		}
+	*/
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	//获取前端参数
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
@@ -182,19 +194,21 @@ func GainNetwork(c *gin.Context) {
 		c.JSON(http.StatusExpectationFailed, gin.H{"error": err})
 		return
 	}
-	var cpuTags Tags
-	var cpuResList []Response
-	err = json.Unmarshal(rBody, &cpuTags)
+	var networkTags Tags
+	var networkResList []Response
+	err = json.Unmarshal(rBody, &networkTags)
 	if err != nil {
 		log.Error("request body json.Unmarshal error ", err)
 		c.JSON(http.StatusUnsupportedMediaType, gin.H{"error": err})
 		return
 	}
-	for _, v := range cpuTags.Pod_namespace {
-		URL := CPUURL + "bucketDuration=" + bucketDuration + "&start=" + start + "&tags=descriptor_name:network/"+ network + ",pod_namespace:" + v
+	for _, v := range networkTags.Pod_namespace {
+		//URL := CPUURL + "bucketDuration=" + bucketDuration + "&start=" + start + "&tags=descriptor_name:network/"+ network + ",pod_namespace:" + v
+		URL := NETWORKURL + urlParas + "&tags=descriptor_name:network/" + network + ",pod_namespace:" + v
 		req, err := haw.GenHawRequest("GET", URL, token, v, nil)
+		defer req.Body.Close()
 		if err != nil || req.StatusCode != http.StatusOK {
-			log.Error("Gain cpu information fail", err)
+			log.Error("Gain network information fail", err)
 			c.JSON(req.StatusCode, gin.H{"Namespace": v, "info": err})
 			return
 		}
@@ -211,11 +225,10 @@ func GainNetwork(c *gin.Context) {
 			c.JSON(http.StatusUnsupportedMediaType, gin.H{"error": err})
 			return
 		}
-		defer req.Body.Close()
-		var cpuRes Response
-		cpuRes.Namespace = v
-		cpuRes.Info = rinfo
-		cpuResList = append(cpuResList, cpuRes)
+		var networkRes Response
+		networkRes.Namespace = v
+		networkRes.Info = rinfo
+		networkResList = append(networkResList, networkRes)
 	}
-	c.JSON(http.StatusOK, cpuResList)
+	c.JSON(http.StatusOK, networkResList)
 }

@@ -33,8 +33,8 @@ var wsupgrader = websocket.Upgrader{
 }
 
 func init() {
-	apiHost = getenv("APIHOST")
-	//apiHost = "prd.dataos.io:443"
+	//apiHost = getenv("APIHOST")
+	apiHost = "console.release.prd.dataos.io"
 }
 
 //获取环境变量

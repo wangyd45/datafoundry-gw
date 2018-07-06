@@ -33,6 +33,7 @@ import (
 	"github.com/asiainfoLDP/datafoundry-gw/oapi/route"
 	"github.com/asiainfoLDP/datafoundry-gw/oapi/template"
 	"github.com/asiainfoLDP/datafoundry-gw/oapi/user"
+	"github.com/asiainfoLDP/datafoundry-gw/hawkular"
 	"github.com/asiainfoLDP/datafoundry-gw/pkg"
 	"github.com/gin-gonic/gin"
 	"github.com/pivotal-golang/lager"
@@ -66,9 +67,15 @@ func main() {
 
 func handle() (router *gin.Engine) {
 	//设置全局环境：1.开发环境（gin.DebugMode） 2.线上环境（gin.ReleaseMode）
-	gin.SetMode(gin.ReleaseMode)
+	//gin.SetMode(gin.ReleaseMode)
+	gin.SetMode(gin.DebugMode)
 	//获取路由实例
 	router = gin.Default()
+
+	//hawkular
+	router.POST("/hawkular/cpu/:bucketDuration/:start",hawkular.GainCpu)
+	//router.POST("/hawkular/memory/:bucketDuration/:start",hawkular.GainMemory)
+	//router.POST("/hawkular/network/:bucketDuration/:start",hawkular.GainNetwork)
 
 	//OpenShift API
 	//v1.user

@@ -5,6 +5,7 @@ import (
 	//_ "net/http/pprof"
 	//"github.com/DeanThompson/ginpprof"
 	"github.com/asiainfoLDP/datafoundry-gw/apis"
+	"github.com/asiainfoLDP/datafoundry-gw/hawkular"
 	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/configmap"
 	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/endpoints"
 	"github.com/asiainfoLDP/datafoundry-gw/k8sapi/event"
@@ -33,7 +34,6 @@ import (
 	"github.com/asiainfoLDP/datafoundry-gw/oapi/route"
 	"github.com/asiainfoLDP/datafoundry-gw/oapi/template"
 	"github.com/asiainfoLDP/datafoundry-gw/oapi/user"
-	"github.com/asiainfoLDP/datafoundry-gw/hawkular"
 	"github.com/asiainfoLDP/datafoundry-gw/pkg"
 	"github.com/gin-gonic/gin"
 	"github.com/pivotal-golang/lager"
@@ -73,9 +73,9 @@ func handle() (router *gin.Engine) {
 	router = gin.Default()
 
 	//hawkular
-	router.POST("/hawkular/cpu",hawkular.GainCpu)
-	router.POST("/hawkular/memory",hawkular.GainMemory)
-	router.POST("/hawkular/network/:sigin",hawkular.GainNetwork)
+	router.POST("/hawkular/cpu", hawkular.GainCpu)
+	router.POST("/hawkular/memory", hawkular.GainMemory)
+	router.POST("/hawkular/network/:sigin", hawkular.GainNetwork)
 
 	//OpenShift API
 	//v1.user

@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	userapi "github.com/openshift/user/api/v1"
 	"io/ioutil"
+	"strings"
 	"time"
 )
 
@@ -58,6 +59,16 @@ func SliceToken(token string) string {
 		return token[7:]
 	}
 	return ""
+}
+
+//截取URL
+func SliceURL(url string) string {
+	sList := strings.Split(url, "?")
+	if len(sList) == 0 {
+		return ""
+	} else {
+		return sList[1]
+	}
 }
 
 //根据Token获取用户名

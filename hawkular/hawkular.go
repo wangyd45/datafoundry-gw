@@ -2,6 +2,7 @@ package hawkular
 
 import (
 	"encoding/json"
+	"errors"
 	haw "github.com/asiainfoLDP/datafoundry-gw/apirequest"
 	"github.com/asiainfoLDP/datafoundry-gw/pkg"
 	"github.com/gin-gonic/gin"
@@ -9,7 +10,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"errors"
 )
 
 const (
@@ -49,16 +49,6 @@ func init() {
 func GainCpu(c *gin.Context) {
 	//获取前端传递的Token，无需拼接"Bearer XXXXXXXXXX"
 	token := pkg.GetToken(c)
-	/*
-		bucketDuration := c.Query("bucketDuration")
-		start := c.Query("start")
-		if bucketDuration == "" {
-			bucketDuration = "12mn"
-		}
-		if start == "" {
-			start = "-8h"
-		}
-	*/
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	//获取前端参数
 	rBody, err := ioutil.ReadAll(c.Request.Body)
@@ -76,7 +66,6 @@ func GainCpu(c *gin.Context) {
 		return
 	}
 	for _, v := range cpuTags.Pod_namespace {
-		//URL := CPUURL + "bucketDuration=" + bucketDuration + "&start=" + start + "&tags=descriptor_name:cpu/usage,pod_namespace:" + v
 		URL := CPUURL + urlParas + "&tags=descriptor_name:cpu/usage,pod_namespace:" + v
 		req, err := haw.GenHawRequest("GET", URL, token, v, nil)
 		defer req.Body.Close()
@@ -109,16 +98,6 @@ func GainCpu(c *gin.Context) {
 func GainMemory(c *gin.Context) {
 	//获取前端传递的Token，无需拼接"Bearer XXXXXXXXXX"
 	token := pkg.GetToken(c)
-	/*
-		bucketDuration := c.Query("bucketDuration")
-		start := c.Query("start")
-		if bucketDuration == "" {
-			bucketDuration = "12mn"
-		}
-		if start == "" {
-			start = "-8h"
-		}
-	*/
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	//获取前端参数
 	rBody, err := ioutil.ReadAll(c.Request.Body)
@@ -136,7 +115,6 @@ func GainMemory(c *gin.Context) {
 		return
 	}
 	for _, v := range memoryTags.Pod_namespace {
-		//URL := CPUURL + "bucketDuration=" + bucketDuration + "&start=" + start + "&tags=descriptor_name:memory/usage,pod_namespace:" + v
 		URL := MEMORYURL + urlParas + "&tags=descriptor_name:memory/usage,pod_namespace:" + v
 		req, err := haw.GenHawRequest("GET", URL, token, v, nil)
 		defer req.Body.Close()
@@ -176,21 +154,12 @@ func GainNetwork(c *gin.Context) {
 		network = "rx_rate"
 	} else if sigin == "tx" {
 		network = "tx_rate"
-	}else{
+	} else {
 		log.Error("Read request body error ", errors.New("network param error"))
 		c.JSON(http.StatusExpectationFailed, gin.H{"error": "network param error"})
 		return
 	}
-	/*
-		bucketDuration := c.Query("bucketDuration")
-		start := c.Query("start")
-		if bucketDuration == "" {
-			bucketDuration = "12mn"
-		}
-		if start == "" {
-			start = "-8h"
-		}
-	*/
+
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	//获取前端参数
 	rBody, err := ioutil.ReadAll(c.Request.Body)
@@ -208,7 +177,6 @@ func GainNetwork(c *gin.Context) {
 		return
 	}
 	for _, v := range networkTags.Pod_namespace {
-		//URL := CPUURL + "bucketDuration=" + bucketDuration + "&start=" + start + "&tags=descriptor_name:network/"+ network + ",pod_namespace:" + v
 		URL := NETWORKURL + urlParas + "&tags=descriptor_name:network/" + network + ",pod_namespace:" + v
 		req, err := haw.GenHawRequest("GET", URL, token, v, nil)
 		defer req.Body.Close()

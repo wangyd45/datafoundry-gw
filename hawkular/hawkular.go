@@ -9,7 +9,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"fmt"
 	"errors"
 )
 
@@ -61,7 +60,6 @@ func GainCpu(c *gin.Context) {
 		}
 	*/
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	fmt.Println("urlParas is ",urlParas)
 	//获取前端参数
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
@@ -74,7 +72,7 @@ func GainCpu(c *gin.Context) {
 	err = json.Unmarshal(rBody, &cpuTags)
 	if err != nil {
 		log.Error("request body json.Unmarshal error ", err)
-		c.JSON(http.StatusUnsupportedMediaType, gin.H{"error": err})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err})
 		return
 	}
 	for _, v := range cpuTags.Pod_namespace {

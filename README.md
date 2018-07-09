@@ -143,7 +143,7 @@ sigin的值为rx或tx
 
 **调用示例：** curl -i -X POST "127.0.0.1:10012/hawkular/network/rx?bucketDuration=20mn&start=-1h" -d '{"namespace":["service-brokers"]}' -H "Authorization:Bearer EtfU_QKrFU0jI9YqYzVAQhYy56AmK-ov477eDO4pqL8"
 
-curl -i -X POST "127.0.0.1:10012/hawkular/network/tx?bucketDuration=20mn&start=-1h" -d '{"namespace":["service-brokers"]}' -H "Authorization:Bearer EtfU_QKrFU0jI9YqYzVAQhYy56AmK-ov477eDO4pqL8" -H "Hawkular-Tenant: service-brokers"
+curl -i -X POST "127.0.0.1:10012/hawkular/network/tx?bucketDuration=20mn&start=-1h" -d '{"namespace":["service-brokers"]}' -H "Authorization:Bearer EtfU_QKrFU0jI9YqYzVAQhYy56AmK-ov477eDO4pqL8"
 
 **返回结果：** JSON格式 
 

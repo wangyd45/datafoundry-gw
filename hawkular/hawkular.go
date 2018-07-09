@@ -128,7 +128,7 @@ func GainMemory(c *gin.Context) {
 		return
 	}
 	for _, v := range cpuTags.Pod_namespace {
-		URL := CPUURL + "bucketDuration=" + bucketDuration + "&start=" + start + "&tags=descriptor_name:memory/usage,pod_namespace:" + v
+		URL := MEMORYURL + "bucketDuration=" + bucketDuration + "&start=" + start + "&tags=descriptor_name:memory/usage,pod_namespace:" + v
 		req, err := haw.GenHawRequest("GET", URL, token, v, nil)
 		if err != nil || req.StatusCode != http.StatusOK {
 			log.Error("Gain cpu information fail", err)
@@ -191,7 +191,7 @@ func GainNetwork(c *gin.Context) {
 		return
 	}
 	for _, v := range cpuTags.Pod_namespace {
-		URL := CPUURL + "bucketDuration=" + bucketDuration + "&start=" + start + "&tags=descriptor_name:network/"+ network + ",pod_namespace:" + v
+		URL := NETWORKURL + "bucketDuration=" + bucketDuration + "&start=" + start + "&tags=descriptor_name:network/"+ network + ",pod_namespace:" + v
 		req, err := haw.GenHawRequest("GET", URL, token, v, nil)
 		if err != nil || req.StatusCode != http.StatusOK {
 			log.Error("Gain cpu information fail", err)

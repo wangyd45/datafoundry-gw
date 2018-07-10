@@ -28,14 +28,14 @@ type Response struct {
 }
 
 type info struct {
-	Start   int     `json:"start"`
-	End     int     `json:"end"`
-	Min     float32 `json:"min"`
-	Avg     float32 `json:"avg"`
-	Median  float32 `json:"median"`
-	Max     float32 `json:"max"`
-	Sum     float32 `json:"sum"`
-	Samples int     `json:"samples"`
+	Start   int64   `json:"start"`
+	End     int64   `json:"end"`
+	Min     float64 `json:"min"`
+	Avg     float64 `json:"avg"`
+	Median  float64 `json:"median"`
+	Max     float64 `json:"max"`
+	Sum     float64 `json:"sum"`
+	Samples int32   `json:"samples"`
 	Empty   bool    `json:"empty"`
 }
 

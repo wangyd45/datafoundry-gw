@@ -101,7 +101,7 @@ v1.User
 ### 获取CPU信息
 **请求方法：** POST 在请求头中加入token
 
-**URL：** host:port/hawkular/cpu
+**URL：** host:port(程序默认为端口号为10012)/hawkular/cpu
 
 **参数：** ?bucketDuration=12mn&start=-6h,start可不传默认-8h
 
@@ -117,7 +117,7 @@ v1.User
 
 **请求方法：** POST 在请求头中加入token
 
-**URL：** host:port/hawkular/memory
+**URL：** host:port(程序默认为端口号为10012)/hawkular/memory
 
 **参数：** ?bucketDuration=12mn&start=-6h,start可不传默认-8h
 
@@ -133,7 +133,7 @@ v1.User
 
 **请求方法：** POST 在请求头中加入token
 
-**URL：** host:port/hawkular/network/:sigin
+**URL：** host:port(程序默认为端口号为10012)/hawkular/network/:sigin
 
 sigin的值为rx或tx
 
@@ -153,9 +153,14 @@ curl -i -X POST "127.0.0.1:10012/hawkular/network/tx?bucketDuration=20mn&start=-
 
 ###错误码
 Error Code  | Error Describe
-------------- | -------------
+----------- | -------------
+
 200  | ok
+
 400  | bad request
+
 415  | server body error
+
 417  | request body error
+
 500  | server error

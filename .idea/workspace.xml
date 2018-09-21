@@ -3,7 +3,38 @@
   <component name="ChangeListManager">
     <list default="true" id="5d1d8f17-e7fb-4da5-9d92-e7182c519935" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/apis/apis.go" afterPath="$PROJECT_DIR$/apis/apis.go" />
       <change beforePath="$PROJECT_DIR$/hawkular/hawkular.go" afterPath="$PROJECT_DIR$/hawkular/hawkular.go" />
+      <change beforePath="$PROJECT_DIR$/k8sapi/configmap/configmap.go" afterPath="$PROJECT_DIR$/k8sapi/configmap/configmap.go" />
+      <change beforePath="$PROJECT_DIR$/k8sapi/endpoints/endpoints.go" afterPath="$PROJECT_DIR$/k8sapi/endpoints/endpoints.go" />
+      <change beforePath="$PROJECT_DIR$/k8sapi/event/event.go" afterPath="$PROJECT_DIR$/k8sapi/event/event.go" />
+      <change beforePath="$PROJECT_DIR$/k8sapi/limitrange/limitrange.go" afterPath="$PROJECT_DIR$/k8sapi/limitrange/limitrange.go" />
+      <change beforePath="$PROJECT_DIR$/k8sapi/namespace/namespace.go" afterPath="$PROJECT_DIR$/k8sapi/namespace/namespace.go" />
+      <change beforePath="$PROJECT_DIR$/k8sapi/node/node.go" afterPath="$PROJECT_DIR$/k8sapi/node/node.go" />
+      <change beforePath="$PROJECT_DIR$/k8sapi/persistentvolume/persistentvolume.go" afterPath="$PROJECT_DIR$/k8sapi/persistentvolume/persistentvolume.go" />
+      <change beforePath="$PROJECT_DIR$/k8sapi/persistentvolumeclaim/persistentvolumeclaim.go" afterPath="$PROJECT_DIR$/k8sapi/persistentvolumeclaim/persistentvolumeclaim.go" />
+      <change beforePath="$PROJECT_DIR$/k8sapi/pod/pod.go" afterPath="$PROJECT_DIR$/k8sapi/pod/pod.go" />
+      <change beforePath="$PROJECT_DIR$/k8sapi/replicationcontroller/replicationcontroller.go" afterPath="$PROJECT_DIR$/k8sapi/replicationcontroller/replicationcontroller.go" />
+      <change beforePath="$PROJECT_DIR$/k8sapi/resourcequota/resourcequota.go" afterPath="$PROJECT_DIR$/k8sapi/resourcequota/resourcequota.go" />
+      <change beforePath="$PROJECT_DIR$/k8sapi/secret/secret.go" afterPath="$PROJECT_DIR$/k8sapi/secret/secret.go" />
+      <change beforePath="$PROJECT_DIR$/k8sapi/service/service.go" afterPath="$PROJECT_DIR$/k8sapi/service/service.go" />
+      <change beforePath="$PROJECT_DIR$/lapi/lapi.go" afterPath="$PROJECT_DIR$/lapi/lapi.go" />
+      <change beforePath="$PROJECT_DIR$/main.go" afterPath="$PROJECT_DIR$/main.go" />
+      <change beforePath="$PROJECT_DIR$/oapi/build/build.go" afterPath="$PROJECT_DIR$/oapi/build/build.go" />
+      <change beforePath="$PROJECT_DIR$/oapi/buildconfig/buildconfig.go" afterPath="$PROJECT_DIR$/oapi/buildconfig/buildconfig.go" />
+      <change beforePath="$PROJECT_DIR$/oapi/deploymentconfig/deploymentconfig.go" afterPath="$PROJECT_DIR$/oapi/deploymentconfig/deploymentconfig.go" />
+      <change beforePath="$PROJECT_DIR$/oapi/imagestream/imagestream.go" afterPath="$PROJECT_DIR$/oapi/imagestream/imagestream.go" />
+      <change beforePath="$PROJECT_DIR$/oapi/imagestreamimport/imagestreamimport.go" afterPath="$PROJECT_DIR$/oapi/imagestreamimport/imagestreamimport.go" />
+      <change beforePath="$PROJECT_DIR$/oapi/imagestreamtag/imagestreamtag.go" afterPath="$PROJECT_DIR$/oapi/imagestreamtag/imagestreamtag.go" />
+      <change beforePath="$PROJECT_DIR$/oapi/netnamespace/netnamespace.go" afterPath="$PROJECT_DIR$/oapi/netnamespace/netnamespace.go" />
+      <change beforePath="$PROJECT_DIR$/oapi/processedtemplate/processedtemplate.go" afterPath="$PROJECT_DIR$/oapi/processedtemplate/processedtemplate.go" />
+      <change beforePath="$PROJECT_DIR$/oapi/project/project.go" afterPath="$PROJECT_DIR$/oapi/project/project.go" />
+      <change beforePath="$PROJECT_DIR$/oapi/role/role.go" afterPath="$PROJECT_DIR$/oapi/role/role.go" />
+      <change beforePath="$PROJECT_DIR$/oapi/rolebinding/rolebinding.go" afterPath="$PROJECT_DIR$/oapi/rolebinding/rolebinding.go" />
+      <change beforePath="$PROJECT_DIR$/oapi/route/route.go" afterPath="$PROJECT_DIR$/oapi/route/route.go" />
+      <change beforePath="$PROJECT_DIR$/oapi/template/template.go" afterPath="$PROJECT_DIR$/oapi/template/template.go" />
+      <change beforePath="$PROJECT_DIR$/oapi/user/user.go" afterPath="$PROJECT_DIR$/oapi/user/user.go" />
+      <change beforePath="$PROJECT_DIR$/pkg/parse.go" afterPath="$PROJECT_DIR$/pkg/parse.go" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -14,11 +45,63 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.go">
+      <file leaf-file-name="processedtemplate.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/oapi/processedtemplate/processedtemplate.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="627">
-              <caret line="73" column="0" lean-forward="false" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+            <state relative-caret-position="38">
+              <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="45" selection-end-column="1" />
+              <folding>
+                <element signature="e#27#261#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="role.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/oapi/role/role.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="76">
+              <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="rolebinding.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/oapi/rolebinding/rolebinding.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="76">
+              <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="route.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/oapi/route/route.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="76">
+              <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="template.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/oapi/template/template.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="76">
+              <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="user.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/oapi/user/user.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="114">
+              <caret line="6" column="27" lean-forward="false" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -27,43 +110,33 @@
       <file leaf-file-name="parse.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pkg/parse.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1140">
-              <caret line="68" column="12" lean-forward="false" selection-start-line="68" selection-start-column="12" selection-end-line="68" selection-end-column="12" />
-              <folding>
-                <element signature="e#13#201#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="hawkular.go" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/hawkular/hawkular.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-161">
-              <caret line="36" column="19" lean-forward="false" selection-start-line="36" selection-start-column="19" selection-end-line="36" selection-end-column="19" />
-              <folding>
-                <element signature="e#18#250#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2983">
-              <caret line="157" column="18" lean-forward="false" selection-start-line="157" selection-start-column="18" selection-end-line="157" selection-end-column="18" />
+            <state relative-caret-position="76">
+              <caret line="4" column="32" lean-forward="false" selection-start-line="4" selection-start-column="32" selection-end-line="4" selection-end-column="32" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="lapi.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lapi/lapi.go">
+      <file leaf-file-name="others.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/others/others.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="6" column="4" lean-forward="false" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="47" />
-              <folding />
+            <state relative-caret-position="589">
+              <caret line="39" column="38" lean-forward="false" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
+              <folding>
+                <element signature="e#16#222#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.go" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/main.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1433">
+              <caret line="502" column="25" lean-forward="false" selection-start-line="502" selection-start-column="25" selection-end-line="502" selection-end-column="25" />
+              <folding>
+                <element signature="e#14#1999#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -110,9 +183,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/handler/util.go" />
-        <option value="$PROJECT_DIR$/handler/openshift.go" />
-        <option value="$PROJECT_DIR$/handler/ocapi.go" />
         <option value="$PROJECT_DIR$/oapi/project/projiect.go" />
         <option value="$PROJECT_DIR$/websocket/dail.go" />
         <option value="$PROJECT_DIR$/apirequest/websocket.go" />
@@ -123,16 +193,16 @@
         <option value="$PROJECT_DIR$/../datafoundry_web/app/resource.js" />
         <option value="$PROJECT_DIR$/vendor/github.com/gorilla/websocket/server.go" />
         <option value="$PROJECT_DIR$/../datafoundry_web/app/app.js" />
-        <option value="$PROJECT_DIR$/k8sapi/pod/pod.go" />
-        <option value="$PROJECT_DIR$/oapi/user/user.go" />
-        <option value="$PROJECT_DIR$/oapi/build/build.go" />
-        <option value="$PROJECT_DIR$/oapi/deploymentconfig/deploymentconfig.go" />
-        <option value="$PROJECT_DIR$/oapi/project/project.go" />
-        <option value="$PROJECT_DIR$/oapi/netnamespace/netnamespace.go" />
-        <option value="$PROJECT_DIR$/oapi/role/role.go" />
-        <option value="$PROJECT_DIR$/oapi/rolebinding/rolebinding.go" />
-        <option value="$PROJECT_DIR$/oapi/route/route.go" />
-        <option value="$PROJECT_DIR$/oapi/template/template.go" />
+        <option value="$PROJECT_DIR$/Dockerfile" />
+        <option value="$PROJECT_DIR$/client/wsclient.go" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/apirequest/apirequest.go" />
+        <option value="$PROJECT_DIR$/../build/Dockerfile" />
+        <option value="$PROJECT_DIR$/Dockerfile.release" />
+        <option value="$PROJECT_DIR$/git-version.sh" />
+        <option value="$PROJECT_DIR$/Makefile" />
+        <option value="$PROJECT_DIR$/apis/apis.go" />
+        <option value="$PROJECT_DIR$/hawkular/hawkular.go" />
         <option value="$PROJECT_DIR$/k8sapi/configmap/configmap.go" />
         <option value="$PROJECT_DIR$/k8sapi/endpoints/endpoints.go" />
         <option value="$PROJECT_DIR$/k8sapi/event/event.go" />
@@ -141,20 +211,29 @@
         <option value="$PROJECT_DIR$/k8sapi/node/node.go" />
         <option value="$PROJECT_DIR$/k8sapi/persistentvolume/persistentvolume.go" />
         <option value="$PROJECT_DIR$/k8sapi/persistentvolumeclaim/persistentvolumeclaim.go" />
-        <option value="$PROJECT_DIR$/oapi/processedtemplate/processedtemplate.go" />
-        <option value="$PROJECT_DIR$/Dockerfile" />
-        <option value="$PROJECT_DIR$/client/wsclient.go" />
-        <option value="$PROJECT_DIR$/main.go" />
-        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/k8sapi/pod/pod.go" />
+        <option value="$PROJECT_DIR$/k8sapi/replicationcontroller/replicationcontroller.go" />
+        <option value="$PROJECT_DIR$/k8sapi/resourcequota/resourcequota.go" />
+        <option value="$PROJECT_DIR$/k8sapi/secret/secret.go" />
+        <option value="$PROJECT_DIR$/k8sapi/service/service.go" />
         <option value="$PROJECT_DIR$/lapi/lapi.go" />
-        <option value="$PROJECT_DIR$/apirequest/apirequest.go" />
-        <option value="$PROJECT_DIR$/../build/Dockerfile" />
-        <option value="$PROJECT_DIR$/apis/apis.go" />
-        <option value="$PROJECT_DIR$/Dockerfile.release" />
-        <option value="$PROJECT_DIR$/git-version.sh" />
-        <option value="$PROJECT_DIR$/Makefile" />
+        <option value="$PROJECT_DIR$/oapi/build/build.go" />
+        <option value="$PROJECT_DIR$/oapi/buildconfig/buildconfig.go" />
+        <option value="$PROJECT_DIR$/oapi/deploymentconfig/deploymentconfig.go" />
+        <option value="$PROJECT_DIR$/oapi/imagestream/imagestream.go" />
+        <option value="$PROJECT_DIR$/oapi/imagestreamimport/imagestreamimport.go" />
+        <option value="$PROJECT_DIR$/oapi/imagestreamtag/imagestreamtag.go" />
+        <option value="$PROJECT_DIR$/oapi/netnamespace/netnamespace.go" />
+        <option value="$PROJECT_DIR$/oapi/processedtemplate/processedtemplate.go" />
+        <option value="$PROJECT_DIR$/oapi/project/project.go" />
+        <option value="$PROJECT_DIR$/oapi/role/role.go" />
+        <option value="$PROJECT_DIR$/oapi/rolebinding/rolebinding.go" />
+        <option value="$PROJECT_DIR$/oapi/route/route.go" />
+        <option value="$PROJECT_DIR$/oapi/template/template.go" />
+        <option value="$PROJECT_DIR$/oapi/user/user.go" />
         <option value="$PROJECT_DIR$/pkg/parse.go" />
-        <option value="$PROJECT_DIR$/hawkular/hawkular.go" />
+        <option value="$PROJECT_DIR$/main.go" />
+        <option value="$PROJECT_DIR$/others/others.go" />
       </list>
     </option>
   </component>
@@ -185,8 +264,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -199,34 +276,12 @@
               <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
               <item name="apirequest" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="hawkular" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="lapi" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="datafoundry-gw" type="462c0819:PsiDirectoryNode" />
-              <item name="pkg" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-            <path>
-              <item name="datafoundry-gw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Go SDK 1.9.2" type="20ee2d1f:SyntheticLibraryElementNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -265,16 +320,16 @@
   <component name="ToolWindowManager">
     <frame x="-336" y="-1057" width="1920" height="1057" extended-state="6" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14217253" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14643237" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905984" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36278588" sideWeight="0.37220448" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36278588" sideWeight="0.38019168" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24964234" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36278588" sideWeight="0.6277955" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36278588" sideWeight="0.6198083" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -297,195 +352,11 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/oapi/deploymentconfig/deploymentconfig.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="433">
-          <caret line="144" column="47" lean-forward="false" selection-start-line="144" selection-start-column="47" selection-end-line="144" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/oapi/build/build.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="817">
-          <caret line="51" column="11" lean-forward="true" selection-start-line="51" selection-start-column="11" selection-end-line="51" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/github.com/gorilla/websocket/server.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1919">
-          <caret line="109" column="19" lean-forward="false" selection-start-line="109" selection-start-column="19" selection-end-line="109" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/github.com/gorilla/websocket/client.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2280">
-          <caret line="120" column="17" lean-forward="false" selection-start-line="120" selection-start-column="17" selection-end-line="120" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/oapi/imagestreamtag/imagestreamtag.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/oapi/rolebinding/rolebinding.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="376">
-          <caret line="121" column="48" lean-forward="true" selection-start-line="121" selection-start-column="48" selection-end-line="121" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/oapi/route/route.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="190" column="34" lean-forward="false" selection-start-line="190" selection-start-column="24" selection-end-line="190" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/oapi/template/template.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="406">
-          <caret line="193" column="66" lean-forward="false" selection-start-line="193" selection-start-column="66" selection-end-line="193" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/k8sapi/replicationcontroller/replicationcontroller.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/k8sapi/endpoints/endpoints.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="125" column="33" lean-forward="false" selection-start-line="125" selection-start-column="23" selection-end-line="125" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/k8sapi/event/event.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="134" column="33" lean-forward="false" selection-start-line="134" selection-start-column="23" selection-end-line="134" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/k8sapi/limitrange/limitrange.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="563">
-          <caret line="134" column="33" lean-forward="false" selection-start-line="134" selection-start-column="23" selection-end-line="134" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/k8sapi/namespace/namespace.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="86" column="33" lean-forward="false" selection-start-line="86" selection-start-column="23" selection-end-line="86" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/k8sapi/persistentvolume/persistentvolume.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="88" column="33" lean-forward="false" selection-start-line="88" selection-start-column="23" selection-end-line="88" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/k8sapi/node/node.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1615">
-          <caret line="86" column="33" lean-forward="false" selection-start-line="86" selection-start-column="33" selection-end-line="86" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/k8sapi/persistentvolumeclaim/persistentvolumeclaim.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10">
-          <caret line="211" column="0" lean-forward="true" selection-start-line="211" selection-start-column="0" selection-end-line="211" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/oapi/netnamespace/netnamespace.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="124" column="28" lean-forward="false" selection-start-line="124" selection-start-column="28" selection-end-line="124" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/go/src/net/http/client.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1672">
-          <caret line="489" column="17" lean-forward="false" selection-start-line="489" selection-start-column="17" selection-end-line="489" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/github.com/pivotal-golang/lager/package.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/github.com/pivotal-golang/lager/writer_sink.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/github.com/pivotal-golang/lager/redacting_writer_sink.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/github.com/pivotal-golang/lager/reconfigurable_sink.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="2" column="7" lean-forward="false" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/github.com/pivotal-golang/lager/models.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="2" column="7" lean-forward="false" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/github.com/pivotal-golang/lager/logger.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="31" column="5" lean-forward="false" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/github.com/pivotal-golang/lager/json_redacter.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="4" column="9" lean-forward="false" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/oapi/user/user.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="950">
-          <caret line="59" column="26" lean-forward="false" selection-start-line="59" selection-start-column="26" selection-end-line="59" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/oapi/project/project.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="35" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/github.com/pivotal-golang/lager/redacting_writer_sink.go" />
+    <entry file="file://$PROJECT_DIR$/vendor/github.com/pivotal-golang/lager/reconfigurable_sink.go" />
+    <entry file="file://$PROJECT_DIR$/vendor/github.com/pivotal-golang/lager/models.go" />
+    <entry file="file://$PROJECT_DIR$/vendor/github.com/pivotal-golang/lager/logger.go" />
+    <entry file="file://$PROJECT_DIR$/vendor/github.com/pivotal-golang/lager/json_redacter.go" />
     <entry file="file:///usr/local/go/src/strings/strings.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -493,69 +364,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/oapi/role/role.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="35" column="50" lean-forward="false" selection-start-line="35" selection-start-column="50" selection-end-line="35" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/oapi/processedtemplate/processedtemplate.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="773">
-          <caret line="42" column="37" lean-forward="false" selection-start-line="42" selection-start-column="37" selection-end-line="42" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/oapi/buildconfig/buildconfig.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5463">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/k8sapi/configmap/configmap.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1672">
-          <caret line="95" column="26" lean-forward="false" selection-start-line="95" selection-start-column="26" selection-end-line="95" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/k8sapi/service/service.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/wsclient.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="18" column="1" lean-forward="false" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/vendor.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1568">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/k8sapi/secret/secret.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="160" column="26" lean-forward="false" selection-start-line="160" selection-start-column="26" selection-end-line="160" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/k8sapi/pod/pod.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9462">
-          <caret line="506" column="5" lean-forward="false" selection-start-line="506" selection-start-column="5" selection-end-line="506" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/vendor.json" />
     <entry file="file:///usr/local/go/src/net/http/response.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2908">
@@ -570,98 +379,275 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="6" column="23" lean-forward="false" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Dockerfile" />
+    <entry file="file://$PROJECT_DIR$/../build/Dockerfile" />
+    <entry file="file://$PROJECT_DIR$/git-version.sh" />
+    <entry file="file://$PROJECT_DIR$/Dockerfile" />
+    <entry file="file://$PROJECT_DIR$/Makefile" />
+    <entry file="file://$PROJECT_DIR$/README.md" />
     <entry file="file://$PROJECT_DIR$/apis/apis.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="18" column="18" lean-forward="false" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
+        <state relative-caret-position="114">
+          <caret line="6" column="37" lean-forward="true" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../build/Dockerfile">
+    <entry file="file://$PROJECT_DIR$/client/wsclient.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/git-version.sh">
+    <entry file="file://$PROJECT_DIR$/hawkular/hawkular.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+        <state relative-caret-position="114">
+          <caret line="6" column="27" lean-forward="false" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Dockerfile">
+    <entry file="file://$PROJECT_DIR$/k8sapi/configmap/configmap.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" column="15" lean-forward="false" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
+        <state relative-caret-position="76">
+          <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Makefile">
+    <entry file="file://$PROJECT_DIR$/k8sapi/endpoints/endpoints.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="3" column="14" lean-forward="false" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="14" />
+        <state relative-caret-position="76">
+          <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apirequest/apirequest.go">
+    <entry file="file://$PROJECT_DIR$/k8sapi/event/event.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-672">
-          <caret line="35" column="4" lean-forward="false" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="4" />
-          <folding>
-            <element signature="e#20#135#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="76">
+          <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/parse.go">
+    <entry file="file://$PROJECT_DIR$/k8sapi/limitrange/limitrange.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1140">
-          <caret line="68" column="12" lean-forward="false" selection-start-line="68" selection-start-column="12" selection-end-line="68" selection-end-column="12" />
-          <folding>
-            <element signature="e#13#201#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="76">
+          <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
+    <entry file="file://$PROJECT_DIR$/k8sapi/namespace/namespace.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2983">
-          <caret line="157" column="18" lean-forward="false" selection-start-line="157" selection-start-column="18" selection-end-line="157" selection-end-column="18" />
-          <folding />
+        <state relative-caret-position="76">
+          <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.go">
+    <entry file="file://$PROJECT_DIR$/k8sapi/node/node.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="627">
-          <caret line="73" column="0" lean-forward="false" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="76">
+          <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/k8sapi/persistentvolume/persistentvolume.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/k8sapi/persistentvolumeclaim/persistentvolumeclaim.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/k8sapi/pod/pod.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/k8sapi/replicationcontroller/replicationcontroller.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/k8sapi/resourcequota/resourcequota.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/k8sapi/secret/secret.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/k8sapi/service/service.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="7" lean-forward="false" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lapi/lapi.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
-          <caret line="6" column="4" lean-forward="false" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="47" />
+          <caret line="6" column="27" lean-forward="false" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oapi/build/build.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oapi/buildconfig/buildconfig.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" column="27" lean-forward="false" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oapi/deploymentconfig/deploymentconfig.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oapi/imagestream/imagestream.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" column="27" lean-forward="false" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oapi/imagestreamimport/imagestreamimport.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" column="27" lean-forward="false" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oapi/imagestreamtag/imagestreamtag.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" column="27" lean-forward="false" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oapi/netnamespace/netnamespace.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oapi/project/project.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="5" column="27" lean-forward="false" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oapi/rolebinding/rolebinding.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hawkular/hawkular.go">
+    <entry file="file://$PROJECT_DIR$/oapi/route/route.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-161">
-          <caret line="36" column="19" lean-forward="false" selection-start-line="36" selection-start-column="19" selection-end-line="36" selection-end-column="19" />
+        <state relative-caret-position="76">
+          <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oapi/template/template.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oapi/user/user.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" column="27" lean-forward="false" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pkg/parse.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="32" lean-forward="false" selection-start-line="4" selection-start-column="32" selection-end-line="4" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oapi/processedtemplate/processedtemplate.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="45" selection-end-column="1" />
           <folding>
-            <element signature="e#18#250#0" expanded="true" />
+            <element signature="e#27#261#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oapi/role/role.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/go/src/net/http/status.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="149">
+          <caret line="62" column="29" lean-forward="false" selection-start-line="62" selection-start-column="4" selection-end-line="62" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/others/others.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="589">
+          <caret line="39" column="38" lean-forward="false" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
+          <folding>
+            <element signature="e#16#222#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apirequest/apirequest.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="798">
+          <caret line="51" column="5" lean-forward="false" selection-start-line="51" selection-start-column="5" selection-end-line="51" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1433">
+          <caret line="502" column="25" lean-forward="false" selection-start-line="502" selection-start-column="25" selection-end-line="502" selection-end-column="25" />
+          <folding>
+            <element signature="e#14#1999#0" expanded="true" />
           </folding>
         </state>
       </provider>

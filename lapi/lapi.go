@@ -3,8 +3,8 @@ package lapi
 import (
 	"encoding/json"
 	"errors"
-	oapi "github.com/asiainfoLDP/datafoundry-gw/apirequest"
-	"github.com/asiainfoLDP/datafoundry-gw/pkg"
+	oapi "github.com/asiainfoldp/datafoundry-gw/apirequest"
+	"github.com/asiainfoldp/datafoundry-gw/pkg"
 	"github.com/gin-gonic/gin"
 	projectapi "github.com/openshift/project/api/v1"
 	rolebindingapi "github.com/openshift/rolebinding/api/v1"

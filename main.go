@@ -34,6 +34,7 @@ import (
 	"github.com/asiainfoldp/datafoundry-gw/oapi/route"
 	"github.com/asiainfoldp/datafoundry-gw/oapi/template"
 	"github.com/asiainfoldp/datafoundry-gw/oapi/user"
+	"github.com/asiainfoldp/datafoundry-gw/others"
 	"github.com/asiainfoldp/datafoundry-gw/pkg"
 	"github.com/gin-gonic/gin"
 	"github.com/pivotal-golang/lager"
@@ -498,5 +499,11 @@ func handle() (router *gin.Engine) {
 	router.GET("/apis/extensions/v1beta1/namespaces/:namespace/replicasets", apis.WatchAllRSns)
 	router.GET("/apis/extensions/v1beta1/namespaces/:namespace/deployments", apis.WatchAllDeployns)
 
+	// 未知路由处理
+	router.NoRoute(others.AnyRequest)
+	// 未知调用方式
+	router.NoMethod(func(context *gin.Context) {
+		context.String(404, "Not method")
+	})
 	return
 }

@@ -1,8 +1,8 @@
 package apis
 
 import (
-	apirequest "github.com/asiainfoLDP/datafoundry-gw/apirequest"
-	"github.com/asiainfoLDP/datafoundry-gw/pkg"
+	apirequest "github.com/asiainfoldp/datafoundry-gw/apirequest"
+	"github.com/asiainfoldp/datafoundry-gw/pkg"
 	"github.com/gin-gonic/gin"
 	"github.com/pivotal-golang/lager"
 	"io/ioutil"

@@ -2,7 +2,7 @@ package pkg
 
 import (
 	"encoding/json"
-	oapi "github.com/asiainfoLDP/datafoundry-gw/apirequest"
+	oapi "github.com/asiainfoldp/datafoundry-gw/apirequest"
 	"github.com/gin-gonic/gin"
 	userapi "github.com/openshift/user/api/v1"
 	"io/ioutil"

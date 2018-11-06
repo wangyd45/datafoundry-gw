@@ -5,11 +5,19 @@ import (
 	kapi "k8s.io/kubernetes/pkg/api/v1"
 )
 
-type node struct{
-	unversioned.TypeMeta// Standard object's metadata.
-	kapi.ObjectMeta `json:"metadata,omitempty" protobuf:"bytes,1,opt,name=metadata"`
+type nodes struct {
+	unversioned.TypeMeta `json:",inline"`
+	Meta                 metadata          `json:"metadata"`
+	Items                []nodeMeta `json:"items"`
 }
 
-type nodeList struct {
-	nodes []node
+type metadata struct {
+	SelfLink        string `json:"selfLink,omitempty" protobuf:"bytes,4,opt,name=selfLink"`
+	ResourceVersion string `json:"resourceVersion,omitempty" protobuf:"bytes,6,opt,name=resourceVersion"`
 }
+
+type nodeMeta struct {
+	kapi.ObjectMeta `json:"metadata,omitempty"`
+}
+
+

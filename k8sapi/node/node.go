@@ -56,14 +56,20 @@ func GetAllNodesLabels(c *gin.Context) {
 	logger.Info("List node Labels ", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
 	result, _ := ioutil.ReadAll(req.Body)
 	defer req.Body.Close()
-	var nodeInfo nodeList
-	var nodesMap map[string]map[string]string
-	json.Unmarshal(result,&nodeInfo)
-	for _,v := range nodeInfo.nodes{
+	var nodeInfo nodes
+	nodesMap := make(map[string]map[string]string)
+	err = json.Unmarshal(result,&nodeInfo)
+	if err != nil{
+		logger.Error("GetAllNodesLabels json unmarshal error ",err)
+	}
+	for _,v := range nodeInfo.Items{
 		nodesMap[v.Name] = v.Labels
 	}
-	//c.Data(req.StatusCode, "application/json", nodesMap)
-	c.String(req.StatusCode, "application/json", nodesMap)
+	result,err = json.Marshal(nodesMap)
+	if err != nil{
+		logger.Error("GetAllNodesLabels json Marshal error ",err)
+	}
+	c.Data(req.StatusCode, "", result)
 }
 
 func getNode(c *gin.Context) {

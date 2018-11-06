@@ -419,7 +419,7 @@ func handle() (router *gin.Engine) {
 	router.POST("/api/v1/nodes", node.CreateNode)
 	router.GET("/api/v1/nodes/:name", node.GorWNode)
 	router.GET("/api/v1/nodes", node.GorWAllNodes)
-	router.GET("/api/v1/nodes/", node.GorWAllNodes)
+	router.GET("/api/v1/labels", node.GetAllNodesLabels)
 	router.PUT("/api/v1/nodes/:name", node.UpdateNode)
 	router.PATCH("/api/v1/nodes/:name", node.PatchNode)
 	router.DELETE("/api/v1/nodes/:name", node.DeleteNode)

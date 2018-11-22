@@ -7,7 +7,7 @@ import (
 
 type nodes struct {
 	unversioned.TypeMeta `json:",inline"`
-	Meta                 metadata          `json:"metadata"`
+	Meta                 metadata   `json:"metadata"`
 	Items                []nodeMeta `json:"items"`
 }
 
@@ -19,5 +19,3 @@ type metadata struct {
 type nodeMeta struct {
 	kapi.ObjectMeta `json:"metadata,omitempty"`
 }
-
-

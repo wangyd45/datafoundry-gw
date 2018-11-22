@@ -81,6 +81,7 @@ v1.Template
 v1.User
 #v1.UserIdentityMapping
 ```
+/api/v1/labels  获取所有Node中的labels **自定义API**
 ## /lapi
 
 ```sh

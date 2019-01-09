@@ -185,8 +185,12 @@ func GetLogDepFromNS(c *gin.Context) {
 		log.Error("GetLogDepFromNS Read req.Body error", err)
 	}
 	defer req.Body.Close()
-	jstring := "{ \"message\": \"" + string(result) + "\"}"
-	c.Data(req.StatusCode, JSON, []byte(jstring))
+	//jstring := "{ \"message\": \"" + string(result) + "\"}"
+	//c.Data(req.StatusCode, JSON, []byte(jstring))
+
+	logData := pkg.LogData{Message: string(result)}
+	c.JSON(req.StatusCode, logData)
+	return
 }
 
 func GetScaleDepFromNS(c *gin.Context) {

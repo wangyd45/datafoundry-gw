@@ -161,8 +161,11 @@ func GetLogBuildFromNS(c *gin.Context) {
 		log.Error("GetLogBuildFromNS Read req.Body error ", err)
 	}
 	defer req.Body.Close()
-	jstring := "{ \"message\": \"" + string(result) + "\"}"
-	c.Data(req.StatusCode, JSON, []byte(jstring))
+	//jstring := "{ \"message\": \"" + string(result) + "\"}"
+	logData := pkg.LogData{Message: string(result)}
+	c.JSON(req.StatusCode, logData)
+	return
+	//c.Data(req.StatusCode, JSON, []byte(jstring))
 }
 
 func watchBuildFromNS(c *gin.Context) {

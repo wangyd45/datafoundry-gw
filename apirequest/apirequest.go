@@ -169,7 +169,7 @@ func WSRequestRL(len int, url, token string, w http.ResponseWriter, r *http.Requ
 	var jstring string
 	for {
 		n, _ := response.Body.Read(data)
-		jstring = "{ \"message\": \"" + string(data[:n]) + "\"}"
+		jstring = "{ \"message\": " + string(data[:n]) + "}"
 		conn.WriteMessage(2, []byte(jstring))
 	}
 

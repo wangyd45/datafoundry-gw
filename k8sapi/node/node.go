@@ -1,13 +1,13 @@
 package node
 
 import (
+	"encoding/json"
 	oapi "github.com/asiainfoldp/datafoundry-gw/apirequest"
 	"github.com/asiainfoldp/datafoundry-gw/pkg"
 	"github.com/gin-gonic/gin"
 	"github.com/pivotal-golang/lager"
 	"io/ioutil"
 	"os"
-	"encoding/json"
 )
 
 var logger lager.Logger
@@ -58,16 +58,16 @@ func GetAllNodesLabels(c *gin.Context) {
 	defer req.Body.Close()
 	var nodeInfo nodes
 	nodesMap := make(map[string]map[string]string)
-	err = json.Unmarshal(result,&nodeInfo)
-	if err != nil{
-		logger.Error("GetAllNodesLabels json unmarshal error ",err)
+	err = json.Unmarshal(result, &nodeInfo)
+	if err != nil {
+		logger.Error("GetAllNodesLabels json unmarshal error ", err)
 	}
-	for _,v := range nodeInfo.Items{
+	for _, v := range nodeInfo.Items {
 		nodesMap[v.Name] = v.Labels
 	}
-	result,err = json.Marshal(nodesMap)
-	if err != nil{
-		logger.Error("GetAllNodesLabels json Marshal error ",err)
+	result, err = json.Marshal(nodesMap)
+	if err != nil {
+		logger.Error("GetAllNodesLabels json Marshal error ", err)
 	}
 	c.Data(req.StatusCode, "", result)
 }

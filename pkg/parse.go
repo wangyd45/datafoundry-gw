@@ -10,6 +10,10 @@ import (
 	"time"
 )
 
+type LogData struct {
+	Message string `json:"message"`
+}
+
 var UserMap map[string]string
 
 type Data struct {

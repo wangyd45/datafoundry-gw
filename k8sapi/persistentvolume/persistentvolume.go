@@ -18,9 +18,10 @@ func init() {
 
 func CreatePV(c *gin.Context) {
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	//调用原生接口
-	req, err := oapi.GenRequest("POST", "/api/v1/persistentvolumes", token, rBody)
+	req, err := oapi.GenRequest("POST", "/api/v1/persistentvolumes"+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Create A PersistentVolume Fail", err)
 	}
@@ -49,7 +50,8 @@ func GorWAllPVs(c *gin.Context) {
 func getPV(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("name")
-	req, err := oapi.GenRequest("GET", "/api/v1/persistentvolumes/"+name, token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", "/api/v1/persistentvolumes/"+name+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get A PersistentVolume Fail", err)
 	}
@@ -61,7 +63,8 @@ func getPV(c *gin.Context) {
 
 func getAllPVs(c *gin.Context) {
 	token := pkg.GetToken(c)
-	req, err := oapi.GenRequest("GET", "/api/v1/persistentvolumes", token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", "/api/v1/persistentvolumes"+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get All PersistentVolumes Fail", err)
 	}
@@ -75,8 +78,9 @@ func watchPV(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
 	name := c.Param("name")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	logger.Info("Watch persistentvolume names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
-	oapi.WSRequest("/api/v1/watch/persistentvolumes/"+name, token, c.Writer, c.Request)
+	oapi.WSRequest("/api/v1/watch/persistentvolumes/"+name+urlParas, token, c.Writer, c.Request)
 	logger.Info("Watch persistentvolume names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
@@ -84,8 +88,9 @@ func watchPV(c *gin.Context) {
 func watchAllPVs(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	logger.Info("Watch collection persistentvolume", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
-	oapi.WSRequest("/api/v1/watch/persistentvolumes", token, c.Writer, c.Request)
+	oapi.WSRequest("/api/v1/watch/persistentvolumes"+urlParas, token, c.Writer, c.Request)
 	logger.Info("Watch collection persistentvolume", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
@@ -93,8 +98,9 @@ func watchAllPVs(c *gin.Context) {
 func UpdatePV(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("name")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PUT", "/api/v1/persistentvolumes/"+name, token, rBody)
+	req, err := oapi.GenRequest("PUT", "/api/v1/persistentvolumes/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Update A PersistentVolume Fail", err)
 	}
@@ -107,8 +113,9 @@ func UpdatePV(c *gin.Context) {
 func PatchPV(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("name")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PATCH", "/api/v1/persistentvolumes/"+name, token, rBody)
+	req, err := oapi.GenRequest("PATCH", "/api/v1/persistentvolumes/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Patch A PersistentVolume Fail", err)
 	}
@@ -121,8 +128,9 @@ func PatchPV(c *gin.Context) {
 func DeletePV(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("name")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("DELETE", "/api/v1/persistentvolumes/"+name, token, rBody)
+	req, err := oapi.GenRequest("DELETE", "/api/v1/persistentvolumes/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Delete A PersistentVolume Fail", err)
 	}
@@ -134,7 +142,8 @@ func DeletePV(c *gin.Context) {
 
 func DeleteAllPVs(c *gin.Context) {
 	token := pkg.GetToken(c)
-	req, err := oapi.GenRequest("DELETE", "/api/v1/persistentvolumes", token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("DELETE", "/api/v1/persistentvolumes"+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Delete All PersistentVolumes Fail", err)
 	}
@@ -147,7 +156,8 @@ func DeleteAllPVs(c *gin.Context) {
 func GetstatusofPV(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("name")
-	req, err := oapi.GenRequest("GET", "/api/v1/persistentvolumes/"+name+"/status", token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", "/api/v1/persistentvolumes/"+name+"/status"+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get status of a PersistentVolume Fail", err)
 	}
@@ -160,8 +170,9 @@ func GetstatusofPV(c *gin.Context) {
 func UpdatestatusofPV(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("name")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PUT", "/api/v1/persistentvolumes/"+name+"/status", token, rBody)
+	req, err := oapi.GenRequest("PUT", "/api/v1/persistentvolumes/"+name+"/status"+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Update status of a PersistentVolume Fail", err)
 	}
@@ -174,8 +185,9 @@ func UpdatestatusofPV(c *gin.Context) {
 func PatchstatusofPV(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("name")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PATCH", "/api/v1/persistentvolumes/"+name+"/status", token, rBody)
+	req, err := oapi.GenRequest("PATCH", "/api/v1/persistentvolumes/"+name+"/status"+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Patch status of a PersistentVolume Fail", err)
 	}

@@ -18,9 +18,10 @@ func init() {
 
 func CreateNamespace(c *gin.Context) {
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	//调用原生接口
-	req, err := oapi.GenRequest("POST", "/api/v1/namespaces", token, rBody)
+	req, err := oapi.GenRequest("POST", "/api/v1/namespaces"+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Create A Namespace Fail", err)
 	}
@@ -49,7 +50,8 @@ func GorWAllNamespaces(c *gin.Context) {
 func getNamespace(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("namespace")
-	req, err := oapi.GenRequest("GET", "/api/v1/namespaces/"+name, token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", "/api/v1/namespaces/"+name+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get A Namespace Fail", err)
 	}
@@ -61,7 +63,8 @@ func getNamespace(c *gin.Context) {
 
 func getAllNamespaces(c *gin.Context) {
 	token := pkg.GetToken(c)
-	req, err := oapi.GenRequest("GET", "/api/v1/namespaces", token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", "/api/v1/namespaces"+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get All Namespaces Fail", err)
 	}
@@ -75,8 +78,9 @@ func watchNamespace(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
 	name := c.Param("namespace")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	logger.Info("Watch namespace names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
-	oapi.WSRequest("/api/v1/watch/namespaces/"+name, token, c.Writer, c.Request)
+	oapi.WSRequest("/api/v1/watch/namespaces/"+name+urlParas, token, c.Writer, c.Request)
 	logger.Info("Watch namespace names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
@@ -84,8 +88,9 @@ func watchNamespace(c *gin.Context) {
 func watchAllNamespaces(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	logger.Info("Watch collection namespace", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
-	oapi.WSRequest("/api/v1/watch/namespaces", token, c.Writer, c.Request)
+	oapi.WSRequest("/api/v1/watch/namespaces"+urlParas, token, c.Writer, c.Request)
 	logger.Info("Watch collection namespace", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
@@ -93,8 +98,9 @@ func watchAllNamespaces(c *gin.Context) {
 func UpdateNamespace(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("namespace")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PUT", "/api/v1/namespaces/"+name, token, rBody)
+	req, err := oapi.GenRequest("PUT", "/api/v1/namespaces/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Update A Namespace Fail", err)
 	}
@@ -107,8 +113,9 @@ func UpdateNamespace(c *gin.Context) {
 func PatchNamespace(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("namespace")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PATCH", "/api/v1/namespaces/"+name, token, rBody)
+	req, err := oapi.GenRequest("PATCH", "/api/v1/namespaces/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Patch A Namespace Fail", err)
 	}
@@ -121,8 +128,9 @@ func PatchNamespace(c *gin.Context) {
 func DeleteNamespace(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("namespace")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("DELETE", "/api/v1/namespaces/"+name, token, rBody)
+	req, err := oapi.GenRequest("DELETE", "/api/v1/namespaces/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Delete A Namespace Fail", err)
 	}
@@ -135,8 +143,9 @@ func DeleteNamespace(c *gin.Context) {
 func UpdatefinalizeofNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("namespace")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PUT", "/api/v1/namespaces/"+name+"/finalize", token, rBody)
+	req, err := oapi.GenRequest("PUT", "/api/v1/namespaces/"+name+"/finalize"+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Update finalize of a Namespace Fail", err)
 	}
@@ -149,7 +158,8 @@ func UpdatefinalizeofNS(c *gin.Context) {
 func GetstatusofNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("namespace")
-	req, err := oapi.GenRequest("GET", "/api/v1/namespaces/"+name+"/status", token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", "/api/v1/namespaces/"+name+"/status"+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get status of a Namespace Fail", err)
 	}
@@ -162,8 +172,9 @@ func GetstatusofNS(c *gin.Context) {
 func UpdatestatusofNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("namespace")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PUT", "/api/v1/namespaces/"+name+"/status", token, rBody)
+	req, err := oapi.GenRequest("PUT", "/api/v1/namespaces/"+name+"/status"+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Update status of a Namespace Fail", err)
 	}
@@ -176,8 +187,9 @@ func UpdatestatusofNS(c *gin.Context) {
 func PatchstatusofNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("namespace")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PATCH", "/api/v1/namespaces/"+name+"/status", token, rBody)
+	req, err := oapi.GenRequest("PATCH", "/api/v1/namespaces/"+name+"/status"+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Patch status of a Namespace Fail", err)
 	}

@@ -18,9 +18,10 @@ func init() {
 
 func CreateConfigMap(c *gin.Context) {
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	//调用原生接口
-	req, err := oapi.GenRequest("POST", "/api/v1/configmaps", token, rBody)
+	req, err := oapi.GenRequest("POST", "/api/v1/configmaps"+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Create A ConfigMap Fail", err)
 	}
@@ -34,9 +35,10 @@ func CreateConfigMap(c *gin.Context) {
 func CreateConfigMapNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	//调用原生接口
-	req, err := oapi.GenRequest("POST", "/api/v1/namespaces/"+namespace+"/configmaps", token, rBody)
+	req, err := oapi.GenRequest("POST", "/api/v1/namespaces/"+namespace+"/configmaps"+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Create A ConfigMap In A Namespace Fail", err)
 	}
@@ -75,7 +77,8 @@ func getConfigMapNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	req, err := oapi.GenRequest("GET", "/api/v1/namespaces/"+namespace+"/configmaps/"+name, token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", "/api/v1/namespaces/"+namespace+"/configmaps/"+name+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get A ConfigMap In A Namespace Fail", err)
 	}
@@ -87,7 +90,8 @@ func getConfigMapNS(c *gin.Context) {
 
 func getAllConfigMap(c *gin.Context) {
 	token := pkg.GetToken(c)
-	req, err := oapi.GenRequest("GET", "/api/v1/configmaps", token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", "/api/v1/configmaps"+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get All ConfigMap Fail", err)
 	}
@@ -100,7 +104,8 @@ func getAllConfigMap(c *gin.Context) {
 func getAllConfigMapNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
-	req, err := oapi.GenRequest("GET", "/api/v1/namespaces/"+namespace+"/configmaps", token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", "/api/v1/namespaces/"+namespace+"/configmaps"+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get All ConfigMap In A Namespace Fail", err)
 	}
@@ -115,8 +120,9 @@ func watchConfigMapNS(c *gin.Context) {
 	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	logger.Info("Watch configmap namespaces/"+namespace+"/names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
-	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/configmaps/"+name, token, c.Writer, c.Request)
+	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/configmaps/"+name+urlParas, token, c.Writer, c.Request)
 	logger.Info("Watch configmap namespaces/"+namespace+"/names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
@@ -124,8 +130,9 @@ func watchConfigMapNS(c *gin.Context) {
 func watchAllConfigMap(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	logger.Info("Watch collection configmap", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
-	oapi.WSRequest("/api/v1/watch/configmaps", token, c.Writer, c.Request)
+	oapi.WSRequest("/api/v1/watch/configmaps"+urlParas, token, c.Writer, c.Request)
 	logger.Info("Watch collection configmap", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
@@ -134,8 +141,9 @@ func watchAllConfigMapNS(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	logger.Info("Watch collection configmap namespaces/"+namespace, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
-	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/configmaps", token, c.Writer, c.Request)
+	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/configmaps"+urlParas, token, c.Writer, c.Request)
 	logger.Info("Watch collection configmap namespaces/"+namespace, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
@@ -144,8 +152,9 @@ func UpdateConfigMapNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PUT", "/api/v1/namespaces/"+namespace+"/configmaps/"+name, token, rBody)
+	req, err := oapi.GenRequest("PUT", "/api/v1/namespaces/"+namespace+"/configmaps/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Update A ConfigMap In A Namespace Fail", err)
 	}
@@ -159,8 +168,9 @@ func PatchConfigMapNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PATCH", "/api/v1/namespaces/"+namespace+"/configmaps/"+name, token, rBody)
+	req, err := oapi.GenRequest("PATCH", "/api/v1/namespaces/"+namespace+"/configmaps/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Patch A ConfigMap In A Namespace Fail", err)
 	}
@@ -174,8 +184,9 @@ func DeleteConfigMapNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("DELETE", "/api/v1/namespaces/"+namespace+"/configmaps/"+name, token, rBody)
+	req, err := oapi.GenRequest("DELETE", "/api/v1/namespaces/"+namespace+"/configmaps/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Delete A ConfigMap In A Namespace Fail", err)
 	}
@@ -188,7 +199,8 @@ func DeleteConfigMapNS(c *gin.Context) {
 func DeleteAllConfigMapNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
-	req, err := oapi.GenRequest("DELETE", "/api/v1/namespaces/"+namespace+"/configmaps", token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("DELETE", "/api/v1/namespaces/"+namespace+"/configmaps"+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Delete All ConfigMap In A Namespace Fail", err)
 	}

@@ -71,7 +71,7 @@ func SliceURL(url string) string {
 	if len(sList) == 0 {
 		return ""
 	} else {
-		return sList[1]
+		return "?"+sList[1]
 	}
 }
 

@@ -18,9 +18,10 @@ func init() {
 
 func CreateEndpoints(c *gin.Context) {
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	//调用原生接口
-	req, err := oapi.GenRequest("POST", "/api/v1/endpoints", token, rBody)
+	req, err := oapi.GenRequest("POST", "/api/v1/endpoints"+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Create A Endpoints Fail", err)
 	}
@@ -33,9 +34,10 @@ func CreateEndpoints(c *gin.Context) {
 func CreateEndpointsNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	//调用原生接口
-	req, err := oapi.GenRequest("POST", "/api/v1/namespaces/"+namespace+"/endpoints", token, rBody)
+	req, err := oapi.GenRequest("POST", "/api/v1/namespaces/"+namespace+"/endpoints"+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Create A Endpoints In A Namespace Fail", err)
 	}
@@ -74,7 +76,8 @@ func getEndpointsNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	req, err := oapi.GenRequest("GET", "/api/v1/namespaces/"+namespace+"/endpoints/"+name, token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", "/api/v1/namespaces/"+namespace+"/endpoints/"+name+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get A Endpoints In A Namespace Fail", err)
 	}
@@ -86,7 +89,8 @@ func getEndpointsNS(c *gin.Context) {
 
 func getAllEndpoints(c *gin.Context) {
 	token := pkg.GetToken(c)
-	req, err := oapi.GenRequest("GET", "/api/v1/endpoints", token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", "/api/v1/endpoints"+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get All Endpoints Fail", err)
 	}
@@ -99,7 +103,8 @@ func getAllEndpoints(c *gin.Context) {
 func getAllEndpointsNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
-	req, err := oapi.GenRequest("GET", "/api/v1/namespaces/"+namespace+"/endpoints", token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", "/api/v1/namespaces/"+namespace+"/endpoints"+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get All Endpoints In A Namespace Fail", err)
 	}
@@ -114,8 +119,9 @@ func watchEndpointsNS(c *gin.Context) {
 	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	logger.Info("Watch endpoints namespaces/"+namespace+"/names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
-	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/endpoints/"+name, token, c.Writer, c.Request)
+	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/endpoints/"+name+urlParas, token, c.Writer, c.Request)
 	logger.Info("Watch endpoints namespaces/"+namespace+"/names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
@@ -123,8 +129,9 @@ func watchEndpointsNS(c *gin.Context) {
 func watchAllEndpoints(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	logger.Info("Watch collection endpoints", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
-	oapi.WSRequest("/api/v1/watch/endpoints", token, c.Writer, c.Request)
+	oapi.WSRequest("/api/v1/watch/endpoints"+urlParas, token, c.Writer, c.Request)
 	logger.Info("Watch collection endpoints", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
@@ -133,8 +140,9 @@ func watchAllEndpointsNS(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	logger.Info("Watch collection endpoints namespaces/"+namespace, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
-	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/endpoints", token, c.Writer, c.Request)
+	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/endpoints"+urlParas, token, c.Writer, c.Request)
 	logger.Info("Watch collection endpoints namespaces/"+namespace, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
@@ -143,8 +151,9 @@ func UpdateEndpointsNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PUT", "/api/v1/namespaces/"+namespace+"/endpoints/"+name, token, rBody)
+	req, err := oapi.GenRequest("PUT", "/api/v1/namespaces/"+namespace+"/endpoints/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Update A Endpoints In A Namespace Fail", err)
 	}
@@ -158,8 +167,9 @@ func PatchEndpointsNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PATCH", "/api/v1/namespaces/"+namespace+"/endpoints/"+name, token, rBody)
+	req, err := oapi.GenRequest("PATCH", "/api/v1/namespaces/"+namespace+"/endpoints/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Patch A Endpoints In A Namespace Fail", err)
 	}
@@ -173,8 +183,9 @@ func DeleteEndpointsNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("DELETE", "/api/v1/namespaces/"+namespace+"/endpoints/"+name, token, rBody)
+	req, err := oapi.GenRequest("DELETE", "/api/v1/namespaces/"+namespace+"/endpoints/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Delete A Endpoints In A Namespace Fail", err)
 	}
@@ -187,7 +198,8 @@ func DeleteEndpointsNS(c *gin.Context) {
 func DeleteAllEndpointsNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
-	req, err := oapi.GenRequest("DELETE", "/api/v1/namespaces/"+namespace+"/endpoints", token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("DELETE", "/api/v1/namespaces/"+namespace+"/endpoints"+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Delete All Endpoints In A Namespace Fail", err)
 	}

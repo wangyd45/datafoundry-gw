@@ -22,7 +22,8 @@ func GetHPAns(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	req, err := apirequest.GenRequest("GET", "/apis/autoscaling/v1/namespaces/"+namespace+"/horizontalpodautoscalers/"+name, token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := apirequest.GenRequest("GET", "/apis/autoscaling/v1/namespaces/"+namespace+"/horizontalpodautoscalers/"+name+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get a HorizontalPodAutoscaler in a namespace Fail", err)
 	}
@@ -36,9 +37,10 @@ func UpdateHPAns(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req, err := apirequest.GenRequest("PUT", "/apis/autoscaling/v1/namespaces/"+namespace+"/horizontalpodautoscalers/"+name, token, rBody)
+	req, err := apirequest.GenRequest("PUT", "/apis/autoscaling/v1/namespaces/"+namespace+"/horizontalpodautoscalers/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Update HorizontalPodAutoscaler in a namespace error ", err)
 	}
@@ -52,9 +54,10 @@ func PatchHPAns(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req, err := apirequest.GenRequest("PATCH", "/apis/autoscaling/v1/namespaces/"+namespace+"/horizontalpodautoscalers/"+name, token, rBody)
+	req, err := apirequest.GenRequest("PATCH", "/apis/autoscaling/v1/namespaces/"+namespace+"/horizontalpodautoscalers/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Patch HorizontalPodAutoscaler in a namespace error ", err)
 	}
@@ -68,9 +71,10 @@ func DeleteHPAns(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req, err := apirequest.GenRequest("DELETE", "/apis/autoscaling/v1/namespaces/"+namespace+"/horizontalpodautoscalers/"+name, token, rBody)
+	req, err := apirequest.GenRequest("DELETE", "/apis/autoscaling/v1/namespaces/"+namespace+"/horizontalpodautoscalers/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Delete HorizontalPodAutoscaler in a namespace error ", err)
 	}
@@ -84,7 +88,8 @@ func GetSFSns(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	req, err := apirequest.GenRequest("GET", "/apis/apps/v1beta1/namespaces/"+namespace+"/statefulsets/"+name, token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := apirequest.GenRequest("GET", "/apis/apps/v1beta1/namespaces/"+namespace+"/statefulsets/"+name+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get a StatefulSet in a namespace Fail", err)
 	}
@@ -98,9 +103,10 @@ func UpdateSFSns(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req, err := apirequest.GenRequest("PUT", "/apis/apps/v1beta1/namespaces/"+namespace+"/statefulsets/"+name, token, rBody)
+	req, err := apirequest.GenRequest("PUT", "/apis/apps/v1beta1/namespaces/"+namespace+"/statefulsets/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Update StatefulSet in a namespace error ", err)
 	}
@@ -114,9 +120,10 @@ func PatchSFSns(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req, err := apirequest.GenRequest("PATCH", "/apis/apps/v1beta1/namespaces/"+namespace+"/statefulsets/"+name, token, rBody)
+	req, err := apirequest.GenRequest("PATCH", "/apis/apps/v1beta1/namespaces/"+namespace+"/statefulsets/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Patch StatefulSet in a namespace error ", err)
 	}
@@ -130,9 +137,10 @@ func DeleteSFSns(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req, err := apirequest.GenRequest("DELETE", "/apis/apps/v1beta1/namespaces/"+namespace+"/statefulsets/"+name, token, rBody)
+	req, err := apirequest.GenRequest("DELETE", "/apis/apps/v1beta1/namespaces/"+namespace+"/statefulsets/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Delete StatefulSet in a namespace error ", err)
 	}
@@ -146,7 +154,8 @@ func GetDeploymentns(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	req, err := apirequest.GenRequest("GET", "/apis/extensions/v1beta1/namespaces/"+namespace+"/deployments/"+name, token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := apirequest.GenRequest("GET", "/apis/extensions/v1beta1/namespaces/"+namespace+"/deployments/"+name+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get a Deployment in a namespace Fail", err)
 	}
@@ -160,9 +169,10 @@ func UpdateDeploymentns(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req, err := apirequest.GenRequest("PUT", "/apis/extensions/v1beta1/namespaces/"+namespace+"/deployments/"+name, token, rBody)
+	req, err := apirequest.GenRequest("PUT", "/apis/extensions/v1beta1/namespaces/"+namespace+"/deployments/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Update Deployment in a namespace error ", err)
 	}
@@ -176,9 +186,10 @@ func PatchDeploymentns(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req, err := apirequest.GenRequest("PATCH", "/apis/extensions/v1beta1/namespaces/"+namespace+"/deployments/"+name, token, rBody)
+	req, err := apirequest.GenRequest("PATCH", "/apis/extensions/v1beta1/namespaces/"+namespace+"/deployments/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Patch Deployment in a namespace error ", err)
 	}
@@ -192,9 +203,10 @@ func DeleteDeploymentns(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req, err := apirequest.GenRequest("DELETE", "/apis/extensions/v1beta1/namespaces/"+namespace+"/deployments/"+name, token, rBody)
+	req, err := apirequest.GenRequest("DELETE", "/apis/extensions/v1beta1/namespaces/"+namespace+"/deployments/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Delete Deployment in a namespace error ", err)
 	}
@@ -208,7 +220,8 @@ func GetDeploymentScalens(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	req, err := apirequest.GenRequest("GET", "/apis/extensions/v1beta1/namespaces/"+namespace+"/deployments/"+name+"/scale", token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := apirequest.GenRequest("GET", "/apis/extensions/v1beta1/namespaces/"+namespace+"/deployments/"+name+"/scale"+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get scale of a Deployment in a namespace Fail", err)
 	}
@@ -222,9 +235,10 @@ func UpdateDeploymentScalens(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req, err := apirequest.GenRequest("PUT", "/apis/extensions/v1beta1/namespaces/"+namespace+"/deployments/"+name+"/scale", token, rBody)
+	req, err := apirequest.GenRequest("PUT", "/apis/extensions/v1beta1/namespaces/"+namespace+"/deployments/"+name+"/scale"+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Update scale of a Deployment in a namespace error ", err)
 	}
@@ -238,9 +252,10 @@ func PatchDeploymentScalens(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req, err := apirequest.GenRequest("PATCH", "/apis/extensions/v1beta1/namespaces/"+namespace+"/deployments/"+name+"/scale", token, rBody)
+	req, err := apirequest.GenRequest("PATCH", "/apis/extensions/v1beta1/namespaces/"+namespace+"/deployments/"+name+"/scale"+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Patch scale of a Deployment in a namespace error ", err)
 	}
@@ -254,7 +269,8 @@ func GetRSns(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	req, err := apirequest.GenRequest("GET", "/apis/extensions/v1beta1/namespaces/"+namespace+"/replicasets/"+name, token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := apirequest.GenRequest("GET", "/apis/extensions/v1beta1/namespaces/"+namespace+"/replicasets/"+name+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get a ReplicaSet in a namespace Fail", err)
 	}
@@ -268,9 +284,10 @@ func UpdateRSns(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req, err := apirequest.GenRequest("PUT", "/apis/extensions/v1beta1/namespaces/"+namespace+"/replicasets/"+name, token, rBody)
+	req, err := apirequest.GenRequest("PUT", "/apis/extensions/v1beta1/namespaces/"+namespace+"/replicasets/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Update ReplicaSet in a namespace error ", err)
 	}
@@ -284,9 +301,10 @@ func PatchRSns(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req, err := apirequest.GenRequest("PATCH", "/apis/extensions/v1beta1/namespaces/"+namespace+"/replicasets/"+name, token, rBody)
+	req, err := apirequest.GenRequest("PATCH", "/apis/extensions/v1beta1/namespaces/"+namespace+"/replicasets/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Patch ReplicaSet in a namespace error ", err)
 	}
@@ -300,9 +318,10 @@ func DeleteRSns(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req, err := apirequest.GenRequest("DELETE", "/apis/extensions/v1beta1/namespaces/"+namespace+"/replicasets/"+name, token, rBody)
+	req, err := apirequest.GenRequest("DELETE", "/apis/extensions/v1beta1/namespaces/"+namespace+"/replicasets/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Delete ReplicaSet in a namespace error ", err)
 	}
@@ -333,7 +352,8 @@ func GorWAllDeployns(c *gin.Context) {
 func getAllRSns(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
-	req, err := apirequest.GenRequest("GET", "/apis/extensions/v1beta1/namespaces/"+namespace+"/replicasets", token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := apirequest.GenRequest("GET", "/apis/extensions/v1beta1/namespaces/"+namespace+"/replicasets"+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get all ReplicaSet in a namespace Fail", err)
 	}
@@ -346,15 +366,17 @@ func getAllRSns(c *gin.Context) {
 func watchAllRSns(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetWSToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	logger.Info("Watch collection replicaset", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
-	apirequest.WSRequest("/apis/extensions/v1beta1/watch/namespaces/"+namespace+"/replicasets", token, c.Writer, c.Request)
+	apirequest.WSRequest("/apis/extensions/v1beta1/watch/namespaces/"+namespace+"/replicasets"+urlParas, token, c.Writer, c.Request)
 	logger.Info("Watch collection replicaset", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 }
 
 func getAllDeployns(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
-	req, err := apirequest.GenRequest("GET", "/apis/extensions/v1beta1/namespaces/"+namespace+"/deployments", token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := apirequest.GenRequest("GET", "/apis/extensions/v1beta1/namespaces/"+namespace+"/deployments"+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get all Deployment in a namespace Fail", err)
 	}
@@ -367,7 +389,8 @@ func getAllDeployns(c *gin.Context) {
 func watchAllDeployns(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetWSToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	logger.Info("Watch collection extension/deployment namespaces/"+namespace, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
-	apirequest.WSRequest("/apis/extensions/v1beta1/watch/namespaces/"+namespace+"/deployments", token, c.Writer, c.Request)
+	apirequest.WSRequest("/apis/extensions/v1beta1/watch/namespaces/"+namespace+"/deployments"+urlParas, token, c.Writer, c.Request)
 	logger.Info("Watch collection extension/deployment namespaces/"+namespace, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 }

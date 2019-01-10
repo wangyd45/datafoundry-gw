@@ -13,9 +13,9 @@ import (
 )
 
 const (
-	CPUURL     = "/hawkular/metrics/counters/data?"
-	MEMORYURL  = "/hawkular/metrics/gauges/data?"
-	NETWORKURL = "/hawkular/metrics/gauges/data?"
+	CPUURL     = "/hawkular/metrics/counters/data"
+	MEMORYURL  = "/hawkular/metrics/gauges/data"
+	NETWORKURL = "/hawkular/metrics/gauges/data"
 )
 
 type Tags struct {

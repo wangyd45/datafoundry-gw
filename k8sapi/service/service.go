@@ -26,12 +26,13 @@ func init() {
 
 func CreateService(c *gin.Context) {
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreateService Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("POST", SERVICE, token, rBody)
+	req, err := api.GenRequest("POST", SERVICE+urlParas, token, rBody)
 	if err != nil {
 		log.Error("CreateService error ", err)
 	}
@@ -47,12 +48,13 @@ func CreateService(c *gin.Context) {
 func CreateServiceInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreateServiceInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("POST", SERVICENAME+"/"+namespace+"/services", token, rBody)
+	req, err := api.GenRequest("POST", SERVICENAME+"/"+namespace+"/services"+urlParas, token, rBody)
 	if err != nil {
 		log.Error("CreateServiceInNS error ", err)
 	}
@@ -69,12 +71,13 @@ func CreateProxysInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreateProxysInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("POST", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy", token, rBody)
+	req, err := api.GenRequest("POST", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy"+urlParas, token, rBody)
 	if err != nil {
 		log.Error("CreateProxysInNS error ", err)
 	}
@@ -92,12 +95,13 @@ func CreateProxysPathInNS(c *gin.Context) {
 	name := c.Param("name")
 	path := c.Param("path")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreateProxysPathInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("POST", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy/"+path, token, rBody)
+	req, err := api.GenRequest("POST", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy/"+path+urlParas, token, rBody)
 	if err != nil {
 		log.Error("CreateProxysPathInNS error ", err)
 	}
@@ -114,12 +118,13 @@ func HeadProxysInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("HeadProxysInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("HEAD", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy", token, rBody)
+	req, err := api.GenRequest("HEAD", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy"+urlParas, token, rBody)
 	if err != nil {
 		log.Error("HeadProxysInNS error ", err)
 	}
@@ -137,12 +142,13 @@ func HeadProxysPathInNS(c *gin.Context) {
 	name := c.Param("name")
 	path := c.Param("path")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("HeadProxysPathInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("HEAD", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy/"+path, token, rBody)
+	req, err := api.GenRequest("HEAD", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy/"+path+urlParas, token, rBody)
 	if err != nil {
 		log.Error("HeadProxysPathInNS error ", err)
 	}
@@ -162,7 +168,8 @@ func GetServiceFromNS(c *gin.Context) {
 		namespace := c.Param("namespace")
 		name := c.Param("name")
 		token := pkg.GetToken(c)
-		req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/services/"+name, token, []byte{})
+		urlParas := pkg.SliceURL(c.Request.URL.String())
+		req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/services/"+name+urlParas, token, []byte{})
 		if err != nil {
 			log.Error("GetServiceFromNS error ", err)
 		}
@@ -181,7 +188,8 @@ func GetAllServices(c *gin.Context) {
 		watchAllServices(c)
 	} else {
 		token := pkg.GetToken(c)
-		req, err := api.GenRequest("GET", SERVICE, token, []byte{})
+		urlParas := pkg.SliceURL(c.Request.URL.String())
+		req, err := api.GenRequest("GET", SERVICE+urlParas, token, []byte{})
 		if err != nil {
 			log.Error("GetAllServices error ", err)
 		}
@@ -201,7 +209,8 @@ func GetAllServicesFromNS(c *gin.Context) {
 	} else {
 		namespace := c.Param("namespace")
 		token := pkg.GetToken(c)
-		req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/services", token, []byte{})
+		urlParas := pkg.SliceURL(c.Request.URL.String())
+		req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/services"+urlParas, token, []byte{})
 		if err != nil {
 			log.Error("GetAllServicesFromNS error ", err)
 		}
@@ -219,7 +228,8 @@ func GetStuServiceFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/services/"+name+"/status", token, []byte{})
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/services/"+name+"/status"+urlParas, token, []byte{})
 	if err != nil {
 		log.Error("GetStuServiceFromNS error ", err)
 	}
@@ -236,7 +246,8 @@ func GetProServiceFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy", token, []byte{})
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy"+urlParas, token, []byte{})
 	if err != nil {
 		log.Error("GetProServiceFromNS error ", err)
 	}
@@ -254,7 +265,8 @@ func GetProPathServiceFromNS(c *gin.Context) {
 	name := c.Param("name")
 	path := c.Param("path")
 	token := pkg.GetToken(c)
-	req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy/"+path, token, []byte{})
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy/"+path+urlParas, token, []byte{})
 	if err != nil {
 		log.Error("GetProPathServiceFromNS error ", err)
 	}
@@ -271,23 +283,26 @@ func watchServicesFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetWSToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	log.Info("Watch Service From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "start watch"})
-	api.WSRequest(WATCH+"/"+namespace+"/services/"+name, token, c.Writer, c.Request)
+	api.WSRequest(WATCH+"/"+namespace+"/services/"+name+urlParas, token, c.Writer, c.Request)
 	log.Info("Watch Service From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "end watch"})
 }
 
 func watchAllServices(c *gin.Context) {
 	token := pkg.GetWSToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	log.Info("Watch Collection Service", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "start watch"})
-	api.WSRequest(WATCHALL, token, c.Writer, c.Request)
+	api.WSRequest(WATCHALL+urlParas, token, c.Writer, c.Request)
 	log.Info("Watch Collection Service", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "end watch"})
 }
 
 func watchAllServicesFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetWSToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	log.Info("Watch Collection Service From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "start watch"})
-	api.WSRequest(WATCH+"/"+namespace+"/services", token, c.Writer, c.Request)
+	api.WSRequest(WATCH+"/"+namespace+"/services"+urlParas, token, c.Writer, c.Request)
 	log.Info("Watch Collection Service From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "end watch"})
 }
 
@@ -295,12 +310,13 @@ func UpdataServicesFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("UpdataServicesFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PUT", SERVICENAME+"/"+namespace+"/services/"+name, token, rBody)
+	req, err := api.GenRequest("PUT", SERVICENAME+"/"+namespace+"/services/"+name+urlParas, token, rBody)
 	if err != nil {
 		log.Error("UpdataServicesFromNS error ", err)
 	}
@@ -317,12 +333,13 @@ func UpdataStuServicesFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("UpdataStuServicesFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PUT", SERVICENAME+"/"+namespace+"/services/"+name+"/status", token, rBody)
+	req, err := api.GenRequest("PUT", SERVICENAME+"/"+namespace+"/services/"+name+"/status"+urlParas, token, rBody)
 	if err != nil {
 		log.Error("UpdataStuServicesFromNS error ", err)
 	}
@@ -339,12 +356,13 @@ func UpdataProServicesFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("UpdataProServicesFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PUT", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy", token, rBody)
+	req, err := api.GenRequest("PUT", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy"+urlParas, token, rBody)
 	if err != nil {
 		log.Error("UpdataProServicesFromNS error ", err)
 	}
@@ -362,12 +380,13 @@ func UpdataProPathServicesFromNS(c *gin.Context) {
 	name := c.Param("name")
 	path := c.Param("path")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("UpdataProPathServicesFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PUT", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy/"+path, token, rBody)
+	req, err := api.GenRequest("PUT", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy/"+path+urlParas, token, rBody)
 	if err != nil {
 		log.Error("UpdataProPathServicesFromNS error ", err)
 	}
@@ -384,12 +403,13 @@ func PatchServicesFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("PatchServicesFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PATCH", SERVICENAME+"/"+namespace+"/services/"+name, token, rBody)
+	req, err := api.GenRequest("PATCH", SERVICENAME+"/"+namespace+"/services/"+name+urlParas, token, rBody)
 	if err != nil {
 		log.Error("PatchServicesFromNS error ", err)
 	}
@@ -406,12 +426,13 @@ func PatchStuServicesFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("PatchStuServicesFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PATCH", SERVICENAME+"/"+namespace+"/services/"+name+"/status", token, rBody)
+	req, err := api.GenRequest("PATCH", SERVICENAME+"/"+namespace+"/services/"+name+"/status"+urlParas, token, rBody)
 	if err != nil {
 		log.Error("PatchStuServicesFromNS error ", err)
 	}
@@ -428,12 +449,13 @@ func PatchProServicesFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("PatchProServicesFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PATCH", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy", token, rBody)
+	req, err := api.GenRequest("PATCH", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy"+urlParas, token, rBody)
 	if err != nil {
 		log.Error("PatchProServicesFromNS error ", err)
 	}
@@ -451,12 +473,13 @@ func PatchProPathServicesFromNS(c *gin.Context) {
 	name := c.Param("name")
 	path := c.Param("path")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("PatchProPathServicesFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PATCH", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy/"+path, token, rBody)
+	req, err := api.GenRequest("PATCH", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy/"+path+urlParas, token, rBody)
 	if err != nil {
 		log.Error("PatchProPathServicesFromNS error ", err)
 	}
@@ -473,12 +496,13 @@ func OptionsServicesFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("OptionsServicesFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("OPTIONS", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy", token, rBody)
+	req, err := api.GenRequest("OPTIONS", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy"+urlParas, token, rBody)
 	if err != nil {
 		log.Error("OptionsServicesFromNS error ", err)
 	}
@@ -496,12 +520,13 @@ func OptionsPathServicesFromNS(c *gin.Context) {
 	name := c.Param("name")
 	path := c.Param("path")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("OptionsPathServicesFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("OPTIONS", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy/"+path, token, rBody)
+	req, err := api.GenRequest("OPTIONS", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy/"+path+urlParas, token, rBody)
 	if err != nil {
 		log.Error("OptionsPathServicesFromNS error ", err)
 	}
@@ -518,12 +543,13 @@ func DeleteProServicesFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("DeleteProServicesFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("DELETE", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy", token, rBody)
+	req, err := api.GenRequest("DELETE", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy"+urlParas, token, rBody)
 	if err != nil {
 		log.Error("DeleteProServicesFromNS error ", err)
 	}
@@ -541,12 +567,13 @@ func DeleteProPathServicesFromNS(c *gin.Context) {
 	name := c.Param("name")
 	path := c.Param("path")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("DeleteProPathServicesFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("DELETE", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy/"+path, token, rBody)
+	req, err := api.GenRequest("DELETE", SERVICENAME+"/"+namespace+"/services/"+name+"/proxy/"+path+urlParas, token, rBody)
 	if err != nil {
 		log.Error("DeleteProPathServicesFromNS error ", err)
 	}

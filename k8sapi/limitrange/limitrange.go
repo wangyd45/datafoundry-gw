@@ -18,9 +18,10 @@ func init() {
 
 func CreateLimitRange(c *gin.Context) {
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	//调用原生接口
-	req, err := oapi.GenRequest("POST", "/api/v1/limitranges", token, rBody)
+	req, err := oapi.GenRequest("POST", "/api/v1/limitranges"+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Create A LimitRange Fail", err)
 	}
@@ -33,9 +34,10 @@ func CreateLimitRange(c *gin.Context) {
 func CreateLimitRangeNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	//调用原生接口
-	req, err := oapi.GenRequest("POST", "/api/v1/namespaces/"+namespace+"/limitranges", token, rBody)
+	req, err := oapi.GenRequest("POST", "/api/v1/namespaces/"+namespace+"/limitranges"+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Create A LimitRange In A Namespace Fail", err)
 	}
@@ -73,7 +75,8 @@ func getLimitRangeNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	req, err := oapi.GenRequest("GET", "/api/v1/namespaces/"+namespace+"/limitranges/"+name, token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", "/api/v1/namespaces/"+namespace+"/limitranges/"+name+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get A LimitRange In A Namespace Fail", err)
 	}
@@ -85,7 +88,8 @@ func getLimitRangeNS(c *gin.Context) {
 
 func getAllLimitRanges(c *gin.Context) {
 	token := pkg.GetToken(c)
-	req, err := oapi.GenRequest("GET", "/api/v1/limitranges", token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", "/api/v1/limitranges"+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get All LimitRanges Fail", err)
 	}
@@ -98,7 +102,8 @@ func getAllLimitRanges(c *gin.Context) {
 func getAllLimitRangesNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
-	req, err := oapi.GenRequest("GET", "/api/v1/namespaces/"+namespace+"/limitranges", token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", "/api/v1/namespaces/"+namespace+"/limitranges"+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get All LimitRanges In A Namespace Fail", err)
 	}
@@ -113,8 +118,9 @@ func watchLimitRangeNS(c *gin.Context) {
 	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	logger.Info("Watch limitrange namespaces/"+namespace+"/names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
-	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/limitranges/"+name, token, c.Writer, c.Request)
+	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/limitranges/"+name+urlParas, token, c.Writer, c.Request)
 	logger.Info("Watch limitrange namespaces/"+namespace+"/names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
@@ -122,8 +128,9 @@ func watchLimitRangeNS(c *gin.Context) {
 func watchAllLimitRanges(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	logger.Info("Watch collection limitrange", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
-	oapi.WSRequest("/api/v1/watch/limitranges", token, c.Writer, c.Request)
+	oapi.WSRequest("/api/v1/watch/limitranges"+urlParas, token, c.Writer, c.Request)
 	logger.Info("Watch collection limitrange", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
@@ -132,8 +139,9 @@ func watchAllLimitRangesNS(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
 	namespace := c.Param("namespace")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	logger.Info("Watch collection limitrange namespaces/"+namespace, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
-	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/limitranges", token, c.Writer, c.Request)
+	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/limitranges"+urlParas, token, c.Writer, c.Request)
 	logger.Info("Watch collection limitrange namespaces/"+namespace, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
@@ -142,8 +150,9 @@ func UpdateLimitRangeNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PUT", "/api/v1/namespaces/"+namespace+"/limitranges/"+name, token, rBody)
+	req, err := oapi.GenRequest("PUT", "/api/v1/namespaces/"+namespace+"/limitranges/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Update A LimitRange In A Namespace Fail", err)
 	}
@@ -157,8 +166,9 @@ func PatchLimitRangeNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PATCH", "/api/v1/namespaces/"+namespace+"/limitranges/"+name, token, rBody)
+	req, err := oapi.GenRequest("PATCH", "/api/v1/namespaces/"+namespace+"/limitranges/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Patch A LimitRange In A Namespace Fail", err)
 	}
@@ -172,8 +182,9 @@ func DeleteLimitRangeNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("DELETE", "/api/v1/namespaces/"+namespace+"/limitranges/"+name, token, rBody)
+	req, err := oapi.GenRequest("DELETE", "/api/v1/namespaces/"+namespace+"/limitranges/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Delete A LimitRange In A Namespace Fail", err)
 	}
@@ -186,7 +197,8 @@ func DeleteLimitRangeNS(c *gin.Context) {
 func DeleteAllLimitRangeNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
-	req, err := oapi.GenRequest("DELETE", "/api/v1/namespaces/"+namespace+"/limitranges", token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("DELETE", "/api/v1/namespaces/"+namespace+"/limitranges"+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Delete All LimitRange In A Namespace Fail", err)
 	}

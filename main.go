@@ -496,8 +496,8 @@ func handle() (router *gin.Engine) {
 	router.PUT("/apis/extensions/v1beta1/namespaces/:namespace/replicasets/:name", apis.UpdateRSns)
 	router.PATCH("/apis/extensions/v1beta1/namespaces/:namespace/replicasets/:name", apis.PatchRSns)
 	router.DELETE("/apis/extensions/v1beta1/namespaces/:namespace/replicasets/:name", apis.DeleteRSns)
-	router.GET("/apis/extensions/v1beta1/namespaces/:namespace/replicasets", apis.WatchAllRSns)
-	router.GET("/apis/extensions/v1beta1/namespaces/:namespace/deployments", apis.WatchAllDeployns)
+	router.GET("/apis/extensions/v1beta1/namespaces/:namespace/replicasets", apis.GorWAllRSns)
+	router.GET("/apis/extensions/v1beta1/namespaces/:namespace/deployments", apis.GorWAllDeployns)
 
 	// 未知路由处理
 	router.NoRoute(others.AnyRequest)

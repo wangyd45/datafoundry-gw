@@ -312,7 +312,38 @@ func DeleteRSns(c *gin.Context) {
 	c.Data(req.StatusCode, "application/json", result)
 }
 
-func WatchAllRSns(c *gin.Context) {
+func GorWAllRSns(c *gin.Context) {
+
+	if pkg.IsWebsocket(c) {
+		watchAllRSns(c)
+	} else {
+		getAllRSns(c)
+	}
+}
+
+func GorWAllDeployns(c *gin.Context) {
+
+	if pkg.IsWebsocket(c) {
+		watchAllDeployns(c)
+	} else {
+		getAllDeployns(c)
+	}
+}
+
+func getAllRSns(c *gin.Context) {
+	token := pkg.GetToken(c)
+	namespace := c.Param("namespace")
+	req, err := apirequest.GenRequest("GET", "/apis/extensions/v1beta1/namespaces/"+namespace+"/replicasets", token, nil)
+	if err != nil {
+		logger.Error("Get all ReplicaSet in a namespace Fail", err)
+	}
+	logger.Info("Get all replicaset namespaces/"+namespace, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
+	defer req.Body.Close()
+	c.Data(req.StatusCode, "application/json", result)
+}
+
+func watchAllRSns(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetWSToken(c)
 	logger.Info("Watch collection replicaset", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
@@ -320,7 +351,20 @@ func WatchAllRSns(c *gin.Context) {
 	logger.Info("Watch collection replicaset", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 }
 
-func WatchAllDeployns(c *gin.Context) {
+func getAllDeployns(c *gin.Context) {
+	token := pkg.GetToken(c)
+	namespace := c.Param("namespace")
+	req, err := apirequest.GenRequest("GET", "/apis/extensions/v1beta1/namespaces/"+namespace+"/deployments", token, nil)
+	if err != nil {
+		logger.Error("Get all Deployment in a namespace Fail", err)
+	}
+	logger.Info("Get extension/deployments namespaces/"+namespace, map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": req.StatusCode})
+	result, _ := ioutil.ReadAll(req.Body)
+	defer req.Body.Close()
+	c.Data(req.StatusCode, "application/json", result)
+}
+
+func watchAllDeployns(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetWSToken(c)
 	logger.Info("Watch collection extension/deployment namespaces/"+namespace, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})

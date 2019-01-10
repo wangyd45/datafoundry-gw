@@ -28,12 +28,13 @@ func init() {
 
 func CreateBC(c *gin.Context) {
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreateBC Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("POST", BUILD, token, rBody)
+	req, err := oapi.GenRequest("POST", BUILD+urlParas, token, rBody)
 	if err != nil {
 		log.Error("CreateBC error ", err)
 	}
@@ -49,12 +50,13 @@ func CreateBC(c *gin.Context) {
 func CreateBCInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreateBCInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("POST", BUILDNAME+namespace+"/buildconfigs", token, rBody)
+	req, err := oapi.GenRequest("POST", BUILDNAME+namespace+"/buildconfigs"+urlParas, token, rBody)
 	if err != nil {
 		log.Error("CreateBCInNS error ", err)
 	}
@@ -71,12 +73,13 @@ func CreateInsInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreateInsInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("POST", BUILDNAME+namespace+BUILDCONFIG+name+"/instantiate", token, rBody)
+	req, err := oapi.GenRequest("POST", BUILDNAME+namespace+BUILDCONFIG+name+"/instantiate"+urlParas, token, rBody)
 	if err != nil {
 		log.Error("CreateInsInNS error ", err)
 	}
@@ -93,12 +96,13 @@ func CreateInstInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreateInstInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("POST", BUILDNAME+namespace+BUILDCONFIG+name+"/instantiatebinary", token, rBody)
+	req, err := oapi.GenRequest("POST", BUILDNAME+namespace+BUILDCONFIG+name+"/instantiatebinary"+urlParas, token, rBody)
 	if err != nil {
 		log.Error("CreateInstInNS error ", err)
 	}
@@ -115,12 +119,13 @@ func CreateWebInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreateWebInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("POST", BUILDNAME+namespace+BUILDCONFIG+name+"/webhooks", token, rBody)
+	req, err := oapi.GenRequest("POST", BUILDNAME+namespace+BUILDCONFIG+name+"/webhooks"+urlParas, token, rBody)
 	if err != nil {
 		log.Error("CreateWebInNS error ", err)
 	}
@@ -138,12 +143,13 @@ func CreateWebInNSP(c *gin.Context) {
 	name := c.Param("name")
 	path := c.Param("path")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreateWebInNSP Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("POST", BUILDNAME+namespace+BUILDCONFIG+name+"/webhooks/"+path, token, rBody)
+	req, err := oapi.GenRequest("POST", BUILDNAME+namespace+BUILDCONFIG+name+"/webhooks/"+path+urlParas, token, rBody)
 	if err != nil {
 		log.Error("CreateWebInNSP error ", err)
 	}
@@ -163,7 +169,8 @@ func GetBCFromNS(c *gin.Context) {
 		namespace := c.Param("namespace")
 		name := c.Param("name")
 		token := pkg.GetToken(c)
-		req, err := oapi.GenRequest("GET", BUILDNAME+namespace+BUILDCONFIG+name, token, []byte{})
+		urlParas := pkg.SliceURL(c.Request.URL.String())
+		req, err := oapi.GenRequest("GET", BUILDNAME+namespace+BUILDCONFIG+name+urlParas, token, []byte{})
 		if err != nil {
 			log.Error("GetBCFromNS error ", err)
 		}
@@ -182,7 +189,8 @@ func GetAllBC(c *gin.Context) {
 		watchAllBC(c)
 	} else {
 		token := pkg.GetToken(c)
-		req, err := oapi.GenRequest("GET", BUILD, token, []byte{})
+		urlParas := pkg.SliceURL(c.Request.URL.String())
+		req, err := oapi.GenRequest("GET", BUILD+urlParas, token, []byte{})
 		if err != nil {
 			log.Error("GetAllBC error ", err)
 		}
@@ -202,7 +210,8 @@ func GetAllBCFromNS(c *gin.Context) {
 	} else {
 		namespace := c.Param("namespace")
 		token := pkg.GetToken(c)
-		req, err := oapi.GenRequest("GET", BUILDNAME+namespace+"/buildconfigs", token, []byte{})
+		urlParas := pkg.SliceURL(c.Request.URL.String())
+		req, err := oapi.GenRequest("GET", BUILDNAME+namespace+"/buildconfigs"+urlParas, token, []byte{})
 		if err != nil {
 			log.Error("GetAllBCFromNS error ", err)
 		}
@@ -220,23 +229,26 @@ func watchBCFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetWSToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	log.Info("Watch A BC From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "start watch"})
-	oapi.WSRequest(WATCH+namespace+BUILDCONFIG+name, token, c.Writer, c.Request)
+	oapi.WSRequest(WATCH+namespace+BUILDCONFIG+name+urlParas, token, c.Writer, c.Request)
 	log.Info("Watch A BC From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "end watch"})
 }
 
 func watchAllBC(c *gin.Context) {
 	token := pkg.GetWSToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	log.Info("Watch collection BC", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "start watch"})
-	oapi.WSRequest(WATCHALL, token, c.Writer, c.Request)
+	oapi.WSRequest(WATCHALL+urlParas, token, c.Writer, c.Request)
 	log.Info("Watch collection BC", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "end watch"})
 }
 
 func watchAllBCFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetWSToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	log.Info("Watch collection BC From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "start watch"})
-	oapi.WSRequest(WATCH+namespace+"/buildconfigs", token, c.Writer, c.Request)
+	oapi.WSRequest(WATCH+namespace+"/buildconfigs"+urlParas, token, c.Writer, c.Request)
 	log.Info("Watch collection BC From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "end watch"})
 }
 
@@ -244,12 +256,13 @@ func UpdataBCFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("UpdataBCFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("PUT", BUILDNAME+namespace+BUILDCONFIG+name, token, rBody)
+	req, err := oapi.GenRequest("PUT", BUILDNAME+namespace+BUILDCONFIG+name+urlParas, token, rBody)
 	if err != nil {
 		log.Error("UpdataBCFromNS error ", err)
 	}
@@ -266,12 +279,13 @@ func PatchBCFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("PatchBCFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("PATCH", BUILDNAME+namespace+BUILDCONFIG+name, token, rBody)
+	req, err := oapi.GenRequest("PATCH", BUILDNAME+namespace+BUILDCONFIG+name+urlParas, token, rBody)
 	if err != nil {
 		log.Error("PatchBCFromNS error ", err)
 	}
@@ -288,12 +302,13 @@ func DeleteBCFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("DeleteBCFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("DELETE", BUILDNAME+namespace+BUILDCONFIG+name, token, rBody)
+	req, err := oapi.GenRequest("DELETE", BUILDNAME+namespace+BUILDCONFIG+name+urlParas, token, rBody)
 	if err != nil {
 		log.Error("DeleteBCFromNS error ", err)
 	}
@@ -309,12 +324,13 @@ func DeleteBCFromNS(c *gin.Context) {
 func DeleteAllBuildConFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("DeleteAllBuildConFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("DELETE", BUILDNAME+namespace+BUILDCONFIG, token, rBody)
+	req, err := oapi.GenRequest("DELETE", BUILDNAME+namespace+BUILDCONFIG+urlParas, token, rBody)
 	if err != nil {
 		log.Error("DeleteAllBuildConFromNS error ", err)
 	}

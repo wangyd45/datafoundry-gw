@@ -28,12 +28,13 @@ func init() {
 
 func CreateDC(c *gin.Context) {
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreateDC Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("POST", DEP, token, rBody)
+	req, err := oapi.GenRequest("POST", DEP+urlParas, token, rBody)
 	if err != nil {
 		log.Error("CreateDC error ", err)
 	}
@@ -49,12 +50,13 @@ func CreateDC(c *gin.Context) {
 func CreateDCInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreateDCInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("POST", DEPNAME+namespace+"/deploymentconfigs", token, rBody)
+	req, err := oapi.GenRequest("POST", DEPNAME+namespace+"/deploymentconfigs"+urlParas, token, rBody)
 	if err != nil {
 		log.Error("CreateDCInNS error ", err)
 	}
@@ -71,12 +73,13 @@ func CreateInsInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreateInsInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("POST", DEPNAME+namespace+DEPCONFIG+name+INS, token, rBody)
+	req, err := oapi.GenRequest("POST", DEPNAME+namespace+DEPCONFIG+name+INS+urlParas, token, rBody)
 	if err != nil {
 		log.Error("CreateInsInNS error ", err)
 	}
@@ -93,12 +96,13 @@ func CreateRollBackInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreateRollBackInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("POST", DEPNAME+namespace+DEPCONFIG+name+"/rollback", token, rBody)
+	req, err := oapi.GenRequest("POST", DEPNAME+namespace+DEPCONFIG+name+"/rollback"+urlParas, token, rBody)
 	if err != nil {
 		log.Error("CreateInstInNameSpace error ", err)
 	}
@@ -118,7 +122,8 @@ func GetDCFromNS(c *gin.Context) {
 		namespace := c.Param("namespace")
 		name := c.Param("name")
 		token := pkg.GetToken(c)
-		req, err := oapi.GenRequest("GET", DEPNAME+namespace+DEPCONFIG+name, token, []byte{})
+		urlParas := pkg.SliceURL(c.Request.URL.String())
+		req, err := oapi.GenRequest("GET", DEPNAME+namespace+DEPCONFIG+name+urlParas, token, []byte{})
 		if err != nil {
 			log.Error("GetDCFromNS error ", err)
 		}
@@ -137,7 +142,8 @@ func GetAllDC(c *gin.Context) {
 		watchAllDC(c)
 	} else {
 		token := pkg.GetToken(c)
-		req, err := oapi.GenRequest("GET", DEP, token, []byte{})
+		urlParas := pkg.SliceURL(c.Request.URL.String())
+		req, err := oapi.GenRequest("GET", DEP+urlParas, token, []byte{})
 		if err != nil {
 			log.Error("GetAllDC error ", err)
 		}
@@ -157,7 +163,8 @@ func GetAllDCFromNS(c *gin.Context) {
 	} else {
 		namespace := c.Param("namespace")
 		token := pkg.GetToken(c)
-		req, err := oapi.GenRequest("GET", DEPNAME+namespace+"/deploymentconfigs", token, []byte{})
+		urlParas := pkg.SliceURL(c.Request.URL.String())
+		req, err := oapi.GenRequest("GET", DEPNAME+namespace+"/deploymentconfigs"+urlParas, token, []byte{})
 		if err != nil {
 			log.Error("GetAllDCFromNS error ", err)
 		}
@@ -175,7 +182,8 @@ func GetLogDepFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	req, err := oapi.GenRequest("GET", DEPNAME+namespace+DEPCONFIG+name+"/log", token, []byte{})
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", DEPNAME+namespace+DEPCONFIG+name+"/log"+urlParas, token, []byte{})
 	if err != nil {
 		log.Error("GetLogDepFromNS error ", err)
 	}
@@ -197,7 +205,8 @@ func GetScaleDepFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	req, err := oapi.GenRequest("GET", DEPNAME+namespace+DEPCONFIG+name+"/scale", token, []byte{})
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", DEPNAME+namespace+DEPCONFIG+name+"/scale"+urlParas, token, []byte{})
 	if err != nil {
 		log.Error("GetScaleDepFromNS error ", err)
 	}
@@ -214,7 +223,8 @@ func GetStatusDepFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
-	req, err := oapi.GenRequest("GET", DEPNAME+namespace+DEPCONFIG+name+"/status", token, []byte{})
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", DEPNAME+namespace+DEPCONFIG+name+"/status"+urlParas, token, []byte{})
 	if err != nil {
 		log.Error("GetStatusDepFromNS error ", err)
 	}
@@ -231,23 +241,26 @@ func watchDCFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetWSToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	log.Info("Watch A DC From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "start watch"})
-	oapi.WSRequest(WATCH+namespace+DEPCONFIG+name, token, c.Writer, c.Request)
+	oapi.WSRequest(WATCH+namespace+DEPCONFIG+name+urlParas, token, c.Writer, c.Request)
 	log.Info("Watch A DC From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "end watch"})
 }
 
 func watchAllDC(c *gin.Context) {
 	token := pkg.GetWSToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	log.Info("Watch collection DC", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "start watch"})
-	oapi.WSRequest(WATCHALL, token, c.Writer, c.Request)
+	oapi.WSRequest(WATCHALL+urlParas, token, c.Writer, c.Request)
 	log.Info("Watch collection DC", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "end watch"})
 }
 
 func watchAllDCFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetWSToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	log.Info("Watch collectionA DC From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "start watch"})
-	oapi.WSRequest(WATCH+namespace+"/deploymentconfigs", token, c.Writer, c.Request)
+	oapi.WSRequest(WATCH+namespace+"/deploymentconfigs"+urlParas, token, c.Writer, c.Request)
 	log.Info("Watch collection DC From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "end watch"})
 }
 
@@ -255,12 +268,13 @@ func UpdataDCFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("UpdataDCFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("PUT", DEPNAME+namespace+DEPCONFIG+name, token, rBody)
+	req, err := oapi.GenRequest("PUT", DEPNAME+namespace+DEPCONFIG+name+urlParas, token, rBody)
 	if err != nil {
 		log.Error("UpdataDCFromNS error ", err)
 	}
@@ -277,12 +291,13 @@ func UpdataScaleDCFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("UpdataScaleDCFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("PUT", DEPNAME+namespace+DEPCONFIG+name+"/scale", token, rBody)
+	req, err := oapi.GenRequest("PUT", DEPNAME+namespace+DEPCONFIG+name+"/scale"+urlParas, token, rBody)
 	if err != nil {
 		log.Error("UpdataScaleDCFromNS error ", err)
 	}
@@ -299,12 +314,13 @@ func UpdataStatusDCFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("UpdataStatusDCFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("PUT", DEPNAME+namespace+DEPCONFIG+name+"/status", token, rBody)
+	req, err := oapi.GenRequest("PUT", DEPNAME+namespace+DEPCONFIG+name+"/status"+urlParas, token, rBody)
 	if err != nil {
 		log.Error("UpdataStatusDCFromNS error ", err)
 	}
@@ -321,12 +337,13 @@ func PatchDCFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("PatchDCFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("PATCH", DEPNAME+namespace+DEPCONFIG+name, token, rBody)
+	req, err := oapi.GenRequest("PATCH", DEPNAME+namespace+DEPCONFIG+name+urlParas, token, rBody)
 	if err != nil {
 		log.Error("PatchDCFromNS error ", err)
 	}
@@ -343,12 +360,13 @@ func PatchScaleDCFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("PatchScaleDCFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("PATCH", DEPNAME+namespace+DEPCONFIG+name+"/scale", token, rBody)
+	req, err := oapi.GenRequest("PATCH", DEPNAME+namespace+DEPCONFIG+name+"/scale"+urlParas, token, rBody)
 	if err != nil {
 		log.Error("PatchScaleDCFromNS error ", err)
 	}
@@ -365,12 +383,13 @@ func PatchStatusDCFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("PatchStatusDCFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("PATCH", DEPNAME+namespace+DEPCONFIG+name+"/status", token, rBody)
+	req, err := oapi.GenRequest("PATCH", DEPNAME+namespace+DEPCONFIG+name+"/status"+urlParas, token, rBody)
 	if err != nil {
 		log.Error("PatchStatusDCFromNS error ", err)
 	}
@@ -387,12 +406,13 @@ func DeleteDCFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("DeleteDCFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("DELETE", DEPNAME+namespace+DEPCONFIG+name, token, rBody)
+	req, err := oapi.GenRequest("DELETE", DEPNAME+namespace+DEPCONFIG+name+urlParas, token, rBody)
 	if err != nil {
 		log.Error("DeleteDCFromNS error ", err)
 	}
@@ -408,12 +428,13 @@ func DeleteDCFromNS(c *gin.Context) {
 func DeleteAllDepFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("DeleteAllDepFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("DELETE", DEPNAME+namespace+"/deploymentconfigs", token, rBody)
+	req, err := oapi.GenRequest("DELETE", DEPNAME+namespace+"/deploymentconfigs"+urlParas, token, rBody)
 	if err != nil {
 		log.Error("DeleteAllDepFromNS error ", err)
 	}

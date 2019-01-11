@@ -18,8 +18,9 @@ func init() {
 
 func CreateRoleBinding(c *gin.Context) {
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("POST", "/oapi/v1/rolebindings", token, rBody)
+	req, err := oapi.GenRequest("POST", "/oapi/v1/rolebindings"+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Create A RoleBinding Fail", err)
 	}
@@ -32,8 +33,9 @@ func CreateRoleBinding(c *gin.Context) {
 func CreateRoleBindingInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("POST", "/oapi/v1/namespaces/"+namespace+"/rolebindings", token, rBody)
+	req, err := oapi.GenRequest("POST", "/oapi/v1/namespaces/"+namespace+"/rolebindings"+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Create A RoleBinding In A Namespace Fail", err)
 	}
@@ -47,7 +49,8 @@ func GetRoleBindingInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
-	req, err := oapi.GenRequest("GET", "/oapi/v1/namespaces/"+namespace+"/rolebindings/"+name, token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", "/oapi/v1/namespaces/"+namespace+"/rolebindings/"+name+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get A RoleBinding In A Namespace Fail", err)
 	}
@@ -59,7 +62,8 @@ func GetRoleBindingInNS(c *gin.Context) {
 
 func GetAllRoleBindings(c *gin.Context) {
 	token := pkg.GetToken(c)
-	req, err := oapi.GenRequest("GET", "/oapi/v1/rolebindings", token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", "/oapi/v1/rolebindings"+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get All RoleBindings Fail", err)
 	}
@@ -72,7 +76,8 @@ func GetAllRoleBindings(c *gin.Context) {
 func GetRoleBindingsInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
-	req, err := oapi.GenRequest("GET", "/oapi/v1/namespaces/"+namespace+"/rolebindings", token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", "/oapi/v1/namespaces/"+namespace+"/rolebindings"+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get All RoleBindings In A Namespace Fail", err)
 	}
@@ -86,8 +91,9 @@ func UpdateRoleBindingInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PUT", "/oapi/v1/namespaces/"+namespace+"/rolebindings/"+name, token, rBody)
+	req, err := oapi.GenRequest("PUT", "/oapi/v1/namespaces/"+namespace+"/rolebindings/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Update A RoleBinding In A Namespace Fail", err)
 	}
@@ -101,8 +107,9 @@ func PatchRoleBindingInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PATCH", "/oapi/v1/namespaces/"+namespace+"/rolebindings/"+name, token, rBody)
+	req, err := oapi.GenRequest("PATCH", "/oapi/v1/namespaces/"+namespace+"/rolebindings/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Patch A RoleBinding In A Namespace Fail", err)
 	}
@@ -116,8 +123,9 @@ func DeleteRoleBindingInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("DELETE", "/oapi/v1/namespaces/"+namespace+"/rolebindings/"+name, token, rBody)
+	req, err := oapi.GenRequest("DELETE", "/oapi/v1/namespaces/"+namespace+"/rolebindings/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Delete A RoleBinding In A Namespace Fail", err)
 	}

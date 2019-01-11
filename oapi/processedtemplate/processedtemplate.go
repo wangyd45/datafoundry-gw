@@ -23,6 +23,7 @@ func init() {
 func CDProcessedTemplate(c *gin.Context) {
 	token := pkg.GetToken(c)
 	namespace := c.Param("namespace")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 
 	cdptMap, err := pkg.BreakBody(rBody)
@@ -32,7 +33,7 @@ func CDProcessedTemplate(c *gin.Context) {
 	cdStatusMap = make(map[string]int)
 
 	for k, v := range cdptMap {
-		req, err := oapi.GenRequest("POST", "/oapi/v1/namespaces/"+namespace+"/"+strings.ToLower(k)+"s", token, v)
+		req, err := oapi.GenRequest("POST", "/oapi/v1/namespaces/"+namespace+"/"+strings.ToLower(k)+"s"+urlParas, token, v)
 		if err != nil {
 			logger.Error("Create A "+k+" Fail", err)
 		}

@@ -27,9 +27,10 @@ func init() {
 //创建用户
 func CreateUser(c *gin.Context) {
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("POST", USER, token, rBody)
+	req, err := oapi.GenRequest("POST", USER+urlParas, token, rBody)
 	if err != nil {
 		log.Error("CreateUser error ", err)
 	}
@@ -42,7 +43,8 @@ func CreateUser(c *gin.Context) {
 func GetUser(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("name")
-	req, err := oapi.GenRequest("GET", USER+"/"+name, token, []byte{})
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", USER+"/"+name+urlParas, token, []byte{})
 	if err != nil {
 		log.Error("GetUser error ", err)
 	}
@@ -54,8 +56,8 @@ func GetUser(c *gin.Context) {
 //获取用户
 func GetSelf(c *gin.Context) {
 	token := pkg.GetToken(c)
-
-	req, err := oapi.GenRequest("GET", USER+"/~", token, []byte{})
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", USER+"/~"+urlParas, token, []byte{})
 	if err != nil {
 		log.Error("GetSelf error ", err)
 	}
@@ -67,7 +69,8 @@ func GetSelf(c *gin.Context) {
 //获取所有用户
 func GetAllUser(c *gin.Context) {
 	token := pkg.GetToken(c)
-	req, err := oapi.GenRequest("GET", USER, token, []byte{})
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", USER+urlParas, token, []byte{})
 	if err != nil {
 		log.Error("CetAllUser error ", err)
 	}
@@ -79,21 +82,24 @@ func GetAllUser(c *gin.Context) {
 func WatchUser(c *gin.Context) {
 	token := pkg.GetWSToken(c)
 	name := c.Param("name")
-	oapi.WSRequest(WATCH+name, token, c.Writer, c.Request)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	oapi.WSRequest(WATCH+name+urlParas, token, c.Writer, c.Request)
 }
 
 func WatchAllUser(c *gin.Context) {
 	token := pkg.GetWSToken(c)
-	oapi.WSRequest(WATCH, token, c.Writer, c.Request)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	oapi.WSRequest(WATCH+urlParas, token, c.Writer, c.Request)
 }
 
 //更新用户
 func UpdataUser(c *gin.Context) {
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("PUT", USER+"/"+name, token, rBody)
+	req, err := oapi.GenRequest("PUT", USER+"/"+name+urlParas, token, rBody)
 	if err != nil {
 		log.Error("DeleteAllUser error ", err)
 	}
@@ -105,7 +111,8 @@ func UpdataUser(c *gin.Context) {
 func PatchUser(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("name")
-	req, err := oapi.GenRequest("PATCH", USER+"/"+name, token, []byte{})
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("PATCH", USER+"/"+name+urlParas, token, []byte{})
 	if err != nil {
 		log.Error("PatchUser error ", err)
 	}
@@ -118,7 +125,8 @@ func PatchUser(c *gin.Context) {
 func DeleteUser(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("name")
-	req, err := oapi.GenRequest("DELETE", USER+"/"+name, token, []byte{})
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("DELETE", USER+"/"+name+urlParas, token, []byte{})
 	if err != nil {
 		log.Error("DeleteUser error ", err)
 	}
@@ -130,7 +138,8 @@ func DeleteUser(c *gin.Context) {
 //删除所有用户
 func DeleteAllUser(c *gin.Context) {
 	token := pkg.GetToken(c)
-	req, err := oapi.GenRequest("DELETE", USER, token, []byte{})
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("DELETE", USER+urlParas, token, []byte{})
 	if err != nil {
 		log.Error("DeleteAllUser error ", err)
 	}

@@ -21,10 +21,11 @@ func init() {
 func CreateProject(c *gin.Context) {
 	//获取前端传递的Token，无需拼接"Bearer XXXXXXXXXX"
 	token := pkg.GetToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	//获取前端参数
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	//调用原生接口
-	req, err := oapi.GenRequest("POST", "/oapi/v1/projectrequests", token, rBody)
+	req, err := oapi.GenRequest("POST", "/oapi/v1/projectrequests"+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Create A Project Fail", err)
 	}
@@ -39,7 +40,8 @@ func CreateProject(c *gin.Context) {
 func getProject(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("name")
-	req, err := oapi.GenRequest("GET", "/oapi/v1/projects/"+name, token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", "/oapi/v1/projects/"+name+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get A Project Fail", err)
 	}
@@ -70,7 +72,8 @@ func GorWAllProjects(c *gin.Context) {
 //获取project列表-OK
 func getAllProjects(c *gin.Context) {
 	token := pkg.GetToken(c)
-	req, err := oapi.GenRequest("GET", "/oapi/v1/projects", token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("GET", "/oapi/v1/projects"+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Get All Projects Fail", err)
 	}
@@ -84,15 +87,17 @@ func watchAProject(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
 	name := c.Param("name")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	logger.Info("Watch projects/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
-	oapi.WSRequest("/oapi/v1/watch/projects/"+name, token, c.Writer, c.Request)
+	oapi.WSRequest("/oapi/v1/watch/projects/"+name+urlParas, token, c.Writer, c.Request)
 	logger.Info("Watch projects/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 }
 
 func watchAllProjects(c *gin.Context) {
 	token := pkg.GetWSToken(c)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	logger.Info("Watch collection projects", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
-	oapi.WSRequest("/oapi/v1/watch/projects", token, c.Writer, c.Request)
+	oapi.WSRequest("/oapi/v1/watch/projects"+urlParas, token, c.Writer, c.Request)
 	logger.Info("Watch collection projects", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 }
 
@@ -100,8 +105,9 @@ func watchAllProjects(c *gin.Context) {
 func UpdateProject(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("name")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PUT", "/oapi/v1/projects/"+name, token, rBody)
+	req, err := oapi.GenRequest("PUT", "/oapi/v1/projects/"+name+urlParas, token, rBody)
 	if err != nil {
 		logger.Error("Update A Project Fail", err)
 	}
@@ -114,8 +120,9 @@ func UpdateProject(c *gin.Context) {
 func PatchAProject(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("name")
+	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PATCH", "/oapi/v1/projects/"+name, token, rBody)
+	req, err := oapi.GenRequest("PATCH", "/oapi/v1/projects/"+name+urlParas, token, rBody)
 	if err != nil {
 		fmt.Println("Patch A Project :%s Fail", name, err)
 	}
@@ -129,7 +136,8 @@ func PatchAProject(c *gin.Context) {
 func DeleteProject(c *gin.Context) {
 	token := pkg.GetToken(c)
 	name := c.Param("name")
-	req, err := oapi.GenRequest("DELETE", "/oapi/v1/projects/"+name, token, nil)
+	urlParas := pkg.SliceURL(c.Request.URL.String())
+	req, err := oapi.GenRequest("DELETE", "/oapi/v1/projects/"+name+urlParas, token, nil)
 	if err != nil {
 		logger.Error("Delete A Project Fail", err)
 	}

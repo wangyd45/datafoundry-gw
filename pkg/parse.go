@@ -68,10 +68,10 @@ func SliceToken(token string) string {
 //截取URL
 func SliceURL(url string) string {
 	sList := strings.Split(url, "?")
-	if len(sList) == 0 {
-		return ""
+	if len(sList) == 2 {
+		return "?" + sList[1]
 	} else {
-		return "?"+sList[1]
+		return ""
 	}
 }
 

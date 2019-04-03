@@ -18,9 +18,11 @@ func init() {
 
 func CreateRole(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("POST", "/oapi/v1/roles"+urlParas, token, rBody)
+	req, err := oapi.GenRequest("POST", host+"/oapi/v1/roles"+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Create A Role Fail", err)
 	}
@@ -32,10 +34,12 @@ func CreateRole(c *gin.Context) {
 
 func CreateRoleInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("POST", "/oapi/v1/namespaces/"+namespace+"/roles"+urlParas, token, rBody)
+	req, err := oapi.GenRequest("POST", host+"/oapi/v1/namespaces/"+namespace+"/roles"+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Create A Role In A Namespace Fail", err)
 	}
@@ -48,10 +52,12 @@ func CreateRoleInNS(c *gin.Context) {
 
 func GetRoleInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("GET", "/oapi/v1/namespaces/"+namespace+"/roles/"+name+urlParas, token, nil)
+	req, err := oapi.GenRequest("GET", host+"/oapi/v1/namespaces/"+namespace+"/roles/"+name+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Get A Role In A Namespace Fail", err)
 	}
@@ -63,8 +69,10 @@ func GetRoleInNS(c *gin.Context) {
 
 func GetAllRoles(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("GET", "/oapi/v1/roles"+urlParas, token, nil)
+	req, err := oapi.GenRequest("GET", host+"/oapi/v1/roles"+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Get All Roles Fail", err)
 	}
@@ -76,9 +84,11 @@ func GetAllRoles(c *gin.Context) {
 
 func GetRolesInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("GET", "/oapi/v1/namespaces/"+namespace+"/roles"+urlParas, token, nil)
+	req, err := oapi.GenRequest("GET", host+"/oapi/v1/namespaces/"+namespace+"/roles"+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Get All Roles In A Namespace Fail", err)
 	}
@@ -90,11 +100,13 @@ func GetRolesInNS(c *gin.Context) {
 
 func UpdateRoleInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PUT", "/oapi/v1/namespaces/"+namespace+"/roles/"+name+urlParas, token, rBody)
+	req, err := oapi.GenRequest("PUT", host+"/oapi/v1/namespaces/"+namespace+"/roles/"+name+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Update A Role In A Namespace Fail", err)
 	}
@@ -106,11 +118,13 @@ func UpdateRoleInNS(c *gin.Context) {
 
 func PatchRoleInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PATCH", "/oapi/v1/namespaces/"+namespace+"/roles/"+name+urlParas, token, rBody)
+	req, err := oapi.GenRequest("PATCH", host+"/oapi/v1/namespaces/"+namespace+"/roles/"+name+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Patch A Role In A Namespace Fail", err)
 	}
@@ -122,11 +136,13 @@ func PatchRoleInNS(c *gin.Context) {
 
 func DeleteRoleInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("DELETE", "/oapi/v1/namespaces/"+namespace+"/roles/"+name+urlParas, token, rBody)
+	req, err := oapi.GenRequest("DELETE", host+"/oapi/v1/namespaces/"+namespace+"/roles/"+name+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Delete A Role In A Namespace Fail", err)
 	}

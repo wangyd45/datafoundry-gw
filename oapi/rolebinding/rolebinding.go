@@ -18,9 +18,11 @@ func init() {
 
 func CreateRoleBinding(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("POST", "/oapi/v1/rolebindings"+urlParas, token, rBody)
+	req, err := oapi.GenRequest("POST", host+"/oapi/v1/rolebindings"+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Create A RoleBinding Fail", err)
 	}
@@ -32,10 +34,12 @@ func CreateRoleBinding(c *gin.Context) {
 
 func CreateRoleBindingInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("POST", "/oapi/v1/namespaces/"+namespace+"/rolebindings"+urlParas, token, rBody)
+	req, err := oapi.GenRequest("POST", host+"/oapi/v1/namespaces/"+namespace+"/rolebindings"+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Create A RoleBinding In A Namespace Fail", err)
 	}
@@ -47,10 +51,12 @@ func CreateRoleBindingInNS(c *gin.Context) {
 
 func GetRoleBindingInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("GET", "/oapi/v1/namespaces/"+namespace+"/rolebindings/"+name+urlParas, token, nil)
+	req, err := oapi.GenRequest("GET", host+"/oapi/v1/namespaces/"+namespace+"/rolebindings/"+name+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Get A RoleBinding In A Namespace Fail", err)
 	}
@@ -62,8 +68,10 @@ func GetRoleBindingInNS(c *gin.Context) {
 
 func GetAllRoleBindings(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("GET", "/oapi/v1/rolebindings"+urlParas, token, nil)
+	req, err := oapi.GenRequest("GET", host+"/oapi/v1/rolebindings"+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Get All RoleBindings Fail", err)
 	}
@@ -75,9 +83,11 @@ func GetAllRoleBindings(c *gin.Context) {
 
 func GetRoleBindingsInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("GET", "/oapi/v1/namespaces/"+namespace+"/rolebindings"+urlParas, token, nil)
+	req, err := oapi.GenRequest("GET", host+"/oapi/v1/namespaces/"+namespace+"/rolebindings"+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Get All RoleBindings In A Namespace Fail", err)
 	}
@@ -89,11 +99,13 @@ func GetRoleBindingsInNS(c *gin.Context) {
 
 func UpdateRoleBindingInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PUT", "/oapi/v1/namespaces/"+namespace+"/rolebindings/"+name+urlParas, token, rBody)
+	req, err := oapi.GenRequest("PUT", host+"/oapi/v1/namespaces/"+namespace+"/rolebindings/"+name+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Update A RoleBinding In A Namespace Fail", err)
 	}
@@ -105,11 +117,13 @@ func UpdateRoleBindingInNS(c *gin.Context) {
 
 func PatchRoleBindingInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PATCH", "/oapi/v1/namespaces/"+namespace+"/rolebindings/"+name+urlParas, token, rBody)
+	req, err := oapi.GenRequest("PATCH", host+"/oapi/v1/namespaces/"+namespace+"/rolebindings/"+name+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Patch A RoleBinding In A Namespace Fail", err)
 	}
@@ -121,11 +135,13 @@ func PatchRoleBindingInNS(c *gin.Context) {
 
 func DeleteRoleBindingInNS(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("DELETE", "/oapi/v1/namespaces/"+namespace+"/rolebindings/"+name+urlParas, token, rBody)
+	req, err := oapi.GenRequest("DELETE", host+"/oapi/v1/namespaces/"+namespace+"/rolebindings/"+name+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Delete A RoleBinding In A Namespace Fail", err)
 	}

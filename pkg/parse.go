@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"strings"
 	"time"
+	"fmt"
 )
 
 type LogData struct {
@@ -39,10 +40,21 @@ func GetToken(c *gin.Context) string {
 	return c.Request.Header.Get("Authorization")
 }
 
+func GetHost(c *gin.Context) string {
+	host := c.Request.Header.Get("cluster")
+	return host
+}
+
 //WS请求获取Token "Beaer ......"
 func GetWSToken(c *gin.Context) (ret string) {
 	ret = "Bearer " + c.Query("access_token")
 	return ret
+}
+
+func GetWsHost(c *gin.Context) string {
+	host := c.Query("cluster")
+	fmt.Println("WS host is ",host)
+	return host
 }
 
 //判断请求是否WS请求

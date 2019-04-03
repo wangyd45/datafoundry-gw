@@ -18,10 +18,12 @@ func init() {
 
 func CreateEvent(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	//调用原生接口
-	req, err := oapi.GenRequest("POST", "/api/v1/events"+urlParas, token, rBody)
+	req, err := oapi.GenRequest("POST", host+"/api/v1/events"+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Create A Event Fail", err)
 	}
@@ -33,11 +35,13 @@ func CreateEvent(c *gin.Context) {
 
 func CreateEventNS(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	//调用原生接口
-	req, err := oapi.GenRequest("POST", "/api/v1/namespaces/"+namespace+"/events"+urlParas, token, rBody)
+	req, err := oapi.GenRequest("POST", host+"/api/v1/namespaces/"+namespace+"/events"+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Create A Event In A Namespace Fail", err)
 	}
@@ -73,10 +77,12 @@ func GorWAllEventsNS(c *gin.Context) {
 
 func getEventNS(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("GET", "/api/v1/namespaces/"+namespace+"/events/"+name+urlParas, token, nil)
+	req, err := oapi.GenRequest("GET", host+"/api/v1/namespaces/"+namespace+"/events/"+name+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Get A Event In A Namespace Fail", err)
 	}
@@ -88,8 +94,10 @@ func getEventNS(c *gin.Context) {
 
 func getAllEvents(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("GET", "/api/v1/events"+urlParas, token, nil)
+	req, err := oapi.GenRequest("GET", host+"/api/v1/events"+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Get All Events Fail", err)
 	}
@@ -101,9 +109,11 @@ func getAllEvents(c *gin.Context) {
 
 func getAllEventsNS(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("GET", "/api/v1/namespaces/"+namespace+"/events"+urlParas, token, nil)
+	req, err := oapi.GenRequest("GET", host+"/api/v1/namespaces/"+namespace+"/events"+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Get All Events In A Namespace Fail", err)
 	}
@@ -116,11 +126,13 @@ func getAllEventsNS(c *gin.Context) {
 func watchEventNS(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
+	host := pkg.GetWsHost(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	logger.Info("Watch event namespaces/"+namespace+"/names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
-	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/events/"+name+urlParas, token, c.Writer, c.Request)
+	oapi.WSRequest(host+"/api/v1/watch/namespaces/"+namespace+"/events/"+name+urlParas, token, c.Writer, c.Request)
+
 	logger.Info("Watch event namespaces/"+namespace+"/names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
@@ -128,9 +140,11 @@ func watchEventNS(c *gin.Context) {
 func watchAllEvents(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
+	host := pkg.GetWsHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	logger.Info("Watch collection event", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
-	oapi.WSRequest("/api/v1/watch/events"+urlParas, token, c.Writer, c.Request)
+	oapi.WSRequest(host+"/api/v1/watch/events"+urlParas, token, c.Writer, c.Request)
+
 	logger.Info("Watch collection event", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
@@ -138,21 +152,25 @@ func watchAllEvents(c *gin.Context) {
 func watchAllEventsNS(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
+	host := pkg.GetWsHost(c)
 	namespace := c.Param("namespace")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	logger.Info("Watch collection event namespces/"+namespace, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
-	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/events"+urlParas, token, c.Writer, c.Request)
+	oapi.WSRequest(host+"/api/v1/watch/namespaces/"+namespace+"/events"+urlParas, token, c.Writer, c.Request)
+
 	logger.Info("Watch collection event namespces/"+namespace, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
 
 func UpdateEventNS(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PUT", "/api/v1/namespaces/"+namespace+"/events/"+name+urlParas, token, rBody)
+	req, err := oapi.GenRequest("PUT", host+"/api/v1/namespaces/"+namespace+"/events/"+name+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Update A Event In A Namespace Fail", err)
 	}
@@ -164,11 +182,13 @@ func UpdateEventNS(c *gin.Context) {
 
 func PatchEventNS(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PATCH", "/api/v1/namespaces/"+namespace+"/events/"+name+urlParas, token, rBody)
+	req, err := oapi.GenRequest("PATCH", host+"/api/v1/namespaces/"+namespace+"/events/"+name+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Patch A Event In A Namespace Fail", err)
 	}
@@ -180,11 +200,13 @@ func PatchEventNS(c *gin.Context) {
 
 func DeleteEventNS(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("DELETE", "/api/v1/namespaces/"+namespace+"/events/"+name+urlParas, token, rBody)
+	req, err := oapi.GenRequest("DELETE", host+"/api/v1/namespaces/"+namespace+"/events/"+name+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Delete A Event In A Namespace Fail", err)
 	}
@@ -196,9 +218,11 @@ func DeleteEventNS(c *gin.Context) {
 
 func DeleteAllEventNS(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("DELETE", "/api/v1/namespaces/"+namespace+"/events"+urlParas, token, nil)
+	req, err := oapi.GenRequest("DELETE", host+"/api/v1/namespaces/"+namespace+"/events"+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Delete All Event In A Namespace Fail", err)
 	}

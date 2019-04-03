@@ -26,13 +26,15 @@ func init() {
 
 func CreateISImport(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreateISImport Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("POST", IMAGE+urlParas, token, rBody)
+	req, err := oapi.GenRequest("POST",host + IMAGE+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("CreateISImport error ", err)
 	}
@@ -48,13 +50,15 @@ func CreateISImport(c *gin.Context) {
 func CreateISImportInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreateISImportInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("POST", IMAGENAME+namespace+IMAGECONFIG+urlParas, token, rBody)
+	req, err := oapi.GenRequest("POST",host + IMAGENAME+namespace+IMAGECONFIG+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("CreateISImportInNS error ", err)
 	}

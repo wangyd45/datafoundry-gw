@@ -27,13 +27,15 @@ func init() {
 
 func CreatePod(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreatePod Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("POST", SERVICE+urlParas, token, rBody)
+	req, err := api.GenRequest("POST",host + SERVICE+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("CreatePod error ", err)
 	}
@@ -49,13 +51,15 @@ func CreatePod(c *gin.Context) {
 func CreatePodInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreatePodInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("POST", SERVICENAME+"/"+namespace+"/pods"+urlParas, token, rBody)
+	req, err := api.GenRequest("POST",host + SERVICENAME+"/"+namespace+"/pods"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("CreatePodInNS error ", err)
 	}
@@ -72,13 +76,15 @@ func AttachPodInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("AttachPodInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("POST", SERVICENAME+"/"+namespace+"/pods/"+name+"/attach"+urlParas, token, rBody)
+	req, err := api.GenRequest("POST",host + SERVICENAME+"/"+namespace+"/pods/"+name+"/attach"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("AttachPodInNS error ", err)
 	}
@@ -95,13 +101,15 @@ func CreateBindPodInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreateBindPodInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("POST", SERVICENAME+"/"+namespace+"/pods/"+name+"/binding"+urlParas, token, rBody)
+	req, err := api.GenRequest("POST",host + SERVICENAME+"/"+namespace+"/pods/"+name+"/binding"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("CreateBindPodInNS error ", err)
 	}
@@ -118,13 +126,15 @@ func CreateEvtPodInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreateEvtPodInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("POST", SERVICENAME+"/"+namespace+"/pods/"+name+"/eviction"+urlParas, token, rBody)
+	req, err := api.GenRequest("POST",host + SERVICENAME+"/"+namespace+"/pods/"+name+"/eviction"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("CreateEvtPodInNS error ", err)
 	}
@@ -141,13 +151,15 @@ func CreateExecPodInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreateExecPodInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("POST", SERVICENAME+"/"+namespace+"/pods/"+name+"/exec"+urlParas, token, rBody)
+	req, err := api.GenRequest("POST",host + SERVICENAME+"/"+namespace+"/pods/"+name+"/exec"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("CreateExecPodInNS error ", err)
 	}
@@ -164,13 +176,15 @@ func PortPodInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("PortPodInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("POST", SERVICENAME+"/"+namespace+"/pods/"+name+"/portforward"+urlParas, token, rBody)
+	req, err := api.GenRequest("POST",host + SERVICENAME+"/"+namespace+"/pods/"+name+"/portforward"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("PortPodInNS error ", err)
 	}
@@ -187,13 +201,15 @@ func ProxyPodInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("ProxyPodInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("POST", SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy"+urlParas, token, rBody)
+	req, err := api.GenRequest("POST",host + SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("ProxyPodInNS error ", err)
 	}
@@ -211,13 +227,15 @@ func ProxysPathInNS(c *gin.Context) {
 	name := c.Param("name")
 	path := c.Param("path")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("ProxysPathInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("POST", SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy/"+path+urlParas, token, rBody)
+	req, err := api.GenRequest("POST",host + SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy/"+path+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("ProxysPathInNS error ", err)
 	}
@@ -234,13 +252,15 @@ func HeadPodInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("HeadPodInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("HEAD", SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy"+urlParas, token, rBody)
+	req, err := api.GenRequest("HEAD",host + SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("HeadPodInNS error ", err)
 	}
@@ -258,13 +278,15 @@ func HeadProxysPathInNS(c *gin.Context) {
 	name := c.Param("name")
 	path := c.Param("path")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("HeadProxysPathInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("HEAD", SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy/"+path+urlParas, token, rBody)
+	req, err := api.GenRequest("HEAD",host + SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy/"+path+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("HeadProxysPathInNS error ", err)
 	}
@@ -284,8 +306,10 @@ func GetPodFromNS(c *gin.Context) {
 		namespace := c.Param("namespace")
 		name := c.Param("name")
 		token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 		urlParas := pkg.SliceURL(c.Request.URL.String())
-		req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/pods/"+name+urlParas, token, []byte{})
+		req, err := api.GenRequest("GET",host + SERVICENAME+"/"+namespace+"/pods/"+name+urlParas, token, []byte{})
+
 		if err != nil {
 			log.Error("GetPodFromNS error ", err)
 		}
@@ -304,8 +328,10 @@ func GetAllPod(c *gin.Context) {
 		watchAllPod(c)
 	} else {
 		token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 		urlParas := pkg.SliceURL(c.Request.URL.String())
-		req, err := api.GenRequest("GET", SERVICE+urlParas, token, []byte{})
+		req, err := api.GenRequest("GET",host + SERVICE+urlParas, token, []byte{})
+
 		if err != nil {
 			log.Error("GetAllPod error ", err)
 		}
@@ -325,8 +351,10 @@ func GetAllPodFromNS(c *gin.Context) {
 	} else {
 		namespace := c.Param("namespace")
 		token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 		urlParas := pkg.SliceURL(c.Request.URL.String())
-		req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/pods"+urlParas, token, []byte{})
+		req, err := api.GenRequest("GET",host + SERVICENAME+"/"+namespace+"/pods"+urlParas, token, []byte{})
+
 		if err != nil {
 			log.Error("GetAllPodFromNS error ", err)
 		}
@@ -344,8 +372,10 @@ func GetAtaPodFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/pods/"+name+"/attach"+urlParas, token, []byte{})
+	req, err := api.GenRequest("GET",host + SERVICENAME+"/"+namespace+"/pods/"+name+"/attach"+urlParas, token, []byte{})
+
 	if err != nil {
 		log.Error("GetAtaPodFromNS error ", err)
 	}
@@ -362,8 +392,10 @@ func GetExecPodFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/pods/"+name+"/exec"+urlParas, token, []byte{})
+	req, err := api.GenRequest("GET",host + SERVICENAME+"/"+namespace+"/pods/"+name+"/exec"+urlParas, token, []byte{})
+
 	if err != nil {
 		log.Error("GetExecPodFromNS error ", err)
 	}
@@ -382,6 +414,7 @@ func GetLogPodFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetWSToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	lenth, e := stringToInt(limitBytes)
 	if e != nil {
@@ -390,7 +423,9 @@ func GetLogPodFromNS(c *gin.Context) {
 	}
 	log.Info("Get Pod Log From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "start watch"})
 	//api.WSRequestRL(lenth, SERVICENAME+"/"+namespace+"/pods/"+name+"/log?follow=true&tailLines="+tailLines+"&limitBytes="+limitBytes, token, c.Writer, c.Request)
-	api.WSRequestRL(lenth, SERVICENAME+"/"+namespace+"/pods/"+name+"/log"+urlParas, token, c.Writer, c.Request)
+
+	api.WSRequestRL(lenth,host + SERVICENAME+"/"+namespace+"/pods/"+name+"/log"+urlParas, token, c.Writer, c.Request)
+
 	log.Info("Get Pod Log From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "end watch"})
 
 }
@@ -399,8 +434,10 @@ func GetPortPodFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/pods/"+name+"/portforward"+urlParas, token, []byte{})
+	req, err := api.GenRequest("GET",host + SERVICENAME+"/"+namespace+"/pods/"+name+"/portforward"+urlParas, token, []byte{})
+
 	if err != nil {
 		log.Error("GetPortPodFromNS error ", err)
 	}
@@ -417,8 +454,10 @@ func GetStatusPodFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/pods/"+name+"/status"+urlParas, token, []byte{})
+	req, err := api.GenRequest("GET",host + SERVICENAME+"/"+namespace+"/pods/"+name+"/status"+urlParas, token, []byte{})
+
 	if err != nil {
 		log.Error("GetStatusPodFromNS error ", err)
 	}
@@ -435,8 +474,10 @@ func GetProxyPodFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy"+urlParas, token, []byte{})
+	req, err := api.GenRequest("GET",host + SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy"+urlParas, token, []byte{})
+
 	if err != nil {
 		log.Error("GetProxyPodFromNS error ", err)
 	}
@@ -454,8 +495,10 @@ func GetProxyPathPodFromNS(c *gin.Context) {
 	name := c.Param("name")
 	path := c.Param("path")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy/"+path+urlParas, token, []byte{})
+	req, err := api.GenRequest("GET",host + SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy/"+path+urlParas, token, []byte{})
+
 	if err != nil {
 		log.Error("GetProxyPathPodFromNS error ", err)
 	}
@@ -472,26 +515,32 @@ func watchPodFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetWSToken(c)
+	host := pkg.GetWsHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	log.Info("Watch Pod From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "start watch"})
-	api.WSRequest(WATCH+"/"+namespace+"/pods/"+name+urlParas, token, c.Writer, c.Request)
+	api.WSRequest(host +WATCH+"/"+namespace+"/pods/"+name+urlParas, token, c.Writer, c.Request)
+
 	log.Info("Watch Pod From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "end watch"})
 }
 
 func watchAllPod(c *gin.Context) {
 	token := pkg.GetWSToken(c)
+	host := pkg.GetWsHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	log.Info("Watch collection ", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "start watch"})
-	api.WSRequest(WATCHALL+urlParas, token, c.Writer, c.Request)
+	api.WSRequest(host +WATCHALL+urlParas, token, c.Writer, c.Request)
+
 	log.Info("Watch collection ", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "end watch"})
 }
 
 func watchAllPodFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetWSToken(c)
+	host := pkg.GetWsHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	log.Info("Watch collection Pod From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "start watch"})
-	api.WSRequest(WATCH+"/"+namespace+"/pods"+urlParas, token, c.Writer, c.Request)
+	api.WSRequest(host +WATCH+"/"+namespace+"/pods"+urlParas, token, c.Writer, c.Request)
+
 	log.Info("Watch collection Pod From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "end watch"})
 }
 
@@ -499,13 +548,15 @@ func UpdataPodFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("UpdataPodFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PUT", SERVICENAME+"/"+namespace+"/pods/"+name+urlParas, token, rBody)
+	req, err := api.GenRequest("PUT",host + SERVICENAME+"/"+namespace+"/pods/"+name+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("UpdataPodFromNS error ", err)
 	}
@@ -522,13 +573,15 @@ func UpdataStuPodFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("UpdataStuPodFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PUT", SERVICENAME+"/"+namespace+"/pods/"+name+"/status"+urlParas, token, rBody)
+	req, err := api.GenRequest("PUT",host + SERVICENAME+"/"+namespace+"/pods/"+name+"/status"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("UpdataStuPodFromNS error ", err)
 	}
@@ -545,13 +598,15 @@ func UpdataProxyPodFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("UpdataProxyPodFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PUT", SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy"+urlParas, token, rBody)
+	req, err := api.GenRequest("PUT",host + SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("UpdataProxyPodFromNS error ", err)
 	}
@@ -569,13 +624,15 @@ func UpdataProPathPodFromNS(c *gin.Context) {
 	name := c.Param("name")
 	path := c.Param("path")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("UpdataProPathPodFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PUT", SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy/"+path+urlParas, token, rBody)
+	req, err := api.GenRequest("PUT",host + SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy/"+path+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("UpdataProPathPodFromNS error ", err)
 	}
@@ -592,13 +649,15 @@ func PatchPodFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("PatchPodFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PATCH", SERVICENAME+"/"+namespace+"/pods/"+name+urlParas, token, rBody)
+	req, err := api.GenRequest("PATCH",host + SERVICENAME+"/"+namespace+"/pods/"+name+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("PatchPodFromNS error ", err)
 	}
@@ -615,13 +674,15 @@ func PatchStuPodFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("PatchStuPodFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PATCH", SERVICENAME+"/"+namespace+"/pods/"+name+"/status"+urlParas, token, rBody)
+	req, err := api.GenRequest("PATCH",host + SERVICENAME+"/"+namespace+"/pods/"+name+"/status"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("PatchStuPodFromNS error ", err)
 	}
@@ -638,13 +699,15 @@ func PatchProxyPodFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("PatchProxyPodFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PATCH", SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy"+urlParas, token, rBody)
+	req, err := api.GenRequest("PATCH",host + SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("PatchProxyPodFromNS error ", err)
 	}
@@ -662,13 +725,15 @@ func PatchProPathPodFromNS(c *gin.Context) {
 	name := c.Param("name")
 	path := c.Param("path")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("PatchProPathPodFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PATCH", SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy/"+path+urlParas, token, rBody)
+	req, err := api.GenRequest("PATCH",host + SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy/"+path+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("PatchProPathPodFromNS error ", err)
 	}
@@ -685,13 +750,15 @@ func OptionsPodFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("OptionsPodFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("OPTIONS", SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy"+urlParas, token, rBody)
+	req, err := api.GenRequest("OPTIONS",host + SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("OptionsPodFromNS error ", err)
 	}
@@ -709,13 +776,15 @@ func OptionsPathPodFromNS(c *gin.Context) {
 	name := c.Param("name")
 	path := c.Param("path")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("OptionsPathPodFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("OPTIONS", SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy/"+path+urlParas, token, rBody)
+	req, err := api.GenRequest("OPTIONS",host + SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy/"+path+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("OptionsPathPodFromNS error ", err)
 	}
@@ -732,13 +801,15 @@ func DeletePodFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("DeletePodFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("DELETE", SERVICENAME+"/"+namespace+"/pods/"+name+urlParas, token, rBody)
+	req, err := api.GenRequest("DELETE",host + SERVICENAME+"/"+namespace+"/pods/"+name+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("DeletePodFromNS error ", err)
 	}
@@ -755,13 +826,15 @@ func DeleteProxyPodFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("DeleteProxyPodFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("DELETE", SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy"+urlParas, token, rBody)
+	req, err := api.GenRequest("DELETE",host + SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("DeleteProxyPodFromNS error ", err)
 	}
@@ -779,13 +852,15 @@ func DeleteProxyPathPodFromNS(c *gin.Context) {
 	name := c.Param("name")
 	path := c.Param("path")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("DeleteProxyPathPodFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("DELETE", SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy/"+path+urlParas, token, rBody)
+	req, err := api.GenRequest("DELETE",host + SERVICENAME+"/"+namespace+"/pods/"+name+"/proxy/"+path+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("DeleteProxyPathPodFromNS error ", err)
 	}
@@ -801,13 +876,15 @@ func DeleteProxyPathPodFromNS(c *gin.Context) {
 func DeleteAllPodFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("DeleteAllPodFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("DELETE", SERVICENAME+"/"+namespace+"/pods"+urlParas, token, rBody)
+	req, err := api.GenRequest("DELETE",host + SERVICENAME+"/"+namespace+"/pods"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("DeleteAllPodFromNS error ", err)
 	}

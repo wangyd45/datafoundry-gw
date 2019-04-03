@@ -26,13 +26,15 @@ func init() {
 
 func CreateRc(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreateRc Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("POST", SERVICE+urlParas, token, rBody)
+	req, err := api.GenRequest("POST", host+SERVICE+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("CreateRc error ", err)
 	}
@@ -48,13 +50,15 @@ func CreateRc(c *gin.Context) {
 func CreateRcInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreateRcInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("POST", SERVICENAME+"/"+namespace+"/replicationcontrollers"+urlParas, token, rBody)
+	req, err := api.GenRequest("POST", host+SERVICENAME+"/"+namespace+"/replicationcontrollers"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("CreateRcInNS error ", err)
 	}
@@ -74,8 +78,10 @@ func GetRcFromNS(c *gin.Context) {
 		namespace := c.Param("namespace")
 		name := c.Param("name")
 		token := pkg.GetToken(c)
+		host := pkg.GetHost(c)
 		urlParas := pkg.SliceURL(c.Request.URL.String())
-		req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/replicationcontrollers/"+name+urlParas, token, []byte{})
+		req, err := api.GenRequest("GET", host+SERVICENAME+"/"+namespace+"/replicationcontrollers/"+name+urlParas, token, []byte{})
+
 		if err != nil {
 			log.Error("GetRcFromNS error ", err)
 		}
@@ -94,8 +100,10 @@ func GetAllRc(c *gin.Context) {
 		watchAllRc(c)
 	} else {
 		token := pkg.GetToken(c)
+		host := pkg.GetHost(c)
 		urlParas := pkg.SliceURL(c.Request.URL.String())
-		req, err := api.GenRequest("GET", SERVICE+urlParas, token, []byte{})
+		req, err := api.GenRequest("GET", host+SERVICE+urlParas, token, []byte{})
+
 		if err != nil {
 			log.Error("GetAllRc error ", err)
 		}
@@ -115,8 +123,10 @@ func GetAllRcFromNS(c *gin.Context) {
 	} else {
 		namespace := c.Param("namespace")
 		token := pkg.GetToken(c)
+		host := pkg.GetHost(c)
 		urlParas := pkg.SliceURL(c.Request.URL.String())
-		req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/replicationcontrollers"+urlParas, token, []byte{})
+		req, err := api.GenRequest("GET", host+SERVICENAME+"/"+namespace+"/replicationcontrollers"+urlParas, token, []byte{})
+
 		if err != nil {
 			log.Error("GetAllRcFromNS error ", err)
 		}
@@ -134,8 +144,10 @@ func GetScaleRcFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/replicationcontrollers/"+name+"/scale"+urlParas, token, []byte{})
+	req, err := api.GenRequest("GET", host+SERVICENAME+"/"+namespace+"/replicationcontrollers/"+name+"/scale"+urlParas, token, []byte{})
+
 	if err != nil {
 		log.Error("GetScaleRcFromNS error ", err)
 	}
@@ -152,8 +164,10 @@ func GetExScaleRcFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := api.GenRequest("GET", "/apis/extensions/v1beta1/namespaces/"+namespace+"/replicationcontrollers/"+name+"/scale"+urlParas, token, []byte{})
+	req, err := api.GenRequest("GET", host+"/apis/extensions/v1beta1/namespaces/"+namespace+"/replicationcontrollers/"+name+"/scale"+urlParas, token, []byte{})
+
 	if err != nil {
 		log.Error("GetExScaleRcFromNS error ", err)
 	}
@@ -170,8 +184,10 @@ func GetStatusRcFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/replicationcontrollers/"+name+"/status"+urlParas, token, []byte{})
+	req, err := api.GenRequest("GET", host+SERVICENAME+"/"+namespace+"/replicationcontrollers/"+name+"/status"+urlParas, token, []byte{})
+
 	if err != nil {
 		log.Error("GetStatusRcFromNS error ", err)
 	}
@@ -188,26 +204,32 @@ func watchRcFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetWSToken(c)
+	host := pkg.GetWsHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	log.Info("Watch RC From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "start watch"})
-	api.WSRequest(WATCH+"/"+namespace+"/replicationcontrollers/"+name+urlParas, token, c.Writer, c.Request)
+	api.WSRequest(host+WATCH+"/"+namespace+"/replicationcontrollers/"+name+urlParas, token, c.Writer, c.Request)
+
 	log.Info("Watch RC From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "end watch"})
 }
 
 func watchAllRc(c *gin.Context) {
 	token := pkg.GetWSToken(c)
+	host := pkg.GetWsHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	log.Info("Watch collection Rc", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "start watch"})
-	api.WSRequest(WATCHALL+urlParas, token, c.Writer, c.Request)
+	api.WSRequest(host+WATCHALL+urlParas, token, c.Writer, c.Request)
+
 	log.Info("Watch collection Rc", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "end watch"})
 }
 
 func watchAllRcFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetWSToken(c)
+	host := pkg.GetWsHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	log.Info("Watch Collection RC From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "start watch"})
-	api.WSRequest(WATCH+"/"+namespace+"/replicationcontrollers"+urlParas, token, c.Writer, c.Request)
+	api.WSRequest(host+WATCH+"/"+namespace+"/replicationcontrollers"+urlParas, token, c.Writer, c.Request)
+
 	log.Info("Watch Collection RC From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "end watch"})
 }
 
@@ -215,13 +237,15 @@ func UpdataRcFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("UpdataRcFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PUT", SERVICENAME+"/"+namespace+"/replicationcontrollers/"+name+urlParas, token, rBody)
+	req, err := api.GenRequest("PUT", host+SERVICENAME+"/"+namespace+"/replicationcontrollers/"+name+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("UpdataRcFromNS error ", err)
 	}
@@ -238,13 +262,15 @@ func UpdataScaleRcFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("UpdataScaleRcFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PUT", SERVICENAME+"/"+namespace+"/replicationcontrollers/"+name+"/scale"+urlParas, token, rBody)
+	req, err := api.GenRequest("PUT", host+SERVICENAME+"/"+namespace+"/replicationcontrollers/"+name+"/scale"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("UpdataScaleRcFromNS error ", err)
 	}
@@ -261,13 +287,15 @@ func UpdataExScaleRcFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("UpdataExScaleRcFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PUT", "/apis/extensions/v1beta1/namespaces/"+namespace+"/replicationcontrollers/"+name+"/scale"+urlParas, token, rBody)
+	req, err := api.GenRequest("PUT", host+"/apis/extensions/v1beta1/namespaces/"+namespace+"/replicationcontrollers/"+name+"/scale"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("UpdataExScaleRcFromNS error ", err)
 	}
@@ -284,13 +312,15 @@ func UpdataStatusRcFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("UpdataStatusRcFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PUT", SERVICENAME+"/"+namespace+"/replicationcontrollers/"+name+"/status"+urlParas, token, rBody)
+	req, err := api.GenRequest("PUT", host+SERVICENAME+"/"+namespace+"/replicationcontrollers/"+name+"/status"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("UpdataStatusRcFromNS error ", err)
 	}
@@ -307,13 +337,15 @@ func PatchRcFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("PatchRcFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PATCH", SERVICENAME+"/"+namespace+"/replicationcontrollers/"+name+urlParas, token, rBody)
+	req, err := api.GenRequest("PATCH", host+SERVICENAME+"/"+namespace+"/replicationcontrollers/"+name+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("PatchRcFromNS error ", err)
 	}
@@ -330,13 +362,15 @@ func PatchScaleRcFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("PatchScaleRcFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PATCH", SERVICENAME+"/"+namespace+"/replicationcontrollers/"+name+"/scale"+urlParas, token, rBody)
+	req, err := api.GenRequest("PATCH", host+SERVICENAME+"/"+namespace+"/replicationcontrollers/"+name+"/scale"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("PatchScaleRcFromNS error ", err)
 	}
@@ -353,13 +387,15 @@ func PatchExScaleFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("PatchExScaleFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PATCH", "/apis/extensions/v1beta1/namespaces/"+namespace+"/replicationcontrollers/"+name+"/scale"+urlParas, token, rBody)
+	req, err := api.GenRequest("PATCH", host+"/apis/extensions/v1beta1/namespaces/"+namespace+"/replicationcontrollers/"+name+"/scale"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("PatchExScaleFromNS error ", err)
 	}
@@ -376,13 +412,15 @@ func PatchStatusRcFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("PatchStatusRcFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PATCH", SERVICENAME+"/"+namespace+"/replicationcontrollers/"+name+"/status"+urlParas, token, rBody)
+	req, err := api.GenRequest("PATCH", host+SERVICENAME+"/"+namespace+"/replicationcontrollers/"+name+"/status"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("PatchStatusRcFromNS error ", err)
 	}
@@ -399,13 +437,15 @@ func DeleteRcFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("DeleteRcFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("DELETE", SERVICENAME+"/"+namespace+"/replicationcontrollers/"+name+urlParas, token, rBody)
+	req, err := api.GenRequest("DELETE", host+SERVICENAME+"/"+namespace+"/replicationcontrollers/"+name+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("DeleteRcFromNS error ", err)
 	}
@@ -421,13 +461,15 @@ func DeleteRcFromNS(c *gin.Context) {
 func DeleteAllRcFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("DeleteAllRcFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("DELETE", SERVICENAME+"/"+namespace+"/replicationcontrollers"+urlParas, token, rBody)
+	req, err := api.GenRequest("DELETE", host+SERVICENAME+"/"+namespace+"/replicationcontrollers"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("DeleteAllRcFromNS error ", err)
 	}

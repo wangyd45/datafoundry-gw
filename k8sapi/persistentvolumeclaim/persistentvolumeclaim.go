@@ -18,10 +18,12 @@ func init() {
 
 func CreatePVC(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	//调用原生接口
-	req, err := oapi.GenRequest("POST", "/api/v1/persistentvolumeclaims"+urlParas, token, rBody)
+	req, err := oapi.GenRequest("POST",host + "/api/v1/persistentvolumeclaims"+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Create A PersistentVolumeClaim Fail", err)
 	}
@@ -33,11 +35,13 @@ func CreatePVC(c *gin.Context) {
 
 func CreatePVCns(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	//调用原生接口
-	req, err := oapi.GenRequest("POST", "/api/v1/namespaces/"+namespace+"/persistentvolumeclaims"+urlParas, token, rBody)
+	req, err := oapi.GenRequest("POST",host + "/api/v1/namespaces/"+namespace+"/persistentvolumeclaims"+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Create A PersistentVolumeClaim In A Namespace Fail", err)
 	}
@@ -73,10 +77,12 @@ func GorWAllPVCns(c *gin.Context) {
 
 func getPVCns(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("GET", "/api/v1/namespaces/"+namespace+"/persistentvolumeclaims/"+name+urlParas, token, nil)
+	req, err := oapi.GenRequest("GET",host + "/api/v1/namespaces/"+namespace+"/persistentvolumeclaims/"+name+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Get A PersistentVolumeClaim In A Namespace Fail", err)
 	}
@@ -88,8 +94,10 @@ func getPVCns(c *gin.Context) {
 
 func getAllPVC(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("GET", "/api/v1/persistentvolumeclaims"+urlParas, token, nil)
+	req, err := oapi.GenRequest("GET",host + "/api/v1/persistentvolumeclaims"+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Get All PersistentVolumeClaims Fail", err)
 	}
@@ -101,9 +109,11 @@ func getAllPVC(c *gin.Context) {
 
 func getAllPVCns(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("GET", "/api/v1/namespaces/"+namespace+"/persistentvolumeclaims"+urlParas, token, nil)
+	req, err := oapi.GenRequest("GET",host + "/api/v1/namespaces/"+namespace+"/persistentvolumeclaims"+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Get All PersistentVolumeClaim In A Namespace Fail", err)
 	}
@@ -116,11 +126,13 @@ func getAllPVCns(c *gin.Context) {
 func watchPVCns(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
+	host := pkg.GetWsHost(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	logger.Info("Watch persistentvolumeclaim namespaces/"+namespace+"/names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
-	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/persistentvolumeclaims/"+name+urlParas, token, c.Writer, c.Request)
+	oapi.WSRequest(host +"/api/v1/watch/namespaces/"+namespace+"/persistentvolumeclaims/"+name+urlParas, token, c.Writer, c.Request)
+
 	logger.Info("Watch persistentvolumeclaim namespaces/"+namespace+"/names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
@@ -128,9 +140,11 @@ func watchPVCns(c *gin.Context) {
 func watchAllPVC(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
+	host := pkg.GetWsHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	logger.Info("Watch collection persistentvolumeclaim", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
-	oapi.WSRequest("/api/v1/watch/persistentvolumeclaims"+urlParas, token, c.Writer, c.Request)
+	oapi.WSRequest(host +"/api/v1/watch/persistentvolumeclaims"+urlParas, token, c.Writer, c.Request)
+
 	logger.Info("Watch collection persistentvolumeclaim", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
@@ -138,21 +152,25 @@ func watchAllPVC(c *gin.Context) {
 func watchAllPVCns(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
+	host := pkg.GetWsHost(c)
 	namespace := c.Param("namespace")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	logger.Info("Watch collection persistentvolumeclaim namespaces/"+namespace, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
-	oapi.WSRequest("/api/v1/watch/namespaces/"+namespace+"/persistentvolumeclaims"+urlParas, token, c.Writer, c.Request)
+	oapi.WSRequest(host +"/api/v1/watch/namespaces/"+namespace+"/persistentvolumeclaims"+urlParas, token, c.Writer, c.Request)
+
 	logger.Info("Watch collection persistentvolumeclaim namespaces/"+namespace, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
 
 func UpdatePVCns(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PUT", "/api/v1/namespaces/"+namespace+"/persistentvolumeclaims/"+name+urlParas, token, rBody)
+	req, err := oapi.GenRequest("PUT",host + "/api/v1/namespaces/"+namespace+"/persistentvolumeclaims/"+name+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Update A PersistentVolumeClaim In A Namespace Fail", err)
 	}
@@ -164,11 +182,13 @@ func UpdatePVCns(c *gin.Context) {
 
 func PatchPVCns(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PATCH", "/api/v1/namespaces/"+namespace+"/persistentvolumeclaims/"+name+urlParas, token, rBody)
+	req, err := oapi.GenRequest("PATCH",host + "/api/v1/namespaces/"+namespace+"/persistentvolumeclaims/"+name+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Patch A PersistentVolumeClaim In A Namespace Fail", err)
 	}
@@ -180,11 +200,13 @@ func PatchPVCns(c *gin.Context) {
 
 func DeletePVCns(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("DELETE", "/api/v1/namespaces/"+namespace+"/persistentvolumeclaims/"+name+urlParas, token, rBody)
+	req, err := oapi.GenRequest("DELETE",host + "/api/v1/namespaces/"+namespace+"/persistentvolumeclaims/"+name+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Delete A PersistentVolumeClaim In A Namespace Fail", err)
 	}
@@ -196,9 +218,11 @@ func DeletePVCns(c *gin.Context) {
 
 func DeleteAllPVCns(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("DELETE", "/api/v1/namespaces/"+namespace+"/persistentvolumeclaims"+urlParas, token, nil)
+	req, err := oapi.GenRequest("DELETE",host + "/api/v1/namespaces/"+namespace+"/persistentvolumeclaims"+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Delete All PersistentVolumeClaim In A Namespace Fail", err)
 	}
@@ -210,10 +234,12 @@ func DeleteAllPVCns(c *gin.Context) {
 
 func GetstatusofPVCns(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("GET", "/api/v1/namespaces/"+namespace+"/persistentvolumeclaims/"+name+"/status"+urlParas, token, nil)
+	req, err := oapi.GenRequest("GET",host + "/api/v1/namespaces/"+namespace+"/persistentvolumeclaims/"+name+"/status"+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Get status of a PersistentVolumeClaim In A Namespace Fail", err)
 	}
@@ -225,11 +251,13 @@ func GetstatusofPVCns(c *gin.Context) {
 
 func UpdatestatusofPVCns(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PUT", "/api/v1/namespaces/"+namespace+"/persistentvolumeclaims/"+name+"/status"+urlParas, token, rBody)
+	req, err := oapi.GenRequest("PUT",host + "/api/v1/namespaces/"+namespace+"/persistentvolumeclaims/"+name+"/status"+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Update status of a PersistentVolumeClaim In A Namespace Fail", err)
 	}
@@ -241,11 +269,13 @@ func UpdatestatusofPVCns(c *gin.Context) {
 
 func PatchstatusofPVCns(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PATCH", "/api/v1/namespaces/"+namespace+"/persistentvolumeclaims/"+name+"/status"+urlParas, token, rBody)
+	req, err := oapi.GenRequest("PATCH",host + "/api/v1/namespaces/"+namespace+"/persistentvolumeclaims/"+name+"/status"+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Patch status of a PersistentVolumeClaim In A Namespace Fail", err)
 	}

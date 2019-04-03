@@ -19,10 +19,12 @@ func init() {
 
 func CreateNode(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
 	//调用原生接口
-	req, err := oapi.GenRequest("POST", "/api/v1/nodes"+urlParas, token, rBody)
+	req, err := oapi.GenRequest("POST",host + "/api/v1/nodes"+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Create A Node Fail", err)
 	}
@@ -50,8 +52,10 @@ func GorWAllNodes(c *gin.Context) {
 
 func GetAllNodesLabels(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("GET", "/api/v1/nodes"+urlParas, token, nil)
+	req, err := oapi.GenRequest("GET",host + "/api/v1/nodes"+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Get All Nodes Labels Fail", err)
 	}
@@ -76,9 +80,11 @@ func GetAllNodesLabels(c *gin.Context) {
 
 func getNode(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("GET", "/api/v1/nodes/"+name+urlParas, token, nil)
+	req, err := oapi.GenRequest("GET",host + "/api/v1/nodes/"+name+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Get A Node Fail", err)
 	}
@@ -90,8 +96,10 @@ func getNode(c *gin.Context) {
 
 func getAllNodes(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("GET", "/api/v1/nodes"+urlParas, token, nil)
+	req, err := oapi.GenRequest("GET",host + "/api/v1/nodes"+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Get All Nodes Fail", err)
 	}
@@ -104,10 +112,12 @@ func getAllNodes(c *gin.Context) {
 func watchNode(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
+	host := pkg.GetWsHost(c)
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	logger.Info("Watch node names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
-	oapi.WSRequest("/api/v1/watch/nodes/"+name+urlParas, token, c.Writer, c.Request)
+	oapi.WSRequest(host +"/api/v1/watch/nodes/"+name+urlParas, token, c.Writer, c.Request)
+
 	logger.Info("Watch node names/"+name, map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
@@ -115,19 +125,23 @@ func watchNode(c *gin.Context) {
 func watchAllNodes(c *gin.Context) {
 
 	token := pkg.GetWSToken(c)
+	host := pkg.GetWsHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	logger.Info("Watch collection node", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "begin"})
-	oapi.WSRequest("/api/v1/watch/nodes"+urlParas, token, c.Writer, c.Request)
+	oapi.WSRequest(host +"/api/v1/watch/nodes"+urlParas, token, c.Writer, c.Request)
+
 	logger.Info("Watch collection node", map[string]interface{}{"user": pkg.GetUserFromToken(token), "time": pkg.GetTimeNow(), "result": "end"})
 
 }
 
 func UpdateNode(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PUT", "/api/v1/nodes/"+name+urlParas, token, rBody)
+	req, err := oapi.GenRequest("PUT",host + "/api/v1/nodes/"+name+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Update A Node Fail", err)
 	}
@@ -139,10 +153,12 @@ func UpdateNode(c *gin.Context) {
 
 func PatchNode(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PATCH", "/api/v1/nodes/"+name+urlParas, token, rBody)
+	req, err := oapi.GenRequest("PATCH",host + "/api/v1/nodes/"+name+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Patch A Node Fail", err)
 	}
@@ -154,10 +170,12 @@ func PatchNode(c *gin.Context) {
 
 func DeleteNode(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("DELETE", "/api/v1/nodes/"+name+urlParas, token, rBody)
+	req, err := oapi.GenRequest("DELETE",host + "/api/v1/nodes/"+name+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Delete A Node Fail", err)
 	}
@@ -169,8 +187,10 @@ func DeleteNode(c *gin.Context) {
 
 func DeleteAllNodes(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("DELETE", "/api/v1/nodes"+urlParas, token, nil)
+	req, err := oapi.GenRequest("DELETE",host + "/api/v1/nodes"+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Delete All Nodes Fail", err)
 	}
@@ -182,9 +202,11 @@ func DeleteAllNodes(c *gin.Context) {
 
 func GetStatusOfNode(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("GET", "/api/v1/nodes/"+name+"/status"+urlParas, token, nil)
+	req, err := oapi.GenRequest("GET",host + "/api/v1/nodes/"+name+"/status"+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Get Status Of A Node Fail", err)
 	}
@@ -196,10 +218,12 @@ func GetStatusOfNode(c *gin.Context) {
 
 func UpdateStatusOfNode(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PUT", "/api/v1/nodes/"+name+"/status"+urlParas, token, rBody)
+	req, err := oapi.GenRequest("PUT",host + "/api/v1/nodes/"+name+"/status"+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Update Status Of A Node Fail", err)
 	}
@@ -211,10 +235,12 @@ func UpdateStatusOfNode(c *gin.Context) {
 
 func PatchStatusOfNode(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, _ := ioutil.ReadAll(c.Request.Body)
-	req, err := oapi.GenRequest("PATCH", "/api/v1/nodes/"+name+"/status"+urlParas, token, rBody)
+	req, err := oapi.GenRequest("PATCH",host + "/api/v1/nodes/"+name+"/status"+urlParas, token, rBody)
+
 	if err != nil {
 		logger.Error("Patch Status Of A Node Fail", err)
 	}
@@ -226,9 +252,11 @@ func PatchStatusOfNode(c *gin.Context) {
 
 func ProxyOpnReqToNode(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("OPTIONS", "/api/v1/nodes/"+name+"/proxy"+urlParas, token, nil)
+	req, err := oapi.GenRequest("OPTIONS",host + "/api/v1/nodes/"+name+"/proxy"+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Proxy OPTIONS Request To A Node Fail", err)
 	}
@@ -240,9 +268,11 @@ func ProxyOpnReqToNode(c *gin.Context) {
 
 func ProxyPostReqToNode(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("POST", "/api/v1/nodes/"+name+"/proxy"+urlParas, token, nil)
+	req, err := oapi.GenRequest("POST",host + "/api/v1/nodes/"+name+"/proxy"+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Proxy Post Request To A Node Fail", err)
 	}
@@ -254,9 +284,11 @@ func ProxyPostReqToNode(c *gin.Context) {
 
 func ProxyHeadReqToNode(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("HEAD", "/api/v1/nodes/"+name+"/proxy"+urlParas, token, nil)
+	req, err := oapi.GenRequest("HEAD",host + "/api/v1/nodes/"+name+"/proxy"+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Proxy Head Request To A Node Fail", err)
 	}
@@ -268,9 +300,11 @@ func ProxyHeadReqToNode(c *gin.Context) {
 
 func ProxyGetReqToNode(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("GET", "/api/v1/nodes/"+name+"/proxy"+urlParas, token, nil)
+	req, err := oapi.GenRequest("GET",host + "/api/v1/nodes/"+name+"/proxy"+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Proxy Get Request To A Node Fail", err)
 	}
@@ -282,9 +316,11 @@ func ProxyGetReqToNode(c *gin.Context) {
 
 func ProxyPutReqToNode(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("PUT", "/api/v1/nodes/"+name+"/proxy"+urlParas, token, nil)
+	req, err := oapi.GenRequest("PUT",host + "/api/v1/nodes/"+name+"/proxy"+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Proxy Put Request To A Node Fail", err)
 	}
@@ -296,9 +332,11 @@ func ProxyPutReqToNode(c *gin.Context) {
 
 func ProxyPatchReqToNode(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("PATCH", "/api/v1/nodes/"+name+"/proxy"+urlParas, token, nil)
+	req, err := oapi.GenRequest("PATCH",host + "/api/v1/nodes/"+name+"/proxy"+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Proxy Patch Request To A Node Fail", err)
 	}
@@ -310,9 +348,11 @@ func ProxyPatchReqToNode(c *gin.Context) {
 
 func ProxyDelReqToNode(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	name := c.Param("name")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("DELETE", "/api/v1/nodes/"+name+"/proxy"+urlParas, token, nil)
+	req, err := oapi.GenRequest("DELETE",host + "/api/v1/nodes/"+name+"/proxy"+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Proxy Delete Request To A Node Fail", err)
 	}
@@ -324,10 +364,12 @@ func ProxyDelReqToNode(c *gin.Context) {
 
 func ProxyOpnReqToNodeP(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	name := c.Param("name")
 	path := c.Param("path")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("OPTIONS", "/api/v1/nodes/"+name+"/proxy/"+path+urlParas, token, nil)
+	req, err := oapi.GenRequest("OPTIONS",host + "/api/v1/nodes/"+name+"/proxy/"+path+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Proxy OPTIONS Request To A Node(with path) Fail", err)
 	}
@@ -339,10 +381,12 @@ func ProxyOpnReqToNodeP(c *gin.Context) {
 
 func ProxyPostReqToNodeP(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	name := c.Param("name")
 	path := c.Param("path")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("POST", "/api/v1/nodes/"+name+"/proxy/"+path+urlParas, token, nil)
+	req, err := oapi.GenRequest("POST",host + "/api/v1/nodes/"+name+"/proxy/"+path+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Proxy Post Request To A Node(with path) Fail", err)
 	}
@@ -354,10 +398,12 @@ func ProxyPostReqToNodeP(c *gin.Context) {
 
 func ProxyHeadReqToNodeP(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	name := c.Param("name")
 	path := c.Param("path")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("HEAD", "/api/v1/nodes/"+name+"/proxy/"+path+urlParas, token, nil)
+	req, err := oapi.GenRequest("HEAD",host + "/api/v1/nodes/"+name+"/proxy/"+path+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Proxy Head Request To A Node(with path) Fail", err)
 	}
@@ -369,10 +415,12 @@ func ProxyHeadReqToNodeP(c *gin.Context) {
 
 func ProxyGetReqToNodeP(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	name := c.Param("name")
 	path := c.Param("path")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("GET", "/api/v1/nodes/"+name+"/proxy/"+path+urlParas, token, nil)
+	req, err := oapi.GenRequest("GET",host + "/api/v1/nodes/"+name+"/proxy/"+path+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Proxy Get Request To A Node(with path) Fail", err)
 	}
@@ -384,10 +432,12 @@ func ProxyGetReqToNodeP(c *gin.Context) {
 
 func ProxyPutReqToNodeP(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	name := c.Param("name")
 	path := c.Param("path")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("PUT", "/api/v1/nodes/"+name+"/proxy/"+path+urlParas, token, nil)
+	req, err := oapi.GenRequest("PUT",host + "/api/v1/nodes/"+name+"/proxy/"+path+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Proxy Put Request To A Node(with path) Fail", err)
 	}
@@ -399,10 +449,12 @@ func ProxyPutReqToNodeP(c *gin.Context) {
 
 func ProxyPatchReqToNodeP(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	name := c.Param("name")
 	path := c.Param("path")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("PATCH", "/api/v1/nodes/"+name+"/proxy/"+path+urlParas, token, nil)
+	req, err := oapi.GenRequest("PATCH",host + "/api/v1/nodes/"+name+"/proxy/"+path+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Proxy Patch Request To A Node(with path) Fail", err)
 	}
@@ -414,10 +466,12 @@ func ProxyPatchReqToNodeP(c *gin.Context) {
 
 func ProxyDelReqToNodeP(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	name := c.Param("name")
 	path := c.Param("path")
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("DELETE", "/api/v1/nodes/"+name+"/proxy/"+path+urlParas, token, nil)
+	req, err := oapi.GenRequest("DELETE",host + "/api/v1/nodes/"+name+"/proxy/"+path+urlParas, token, nil)
+
 	if err != nil {
 		logger.Error("Proxy Delete Request To A Node(with path) Fail", err)
 	}

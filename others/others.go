@@ -19,15 +19,17 @@ func init() {
 
 func AnyRequest(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	url := c.Request.URL.String()
 	method := c.Request.Method
 	body, err := ioutil.ReadAll(c.Request.Body)
+	logger.Info("AnyRequest host is  " + host)
 	if err != nil {
 		logger.Error("AnyRequest Read Request.Body error", err)
 		c.JSON(http.StatusBadRequest, gin.H{"status": "BadRequest", "metrics": err})
 		return
 	}
-	code, result, err := any(method, url, token, body)
+	code, result, err := any(method, host + url, token, body)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"status": "InternalServerError", "metrics": err})
 		return

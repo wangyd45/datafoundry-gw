@@ -26,13 +26,15 @@ func init() {
 
 func CreateIST(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreateIST Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("POST", IMAGE+urlParas, token, rBody)
+	req, err := oapi.GenRequest("POST", host+IMAGE+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("CreateIST error ", err)
 	}
@@ -48,13 +50,15 @@ func CreateIST(c *gin.Context) {
 func CreateImageTagInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreateImageTagInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("POST", IMAGENAME+namespace+"/imagestreamtags"+urlParas, token, rBody)
+	req, err := oapi.GenRequest("POST", host+IMAGENAME+namespace+"/imagestreamtags"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("CreateImageTagInNS error ", err)
 	}
@@ -71,8 +75,10 @@ func GetImageTagFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("GET", IMAGENAME+namespace+IMAGECONFIG+name+urlParas, token, []byte{})
+	req, err := oapi.GenRequest("GET", host+IMAGENAME+namespace+IMAGECONFIG+name+urlParas, token, []byte{})
+
 	if err != nil {
 		log.Error("GetImageTagFromNS error ", err)
 	}
@@ -87,8 +93,10 @@ func GetImageTagFromNS(c *gin.Context) {
 
 func GetAllImageTag(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("GET", IMAGE+urlParas, token, []byte{})
+	req, err := oapi.GenRequest("GET", host+IMAGE+urlParas, token, []byte{})
+
 	if err != nil {
 		log.Error("GetAllImageTag error ", err)
 	}
@@ -104,8 +112,10 @@ func GetAllImageTag(c *gin.Context) {
 func GetAllImageTagFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
-	req, err := oapi.GenRequest("GET", IMAGENAME+namespace+"/imagestreamtags"+urlParas, token, []byte{})
+	req, err := oapi.GenRequest("GET", host+IMAGENAME+namespace+"/imagestreamtags"+urlParas, token, []byte{})
+
 	if err != nil {
 		log.Error("GetAllImageTagFromNS error ", err)
 	}
@@ -122,13 +132,15 @@ func UpdataImageTagFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("UpdataImageTagFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("PUT", IMAGENAME+namespace+IMAGECONFIG+name+urlParas, token, rBody)
+	req, err := oapi.GenRequest("PUT", host+IMAGENAME+namespace+IMAGECONFIG+name+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("UpdataImageTagFromNS error ", err)
 	}
@@ -145,13 +157,15 @@ func PatchImageTagFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("PatchImageTagFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("PATCH", IMAGENAME+namespace+IMAGECONFIG+name+urlParas, token, rBody)
+	req, err := oapi.GenRequest("PATCH", host+IMAGENAME+namespace+IMAGECONFIG+name+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("PatchImageTagFromNS error ", err)
 	}
@@ -168,13 +182,15 @@ func DeleteImageTagFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("DeleteImageTagFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := oapi.GenRequest("DELETE", IMAGENAME+namespace+IMAGECONFIG+name+urlParas, token, rBody)
+	req, err := oapi.GenRequest("DELETE", host+IMAGENAME+namespace+IMAGECONFIG+name+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("DeleteImageTagFromNS error ", err)
 	}

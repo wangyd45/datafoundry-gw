@@ -53,13 +53,14 @@ func CreateProject(c *gin.Context) {
 		return
 	}
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	if "" == token {
 		log.Error("get token error ", nil)
 		rstring := "{\"messages\": \"Unauthorized\",\"reason\": \"TokenNull\"}"
 		c.Data(403, "application/json", []byte(rstring))
 		return
 	}
-	user, err := authDF(token)
+	user, err := authDF(host,token)
 	if err != nil {
 		log.Error("get user error!", err)
 		return
@@ -75,7 +76,8 @@ func CreateProject(c *gin.Context) {
 		log.Error("json Masrshal error ", err)
 		return
 	}
-	req, err := oapi.GenRequest("POST", "/oapi/v1/projectrequests", token, rBody)
+	req, err := oapi.GenRequest("POST",host + "/oapi/v1/projectrequests", token, rBody)
+
 	if err != nil {
 		log.Error("Create A Project Fail", err)
 		return
@@ -93,13 +95,15 @@ func CreateProject(c *gin.Context) {
 func ListMembers(c *gin.Context) {
 	project := c.Param("project")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	if "" == token {
 		log.Error("get token error ", nil)
 		rstring := "{\"messages\": \"Unauthorized\",\"reason\": \"TokenNull\"}"
 		c.Data(403, "application/json", []byte(rstring))
 		return
 	}
-	req, err := oapi.GenRequest("GET", "/oapi/v1/namespaces/"+project+"/rolebindings", token, nil)
+	req, err := oapi.GenRequest("GET",host + "/oapi/v1/namespaces/"+project+"/rolebindings", token, nil)
+
 	if err != nil {
 		log.Error("ListMembers error ", err)
 	}
@@ -144,6 +148,7 @@ func ListMembers(c *gin.Context) {
 func InviteMember(c *gin.Context) {
 
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	if "" == token {
 		log.Error("get token error ", nil)
 		rstring := "{\"messages\": \"Unauthorized\",\"reason\": \"TokenNull\"}"
@@ -165,7 +170,7 @@ func InviteMember(c *gin.Context) {
 	}
 
 	project := c.Param("project")
-	req, err := roleAdd(token, project, member.Name, member.IsAdmin)
+	req, err := roleAdd(host,token, project, member.Name, member.IsAdmin)
 
 	if err != nil {
 		log.Error("InviteMember error ", err)
@@ -186,6 +191,7 @@ func InviteMember(c *gin.Context) {
 func RemoveMember(c *gin.Context) {
 
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	if "" == token {
 		log.Error("get token error ", nil)
 		rstring := "{\"messages\": \"Unauthorized\",\"reason\": \"TokenNull\"}"
@@ -208,7 +214,7 @@ func RemoveMember(c *gin.Context) {
 
 	project := c.Param("project")
 
-	req, err := roleRemove(token, project, member.Name)
+	req, err := roleRemove(host,token, project, member.Name)
 	if err != nil {
 		log.Error("RemoveMember error ", err)
 		rstring := "{\"messages\": \"" + err.Error() + "\"}"
@@ -236,9 +242,10 @@ func genRandomName(strlen int) (name string) {
 }
 
 //根据Token获取用户名称
-func authDF(token string) (string, error) {
+func authDF(host,token string) (string, error) {
 	u := &userapi.User{}
-	req, err := oapi.GenRequest("GET", "/oapi/v1/users/~", token, []byte{})
+	req, err := oapi.GenRequest("GET",host + "/oapi/v1/users/~", token, []byte{})
+
 	if err != nil {
 		log.Error("GetUser error ", err)
 	}
@@ -271,7 +278,7 @@ func parseRequestBody(r *http.Request, v interface{}) error {
 }
 
 //移除rolebindings
-func roleRemove(token, project, name string) (*http.Response, error) {
+func roleRemove(host,token, project, name string) (*http.Response, error) {
 
 	var req *http.Response
 	var err error
@@ -281,7 +288,7 @@ func roleRemove(token, project, name string) (*http.Response, error) {
 	}
 
 	println("project:" + project)
-	roleList, _ := getListRoles(token, project)
+	roleList, _ := getListRoles(host,token, project)
 	if err != nil {
 		return nil, err
 	}
@@ -292,14 +299,15 @@ func roleRemove(token, project, name string) (*http.Response, error) {
 	} else {
 		role = removeUserInRole(role, name)
 		body, _ := json.Marshal(role)
-		req, err = oapi.GenRequest("PUT", "/oapi/v1/namespaces/"+project+"/rolebindings/"+role.Name, token, body)
+		req, err = oapi.GenRequest("PUT",host + "/oapi/v1/namespaces/"+project+"/rolebindings/"+role.Name, token, body)
+
 		return req, err
 	}
 
 }
 
 //创建或更新rolebindings
-func roleAdd(token, project, name string, admin bool) (*http.Response, error) {
+func roleAdd(host,token, project, name string, admin bool) (*http.Response, error) {
 
 	var req *http.Response
 	var err error
@@ -308,7 +316,7 @@ func roleAdd(token, project, name string, admin bool) (*http.Response, error) {
 		return nil, errors.New("namespace or username is null")
 	}
 
-	roleList, err := getListRoles(token, project)
+	roleList, err := getListRoles(host,token, project)
 	if err != nil {
 		return nil, err
 	}
@@ -344,23 +352,26 @@ func roleAdd(token, project, name string, admin bool) (*http.Response, error) {
 
 	body, _ := json.Marshal(role)
 	if create {
-		req, err = oapi.GenRequest("POST", "/oapi/v1/namespaces/"+project+"/rolebindings", token, body)
+		req, err = oapi.GenRequest("POST",host + "/oapi/v1/namespaces/"+project+"/rolebindings", token, body)
+
 
 	} else {
-		req, err = oapi.GenRequest("PUT", "/oapi/v1/namespaces/"+project+"/rolebindings/"+roleRef, token, body)
+		req, err = oapi.GenRequest("PUT",host + "/oapi/v1/namespaces/"+project+"/rolebindings/"+roleRef, token, body)
+
 	}
 
 	return req, err
 }
 
 //获取rolebindings列表
-func getListRoles(token, project string) (*rolebindingapi.RoleBindingList, error) {
+func getListRoles(host,token, project string) (*rolebindingapi.RoleBindingList, error) {
 
 	var err error
 
 	roles := new(rolebindingapi.RoleBindingList)
 
-	resp, err := oapi.GenRequest("GET", "/oapi/v1/namespaces/"+project+"/rolebindings", token, nil)
+	resp, err := oapi.GenRequest("GET",host + "/oapi/v1/namespaces/"+project+"/rolebindings", token, nil)
+
 	if err != nil {
 		log.Error("Get All RoleBindings In A Namespace Fail", err)
 		return nil, err

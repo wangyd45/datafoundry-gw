@@ -26,13 +26,15 @@ func init() {
 
 func CreateSecret(c *gin.Context) {
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreateSecret Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("POST", SERVICE+urlParas, token, rBody)
+	req, err := api.GenRequest("POST", host+SERVICE+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("CreateSecret error ", err)
 	}
@@ -48,13 +50,15 @@ func CreateSecret(c *gin.Context) {
 func CreateSecretInNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("CreateSecretInNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("POST", SERVICENAME+"/"+namespace+"/secrets"+urlParas, token, rBody)
+	req, err := api.GenRequest("POST", host+SERVICENAME+"/"+namespace+"/secrets"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("CreateSecretInNS error ", err)
 	}
@@ -74,8 +78,10 @@ func GetSecretFromNS(c *gin.Context) {
 		namespace := c.Param("namespace")
 		name := c.Param("name")
 		token := pkg.GetToken(c)
+		host := pkg.GetHost(c)
 		urlParas := pkg.SliceURL(c.Request.URL.String())
-		req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/secrets/"+name+urlParas, token, []byte{})
+		req, err := api.GenRequest("GET", host+SERVICENAME+"/"+namespace+"/secrets/"+name+urlParas, token, []byte{})
+
 		if err != nil {
 			log.Error("GetSecretFromNS error ", err)
 		}
@@ -94,8 +100,10 @@ func GetAllSecret(c *gin.Context) {
 		watchAllSecret(c)
 	} else {
 		token := pkg.GetToken(c)
+		host := pkg.GetHost(c)
 		urlParas := pkg.SliceURL(c.Request.URL.String())
-		req, err := api.GenRequest("GET", SERVICE+urlParas, token, []byte{})
+		req, err := api.GenRequest("GET", host+SERVICE+urlParas, token, []byte{})
+
 		if err != nil {
 			log.Error("GetAllSecret error ", err)
 		}
@@ -115,8 +123,10 @@ func GetAllSecretFromNS(c *gin.Context) {
 	} else {
 		namespace := c.Param("namespace")
 		token := pkg.GetToken(c)
+		host := pkg.GetHost(c)
 		urlParas := pkg.SliceURL(c.Request.URL.String())
-		req, err := api.GenRequest("GET", SERVICENAME+"/"+namespace+"/secrets"+urlParas, token, []byte{})
+		req, err := api.GenRequest("GET", host+SERVICENAME+"/"+namespace+"/secrets"+urlParas, token, []byte{})
+
 		if err != nil {
 			log.Error("GetAllSecretFromNS error ", err)
 		}
@@ -134,26 +144,32 @@ func watchSecretFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetWSToken(c)
+	host := pkg.GetWsHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	log.Info("Watch Secret From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "start watch"})
-	api.WSRequest(WATCH+"/"+namespace+"/secrets/"+name+urlParas, token, c.Writer, c.Request)
+	api.WSRequest(host+WATCH+"/"+namespace+"/secrets/"+name+urlParas, token, c.Writer, c.Request)
+
 	log.Info("Watch Secret From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "end watch"})
 }
 
 func watchAllSecret(c *gin.Context) {
 	token := pkg.GetWSToken(c)
+	host := pkg.GetWsHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	log.Info("Watch Collection Secret", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "start watch"})
-	api.WSRequest(WATCHALL+urlParas, token, c.Writer, c.Request)
+	api.WSRequest(host+WATCHALL+urlParas, token, c.Writer, c.Request)
+
 	log.Info("Watch Collection Secret", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "end watch"})
 }
 
 func watchAllSecretFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetWSToken(c)
+	host := pkg.GetWsHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	log.Info("Watch Collection Secret From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "start watch"})
-	api.WSRequest(WATCH+"/"+namespace+"/secrets"+urlParas, token, c.Writer, c.Request)
+	api.WSRequest(host+WATCH+"/"+namespace+"/secrets"+urlParas, token, c.Writer, c.Request)
+
 	log.Info("Watch Collection Secret From NameSpace", map[string]interface{}{"user": pkg.GetUserFromToken(pkg.SliceToken(token)), "time": pkg.GetTimeNow(), "result": "end watch"})
 }
 
@@ -161,13 +177,15 @@ func UpdataSecretFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("UpdataSecretFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PUT", SERVICENAME+"/"+namespace+"/secrets/"+name+urlParas, token, rBody)
+	req, err := api.GenRequest("PUT", host+SERVICENAME+"/"+namespace+"/secrets/"+name+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("UpdataSecretFromNS error ", err)
 	}
@@ -184,13 +202,15 @@ func PatchSecretFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("PatchSecretFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("PATCH", SERVICENAME+"/"+namespace+"/secrets/"+name+urlParas, token, rBody)
+	req, err := api.GenRequest("PATCH", host+SERVICENAME+"/"+namespace+"/secrets/"+name+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("PatchSecretFromNS error ", err)
 	}
@@ -207,13 +227,15 @@ func DeleteSecretFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	name := c.Param("name")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("DeleteSecretFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("DELETE", SERVICENAME+"/"+namespace+"/secrets/"+name+urlParas, token, rBody)
+	req, err := api.GenRequest("DELETE", host+SERVICENAME+"/"+namespace+"/secrets/"+name+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("DeleteSecretFromNS error ", err)
 	}
@@ -229,13 +251,15 @@ func DeleteSecretFromNS(c *gin.Context) {
 func DeleteAllSecretFromNS(c *gin.Context) {
 	namespace := c.Param("namespace")
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	rBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Error("DeleteAllSecretFromNS Read Request.Body error", err)
 	}
 	defer c.Request.Body.Close()
-	req, err := api.GenRequest("DELETE", SERVICENAME+"/"+namespace+"/secrets"+urlParas, token, rBody)
+	req, err := api.GenRequest("DELETE", host+SERVICENAME+"/"+namespace+"/secrets"+urlParas, token, rBody)
+
 	if err != nil {
 		log.Error("DeleteAllSecretFromNS error ", err)
 	}

@@ -7,11 +7,11 @@ import (
 	"fmt"
 	"github.com/gorilla/websocket"
 	"net/http"
-	"os"
+//	"os"
 	"time"
 )
 
-var apiHost string
+//var apiHost string
 
 var httpClientB = &http.Client{
 	Transport: &http.Transport{
@@ -32,6 +32,7 @@ var wsupgrader = websocket.Upgrader{
 	CheckOrigin:     func(r *http.Request) bool { return true },
 }
 
+/*
 func init() {
 	apiHost = getenv("APIHOST")
 	//apiHost = "console.release.prd.dataos.io"
@@ -47,12 +48,12 @@ func getenv(env string) string {
 	}
 	fmt.Println("ENV:", env, env_value)
 	return env_value
-}
+}*/
 
 func GenRequest(method, url, token string, body []byte) (*http.Response, error) {
 	var req *http.Request
 	var err error
-	url = "https://" + apiHost + url
+	url = "https://" + url
 
 	if len(body) == 0 {
 		req, err = http.NewRequest(method, url, nil)
@@ -78,7 +79,7 @@ func GenRequest(method, url, token string, body []byte) (*http.Response, error) 
 func GenHawRequest(method, url, token, namespace string, body []byte) (*http.Response, error) {
 	var req *http.Request
 	var err error
-	url = "https://" + apiHost + url
+	url = "https://" + url
 
 	if len(body) == 0 {
 		req, err = http.NewRequest(method, url, nil)
@@ -107,7 +108,8 @@ func WSRequest(url, token string, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	url = "https://" + apiHost + url
+	//url = "https://" + apiHost + url
+	url = "https://" + url
 	request, err = http.NewRequest("GET", url, nil)
 	if err != nil {
 		fmt.Errorf("Request err:", err)
@@ -154,7 +156,7 @@ func WSRequestRL(len int, url, token string, w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	url = "https://" + apiHost + url
+	url = "https://" + url
 	request, err = http.NewRequest("GET", url, nil)
 	if err != nil {
 		fmt.Errorf("Request err:", err)

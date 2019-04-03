@@ -49,6 +49,7 @@ func init() {
 func GainCpu(c *gin.Context) {
 	//获取前端传递的Token，无需拼接"Bearer XXXXXXXXXX"
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	//获取前端参数
 	rBody, err := ioutil.ReadAll(c.Request.Body)
@@ -67,7 +68,7 @@ func GainCpu(c *gin.Context) {
 	}
 	for _, v := range cpuTags.Pod_namespace {
 		URL := CPUURL + urlParas + "&tags=descriptor_name:cpu/usage,pod_namespace:" + v
-		req, err := haw.GenHawRequest("GET", URL, token, v, nil)
+		req, err := haw.GenHawRequest("GET", host + URL, token, v, nil)
 		defer req.Body.Close()
 		if err != nil || req.StatusCode != http.StatusOK {
 			log.Error("Gain cpu information fail", err)
@@ -98,6 +99,7 @@ func GainCpu(c *gin.Context) {
 func GainMemory(c *gin.Context) {
 	//获取前端传递的Token，无需拼接"Bearer XXXXXXXXXX"
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	//获取前端参数
 	rBody, err := ioutil.ReadAll(c.Request.Body)
@@ -115,8 +117,8 @@ func GainMemory(c *gin.Context) {
 		return
 	}
 	for _, v := range memoryTags.Pod_namespace {
-		URL := MEMORYURL + urlParas + "&tags=descriptor_name:memory/usage,pod_namespace:" + v
-		req, err := haw.GenHawRequest("GET", URL, token, v, nil)
+		URL := host + MEMORYURL + urlParas + "&tags=descriptor_name:memory/usage,pod_namespace:" + v
+		req, err := haw.GenHawRequest("GET",host + URL, token, v, nil)
 		defer req.Body.Close()
 		if err != nil || req.StatusCode != http.StatusOK {
 			log.Error("Gain memory information fail", err)
@@ -148,6 +150,7 @@ func GainMemory(c *gin.Context) {
 func GainNetwork(c *gin.Context) {
 	//获取前端传递的Token，无需拼接"Bearer XXXXXXXXXX"
 	token := pkg.GetToken(c)
+	host := pkg.GetHost(c)
 	sigin := c.Param("sigin")
 	var network string
 	if sigin == "rx" {
@@ -178,7 +181,7 @@ func GainNetwork(c *gin.Context) {
 	}
 	for _, v := range networkTags.Pod_namespace {
 		URL := NETWORKURL + urlParas + "&tags=descriptor_name:network/" + network + ",pod_namespace:" + v
-		req, err := haw.GenHawRequest("GET", URL, token, v, nil)
+		req, err := haw.GenHawRequest("GET",host + URL, token, v, nil)
 		defer req.Body.Close()
 		if err != nil || req.StatusCode != http.StatusOK {
 			log.Error("Gain network information fail", err)

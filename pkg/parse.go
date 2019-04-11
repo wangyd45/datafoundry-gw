@@ -41,7 +41,7 @@ func GetToken(c *gin.Context) string {
 }
 
 func GetHost(c *gin.Context) string {
-	host := c.Request.Header.Get("cluster")
+	host := c.Request.Header.Get("Cluster")
 	return host
 }
 
@@ -52,7 +52,7 @@ func GetWSToken(c *gin.Context) (ret string) {
 }
 
 func GetWsHost(c *gin.Context) string {
-	host := c.Query("cluster")
+	host := c.Query("Cluster")
 	fmt.Println("WS host is ",host)
 	return host
 }

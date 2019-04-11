@@ -110,9 +110,10 @@ func WSRequest(url, token string, w http.ResponseWriter, r *http.Request) {
 
 	//url = "https://" + apiHost + url
 	url = "https://" + url
+	fmt.Println("WSRequest URL is ",url)
 	request, err = http.NewRequest("GET", url, nil)
 	if err != nil {
-		fmt.Errorf("Request err:", err)
+		fmt.Errorf("WSRequest err:", err)
 	}
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Authorization", token)

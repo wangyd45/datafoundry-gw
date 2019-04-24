@@ -29,7 +29,7 @@ func AnyRequest(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"status": "BadRequest", "metrics": err})
 		return
 	}
-	code, result, err := any(method, host + url, token, body)
+	code, result, err := Any(method, host + url, token, body)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"status": "InternalServerError", "metrics": err})
 		return
@@ -38,7 +38,7 @@ func AnyRequest(c *gin.Context) {
 	return
 }
 
-func any(method, url, token string, body []byte) (code int, result []byte, err error) {
+func Any(method, url, token string, body []byte) (code int, result []byte, err error) {
 	logger.Debug("any body is " + string(body))
 	req, err := oapi.GenRequest(method, url, token, body)
 	if err != nil {

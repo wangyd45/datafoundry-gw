@@ -10,6 +10,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"github.com/asiainfoldp/datafoundry-gw/others"
 )
 
 const (
@@ -49,7 +50,7 @@ func init() {
 func GainCpu(c *gin.Context) {
 	//获取前端传递的Token，无需拼接"Bearer XXXXXXXXXX"
 	token := pkg.GetToken(c)
-	host := pkg.GetHost(c)
+	host := pkg.GetHawHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	//获取前端参数
 	rBody, err := ioutil.ReadAll(c.Request.Body)
@@ -99,7 +100,7 @@ func GainCpu(c *gin.Context) {
 func GainMemory(c *gin.Context) {
 	//获取前端传递的Token，无需拼接"Bearer XXXXXXXXXX"
 	token := pkg.GetToken(c)
-	host := pkg.GetHost(c)
+	host := pkg.GetHawHost(c)
 	urlParas := pkg.SliceURL(c.Request.URL.String())
 	//获取前端参数
 	rBody, err := ioutil.ReadAll(c.Request.Body)
@@ -150,7 +151,7 @@ func GainMemory(c *gin.Context) {
 func GainNetwork(c *gin.Context) {
 	//获取前端传递的Token，无需拼接"Bearer XXXXXXXXXX"
 	token := pkg.GetToken(c)
-	host := pkg.GetHost(c)
+	host := pkg.GetHawHost(c)
 	sigin := c.Param("sigin")
 	var network string
 	if sigin == "rx" {
@@ -207,4 +208,28 @@ func GainNetwork(c *gin.Context) {
 		networkResList = append(networkResList, networkRes)
 	}
 	c.JSON(http.StatusOK, networkResList)
+}
+
+func GainStats(c *gin.Context) {
+	//获取前端传递的Token，无需拼接"Bearer XXXXXXXXXX"
+	token := pkg.GetToken(c)
+	host := pkg.GetHawHost(c)
+	url := c.Request.URL.String()
+	method := c.Request.Method
+	body, err := ioutil.ReadAll(c.Request.Body)
+	log.Info("GainStats host is  " + host)
+	if err != nil {
+		log.Error("GainStats Read Request.Body error", err)
+		c.JSON(http.StatusBadRequest, gin.H{"status": "BadRequest", "metrics": err})
+		return
+	}
+	code, result, err := others.Any(method, host + url, token, body)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"status": "InternalServerError", "metrics": err})
+		return
+	}
+	c.Data(code, "application/json", result)
+	return
+
+	c.JSON(http.StatusOK, result)
 }

@@ -41,8 +41,11 @@ func GetToken(c *gin.Context) string {
 }
 
 func GetHost(c *gin.Context) string {
-	host := c.Request.Header.Get("Cluster")
-	return host
+	return c.Request.Header.Get("Cluster")
+}
+
+func GetHawHost(c *gin.Context) string{
+	return c.Request.Header.Get("HawkularUrl")
 }
 
 //WS请求获取Token "Beaer ......"

@@ -8,7 +8,6 @@ import (
 	"io/ioutil"
 	"strings"
 	"time"
-	"fmt"
 )
 
 type LogData struct {
@@ -55,8 +54,7 @@ func GetWSToken(c *gin.Context) (ret string) {
 }
 
 func GetWsHost(c *gin.Context) string {
-	host := c.Query("Cluster")
-	fmt.Println("WS host is ",host)
+	host := c.Request.URL.Query().Get("Cluster")
 	return host
 }
 
